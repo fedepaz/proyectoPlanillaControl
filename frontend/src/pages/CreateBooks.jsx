@@ -205,26 +205,66 @@ const CreatePlanilla = () => {
 
         <div className="border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Datos Vehículos</h2>
-          <div className=" my-1 flex">
-            {Object.keys(datosVehiculos).map((key) => (
-              <div key={key} className="p-1 text-center">
-                <label className="text-gray-600">{key}</label>
+          <div className=" my-1 flex-col">
+            <div className=" flex">
+              <div className="p-1 text-center">
+                <label className="text-gray-600">Tipo Vehículo</label>
                 <input
                   type="text"
-                  value={datosVehiculos[key]}
+                  value={datosVehiculos.tipoVehiculo}
                   onChange={(e) =>
-                    setDatosVehiculos({
-                      ...datosVehiculos,
-                      [key]: e.target.value,
-                    })
+                    setDatosVehiculos(
+                      (datosVehiculos.tipoVehiculo = e.target.value)
+                    )
                   }
                   className="border border-gray-400 px-3 py-1 w-full"
                 />
               </div>
-            ))}
+              <div className="p-1 text-center">
+                <label className="text-gray-600">Empresa</label>
+                <input
+                  type="text"
+                  value={datosVehiculos.empresa}
+                  onChange={(e) =>
+                    setDatosVehiculos((datosVehiculos.empresa = e.target.value))
+                  }
+                  className="border border-gray-400 px-3 py-1 w-full"
+                />
+              </div>
+            </div>
+
+            <div className=" flex">
+              <div className="p-1 text-center">
+                <label className="text-gray-600">Num Interno</label>
+                <input
+                  type="text"
+                  value={datosVehiculos.numInterno}
+                  onChange={(e) =>
+                    setDatosVehiculos(
+                      (datosVehiculos.numInterno = e.target.value)
+                    )
+                  }
+                  className="border border-gray-400 px-3 py-1 w-full"
+                />
+              </div>
+
+              <div className="p-1 text-center">
+                <label className="text-gray-600">Operador</label>
+                <input
+                  type="text"
+                  value={datosVehiculos.operador}
+                  onChange={(e) =>
+                    setDatosVehiculos(
+                      (datosVehiculos.operador = e.target.value)
+                    )
+                  }
+                  className="border border-gray-400 px-3 py-1 w-full"
+                />
+              </div>
+            </div>
           </div>
         </div>
-
+        {/* DESDE ACA
         <div className="border-b border-gray-300 pb-4 mb-4">
           <div className="my-4">
             <h2 className="text-xl font-semibold mb-2">Novedades Equipajes</h2>
@@ -254,8 +294,8 @@ const CreatePlanilla = () => {
             />
           </div>
         </div>
+ */}
 
-        {/* Save button */}
         <button
           className="p-2 bg-sky-300 m-8 rounded"
           onClick={handleSavePlanilla}
