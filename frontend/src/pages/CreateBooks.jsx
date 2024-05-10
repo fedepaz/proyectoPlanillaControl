@@ -130,7 +130,6 @@ const CreatePlanilla = () => {
             </div>
           ))}
         </div>
-
         {/* datosVuelo section */}
         <div className="border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Datos Vuelo</h2>
@@ -148,7 +147,6 @@ const CreatePlanilla = () => {
             </div>
           ))}
         </div>
-
         {/* datosTerrestre section */}
         <div className="border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Datos Terrestre</h2>
@@ -176,95 +174,211 @@ const CreatePlanilla = () => {
             Add Terrestre
           </button>
         </div>
-
         {/* Render inputs for datosSeguridad */}
+        {/* DESDE ACA
         <div className="border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Datos Seguridad</h2>
-          <div className=" my-1 flex-col">
-            {datosSeguridad.map((seguridad, index) => (
-              <div key={index} className="flex flex-col mb-3">
-                {Object.keys(seguridad).map((key) => (
-                  <div key={`${index}-${key}`} className="my-2 text-center ">
-                    <label className="text-gray-600">{key}</label>
-                    <input
-                      type="text"
-                      value={seguridad[key]}
-                      onChange={(e) => {
-                        const updatedSeguridad = [...datosSeguridad];
-                        updatedSeguridad[index][key] = e.target.value;
-                        setDatosSeguridad(updatedSeguridad);
-                      }}
-                      className="border border-gray-400 px-3 py-1 w-full"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
+          <div className="my-1 grid grid-cols-5 gap-4">
+            <div className="flex flex-col col-span-1">
+              <label
+                htmlFor="apellido"
+                className="text-gray-600 mr-2 w-full text-center"
+              >
+                Apellido
+              </label>
+              <input
+                id="apellido"
+                type="text"
+                value={datosSeguridad.apellido}
+                onChange={(e) =>
+                  setDatosSeguridad({
+                    ...datosSeguridad,
+                    apellido: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+
+            <div className="flex flex-col col-span-1">
+              <label
+                htmlFor="nombre"
+                className="text-gray-600 mr-2 w-full text-center"
+              >
+                Nombre
+              </label>
+              <input
+                id="nombre"
+                type="text"
+                value={datosSeguridad.nombre}
+                onChange={(e) =>
+                  setDatosSeguridad({
+                    ...datosSeguridad,
+                    nombre: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+
+            <div className="flex flex-col col-span-1">
+              <label
+                htmlFor="dni"
+                className="text-gray-600 mr-2 w-full text-center"
+              >
+                DNI
+              </label>
+              <input
+                id="dni"
+                type="text"
+                value={datosSeguridad.dni}
+                onChange={(e) =>
+                  setDatosSeguridad({
+                    ...datosSeguridad,
+                    dni: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+
+            <div className="flex flex-col col-span-1">
+              <label
+                htmlFor="legajo"
+                className="text-gray-600 mr-2 w-full text-center"
+              >
+                Legajo
+              </label>
+              <input
+                id="legajo"
+                type="text"
+                value={datosSeguridad.legajo}
+                onChange={(e) =>
+                  setDatosSeguridad({
+                    ...datosSeguridad,
+                    legajo: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+
+            <div className="flex flex-col col-span-1">
+              <label
+                htmlFor="empresa"
+                className="text-gray-600 mr-2 w-full text-center"
+              >
+                Empresa
+              </label>
+              <input
+                id="empresa"
+                type="text"
+                value={datosSeguridad.apellido}
+                onChange={(e) =>
+                  setDatosSeguridad({
+                    ...datosSeguridad,
+                    empresa: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
           </div>
         </div>
-
+        
         <div className="border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Datos Vehículos</h2>
-          <div className=" my-1 flex-col">
-            <div className=" flex">
-              <div className="p-1 text-center">
-                <label className="text-gray-600">Tipo Vehículo</label>
-                <input
-                  type="text"
-                  value={datosVehiculos.tipoVehiculo}
-                  onChange={(e) =>
-                    setDatosVehiculos(
-                      (datosVehiculos.tipoVehiculo = e.target.value)
-                    )
-                  }
-                  className="border border-gray-400 px-3 py-1 w-full"
-                />
-              </div>
-              <div className="p-1 text-center">
-                <label className="text-gray-600">Empresa</label>
-                <input
-                  type="text"
-                  value={datosVehiculos.empresa}
-                  onChange={(e) =>
-                    setDatosVehiculos((datosVehiculos.empresa = e.target.value))
-                  }
-                  className="border border-gray-400 px-3 py-1 w-full"
-                />
-              </div>
+          <div className="my-1 grid grid-cols-2 gap-4">
+            <div className="flex items-center col-span-1">
+              <label
+                htmlFor="tipoVehiculo"
+                className="text-gray-600 mr-2 w-full"
+              >
+                Tipo Vehículo
+              </label>
+              <input
+                id="tipoVehiculo"
+                type="text"
+                value={datosVehiculos.tipoVehiculo}
+                onChange={(e) =>
+                  setDatosVehiculos({
+                    ...datosVehiculos,
+                    tipoVehiculo: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
             </div>
-
-            <div className=" flex">
-              <div className="p-1 text-center">
-                <label className="text-gray-600">Num Interno</label>
-                <input
-                  type="text"
-                  value={datosVehiculos.numInterno}
-                  onChange={(e) =>
-                    setDatosVehiculos(
-                      (datosVehiculos.numInterno = e.target.value)
-                    )
-                  }
-                  className="border border-gray-400 px-3 py-1 w-full"
-                />
-              </div>
-
-              <div className="p-1 text-center">
-                <label className="text-gray-600">Operador</label>
-                <input
-                  type="text"
-                  value={datosVehiculos.operador}
-                  onChange={(e) =>
-                    setDatosVehiculos(
-                      (datosVehiculos.operador = e.target.value)
-                    )
-                  }
-                  className="border border-gray-400 px-3 py-1 w-full"
-                />
-              </div>
+            <div className="flex items-center col-span-1">
+              <label htmlFor="empresa" className="text-gray-600 mr-2 w-full">
+                Empresa
+              </label>
+              <input
+                id="empresa"
+                type="text"
+                value={datosVehiculos.empresa}
+                onChange={(e) =>
+                  setDatosVehiculos({
+                    ...datosVehiculos,
+                    empresa: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+            <div className="flex items-center col-span-1">
+              <label htmlFor="numInterno" className="text-gray-600 mr-2 w-full">
+                Nº Interno
+              </label>
+              <input
+                id="numInterno"
+                type="text"
+                value={datosVehiculos.numInterno}
+                onChange={(e) =>
+                  setDatosVehiculos({
+                    ...datosVehiculos,
+                    numInterno: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
+            </div>
+            <div className="flex items-center col-span-1">
+              <label htmlFor="operador" className="text-gray-600 mr-2 w-full">
+                Operador
+              </label>
+              <input
+                id="operador"
+                type="text"
+                value={datosVehiculos.operador}
+                onChange={(e) =>
+                  setDatosVehiculos({
+                    ...datosVehiculos,
+                    operador: e.target.value,
+                  })
+                }
+                className="border border-gray-400 px-3 py-1 w-full"
+              />
             </div>
           </div>
+          <div className="flex items-center col-span-1 my-4">
+            <label htmlFor="observaciones" className="text-gray-600 mr-2">
+              Observaciones
+            </label>
+            <input
+              id="observaciones"
+              type="text"
+              value={datosVehiculos.observaciones}
+              onChange={(e) =>
+                setDatosVehiculos({
+                  ...datosVehiculos,
+                  observaciones: e.target.value,
+                })
+              }
+              className="border border-gray-400 px-3 py-1 w-full"
+            />
+          </div>
         </div>
-        {/* DESDE ACA
         <div className="border-b border-gray-300 pb-4 mb-4">
           <div className="my-4">
             <h2 className="text-xl font-semibold mb-2">Novedades Equipajes</h2>
@@ -294,8 +408,7 @@ const CreatePlanilla = () => {
             />
           </div>
         </div>
- */}
-
+        */}
         <button
           className="p-2 bg-sky-300 m-8 rounded"
           onClick={handleSavePlanilla}
