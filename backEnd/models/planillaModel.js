@@ -26,30 +26,30 @@ const planillaSchema = mongoose.Schema(
     },
     datosTerrestre: [
       {
-        apellido: { type: String, required: true },
-        nombre: { type: String, required: true },
-        dni: { type: Number, required: true },
-        legajo: { type: Number, required: true },
-        funcion: { type: Number, required: true },
+        apellidoTerrestre: { type: String, required: true },
+        nombreTerrestre: { type: String, required: true },
+        dniTerrestre: { type: Number, required: true },
+        legajoTerrestre: { type: Number, required: true },
+        funcion: { type: String, required: true },
         grupo: { type: String, required: true },
       },
     ],
     datosSeguridad: [
       {
-        apellido: { type: String, required: true },
-        nombre: { type: String, required: true },
-        dni: { type: Number, required: true },
-        legajo: { type: Number, required: true },
-        empresa: { type: String, required: true },
+        apellidoSeguridad: { type: String, required: true },
+        nombreSeguridad: { type: String, required: true },
+        dniSeguridad: { type: Number, required: true },
+        legajoSeguridad: { type: Number, required: true },
+        empresaSeguridad: { type: String, required: true },
       },
     ],
     datosVehiculos: [
       {
         tipoVehiculo: { type: String, required: true },
-        empresa: { type: String, required: true },
+        empresaVehiculo: { type: String, required: true },
         numInterno: { type: Number, required: true },
-        operador: { type: String, required: true },
-        observaciones: { type: String, required: true },
+        operadorVehiculo: { type: String, required: true },
+        observacionesVehiculo: { type: String, required: true },
       },
     ],
     novEquipajes: {
