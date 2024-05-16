@@ -1,16 +1,20 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-const DatosPsa = () => {
-  const [datosPsa, setDatosPsa] = useState({
-    fecha: "",
-    responsable: "",
-    horaIni: "",
-    horaFin: "",
-    cant: "",
-    tipoControl: "",
-    medioTec: "",
-    tipoPro: "",
-  });
+const DatosPsa = ({ datosPsa, setDatosPsa }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDatosPsa((prevDatosPsa) => ({
+      ...prevDatosPsa,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (name, option) => {
+    setDatosPsa((prevDatosPsa) => ({
+      ...prevDatosPsa,
+      [name]: option,
+    }));
+  };
   return (
     <div className="p-4">
       <div className="border-b border-gray-300 pb-4 mb-4">
@@ -22,14 +26,10 @@ const DatosPsa = () => {
             </label>
             <input
               id="fecha"
+              name="fecha"
               type="text"
               value={datosPsa.fecha}
-              onChange={(e) =>
-                setDatosPsa({
-                  ...datosPsa,
-                  fecha: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -40,14 +40,10 @@ const DatosPsa = () => {
             </label>
             <input
               id="responsable"
+              name="responsable"
               type="text"
               value={datosPsa.responsable}
-              onChange={(e) =>
-                setDatosPsa({
-                  ...datosPsa,
-                  responsable: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -57,14 +53,10 @@ const DatosPsa = () => {
             </label>
             <input
               id="horaIni"
+              name="horaIni"
               type="text"
               value={datosPsa.horaIni}
-              onChange={(e) =>
-                setDatosPsa({
-                  ...datosPsa,
-                  horaIni: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -75,14 +67,10 @@ const DatosPsa = () => {
             </label>
             <input
               id="horaFin"
+              name="horaFin"
               type="text"
               value={datosPsa.horaFin}
-              onChange={(e) =>
-                setDatosPsa({
-                  ...datosPsa,
-                  horaFin: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -93,14 +81,10 @@ const DatosPsa = () => {
             </label>
             <input
               id="cant"
+              name="cant"
               type="text"
               value={datosPsa.cant}
-              onChange={(e) =>
-                setDatosPsa({
-                  ...datosPsa,
-                  cant: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -117,12 +101,7 @@ const DatosPsa = () => {
                     id={option}
                     type="checkbox"
                     checked={datosPsa.tipoControl === option}
-                    onChange={(e) =>
-                      setDatosPsa({
-                        ...datosPsa,
-                        tipoControl: (e.target.value = option),
-                      })
-                    }
+                    onChange={() => handleCheckboxChange("tipoControl", option)}
                   />
                   {option}
                 </label>
@@ -142,12 +121,7 @@ const DatosPsa = () => {
                     id={option}
                     type="checkbox"
                     checked={datosPsa.medioTec === option}
-                    onChange={(e) =>
-                      setDatosPsa({
-                        ...datosPsa,
-                        medioTec: (e.target.value = option),
-                      })
-                    }
+                    onChange={() => handleCheckboxChange("medioTec", option)}
                   />
                   {option}
                 </label>
@@ -168,12 +142,7 @@ const DatosPsa = () => {
                     id={option}
                     type="checkbox"
                     checked={datosPsa.tipoPro === option}
-                    onChange={(e) =>
-                      setDatosPsa({
-                        ...datosPsa,
-                        tipoPro: (e.target.value = option),
-                      })
-                    }
+                    onChange={() => handleCheckboxChange("tipoPro", option)}
                   />
                   {option}
                 </label>
@@ -184,6 +153,19 @@ const DatosPsa = () => {
       </div>
     </div>
   );
+};
+DatosPsa.propTypes = {
+  datosPsa: PropTypes.shape({
+    fecha: PropTypes.string,
+    responsable: PropTypes.string,
+    horaIni: PropTypes.string,
+    horaFin: PropTypes.string,
+    cant: PropTypes.string,
+    tipoControl: PropTypes.string,
+    medioTec: PropTypes.string,
+    tipoPro: PropTypes.string,
+  }).isRequired,
+  setDatosPsa: PropTypes.func.isRequired,
 };
 
 export default DatosPsa;

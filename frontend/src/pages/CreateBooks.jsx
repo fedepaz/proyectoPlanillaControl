@@ -18,7 +18,65 @@ const CreatePlanilla = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const addNewDatosTerrestre = () => {};
+  const [datosPsa, setDatosPsa] = useState({
+    fecha: "",
+    responsable: "",
+    horaIni: "",
+    horaFin: "",
+    cant: "",
+    tipoControl: "",
+    medioTec: "",
+    tipoPro: "",
+  });
+
+  const [datosVuelo, setDatosVuelo] = useState({
+    aerolinea: "",
+    codVuelo: "",
+    origen: "",
+    destino: "",
+    horaArribo: "",
+    horaPartida: "",
+    demora: "",
+    tipo: "",
+    matriculaAeronave: "",
+    posicion: "",
+  });
+
+  const [datosTerrestre, setDatosTerrestre] = useState([
+    {
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+  ]);
+
+  const [datosSeguridad, setDatosSeguridad] = useState([
+    {
+      apellidoSeguridad: "",
+      nombreSeguridad: "",
+      dniSeguridad: "",
+      legajoSeguridad: "",
+      empresaSeguridad: "",
+    },
+  ]);
+
+  const [datosVehiculos, setDatosVehiculos] = useState({
+    tipoVehiculo: "",
+    empresaVehiculo: "",
+    numInterno: "",
+    operadorVehiculo: "",
+    observacionesVehiculo: "",
+  });
+  const [novEquipajes, setNovEquipajes] = useState({});
+  const [novInspeccion, setNovInspeccion] = useState({});
+  const [novOtras, setNovOtras] = useState({});
+
+  const addNewDatosTerrestre = () => {
+    setDatosTerrestre([...datosTerrestre, {}]);
+  };
 
   const handleSavePlanilla = () => {
     const data = {
@@ -53,33 +111,39 @@ const CreatePlanilla = () => {
       {loading ? <Spinner /> : ""}
       <div className="border border-gray-300 rounded-xl p-4 mx-auto">
         {/* datosPsa section */}
-        <DatosPsa />
+        <DatosPsa datosPsa={datosPsa} setDatosPsa={setDatosPsa} />
         {/* datosVuelo section */}
-        <DatosVuelo />
-        {/* datosTerrestre section */}
-        <DatosTerrestre />
-        <button
-          className="bg-blue-500 text-white px-3 py-1 rounded"
-          onClick={addNewDatosTerrestre}
-        >
-          Add Terrestre
-        </button>
-        {/* Render inputs for datosSeguridad */}
-        <DatosSeguridad />
-        <DatosVehiculos />
+        <DatosVuelo datosVuelo={datosVuelo} setDatosVuelo={setDatosVuelo} />
+        {datosTerrestre.map((terrestre, index) => (
+          <DatosTerrestre
+            key={index}
+            setDatosTerrestre={(data) => {
+              const newDatosTerrestre = [...datosTerrestre];
+              newDatosTerrestre[index] = data;
+              setDatosTerrestre(newDatosTerrestre);
+            }}
+          />
+        ))}
         <div className="border-b border-gray-300 pb-4 mb-4">
-          <NovEquipajes />
-
-          <NovInspeccion />
-          <NovOtras />
-
           <button
-            className="p-2 bg-sky-300 m-8 rounded"
-            onClick={handleSavePlanilla}
+            className="bg-blue-500 text-white px-3 py-1 rounded"
+            onClick={addNewDatosTerrestre}
           >
-            Save
+            Add Terrestre
           </button>
         </div>
+        <DatosSeguridad setDatosSeguridad={setDatosSeguridad} />
+        <DatosVehiculos setDatosVehiculos={setDatosVehiculos} />
+        <NovEquipajes setNovEquipajes={setNovEquipajes} />
+        <NovInspeccion setNovInspeccion={setNovInspeccion} />
+        <NovOtras setNovOtras={setNovOtras} />
+
+        <button
+          className="p-2 bg-sky-300 m-8 rounded"
+          onClick={handleSavePlanilla}
+        >
+          Save
+        </button>
       </div>
     </div>
   );

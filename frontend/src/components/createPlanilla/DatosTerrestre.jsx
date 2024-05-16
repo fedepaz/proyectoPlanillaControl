@@ -48,11 +48,11 @@ const DatosTerrestre = () => {
           <input
             id="nombreTerrestre"
             type="text"
-            value={datosTerrestre.nombrTerrestre}
+            value={datosTerrestre.nombreTerrestre}
             onChange={(e) =>
               setDatosTerrestre({
                 ...datosTerrestre,
-                nombrTerrestre: e.target.value,
+                nombreTerrestre: e.target.value,
               })
             }
             className="border border-gray-400 px-3 py-1 w-full"

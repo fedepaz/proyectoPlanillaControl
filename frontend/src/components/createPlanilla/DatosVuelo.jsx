@@ -1,18 +1,20 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-const DatosVuelo = () => {
-  const [datosVuelo, setDatosVuelo] = useState({
-    aerolinea: "",
-    codVuelo: "",
-    origen: "",
-    destino: "",
-    horaArribo: "",
-    horaPartida: "",
-    demora: "",
-    tipo: "",
-    matriculaAeronave: "",
-    posicion: "",
-  });
+const DatosVuelo = ({ datosVuelo, setDatosVuelo }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDatosVuelo((prevDatosVuelo) => ({
+      ...prevDatosVuelo,
+      [name]: value,
+    }));
+  };
+  const handleCheckboxChange = (name, option) => {
+    setDatosVuelo((prevDatosVuelo) => ({
+      ...prevDatosVuelo,
+      [name]: option,
+    }));
+  };
+
   return (
     <div className="p-4">
       <div className="border-b border-gray-300 pb-4 mb-4">
@@ -24,14 +26,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="aerolinea"
+              name="aerolinea"
               type="text"
               value={datosVuelo.aerolinea}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  aerolinea: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -42,14 +40,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="codVuelo"
+              name="codVuelo"
               type="text"
               value={datosVuelo.codVuelo}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  codVuelo: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -59,14 +53,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="origen"
+              name="origen"
               type="text"
               value={datosVuelo.origen}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  origen: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -77,14 +67,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="destino"
+              name="destino"
               type="text"
               value={datosVuelo.destino}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  destino: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -95,14 +81,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="horaArribo"
+              name="horaArribo"
               type="text"
               value={datosVuelo.horaArribo}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  horaArribo: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -113,14 +95,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="horaPartida"
+              name="horaPartida"
               type="text"
               value={datosVuelo.horaPartida}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  horaPartida: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -137,12 +115,7 @@ const DatosVuelo = () => {
                     id={option}
                     type="checkbox"
                     checked={datosVuelo.demora === option}
-                    onChange={(e) =>
-                      setDatosVuelo({
-                        ...datosVuelo,
-                        demora: (e.target.value = option),
-                      })
-                    }
+                    onChange={() => handleCheckboxChange("demora", option)}
                   />
                   {option}
                 </label>
@@ -161,12 +134,7 @@ const DatosVuelo = () => {
                     id={option}
                     type="checkbox"
                     checked={datosVuelo.tipo === option}
-                    onChange={(e) =>
-                      setDatosVuelo({
-                        ...datosVuelo,
-                        tipo: (e.target.value = option),
-                      })
-                    }
+                    onChange={() => handleCheckboxChange("tipo", option)}
                   />
                   {option}
                 </label>
@@ -183,14 +151,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="matriculaAeronave"
+              name="matriculaAeronave"
               type="text"
               value={datosVuelo.matriculaAeronave}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  matriculaAeronave: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -201,14 +165,10 @@ const DatosVuelo = () => {
             </label>
             <input
               id="posicion"
+              name="posicion"
               type="text"
               value={datosVuelo.posicion}
-              onChange={(e) =>
-                setDatosVuelo({
-                  ...datosVuelo,
-                  posicion: e.target.value,
-                })
-              }
+              onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
           </div>
@@ -216,6 +176,21 @@ const DatosVuelo = () => {
       </div>
     </div>
   );
+};
+DatosVuelo.propTypes = {
+  datosVuelo: PropTypes.shape({
+    aerolinea: PropTypes.string,
+    codVuelo: PropTypes.string,
+    origen: PropTypes.string,
+    destino: PropTypes.string,
+    horaArribo: PropTypes.string,
+    horaPartida: PropTypes.string,
+    demora: PropTypes.string,
+    tipo: PropTypes.string,
+    matriculaAeronave: PropTypes.string,
+    posicion: PropTypes.string,
+  }).isRequired,
+  setDatosVuelo: PropTypes.func.isRequired,
 };
 
 export default DatosVuelo;
