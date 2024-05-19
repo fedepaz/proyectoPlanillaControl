@@ -44,6 +44,7 @@ const CreatePlanilla = () => {
 
   const [datosTerrestre, setDatosTerrestre] = useState([
     {
+      id: 0,
       apellidoTerrestre: "",
       nombreTerrestre: "",
       dniTerrestre: "",
@@ -55,6 +56,7 @@ const CreatePlanilla = () => {
 
   const [datosSeguridad, setDatosSeguridad] = useState([
     {
+      id: 0,
       apellidoSeguridad: "",
       nombreSeguridad: "",
       dniSeguridad: "",
@@ -73,9 +75,40 @@ const CreatePlanilla = () => {
   const [novEquipajes, setNovEquipajes] = useState({});
   const [novInspeccion, setNovInspeccion] = useState({});
   const [novOtras, setNovOtras] = useState({});
+  const [datosTerrestreCount, setDatosTerrestreCount] = useState(0);
+  const [datosSeguridadCount, setDatosSeguridadCount] = useState(0);
 
   const addNewDatosTerrestre = () => {
-    setDatosTerrestre([...datosTerrestre, {}]);
+    const newCount = datosTerrestreCount + 1;
+    setDatosTerrestreCount(newCount);
+    setDatosTerrestre((prevDatosTerrestre) => [
+      ...prevDatosTerrestre,
+      {
+        id: newCount,
+        apellidoTerrestre: "",
+        nombreTerrestre: "",
+        dniTerrestre: "",
+        legajoTerrestre: "",
+        funcion: "",
+        grupo: "",
+      },
+    ]);
+  };
+
+  const addNewDatosSeguridad = () => {
+    const newCount = datosSeguridadCount + 1;
+    setDatosSeguridadCount(newCount);
+    setDatosSeguridad((prevDatosSeguridad) => [
+      ...prevDatosSeguridad,
+      {
+        id: newCount,
+        apellidoSeguridad: "",
+        nombreSeguridad: "",
+        dniSeguridad: "",
+        legajoSeguridad: "",
+        empresaSeguridad: "",
+      },
+    ]);
   };
 
   const handleSavePlanilla = () => {
@@ -114,13 +147,17 @@ const CreatePlanilla = () => {
         <DatosPsa datosPsa={datosPsa} setDatosPsa={setDatosPsa} />
         {/* datosVuelo section */}
         <DatosVuelo datosVuelo={datosVuelo} setDatosVuelo={setDatosVuelo} />
-        {datosTerrestre.map((terrestre, index) => (
+        {datosTerrestre.map((terrestre) => (
           <DatosTerrestre
-            key={index}
-            setDatosTerrestre={(data) => {
-              const newDatosTerrestre = [...datosTerrestre];
-              newDatosTerrestre[index] = data;
-              setDatosTerrestre(newDatosTerrestre);
+            key={terrestre.id}
+            idPrefix={`${terrestre.id}`}
+            datosTerrestre={terrestre}
+            setDatosTerrestre={(updatedTerrestre) => {
+              setDatosTerrestre((prevDatosTerrestre) =>
+                prevDatosTerrestre.map((item) =>
+                  item.id === terrestre.id ? updatedTerrestre : item
+                )
+              );
             }}
           />
         ))}
@@ -129,10 +166,31 @@ const CreatePlanilla = () => {
             className="bg-blue-500 text-white px-3 py-1 rounded"
             onClick={addNewDatosTerrestre}
           >
-            Add Terrestre
+            Otro Terrestre
           </button>
         </div>
-        <DatosSeguridad setDatosSeguridad={setDatosSeguridad} />
+        {datosSeguridad.map((seguridad) => (
+          <DatosSeguridad
+            key={seguridad.id}
+            idPrefix={`${seguridad.id}`}
+            datosSeguridad={seguridad}
+            setDatosSeguridad={(updatedSeguridad) => {
+              setDatosSeguridad((prevDatosSeguridad) =>
+                prevDatosSeguridad.map((item) =>
+                  item.id === seguridad.id ? updatedSeguridad : item
+                )
+              );
+            }}
+          />
+        ))}
+        <div className="border-b border-gray-300 pb-4 mb-4">
+          <button
+            className="bg-blue-500 text-white px-3 py-1 rounded"
+            onClick={addNewDatosSeguridad}
+          >
+            Otro Seguridad
+          </button>
+        </div>
         <DatosVehiculos setDatosVehiculos={setDatosVehiculos} />
         <NovEquipajes setNovEquipajes={setNovEquipajes} />
         <NovInspeccion setNovInspeccion={setNovInspeccion} />

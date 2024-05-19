@@ -1,15 +1,13 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-const DatosSeguridad = () => {
-  const [datosSeguridad, setDatosSeguridad] = useState([
-    {
-      apellidoSeguridad: "",
-      nombreSeguridad: "",
-      dniSeguridad: "",
-      legajoSeguridad: "",
-      empresaSeguridad: "",
-    },
-  ]);
+const DatosSeguridad = ({ idPrefix, datosSeguridad, setDatosSeguridad }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDatosSeguridad((prevDatosSeguridad) => ({
+      ...prevDatosSeguridad,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="border-b border-gray-300 pb-4 mb-4">
@@ -17,111 +15,102 @@ const DatosSeguridad = () => {
       <div className="my-1 grid grid-cols-5 gap-4">
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="apellidoSeguridad"
+            htmlFor={`${idPrefix}-apellidoSeguridad`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Apellido
           </label>
           <input
-            id="apellidoSeguridad"
+            id={`${idPrefix}-apellidoSeguridad`}
+            name="apellidoSeguridad"
             type="text"
             value={datosSeguridad.apellidoSeguridad}
-            onChange={(e) =>
-              setDatosSeguridad({
-                ...datosSeguridad,
-                apellidoSeguridad: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
 
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="nombreSeguridad"
+            htmlFor={`${idPrefix}-nombreSeguridad`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Nombre
           </label>
           <input
-            id="nombreSeguridad"
+            id={`${idPrefix}-nombreSeguridad`}
+            name="nombreSeguridad"
             type="text"
             value={datosSeguridad.nombreSeguridad}
-            onChange={(e) =>
-              setDatosSeguridad({
-                ...datosSeguridad,
-                nombreSeguridad: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
 
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="dniSeguridad"
+            htmlFor={`${idPrefix}-dniSeguridad`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             DNI
           </label>
           <input
-            id="dniSeguridad"
+            id={`${idPrefix}-dniSeguridad`}
+            name="dniSeguridad"
             type="text"
             value={datosSeguridad.dniSeguridad}
-            onChange={(e) =>
-              setDatosSeguridad({
-                ...datosSeguridad,
-                dniSeguridad: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
 
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="legajoSeguridad"
+            htmlFor={`${idPrefix}-legajoSeguridad`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Legajo
           </label>
           <input
-            id="legajoSeguridad"
+            id={`${idPrefix}-legajoSeguridad`}
+            name="legajoSeguridad"
             type="text"
             value={datosSeguridad.legajoSeguridad}
-            onChange={(e) =>
-              setDatosSeguridad({
-                ...datosSeguridad,
-                legajoSeguridad: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
 
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="empresaSeguridad"
+            htmlFor={`${idPrefix}-empresaSeguridad`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Empresa
           </label>
           <input
-            id="empresaSeguridad"
+            id={`${idPrefix}-empresaSeguridad`}
+            name="empresaSeguridad"
             type="text"
             value={datosSeguridad.empresaSeguridad}
-            onChange={(e) =>
-              setDatosSeguridad({
-                ...datosSeguridad,
-                empresaSeguridad: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
       </div>
     </div>
   );
+};
+DatosSeguridad.propTypes = {
+  idPrefix: PropTypes.string.isRequired,
+  datosSeguridad: PropTypes.shape({
+    apellidoSeguridad: PropTypes.string,
+    nombreSeguridad: PropTypes.string,
+    dniSeguridad: PropTypes.string,
+    legajoSeguridad: PropTypes.string,
+    empresaSeguridad: PropTypes.string,
+  }).isRequired,
+  setDatosSeguridad: PropTypes.func.isRequired,
 };
 
 export default DatosSeguridad;

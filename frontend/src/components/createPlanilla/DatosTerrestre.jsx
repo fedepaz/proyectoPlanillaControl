@@ -1,17 +1,19 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-const DatosTerrestre = () => {
-  const [datosTerrestre, setDatosTerrestre] = useState([
-    {
-      apellidoTerrestre: "",
-      nombreTerrestre: "",
-      dniTerrestre: "",
-      legajoTerrestre: "",
-      funcion: "",
-      grupo: "",
-    },
-  ]);
-
+const DatosTerrestre = ({ idPrefix, datosTerrestre, setDatosTerrestre }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDatosTerrestre((prevDatosTerrestre) => ({
+      ...prevDatosTerrestre,
+      [name]: value,
+    }));
+  };
+  const handleCheckboxChange = (name, option) => {
+    setDatosTerrestre((prevDatosTerrestre) => ({
+      ...prevDatosTerrestre,
+      [name]: option,
+    }));
+  };
   return (
     <div className="border-b border-gray-300 pb-4 mb-4">
       <h2 className="text-xl font-semibold mb-2">
@@ -20,87 +22,71 @@ const DatosTerrestre = () => {
       <div className="my-1 grid grid-cols-6 gap-4">
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="apellidoTerrestre"
+            htmlFor={`${idPrefix}-apellidoTerrestre`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Apellido
           </label>
           <input
-            id="apellidoTerrestre"
+            id={`${idPrefix}-apellidoTerrestre`}
+            name="apellidoTerrestre"
             type="text"
             value={datosTerrestre.apellidoTerrestre}
-            onChange={(e) =>
-              setDatosTerrestre({
-                ...datosTerrestre,
-                apellidoTerrestre: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="nombreTerrestre"
+            htmlFor={`${idPrefix}-nombreTerrestre`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Nombre
           </label>
           <input
-            id="nombreTerrestre"
+            id={`${idPrefix}-nombreTerrestre`}
+            name="nombreTerrestre"
             type="text"
             value={datosTerrestre.nombreTerrestre}
-            onChange={(e) =>
-              setDatosTerrestre({
-                ...datosTerrestre,
-                nombreTerrestre: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="dniTerrestre"
+            htmlFor={`${idPrefix}-dniTerrestre`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             DNI
           </label>
           <input
-            id="dniTerrestre"
+            id={`${idPrefix}-dniTerrestre`}
+            name="dniTerrestre"
             type="text"
             value={datosTerrestre.dniTerrestre}
-            onChange={(e) =>
-              setDatosTerrestre({
-                ...datosTerrestre,
-                dniTerrestre: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="legajoTerrestre"
+            htmlFor={`${idPrefix}-legajoTerrestre`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Legajo
           </label>
           <input
-            id="legajoTerrestre"
+            id={`${idPrefix}-legajoTerrestre`}
+            name="legajoTerrestre"
             type="text"
             value={datosTerrestre.legajoTerrestre}
-            onChange={(e) =>
-              setDatosTerrestre({
-                ...datosTerrestre,
-                legajoTerrestre: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
         <div className="flex flex-col col-span-1">
           <p
-            htmlFor="funcion"
+            htmlFor={`${idPrefix}-funcion`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Funcion
@@ -110,15 +96,10 @@ const DatosTerrestre = () => {
             {["Sup", "Bod", "Cin", "Tra", "Otr"].map((option) => (
               <label key={option}>
                 <input
-                  id={option}
+                  id={`${idPrefix}-${option}`}
                   type="checkbox"
                   checked={datosTerrestre.funcion === option}
-                  onChange={(e) =>
-                    setDatosTerrestre({
-                      ...datosTerrestre,
-                      funcion: (e.target.value = option),
-                    })
-                  }
+                  onChange={() => handleCheckboxChange("funcion", option)}
                 />
                 {option}
               </label>
@@ -127,27 +108,35 @@ const DatosTerrestre = () => {
         </div>
         <div className="flex flex-col col-span-1">
           <label
-            htmlFor="grupo"
+            htmlFor={`${idPrefix}-grupo`}
             className="text-gray-600 mr-2 w-full text-center"
           >
             Grupo
           </label>
           <input
-            id="grupo"
+            id={`${idPrefix}-grupo`}
+            name="grupo"
             type="text"
             value={datosTerrestre.grupo}
-            onChange={(e) =>
-              setDatosTerrestre({
-                ...datosTerrestre,
-                grupo: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="border border-gray-400 px-3 py-1 w-full"
           />
         </div>
       </div>
     </div>
   );
+};
+DatosTerrestre.propTypes = {
+  idPrefix: PropTypes.string.isRequired,
+  datosTerrestre: PropTypes.shape({
+    apellidoTerrestre: PropTypes.string,
+    nombreTerrestre: PropTypes.string,
+    dniTerrestre: PropTypes.string,
+    legajoTerrestre: PropTypes.string,
+    funcion: PropTypes.string,
+    grupo: PropTypes.string,
+  }).isRequired,
+  setDatosTerrestre: PropTypes.func.isRequired,
 };
 
 export default DatosTerrestre;
