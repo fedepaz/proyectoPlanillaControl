@@ -90,17 +90,7 @@ const DatosTerrestre = ({ datosTerrestre, setDatosTerrestre }) => {
 };
 
 DatosTerrestre.propTypes = {
-  datosTerrestre: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      apellidoTerrestre: PropTypes.string,
-      nombreTerrestre: PropTypes.string,
-      dniTerrestre: PropTypes.string,
-      legajoTerrestre: PropTypes.string,
-      funcion: PropTypes.string,
-      grupo: PropTypes.string,
-    })
-  ).isRequired,
+  datosTerrestre: PropTypes.array.isRequired,
   setDatosTerrestre: PropTypes.func.isRequired,
 };
 

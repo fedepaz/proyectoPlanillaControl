@@ -2,11 +2,8 @@ import PropTypes from "prop-types";
 
 const NovEquipajes = ({ novEquipajes, setNovEquipajes }) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNovEquipajes((preNovEquipajes) => ({
-      ...preNovEquipajes,
-      [name]: value,
-    }));
+    const { value } = e.target;
+    setNovEquipajes(value);
   };
   return (
     <div className="my-4">

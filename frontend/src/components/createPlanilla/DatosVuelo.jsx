@@ -178,18 +178,7 @@ const DatosVuelo = ({ datosVuelo, setDatosVuelo }) => {
   );
 };
 DatosVuelo.propTypes = {
-  datosVuelo: PropTypes.shape({
-    aerolinea: PropTypes.string,
-    codVuelo: PropTypes.string,
-    origen: PropTypes.string,
-    destino: PropTypes.string,
-    horaArribo: PropTypes.string,
-    horaPartida: PropTypes.string,
-    demora: PropTypes.string,
-    tipo: PropTypes.string,
-    matriculaAeronave: PropTypes.string,
-    posicion: PropTypes.string,
-  }).isRequired,
+  datosVuelo: PropTypes.object.isRequired,
   setDatosVuelo: PropTypes.func.isRequired,
 };
 

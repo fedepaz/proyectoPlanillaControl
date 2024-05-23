@@ -56,16 +56,7 @@ const DatosSeguridad = ({ datosSeguridad, setDatosSeguridad }) => {
 };
 
 DatosSeguridad.propTypes = {
-  datosSeguridad: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      apellidoSeguridad: PropTypes.string,
-      nombreSeguridad: PropTypes.string,
-      dniSeguridad: PropTypes.string,
-      legajoSeguridad: PropTypes.string,
-      empresaSeguridad: PropTypes.string,
-    })
-  ).isRequired,
+  datosSeguridad: PropTypes.array.isRequired,
   setDatosSeguridad: PropTypes.func.isRequired,
 };
 

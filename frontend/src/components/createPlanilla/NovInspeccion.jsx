@@ -2,11 +2,8 @@ import PropTypes from "prop-types";
 
 const NovInspeccion = ({ novInspeccion, setNovInspeccion }) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNovInspeccion((preNovInspeccion) => ({
-      ...preNovInspeccion,
-      [name]: value,
-    }));
+    const { value } = e.target;
+    setNovInspeccion(value);
   };
 
   return (

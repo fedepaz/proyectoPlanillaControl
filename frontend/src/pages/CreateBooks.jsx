@@ -29,6 +29,42 @@ const CreatePlanilla = () => {
     tipoPro: "",
   });
 
+  const [errors, setErrors] = useState({
+    fecha: "",
+    responsable: "",
+    horaIni: "",
+    horaFin: "",
+    cant: "",
+  });
+
+  const validateInput = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "fecha":
+        if (!value) error = "Fecha de Control es obligatoria.";
+        break;
+      case "responsable":
+        if (!value) error = "Responsable PSA es obligatorio.";
+        break;
+      case "horaIni":
+        if (!value) error = "Hora Inicio es obligatoria.";
+        break;
+      case "horaFin":
+        if (!value) error = "Hora Fin es obligatoria.";
+        break;
+      case "cant":
+        if (!value) error = "Cantidad Personal es obligatoria.";
+        else if (isNaN(value)) error = "Cantidad Personal debe ser un número.";
+        break;
+      default:
+        break;
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
+    }));
+  };
+
   const [datosVuelo, setDatosVuelo] = useState({
     aerolinea: "",
     codVuelo: "",
@@ -158,12 +194,20 @@ const CreatePlanilla = () => {
       novInspeccion,
       novOtras,
     };
+    Object.keys(datosPsa).forEach((key) => validateInput(key, datosPsa[key]));
+
+    // If there are any errors, do not proceed
+    if (Object.values(errors).some((error) => error !== "")) {
+      enqueueSnackbar("Faltan datos", { variant: "error" });
+      return;
+    }
+
     setLoading(true);
     axios
       .post("http://localhost:5555/books", data)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("Planilla created succesfully", { variant: "success" });
+        enqueueSnackbar("Planilla creada", { variant: "success" });
         navigate("/");
       })
       .catch((error) => {
@@ -180,7 +224,12 @@ const CreatePlanilla = () => {
       {loading ? <Spinner /> : ""}
       <div className="border border-gray-300 rounded-xl p-4 mx-auto">
         {/* datosPsa section */}
-        <DatosPsa datosPsa={datosPsa} setDatosPsa={setDatosPsa} />
+        <DatosPsa
+          datosPsa={datosPsa}
+          setDatosPsa={setDatosPsa}
+          errors={errors}
+          validateInput={validateInput}
+        />
         {/* datosVuelo section */}
         <DatosVuelo datosVuelo={datosVuelo} setDatosVuelo={setDatosVuelo} />
         <DatosTerrestre

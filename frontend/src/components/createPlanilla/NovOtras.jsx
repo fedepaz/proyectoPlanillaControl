@@ -2,11 +2,8 @@ import PropTypes from "prop-types";
 
 const NovOtras = ({ novOtras, setNovOtras }) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNovOtras((preNovOtras) => ({
-      ...preNovOtras,
-      [name]: value,
-    }));
+    const { value } = e.target;
+    setNovOtras(value);
   };
   return (
     <div className="my-4">

@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 
-const DatosPsa = ({ datosPsa, setDatosPsa }) => {
+const DatosPsa = ({ datosPsa, setDatosPsa, errors, validateInput }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDatosPsa((prevDatosPsa) => ({
       ...prevDatosPsa,
       [name]: value,
     }));
+    validateInput(name, value);
   };
 
   const handleCheckboxChange = (name, option) => {
@@ -32,6 +33,11 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
               onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
+            {errors.fecha && (
+              <div className="text-red-500 text-xs flex-rowl items-center col-span-1">
+                {errors.fecha}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center col-span-1">
@@ -46,6 +52,9 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
               onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
+            {errors.responsable && (
+              <p className="text-red-500 text-xs">{errors.responsable}</p>
+            )}
           </div>
           <div className="flex items-center col-span-1">
             <label htmlFor="horaIni" className="text-gray-600 mr-2 w-full">
@@ -59,6 +68,9 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
               onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
+            {errors.horaIni && (
+              <p className="text-red-500 text-xs">{errors.horaIni}</p>
+            )}
           </div>
 
           <div className="flex items-center col-span-1">
@@ -73,6 +85,9 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
               onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
+            {errors.horaFin && (
+              <p className="text-red-500 text-xs">{errors.horaFin}</p>
+            )}
           </div>
 
           <div className="flex items-center col-span-1">
@@ -87,6 +102,9 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
               onChange={handleChange}
               className="border border-gray-400 px-3 py-1 w-full"
             />
+            {errors.cant && (
+              <p className="text-red-500 text-xs">{errors.cant}</p>
+            )}
           </div>
 
           <div className="flex items-center col-span-1">
@@ -155,17 +173,10 @@ const DatosPsa = ({ datosPsa, setDatosPsa }) => {
   );
 };
 DatosPsa.propTypes = {
-  datosPsa: PropTypes.shape({
-    fecha: PropTypes.string,
-    responsable: PropTypes.string,
-    horaIni: PropTypes.string,
-    horaFin: PropTypes.string,
-    cant: PropTypes.string,
-    tipoControl: PropTypes.string,
-    medioTec: PropTypes.string,
-    tipoPro: PropTypes.string,
-  }).isRequired,
+  datosPsa: PropTypes.object.isRequired,
   setDatosPsa: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  validateInput: PropTypes.func.isRequired,
 };
 
 export default DatosPsa;

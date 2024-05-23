@@ -76,16 +76,7 @@ const DatosVehiculos = ({ datosVehiculos, setDatosVehiculos }) => {
 };
 
 DatosVehiculos.propTypes = {
-  datosVehiculos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      tipoVehiculo: PropTypes.string,
-      empresaVehiculo: PropTypes.string,
-      numInterno: PropTypes.string,
-      operadorVehiculo: PropTypes.string,
-      observacionesVehiculo: PropTypes.string,
-    })
-  ).isRequired,
+  datosVehiculos: PropTypes.array.isRequired,
   setDatosVehiculos: PropTypes.func.isRequired,
 };
 
