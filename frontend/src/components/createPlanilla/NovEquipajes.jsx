@@ -13,6 +13,7 @@ const NovEquipajes = ({ novEquipajes, setNovEquipajes }) => {
       <h2 className="text-xl font-semibold mb-2">NOVEDADES EQUIPAJES</h2>
       <input
         id="novEquipajes"
+        name="novEquipajes"
         type="text"
         value={novEquipajes}
         onChange={handleChange}

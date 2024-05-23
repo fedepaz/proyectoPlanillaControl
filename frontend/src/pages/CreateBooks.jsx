@@ -44,7 +44,43 @@ const CreatePlanilla = () => {
 
   const [datosTerrestre, setDatosTerrestre] = useState([
     {
-      id: 0,
+      id: 1,
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+    {
+      id: 2,
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+    {
+      id: 3,
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+    {
+      id: 4,
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+    {
+      id: 5,
       apellidoTerrestre: "",
       nombreTerrestre: "",
       dniTerrestre: "",
@@ -56,7 +92,31 @@ const CreatePlanilla = () => {
 
   const [datosSeguridad, setDatosSeguridad] = useState([
     {
-      id: 0,
+      id: 1,
+      apellidoSeguridad: "",
+      nombreSeguridad: "",
+      dniSeguridad: "",
+      legajoSeguridad: "",
+      empresaSeguridad: "",
+    },
+    {
+      id: 2,
+      apellidoSeguridad: "",
+      nombreSeguridad: "",
+      dniSeguridad: "",
+      legajoSeguridad: "",
+      empresaSeguridad: "",
+    },
+    {
+      id: 3,
+      apellidoSeguridad: "",
+      nombreSeguridad: "",
+      dniSeguridad: "",
+      legajoSeguridad: "",
+      empresaSeguridad: "",
+    },
+    {
+      id: 4,
       apellidoSeguridad: "",
       nombreSeguridad: "",
       dniSeguridad: "",
@@ -67,7 +127,15 @@ const CreatePlanilla = () => {
 
   const [datosVehiculos, setDatosVehiculos] = useState([
     {
-      id: 0,
+      id: 1,
+      tipoVehiculo: "",
+      empresaVehiculo: "",
+      numInterno: "",
+      operadorVehiculo: "",
+      observacionesVehiculo: "",
+    },
+    {
+      id: 2,
       tipoVehiculo: "",
       empresaVehiculo: "",
       numInterno: "",
@@ -75,60 +143,9 @@ const CreatePlanilla = () => {
       observacionesVehiculo: "",
     },
   ]);
-  const [novEquipajes, setNovEquipajes] = useState({});
-  const [novInspeccion, setNovInspeccion] = useState({});
-  const [novOtras, setNovOtras] = useState({});
-  const [datosTerrestreCount, setDatosTerrestreCount] = useState(0);
-  const [datosSeguridadCount, setDatosSeguridadCount] = useState(0);
-  const [datosVehiculosCount, setDatosVehiculosCount] = useState(0);
-
-  const addNewDatosTerrestre = () => {
-    const newCount = datosTerrestreCount + 1;
-    setDatosTerrestreCount(newCount);
-    setDatosTerrestre((prevDatosTerrestre) => [
-      ...prevDatosTerrestre,
-      {
-        id: newCount,
-        apellidoTerrestre: "",
-        nombreTerrestre: "",
-        dniTerrestre: "",
-        legajoTerrestre: "",
-        funcion: "",
-        grupo: "",
-      },
-    ]);
-  };
-
-  const addNewDatosSeguridad = () => {
-    const newCount = datosSeguridadCount + 1;
-    setDatosSeguridadCount(newCount);
-    setDatosSeguridad((prevDatosSeguridad) => [
-      ...prevDatosSeguridad,
-      {
-        id: newCount,
-        apellidoSeguridad: "",
-        nombreSeguridad: "",
-        dniSeguridad: "",
-        legajoSeguridad: "",
-        empresaSeguridad: "",
-      },
-    ]);
-  };
-  const addNewDatosVehiculo = () => {
-    const newCount = datosVehiculosCount + 1;
-    setDatosVehiculosCount(newCount);
-    setDatosVehiculos((prevDatosVehiculo) => [
-      ...prevDatosVehiculo,
-      {
-        id: newCount,
-        tipoVehiculo: "",
-        empresaVehiculo: "",
-        numInterno: "",
-        operadorVehiculo: "",
-        observacionesVehiculo: "",
-      },
-    ]);
-  };
+  const [novEquipajes, setNovEquipajes] = useState("");
+  const [novInspeccion, setNovInspeccion] = useState("");
+  const [novOtras, setNovOtras] = useState("");
 
   const handleSavePlanilla = () => {
     const data = {
@@ -166,72 +183,18 @@ const CreatePlanilla = () => {
         <DatosPsa datosPsa={datosPsa} setDatosPsa={setDatosPsa} />
         {/* datosVuelo section */}
         <DatosVuelo datosVuelo={datosVuelo} setDatosVuelo={setDatosVuelo} />
-        {datosTerrestre.map((terrestre) => (
-          <DatosTerrestre
-            key={terrestre.id}
-            idPrefix={`${terrestre.id}`}
-            datosTerrestre={terrestre}
-            setDatosTerrestre={(updatedTerrestre) => {
-              setDatosTerrestre((prevDatosTerrestre) =>
-                prevDatosTerrestre.map((item) =>
-                  item.id === terrestre.id ? updatedTerrestre : item
-                )
-              );
-            }}
-          />
-        ))}
-        <div className="border-b border-gray-300 pb-4 mb-4">
-          <button
-            className="bg-blue-500 text-white px-3 py-1 rounded"
-            onClick={addNewDatosTerrestre}
-          >
-            Otro Terrestre
-          </button>
-        </div>
-        {datosSeguridad.map((seguridad) => (
-          <DatosSeguridad
-            key={seguridad.id}
-            idPrefix={`${seguridad.id}`}
-            datosSeguridad={seguridad}
-            setDatosSeguridad={(updatedSeguridad) => {
-              setDatosSeguridad((prevDatosSeguridad) =>
-                prevDatosSeguridad.map((item) =>
-                  item.id === seguridad.id ? updatedSeguridad : item
-                )
-              );
-            }}
-          />
-        ))}
-        <div className="border-b border-gray-300 pb-4 mb-4">
-          <button
-            className="bg-blue-500 text-white px-3 py-1 rounded"
-            onClick={addNewDatosSeguridad}
-          >
-            Otro Seguridad
-          </button>
-        </div>
-        {datosVehiculos.map((vehiculo) => (
-          <DatosVehiculos
-            key={vehiculo.id}
-            idPrefix={`${vehiculo.id}`}
-            datosVehiculos={vehiculo}
-            setDatosVehiculos={(updatedVehiculo) => {
-              setDatosSeguridad((prevDatosVehiculo) =>
-                prevDatosVehiculo.map((item) =>
-                  item.id === vehiculo.id ? updatedVehiculo : item
-                )
-              );
-            }}
-          />
-        ))}
-        <div className="border-b border-gray-300 pb-4 mb-4">
-          <button
-            className="bg-blue-500 text-white px-3 py-1 rounded"
-            onClick={addNewDatosVehiculo}
-          >
-            Otro Vehículo
-          </button>
-        </div>
+        <DatosTerrestre
+          datosTerrestre={datosTerrestre}
+          setDatosTerrestre={setDatosTerrestre}
+        />
+        <DatosSeguridad
+          datosSeguridad={datosSeguridad}
+          setDatosSeguridad={setDatosSeguridad}
+        />
+        <DatosVehiculos
+          datosVehiculos={datosVehiculos}
+          setDatosVehiculos={setDatosVehiculos}
+        />
         <NovEquipajes
           novEquipajes={novEquipajes}
           setNovEquipajes={setNovEquipajes}
