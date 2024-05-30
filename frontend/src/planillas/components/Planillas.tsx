@@ -1,16 +1,13 @@
-import { useForm } from "react-hook-form";
 import { Stack, TextField } from "@mui/material";
-import { Schema, schema } from "../types/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useFormContext } from "react-hook-form";
+import { Schema } from "../types/schema";
+import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 
 export function Planillas() {
   const {
     register,
     formState: { errors },
-  } = useForm<Schema>({
-    mode: "all",
-    resolver: zodResolver(schema),
-  });
+  } = useFormContext<Schema>();
 
   return (
     <Stack sx={{ gap: 2 }}>
@@ -25,6 +22,14 @@ export function Planillas() {
         label="Email"
         error={!!errors.email}
         helperText={errors.email?.message}
+      />
+      <RHFAutocomplete<Schema>
+        name="states"
+        options={[
+          { id: "1", label: "Mendoza" },
+          { id: "2", label: "Buenos Aires" },
+        ]}
+        label="States"
       />
     </Stack>
   );

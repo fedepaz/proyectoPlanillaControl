@@ -1,5 +1,5 @@
-import { Planillas } from "./planillas/components/Planillas";
+import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
 
 export function App() {
-  return <Planillas />;
+  return <PlanillasProvider />;
 }
