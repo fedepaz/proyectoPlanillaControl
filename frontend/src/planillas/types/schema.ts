@@ -7,7 +7,7 @@ export const schema = z.object({
     .string()
     .min(1, { message: "Email requerido" })
     .refine((text) => patterns.email.test(text), { message: "Email inválido" }),
-  states: z.array(z.string()).min(1).max(2),
+  tipoControl: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -15,5 +15,5 @@ export type Schema = z.infer<typeof schema>;
 export const defaultValues: Schema = {
   email: "",
   name: "",
-  states: [],
+  tipoControl: [],
 };

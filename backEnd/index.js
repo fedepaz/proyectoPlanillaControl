@@ -2,6 +2,7 @@ import express, { request, response } from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
+import dataRoute from "./routes/dataRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -19,7 +20,9 @@ app.get("/", (request, response) => {
   return response.status(234).send("Bienvenidos a MERN stack");
 });
 
-app.use("/books", planillasRoute);
+app.use("/data", dataRoute);
+
+app.use("/planillas", planillasRoute);
 
 mongoose
   .connect(mongoDBURL)

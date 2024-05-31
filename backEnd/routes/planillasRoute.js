@@ -1,7 +1,26 @@
 import express from "express";
 import { Planilla } from "../models/planillaModel.js";
+import {
+  TipoControl,
+  MediosTec,
+  TipoPro,
+  Demora,
+  TipoVuelo,
+  Funcion,
+} from "../models/opcionesModel.js";
 
 const router = express.Router();
+
+const fetchOptions = async (model) => {
+  const options = await model.find().select("value -_id");
+  return options.map((option) => option.value);
+};
+
+const validateOptions = (field, value, validOptions) => {
+  if (!validOptions.includes(value)) {
+    throw new Error(`Invalid value for ${field}`);
+  }
+};
 
 router.post("/", async (req, res) => {
   try {
@@ -32,6 +51,27 @@ router.post("/", async (req, res) => {
         message: "Please provide all required fields for Planilla creation.",
       });
     }
+
+    // Fetch valid options from the database
+    const validTipoControl = await fetchOptions(TipoControl);
+    const validMediosTec = await fetchOptions(MediosTec);
+    const validTipoPro = await fetchOptions(TipoPro);
+    const validDemora = await fetchOptions(Demora);
+    const validTipoVuelo = await fetchOptions(TipoVuelo);
+    const validFuncion = await fetchOptions(Funcion);
+
+    // Validate fields
+    validateOptions("tipoControl", datosPsa.tipoControl, validTipoControl);
+    validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
+    validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
+    validateOptions("demora", datosVuelo.demora, validDemora);
+    validateOptions("tipo", datosVuelo.tipo, validTipoVuelo);
+
+    datosTerrestre.forEach((item) =>
+      validateOptions("funcion", item.funcion, validFuncion)
+    );
+
+    // Create and save the Planilla
     const newPlanilla = await Planilla.create({
       datosPsa,
       datosVuelo,
@@ -50,31 +90,31 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (request, response) => {
+router.get("/", async (req, res) => {
   try {
     const planillas = await Planilla.find({});
-    return response.status(200).json({
+    return res.status(200).json({
       count: planillas.length,
       data: planillas,
     });
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", async (req, res) => {
   try {
-    const { id } = request.params;
+    const { id } = req.params;
     const planilla = await Planilla.findById(id);
-    return response.status(200).json(planilla);
+    return res.status(200).json(planilla);
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
-router.put("/:id", async (request, response) => {
+router.put("/:id", async (req, res) => {
   try {
     // Destructure required fields from request body
     const {
@@ -86,7 +126,7 @@ router.put("/:id", async (request, response) => {
       novEquipajes,
       novInspeccion,
       novOtras,
-    } = request.body;
+    } = req.body;
 
     // Check if all required fields are present in the request body
     if (
@@ -99,39 +139,61 @@ router.put("/:id", async (request, response) => {
       !novInspeccion ||
       !novOtras
     ) {
-      return response.status(400).json({
-        message: "Please provide all required fields for Planilla creation.",
+      return res.status(400).json({
+        message: "Please provide all required fields for Planilla update.",
       });
     }
-    const { id } = request.params;
-    const result = await Planilla.findByIdAndUpdate(id, request.body);
+
+    // Fetch valid options from the database
+    const validTipoControl = await fetchOptions(TipoControl);
+    const validMediosTec = await fetchOptions(MediosTec);
+    const validTipoPro = await fetchOptions(TipoPro);
+    const validDemora = await fetchOptions(Demora);
+    const validTipoVuelo = await fetchOptions(TipoVuelo);
+    const validFuncion = await fetchOptions(Funcion);
+
+    // Validate fields
+    validateOptions("tipoControl", datosPsa.tipoControl, validTipoControl);
+    validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
+    validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
+    validateOptions("demora", datosVuelo.demora, validDemora);
+    validateOptions("tipo", datosVuelo.tipo, validTipoVuelo);
+
+    datosTerrestre.forEach((item) =>
+      validateOptions("funcion", item.funcion, validFuncion)
+    );
+
+    const { id } = req.params;
+    const result = await Planilla.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!result) {
-      return response.status(404).send({
+      return res.status(404).send({
         message: "Planilla not found",
       });
     }
-    return response
+    return res
       .status(200)
-      .send({ message: "Planilla updated successfully" });
+      .send({ message: "Planilla updated successfully", data: result });
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const { id } = request.params;
+    const { id } = req.params;
     const result = await Planilla.findByIdAndDelete(id);
     if (!result) {
-      return response.status(404).send({
+      return res.status(404).send({
         message: "Planilla not found",
       });
     }
-    return response.status(200).send({ message: "Planilla Deleted" });
+    return res.status(200).send({ message: "Planilla Deleted" });
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 

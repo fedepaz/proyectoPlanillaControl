@@ -6,13 +6,13 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
-  options: Option[];
+  options?: Option[];
   label: string;
 };
 
 export function RHFAutocomplete<T extends FieldValues>({
   name,
-  options,
+  options = [],
   label,
 }: Props<T>) {
   const { control } = useFormContext();
@@ -22,16 +22,18 @@ export function RHFAutocomplete<T extends FieldValues>({
       name={name}
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <Autocomplete
-          options={options}
-          value={value.map((id: string) =>
-            options.find((item) => item.id === id)
+          options={options || []}
+          value={value.map((_id: string) =>
+            options?.find((item) => item._id === _id)
           )}
           getOptionLabel={(option) =>
-            options?.find((item) => item.id === option.id)?.label ?? ""
+            options?.find((item) => item._id === option._id)?.label ?? ""
           }
-          isOptionEqualToValue={(option, newValue) => option.id === newValue.id}
+          isOptionEqualToValue={(option, newValue) =>
+            option._id === newValue._id
+          }
           onChange={(_, newValue) => {
-            onChange(newValue.map((item) => item.id));
+            onChange(newValue.map((item) => item._id));
           }}
           disableCloseOnSelect
           multiple

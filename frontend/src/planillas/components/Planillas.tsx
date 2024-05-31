@@ -2,8 +2,11 @@ import { Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { Schema } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
+import { useTipoControl } from "../services/queries";
 
 export function Planillas() {
+  const tipoControlQuery = useTipoControl();
+
   const {
     register,
     formState: { errors },
@@ -24,12 +27,9 @@ export function Planillas() {
         helperText={errors.email?.message}
       />
       <RHFAutocomplete<Schema>
-        name="states"
-        options={[
-          { id: "1", label: "Mendoza" },
-          { id: "2", label: "Buenos Aires" },
-        ]}
-        label="States"
+        name="tipoControl"
+        options={tipoControlQuery.data}
+        label="Tipo de Controles"
       />
     </Stack>
   );
