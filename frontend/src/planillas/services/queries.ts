@@ -14,3 +14,16 @@ export function useTipoControl() {
     },
   });
 }
+
+export function useFuncion() {
+  return useQuery({
+    queryKey: ["funcion"],
+    queryFn: async () => {
+      const response = await axios.get<{ funcion: Option[] }>(
+        "http://localhost:5555/data/funcion"
+      );
+      const { funcion } = response.data;
+      return funcion;
+    },
+  });
+}
