@@ -12,6 +12,7 @@ import {
 } from "../services/queries";
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
+import { RHFCheckBox } from "../../components/RHFCheckBox";
 
 export function Planillas() {
   const tipoControlQuery = useTipoControl();
@@ -54,6 +55,11 @@ export function Planillas() {
         options={demoraQuery.data}
         label="Demora"
       ></RHFRadioGroup>
+      <RHFCheckBox<Schema>
+        name="mediosTec"
+        options={medioTecQuery.data}
+        label="Medios Técnicos"
+      ></RHFCheckBox>
     </Stack>
   );
 }
