@@ -2,11 +2,23 @@ import { Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { Schema } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
-import { useFuncion, useTipoControl } from "../services/queries";
+import {
+  useDemora,
+  useFuncion,
+  useMediosTec,
+  useTipoControl,
+  useTipoPro,
+  useTipoVuelo,
+} from "../services/queries";
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
+import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 
 export function Planillas() {
   const tipoControlQuery = useTipoControl();
+  const medioTecQuery = useMediosTec();
+  const tipoProQuery = useTipoPro();
+  const demoraQuery = useDemora();
+  const tipoVueloQuery = useTipoVuelo();
   const funcionQuery = useFuncion();
 
   const {
@@ -37,6 +49,11 @@ export function Planillas() {
         name="funcion"
         options={funcionQuery.data}
       ></RHFToggleButtonGroup>
+      <RHFRadioGroup<Schema>
+        name="demora"
+        options={demoraQuery.data}
+        label="Demora"
+      ></RHFRadioGroup>
     </Stack>
   );
 }

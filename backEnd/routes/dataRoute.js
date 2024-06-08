@@ -57,6 +57,7 @@ router.get("/tipoPro", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
 router.get("/demora", async (req, res) => {
   try {
     const demora = await fetchOptions(Demora);
@@ -69,6 +70,7 @@ router.get("/demora", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
 router.get("/tipoVuelo", async (req, res) => {
   try {
     const tipoVuelo = await fetchOptions(TipoVuelo);
