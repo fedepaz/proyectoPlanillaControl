@@ -1,4 +1,4 @@
-import { Stack, TextField } from "@mui/material";
+import { Divider, Stack, TextField, Typography } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { Schema } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
@@ -13,14 +13,17 @@ import {
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 import { RHFCheckBox } from "../../components/RHFCheckBox";
+import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
+import { RHFDateRangePicker } from "../../components/RHFDateRangePicker";
+import { RHFSlider } from "../../components/RHFSlider";
 
 export function Planillas() {
   const tipoControlQuery = useTipoControl();
+  const funcionQuery = useFuncion();
+  const demoraQuery = useDemora();
   const medioTecQuery = useMediosTec();
   const tipoProQuery = useTipoPro();
-  const demoraQuery = useDemora();
   const tipoVueloQuery = useTipoVuelo();
-  const funcionQuery = useFuncion();
 
   const {
     register,
@@ -28,7 +31,11 @@ export function Planillas() {
   } = useFormContext<Schema>();
 
   return (
-    <Stack sx={{ gap: 2 }}>
+    <Stack
+      justifyContent="flex-start"
+      sx={{ gap: 2 }}
+      divider={<Divider orientation="horizontal" flexItem />}
+    >
       <TextField
         {...register("name")}
         label="Nombre"
@@ -60,6 +67,12 @@ export function Planillas() {
         options={medioTecQuery.data}
         label="Medios Técnicos"
       ></RHFCheckBox>
+      <RHFDateTimePicker<Schema>
+        name="registrationDateAndTime"
+        label="Comienzo Vuelo"
+      />
+      <RHFDateRangePicker<Schema> name="formerEmploymentPeriod" />
+      <RHFSlider<Schema> name="salartRange" label="Rango Salarial" />
     </Stack>
   );
 }

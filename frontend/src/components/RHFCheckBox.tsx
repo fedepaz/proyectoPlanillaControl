@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormHelperText,
   FormLabel,
 } from "@mui/material";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
@@ -32,6 +33,7 @@ export function RHFCheckBox<T extends FieldValues>({
               <FormControlLabel
                 control={
                   <Checkbox
+                    id={option._id}
                     checked={value.includes(option._id)}
                     onChange={() => {
                       if (value.includes(option._id)) {
@@ -47,10 +49,12 @@ export function RHFCheckBox<T extends FieldValues>({
                     key={option._id}
                   />
                 }
+                key={option._id}
                 label={option.label}
               />
             ))}
           </FormGroup>
+          <FormHelperText>{error?.message}</FormHelperText>
         </FormControl>
       )}
     ></Controller>

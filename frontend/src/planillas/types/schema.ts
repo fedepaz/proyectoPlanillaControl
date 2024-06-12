@@ -8,11 +8,21 @@ export const schema = z.object({
     .min(1, { message: "Email requerido" })
     .refine((text) => patterns.email.test(text), { message: "Email inválido" }),
   tipoControl: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
-  mediosTec: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
-  tipoPro: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
+  funcion: z
+    .array(z.string())
+    .min(1, { message: "Requerido" })
+    .max(2, { message: "Máximo dos opciones..." }),
   demora: z.string().min(1, { message: "Requerido" }),
+  mediosTec: z
+    .array(z.string())
+    .min(1, { message: "Requerido" })
+    .max(2, { message: "Máximo dos opciones..." }),
+
+  tipoPro: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
   tipoVuelo: z.string().min(1, { message: "Requerido" }),
-  funcion: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
+  registrationDateAndTime: z.date(),
+  formerEmploymentPeriod: z.array(z.date()).max(2).min(2),
+  salartRange: z.array(z.number()).min(2).max(2),
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -26,4 +36,7 @@ export const defaultValues: Schema = {
   demora: "",
   tipoVuelo: "",
   funcion: [],
+  registrationDateAndTime: new Date(),
+  formerEmploymentPeriod: [new Date(), new Date()],
+  salartRange: [0.9999999],
 };
