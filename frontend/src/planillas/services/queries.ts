@@ -79,3 +79,13 @@ export function useFuncion() {
     },
   });
 }
+
+export function useOficial() {
+  return useQuery({
+    queryKey: ["oficial"],
+    queryFn: (): Promise<Option[]> =>
+      axios
+        .get<{}>("http://localhost:5555/personal/oficial")
+        .then((response) => response.data.map()),
+  });
+}
