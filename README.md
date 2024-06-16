@@ -8,6 +8,10 @@ El código base de este proyecto sigue el tutorial de freeCodeCamp sobre el stac
 
 En Junio 2024, comenzé con otro tutorial también de freeCodeCamp React Hook Form Tutorial, que me pareció más adecuado para el manejo de errores, y la solicitud de información en los distintos parámetros. Puedes encontrar el tutorial original [aquí](https://www.youtube.com/watch?v=JyeWoqWsQFo&t=5242s).
 
+# Proyecto Junio 2024 - Segunda Parte
+
+Comenzando a refactorizar e implementar la lógica en base de datos...
+
 ## Objetivos
 
 ### Etapa Inicial

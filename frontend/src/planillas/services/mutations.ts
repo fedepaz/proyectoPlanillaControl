@@ -6,7 +6,7 @@ export function useCreateOficial() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Schema) => {
-      await axios.post("http://localhost:5555/data/");
+      await axios.post("http://localhost:5555/data/"), data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [""] });

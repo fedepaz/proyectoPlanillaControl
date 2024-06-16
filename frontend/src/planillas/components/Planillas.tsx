@@ -87,6 +87,12 @@ export function Planillas() {
     }
   }, [isTeacher, replace, unregister]);
 
+  useEffect(() => {
+    if (ofiQuery.data) {
+      reset(ofiQuery.data);
+    }
+  }, [reset, ofiQuery.data]);
+
   const handleReset = () => {
     reset(defaultValues);
   };
@@ -94,7 +100,10 @@ export function Planillas() {
   return (
     <Container maxWidth="sm" component="form">
       <Stack sx={{ flexDirection: "row", gap: 2 }}>
-        <List subheader={<ListSubheader>Oficiales</ListSubheader>}>
+        <List
+          subheader={<ListSubheader>Oficiales</ListSubheader>}
+          sx={{ padding: 2 }}
+        >
           {oficialQuery.data?.map((oficial) => (
             <ListItem key={oficial._id} disablePadding>
               <ListItemButton

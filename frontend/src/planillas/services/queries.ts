@@ -135,5 +135,6 @@ export function useOfi(_id: string) {
         throw new Error(`Failed to fetch oficial data: ${error}`);
       }
     },
+    enabled: !!_id,
   });
 }
