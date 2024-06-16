@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Option } from "../../types/option";
+import { Option, OficialOption } from "../../types/option";
 import { ApiGetOficial } from "../types/apiTypes";
-import { Schema, SchemaOficial } from "../types/schema";
+import { SchemaOficial } from "../types/schema";
 
 export function useTipoControl() {
   return useQuery({
@@ -81,22 +81,33 @@ export function useFuncion() {
     },
   });
 }
+interface ApiResponse {
+  oficial: ApiGetOficial[];
+}
 
 export function useOficial() {
-  return useQuery({
+  return useQuery<OficialOption[], Error>({
     queryKey: ["oficial"],
-    queryFn: (): Promise<Option[]> =>
-      axios
-        .get<ApiGetOficial[]>("http://localhost:5555/personal/oficial")
-        .then((response) =>
-          response.data.map(
-            (oficial) =>
-              ({
-                _id: oficial._id,
-                label: oficial.firstName,
-              } satisfies Option)
-          )
-        ),
+    queryFn: async (): Promise<OficialOption[]> => {
+      try {
+        const response = await axios.get<ApiResponse>(
+          "http://localhost:5555/personal/oficial"
+        );
+        return response.data.oficial.map(
+          (oficial) =>
+            ({
+              _id: oficial._id,
+              dni: oficial.dni,
+              firstname: oficial.firstname,
+              lastname: oficial.lastname,
+              legajo: oficial.legajo,
+            } satisfies OficialOption)
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw new Error("Failed to fetch data");
+      }
+    },
   });
 }
 
@@ -104,17 +115,25 @@ export function useOfi(_id: string) {
   return useQuery({
     queryKey: ["oficial", { _id }],
     queryFn: async (): Promise<SchemaOficial> => {
-      const { data } = await axios.get<ApiGetOficial>(
-        `http://localhost:5555/personal/oficial/${_id}`
-      );
-      return {
-        variant: "edit",
-        _id: data._id,
-        dni: data.dni,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        legajo: data.legajo,
-      };
+      if (!_id) {
+        throw new Error("Invalid ID: _id is undefined");
+      }
+
+      try {
+        const { data } = await axios.get<ApiGetOficial>(
+          `http://localhost:5555/personal/oficial/${_id}`
+        );
+        return {
+          variant: "edit",
+          _id: data._id,
+          dni: data.dni,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          legajo: data.legajo,
+        };
+      } catch (error) {
+        throw new Error(`Failed to fetch oficial data: ${error}`);
+      }
     },
   });
 }

@@ -64,8 +64,8 @@ export const defaultValues: Schema = {
 export const schemaOficial = z.intersection(
   z.object({
     dni: z.number().max(8).min(8),
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
+    firstname: z.string().min(1),
+    lastname: z.string().min(1),
     legajo: z.number().min(6).max(6),
   }),
   z.discriminatedUnion("variant", [
@@ -79,7 +79,7 @@ export type SchemaOficial = z.infer<typeof schemaOficial>;
 export const defaultValuesOfi: SchemaOficial = {
   variant: "create",
   dni: 11111111,
-  firstName: "",
-  lastName: "",
+  firstname: "",
+  lastname: "",
   legajo: 111111,
 };

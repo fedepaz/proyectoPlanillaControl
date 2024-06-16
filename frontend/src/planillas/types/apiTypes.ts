@@ -9,22 +9,22 @@ type Edit = {
 
 export type OficialCommon = {
   dni: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   legajo: number;
 };
 
 export type PersonalEmpresaCommon = {
   dni: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   empresa: string;
   legajo: number;
 };
 export type PersonalSeguridadCommon = {
   dni: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   empresa: string;
   legajo: number;
 };

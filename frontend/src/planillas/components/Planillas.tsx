@@ -1,5 +1,8 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   Container,
   Divider,
   List,
@@ -8,9 +11,21 @@ import {
   ListItemText,
   ListSubheader,
   Stack,
+  Typography,
 } from "@mui/material";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { Schema, defaultValues } from "../types/schema";
+import {
+  useFieldArray,
+  useForm,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
+import {
+  Schema,
+  SchemaOficial,
+  defaultValues,
+  defaultValuesOfi,
+  schemaOficial,
+} from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
   useDemora,
@@ -43,9 +58,9 @@ export function Planillas() {
   const { unregister, watch, control, reset, setValue } =
     useFormContext<Schema>();
 
-  const id = useWatch({ control, name: "_id" });
+  const _id = useWatch({ control, name: "_id" });
 
-  const ofiQuery = useOfi(id);
+  const ofiQuery = useOfi(_id);
 
   useEffect(() => {
     const sub = watch((value) => {
@@ -84,12 +99,35 @@ export function Planillas() {
             <ListItem key={oficial._id} disablePadding>
               <ListItemButton
                 onClick={() => handleOfiClick(oficial._id)}
-                selected={id === oficial._id}
+                selected={_id === oficial._id}
               >
-                <ListItemText primary={oficial.label} />
+                <ListItemText
+                  primary={oficial.firstname + " " + oficial.lastname}
+                />
               </ListItemButton>
             </ListItem>
           ))}
+          {_id ? (
+            <Box>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {ofiQuery.data?.lastname}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {ofiQuery.data?.firstname}
+                  </Typography>
+                  <Typography variant="body2">
+                    {ofiQuery.data?.legajo}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
+          ) : null}
         </List>
         <Stack
           justifyContent="flex-start"
