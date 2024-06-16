@@ -18,6 +18,12 @@ const fetchOptions = async (model) => {
   }
 };
 
+const validateOptions = (field, value, validOptions) => {
+  if (!validOptions.includes(value)) {
+    throw new Error(`Invalid value for ${field}`);
+  }
+};
+
 router.get("/oficial", async (req, res) => {
   try {
     const oficial = await fetchOptions(Oficial);
@@ -30,6 +36,18 @@ router.get("/oficial", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
+router.get("/oficial/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const oficial = await Oficial.findById(id);
+    return res.status(200).json(oficial);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 router.get("/personalEmpresa", async (req, res) => {
   try {
     const personalEmpresa = await fetchOptions(PersonalEmpresa);

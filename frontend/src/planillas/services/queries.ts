@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Option } from "../../types/option";
+import { ApiGetOficial } from "../types/apiTypes";
+import { Schema, SchemaOficial } from "../types/schema";
 
 export function useTipoControl() {
   return useQuery({
@@ -85,7 +87,34 @@ export function useOficial() {
     queryKey: ["oficial"],
     queryFn: (): Promise<Option[]> =>
       axios
-        .get<{}>("http://localhost:5555/personal/oficial")
-        .then((response) => response.data.map()),
+        .get<ApiGetOficial[]>("http://localhost:5555/personal/oficial")
+        .then((response) =>
+          response.data.map(
+            (oficial) =>
+              ({
+                _id: oficial._id,
+                label: oficial.firstName,
+              } satisfies Option)
+          )
+        ),
+  });
+}
+
+export function useOfi(_id: string) {
+  return useQuery({
+    queryKey: ["oficial", { _id }],
+    queryFn: async (): Promise<SchemaOficial> => {
+      const { data } = await axios.get<ApiGetOficial>(
+        `http://localhost:5555/personal/oficial/${_id}`
+      );
+      return {
+        variant: "edit",
+        _id: data._id,
+        dni: data.dni,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        legajo: data.legajo,
+      };
+    },
   });
 }

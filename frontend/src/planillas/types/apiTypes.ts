@@ -8,27 +8,24 @@ type Edit = {
 };
 
 export type OficialCommon = {
-  _id: string;
+  dni: number;
   firstName: string;
   lastName: string;
   legajo: number;
-  dni: number;
 };
 
 export type PersonalEmpresaCommon = {
-  _id: string;
+  dni: number;
   firstName: string;
   lastName: string;
   empresa: string;
-  dni: number;
   legajo: number;
 };
 export type PersonalSeguridadCommon = {
-  _id: string;
+  dni: number;
   firstName: string;
   lastName: string;
   empresa: string;
-  dni: number;
   legajo: number;
 };
 

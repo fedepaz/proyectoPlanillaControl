@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
 const oficialSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  firstName: { type: String, required: true },
   dni: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true },
+  firstName: { type: String, required: true },
   legajo: { type: Number, required: true, unique: true },
 });
 
 export const Oficial = mongoose.model("Oficial", oficialSchema);
 
 const personalEmpresaSchema = new mongoose.Schema({
+  dni: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   firstName: { type: String, required: true },
   empresa: { type: String, required: true },
-  dni: { type: String, required: true, unique: true },
   legajo: { type: String, required: true, unique: true },
 });
 
@@ -23,10 +23,10 @@ export const PersonalEmpresa = mongoose.model(
 );
 
 const personalSeguridadSchema = new mongoose.Schema({
+  dni: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   firstName: { type: String, required: true },
   empresa: { type: String, required: true },
-  dni: { type: String, required: true, unique: true },
   legajo: { type: String, required: true, unique: true },
 });
 

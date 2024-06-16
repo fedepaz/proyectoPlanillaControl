@@ -60,3 +60,26 @@ export const defaultValues: Schema = {
   formerEmploymentPeriod: [new Date(), new Date()],
   salartRange: [0.9999999],
 };
+
+export const schemaOficial = z.intersection(
+  z.object({
+    dni: z.number().max(8).min(8),
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    legajo: z.number().min(6).max(6),
+  }),
+  z.discriminatedUnion("variant", [
+    z.object({ variant: z.literal("create") }),
+    z.object({ variant: z.literal("edit"), _id: z.string().min(1) }),
+  ])
+);
+
+export type SchemaOficial = z.infer<typeof schemaOficial>;
+
+export const defaultValuesOfi: SchemaOficial = {
+  variant: "create",
+  dni: 11111111,
+  firstName: "",
+  lastName: "",
+  legajo: 111111,
+};
