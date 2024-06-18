@@ -11,7 +11,10 @@ export const schema = z
         .refine((text) => patterns.email.test(text), {
           message: "Email inválido",
         }),
-      tipoControl: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
+      tipoControl: z
+        .array(z.string())
+        .min(1, { message: "Requerido" })
+        .max(2, { message: "Máximo 2 penca!" }),
       funcion: z
         .array(z.string())
         .min(1, { message: "Requerido" })

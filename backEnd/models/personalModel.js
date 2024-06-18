@@ -39,3 +39,37 @@ const empresaSchema = new mongoose.Schema({
 });
 
 export const Empresa = mongoose.model("Empresa", empresaSchema);
+
+const matriculaAeronaveSchema = new mongoose.Schema({
+  matriculaAeronave: { type: String, required: true, unique: true },
+  empresa: { type: String, required: true },
+});
+
+export const MatriculaAeronave = mongoose.model(
+  "MatriculaAeronave",
+  matriculaAeronaveSchema
+);
+
+const aeropuertosSchema = new mongoose.Schema({
+  aeropuerto: { type: String, required: true, unique: true },
+  codIATA: { type: String, required: true },
+  codOACI: { type: String, required: true },
+});
+
+export const Aeropuertos = mongoose.model("Aeropuertos", aeropuertosSchema);
+
+const vehiculoSchema = new mongoose.Schema({
+  numInterno: { type: String, required: true, unique: true },
+  empresa: { type: String, required: true },
+  tipoVehiculo: { type: String, required: true },
+});
+
+export const Vehiculos = mongoose.model("Vehiculos", vehiculoSchema);
+
+const codVueloSchema = new mongoose.Schema({
+  codVuelo: { type: String, required: true, unique: true },
+  aeropuerto: { type: String, required: true },
+  tipoVuelo: { type: String, required: true },
+});
+
+export const CodVuelo = mongoose.model("CodVuelo", codVueloSchema);

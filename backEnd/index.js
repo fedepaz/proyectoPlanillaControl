@@ -3,7 +3,7 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
-import personalRoute from "./routes/personalRoute.js";
+import personalRoute from "./routes/personal/personalEmpresaRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors());
 );
 */
 app.get("/", (request, response) => {
-  return response.status(234).send("Bienvenidos a MERN stack");
+  return response.status(234).send("<h1>PLanillas</h1>");
 });
 
 app.use("/data", dataRoute);

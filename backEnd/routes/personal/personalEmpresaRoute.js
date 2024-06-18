@@ -4,7 +4,11 @@ import {
   PersonalEmpresa,
   PersonalSeguridadEmpresa,
   Empresa,
-} from "../models/personalModel.js";
+  MatriculaAeronave,
+  Aeropuertos,
+  Vehiculos,
+  CodVuelo,
+} from "../../models/personalModel.js";
 
 const router = express.Router();
 

@@ -20,7 +20,7 @@ const planillaSchema = mongoose.Schema(
       horaArribo: { type: String, required: true },
       horaPartida: { type: String, required: true },
       demora: { type: String, required: true },
-      tipo: { type: String, required: true },
+      tipoVuelo: { type: String, required: true },
       matriculaAeronave: { type: String, required: true },
       posicion: { type: String, required: true },
     },

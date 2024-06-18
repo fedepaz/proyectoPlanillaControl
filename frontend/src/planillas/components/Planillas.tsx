@@ -180,7 +180,6 @@ export function Planillas() {
             label="Tipo de Vuelo"
           ></RHFRadioGroup>
 
-          <RHFSlider<Schema> name="salartRange" label="Rango Salarial" />
           <RHFSwitch<Schema> name="isTeacher" label="Sos o no" />
           {isTeacher && (
             <Button
