@@ -19,7 +19,7 @@ const validateOptions = (field, value, validOptions) => {
   }
 };
 
-router.get("/oficial", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const oficial = await fetchOptions(Oficial);
 
@@ -32,7 +32,7 @@ router.get("/oficial", async (req, res) => {
   }
 });
 
-router.get("/oficial/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const oficial = await Oficial.findById(id);
@@ -42,4 +42,27 @@ router.get("/oficial/:id", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
+router.post("/", async (req, res) => {
+  try {
+    const { dni, firstname, lastname, legajo } = req.body;
+    if (!dni || !firstname || !lastname || !legajo) {
+      return res.status(400).json({
+        message: "Faltan datos de Oficial",
+      });
+    }
+
+    const newOficial = await Oficial.create({
+      dni,
+      firstname,
+      lastname,
+      legajo,
+    });
+    return res.status(201).json(newOficial);
+  } catch (error) {
+    console.error("Error generando Oficial:", error);
+    return res.status(500).json({ message: "Internal server error " + error });
+  }
+});
+
 export default router;

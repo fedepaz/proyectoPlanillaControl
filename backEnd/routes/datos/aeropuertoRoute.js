@@ -1,5 +1,5 @@
 import express from "express";
-import { PersonalEmpresa } from "../../models/personalModel.js";
+import { Aeropuertos } from "../../models/personalModel.js";
 
 const router = express.Router();
 
@@ -21,10 +21,10 @@ const validateOptions = (field, value, validOptions) => {
 
 router.get("/", async (req, res) => {
   try {
-    const personalEmpresa = await fetchOptions(PersonalEmpresa);
+    const aeropuerto = await fetchOptions(Aeropuertos);
 
     res.status(200).json({
-      personalEmpresa,
+      aeropuerto,
     });
   } catch (error) {
     console.log(error.message);
@@ -35,8 +35,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const personal = await PersonalEmpresa.findById(id);
-    return res.status(200).json(personal);
+    const aeropuerto = await Aeropuertos.findById(id);
+    return res.status(200).json(aeropuerto);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
@@ -45,23 +45,21 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { dni, firstname, lastname, empresa, legajo } = req.body;
-    if (!dni || !firstname || !lastname || !empresa || !legajo) {
+    const { aeropuerto, codIATA, codOACI } = req.body;
+    if (!aeropuerto || !codIATA || !codOACI) {
       return res.status(400).json({
-        message: "Faltan datos de Personal",
+        message: "Faltan datos de Aeropuerto",
       });
     }
 
-    const newPersonal = await PersonalEmpresa.create({
-      dni,
-      firstname,
-      lastname,
-      empresa,
-      legajo,
+    const newAero = await Aeropuertos.create({
+      aeropuerto,
+      codIATA,
+      codOACI,
     });
-    return res.status(201).json(newPersonal);
+    return res.status(201).json(newAero);
   } catch (error) {
-    console.error("Error generando Personal:", error);
+    console.error("Error generando Matricula:", error);
     return res.status(500).json({ message: "Internal server error " + error });
   }
 });

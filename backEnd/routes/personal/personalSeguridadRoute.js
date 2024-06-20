@@ -1,14 +1,5 @@
 import express from "express";
-import {
-  Oficial,
-  PersonalEmpresa,
-  PersonalSeguridadEmpresa,
-  Empresa,
-  MatriculaAeronave,
-  Aeropuertos,
-  Vehiculos,
-  CodVuelo,
-} from "../../models/personalModel.js";
+import { PersonalSeguridadEmpresa } from "../../models/personalModel.js";
 
 const router = express.Router();
 
@@ -28,44 +19,7 @@ const validateOptions = (field, value, validOptions) => {
   }
 };
 
-router.get("/oficial", async (req, res) => {
-  try {
-    const oficial = await fetchOptions(Oficial);
-
-    res.status(200).json({
-      oficial,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-router.get("/oficial/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const oficial = await Oficial.findById(id);
-    return res.status(200).json(oficial);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-router.get("/personalEmpresa", async (req, res) => {
-  try {
-    const personalEmpresa = await fetchOptions(PersonalEmpresa);
-
-    res.status(200).json({
-      personalEmpresa,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-router.get("/personalSeguridadEmpresa", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const personalSeguridadEmpresa = await fetchOptions(
       PersonalSeguridadEmpresa
@@ -79,17 +33,37 @@ router.get("/personalSeguridadEmpresa", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
-
-router.get("/empresa", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const empresa = await fetchOptions(Empresa);
-
-    res.status(200).json({
-      empresa,
-    });
+    const { id } = req.params;
+    const personal = await PersonalSeguridadEmpresa.findById(id);
+    return res.status(200).json(personal);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const { dni, firstname, lastname, empresa, legajo } = req.body;
+    if (!dni || !firstname || !lastname || !empresa || !legajo) {
+      return res.status(400).json({
+        message: "Faltan datos de Personal",
+      });
+    }
+
+    const newPersonal = await PersonalSeguridadEmpresa.create({
+      dni,
+      firstname,
+      lastname,
+      empresa,
+      legajo,
+    });
+    return res.status(201).json(newPersonal);
+  } catch (error) {
+    console.error("Error generando Personal:", error);
+    return res.status(500).json({ message: "Internal server error " + error });
   }
 });
 

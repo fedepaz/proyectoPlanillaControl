@@ -3,7 +3,14 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
-import personalRoute from "./routes/personal/personalEmpresaRoute.js";
+import oficialRoute from "./routes/personal/oficialRoute.js";
+import personalEmpresaRoute from "./routes/personal/personalEmpresaRoute.js";
+import personalSeguridadRoute from "./routes/personal/personalSeguridadRoute.js";
+import aeronaveRoute from "./routes/datos/aeronaveRoute.js";
+import codVueloRoute from "./routes/datos/codVueloRoute.js";
+import empresaRoute from "./routes/datos/empresaRoute.js";
+import aeropuertoRoute from "./routes/datos/aeropuertoRoute.js";
+import vehiculosRoute from "./routes/datos/vehiculosRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -24,7 +31,15 @@ app.get("/", (request, response) => {
 app.use("/data", dataRoute);
 
 app.use("/planillas", planillasRoute);
-app.use("/personal", personalRoute);
+app.use("/oficial", oficialRoute);
+app.use("/personalEmpresa", personalEmpresaRoute);
+app.use("/personalSeguridad", personalSeguridadRoute);
+
+app.use("/aeronave", aeronaveRoute);
+app.use("/empresa", empresaRoute);
+app.use("/codVueloRoute", codVueloRoute);
+app.use("/aeropuerto", aeropuertoRoute);
+app.use("/vehiculos", vehiculosRoute);
 
 mongoose
   .connect(mongoDBURL)
