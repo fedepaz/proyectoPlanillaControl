@@ -1,88 +1,119 @@
 import { z } from "zod";
-import { patterns } from "../../constants";
 
-export const schema = z
-  .intersection(
-    z.object({
-      name: z.string().min(1, { message: "Campo requerido" }),
-      email: z
-        .string()
-        .min(1, { message: "Email requerido" })
-        .refine((text) => patterns.email.test(text), {
-          message: "Email inválido",
-        }),
-      tipoControl: z
-        .array(z.string())
-        .min(1, { message: "Requerido" })
-        .max(2, { message: "Máximo 2 penca!" }),
-      funcion: z
-        .array(z.string())
-        .min(1, { message: "Requerido" })
-        .max(2, { message: "Máximo dos opciones..." }),
-      demora: z.string().min(1, { message: "Requerido" }),
-      mediosTec: z
-        .array(z.string())
-        .min(1, { message: "Requerido" })
-        .max(2, { message: "Máximo dos opciones..." }),
-
-      tipoPro: z.array(z.string()).min(1, { message: "Requerido" }).max(2),
-      tipoVuelo: z.string().min(1, { message: "Requerido" }),
-      registrationDateAndTime: z.date(),
-      formerEmploymentPeriod: z.array(z.date()).max(2).min(2),
-      salartRange: z.array(z.number()).min(2).max(2),
+const planillaSchema = z
+  .object({
+    datosPsa: z.object({
+      fecha: z.string().min(1),
+      responsable: z.string().min(1),
+      horaIni: z.string().min(1),
+      horaFin: z.string().min(1),
+      cant: z.string().min(1),
+      tipoControl: z.string().min(1),
+      medioTec: z.string().min(1),
+      tipoPro: z.string().min(1),
     }),
-    z.discriminatedUnion("variant", [
-      z.object({ variant: z.literal("create") }),
-      z.object({ variant: z.literal("edit"), _id: z.string().min(1) }),
-    ])
-  )
-  .and(
-    z.union([
-      z.object({ isTeacher: z.literal(false) }),
+    datosVuelo: z.object({
+      aerolinea: z.string().min(1),
+      codVuelo: z.string().min(1),
+      origen: z.string().min(1),
+      destino: z.string().min(1),
+      horaArribo: z.string().min(1),
+      horaPartida: z.string().min(1),
+      demora: z.string().min(1),
+      tipoVuelo: z.string().min(1),
+      matriculaAeronave: z.string().min(1),
+      posicion: z.string().min(1),
+    }),
+    datosTerrestre: z.array(
       z.object({
-        isTeacher: z.literal(true),
-        students: z.array(z.object({ name: z.string().min(4) })),
-      }),
-    ])
-  );
+        apellidoTerrestre: z.string().min(1),
+        nombreTerrestre: z.string().min(1),
+        dniTerrestre: z.string().min(1),
+        legajoTerrestre: z.string().min(1),
+        funcion: z.string().min(1),
+        grupo: z.string().min(1),
+      })
+    ),
+    datosSeguridad: z.array(
+      z.object({
+        apellidoSeguridad: z.string().min(1),
+        nombreSeguridad: z.string().min(1),
+        dniSeguridad: z.string().min(1),
+        legajoSeguridad: z.string().min(1),
+        empresaSeguridad: z.string().min(1),
+      })
+    ),
+    datosVehiculos: z.array(
+      z.object({
+        tipoVehiculo: z.string().min(1),
+        empresaVehiculo: z.string().min(1),
+        numInterno: z.string().min(1),
+        operadorVehiculo: z.string().min(1),
+        observacionesVehiculo: z.string().min(1),
+      })
+    ),
+    novEquipajes: z.string().min(1),
+    novInspeccion: z.string().min(1),
+    novOtras: z.string().min(1),
+  })
+  .strict();
 
-export type Schema = z.infer<typeof schema>;
+export { planillaSchema };
+
+export type Schema = z.infer<typeof planillaSchema>;
 
 export const defaultValues: Schema = {
-  variant: "create",
-  isTeacher: false,
-  email: "",
-  name: "",
-  tipoControl: [],
-  mediosTec: [],
-  tipoPro: [],
-  demora: "",
-  tipoVuelo: "",
-  funcion: [],
-  registrationDateAndTime: new Date(),
-  formerEmploymentPeriod: [new Date(), new Date()],
-  salartRange: [0.9999999],
-};
-
-export const schemaOficial = z.intersection(
-  z.object({
-    dni: z.number().max(8).min(8),
-    firstname: z.string().min(1),
-    lastname: z.string().min(1),
-    legajo: z.number().min(6).max(6),
-  }),
-  z.discriminatedUnion("variant", [
-    z.object({ variant: z.literal("create") }),
-    z.object({ variant: z.literal("edit"), _id: z.string().min(1) }),
-  ])
-);
-
-export type SchemaOficial = z.infer<typeof schemaOficial>;
-
-export const defaultValuesOfi: SchemaOficial = {
-  variant: "create",
-  dni: 11111111,
-  firstname: "",
-  lastname: "",
-  legajo: 111111,
+  datosPsa: {
+    fecha: "",
+    responsable: "",
+    horaIni: "",
+    horaFin: "",
+    cant: "",
+    tipoControl: "",
+    medioTec: "",
+    tipoPro: "",
+  },
+  datosVuelo: {
+    aerolinea: "",
+    codVuelo: "",
+    origen: "",
+    destino: "",
+    horaArribo: "",
+    horaPartida: "",
+    demora: "",
+    tipoVuelo: "",
+    matriculaAeronave: "",
+    posicion: "",
+  },
+  datosTerrestre: [
+    {
+      apellidoTerrestre: "",
+      nombreTerrestre: "",
+      dniTerrestre: "",
+      legajoTerrestre: "",
+      funcion: "",
+      grupo: "",
+    },
+  ],
+  datosSeguridad: [
+    {
+      apellidoSeguridad: "",
+      nombreSeguridad: "",
+      dniSeguridad: "",
+      legajoSeguridad: "",
+      empresaSeguridad: "",
+    },
+  ],
+  datosVehiculos: [
+    {
+      tipoVehiculo: "",
+      empresaVehiculo: "",
+      numInterno: "",
+      operadorVehiculo: "",
+      observacionesVehiculo: "",
+    },
+  ],
+  novEquipajes: "",
+  novInspeccion: "",
+  novOtras: "",
 };
