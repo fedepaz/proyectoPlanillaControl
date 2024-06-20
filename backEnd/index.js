@@ -37,7 +37,7 @@ app.use("/personalSeguridad", personalSeguridadRoute);
 
 app.use("/aeronave", aeronaveRoute);
 app.use("/empresa", empresaRoute);
-app.use("/codVueloRoute", codVueloRoute);
+app.use("/codVuelo", codVueloRoute);
 app.use("/aeropuerto", aeropuertoRoute);
 app.use("/vehiculos", vehiculosRoute);
 

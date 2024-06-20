@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
     const { matriculaAeronave, empresa } = req.body;
     if (!matriculaAeronave || !empresa) {
       return res.status(400).json({
-        message: "Faltan datos de Personal",
+        message: "Faltan datos de Aeronave",
       });
     }
 
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
     });
     return res.status(201).json(newMat);
   } catch (error) {
-    console.error("Error generando Matricula:", error);
+    console.error("Error generando Aeronave:", error);
     return res.status(500).json({ message: "Internal server error " + error });
   }
 });

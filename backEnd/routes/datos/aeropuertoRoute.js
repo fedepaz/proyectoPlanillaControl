@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
     });
     return res.status(201).json(newAero);
   } catch (error) {
-    console.error("Error generando Matricula:", error);
+    console.error("Error generando Aeropuerto:", error);
     return res.status(500).json({ message: "Internal server error " + error });
   }
 });

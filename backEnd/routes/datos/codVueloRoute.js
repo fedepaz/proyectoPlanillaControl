@@ -1,5 +1,5 @@
 import express from "express";
-import { MatriculaAeronave } from "../../models/personalModel.js";
+import { CodVuelo } from "../../models/personalModel.js";
 
 const router = express.Router();
 
@@ -21,10 +21,10 @@ const validateOptions = (field, value, validOptions) => {
 
 router.get("/", async (req, res) => {
   try {
-    const matriculaAeronave = await fetchOptions(MatriculaAeronave);
+    const codVuelo = await fetchOptions(CodVuelo);
 
     res.status(200).json({
-      matriculaAeronave,
+      codVuelo,
     });
   } catch (error) {
     console.log(error.message);
@@ -35,8 +35,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const matriculaAeronave = await MatriculaAeronave.findById(id);
-    return res.status(200).json(matriculaAeronave);
+    const codVuelo = await CodVuelo.findById(id);
+    return res.status(200).json(codVuelo);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
@@ -45,20 +45,21 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { matriculaAeronave, empresa } = req.body;
-    if (!matriculaAeronave || !empresa) {
+    const { codVuelo, aeropuerto, tipoVuelo } = req.body;
+    if (!codVuelo || !aeropuerto || !tipoVuelo) {
       return res.status(400).json({
-        message: "Faltan datos de Personal",
+        message: "Faltan datos de Vuelo",
       });
     }
 
-    const newMat = await MatriculaAeronave.create({
-      matriculaAeronave,
-      empresa,
+    const newCodVuelo = await CodVuelo.create({
+      codVuelo,
+      aeropuerto,
+      tipoVuelo,
     });
-    return res.status(201).json(newMat);
+    return res.status(201).json(newCodVuelo);
   } catch (error) {
-    console.error("Error generando Matricula:", error);
+    console.error("Error generando Vuelo:", error);
     return res.status(500).json({ message: "Internal server error " + error });
   }
 });

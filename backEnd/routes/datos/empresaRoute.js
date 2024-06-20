@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
     });
     return res.status(201).json(newEmpresa);
   } catch (error) {
-    console.error("Error generando Matricula:", error);
+    console.error("Error generando Empresa:", error);
     return res.status(500).json({ message: "Internal server error " + error });
   }
 });
