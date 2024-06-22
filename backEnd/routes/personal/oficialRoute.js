@@ -43,6 +43,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/dni/:dni", async (req, res) => {
+  try {
+    const { dni } = req.params;
+    const oficial = await Oficial.findOne({ dni: dni });
+
+    if (!oficial) {
+      return res.status(404).json({ message: "No DNI" });
+    }
+    return res.status(200).json(oficial);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { dni, firstname, lastname, legajo } = req.body;

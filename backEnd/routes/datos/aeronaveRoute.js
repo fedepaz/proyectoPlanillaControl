@@ -42,6 +42,22 @@ router.get("/:id", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+/*
+router.get("/dni/:dni", async (req, res) => {
+  try {
+    const { dni } = req.params;
+    const personal = await PersonalEmpresa.findOne({ dni: dni });
+
+    if (!personal) {
+      return res.status(404).json({ message: "No DNI" });
+    }
+    return res.status(200).json(personal);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+*/
 
 router.post("/", async (req, res) => {
   try {
