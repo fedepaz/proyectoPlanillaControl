@@ -64,3 +64,30 @@ describe("GET /data/mediosTec", function () {
       });
   });
 });
+
+describe("GET /data/tipoPro", function () {
+  let findStub;
+
+  before(function () {
+    findStub = sinon.stub(TipoPro, "find").returns({
+      select: sinon.stub().returns({
+        exec: sinon.stub().resolves([{ _id: "1", label: "Option1" }]),
+      }),
+    });
+  });
+
+  after(function () {
+    findStub.restore();
+  });
+
+  it("should return status 200 and fetch tipoPro options", function (done) {
+    request(app)
+      .get("/data/tipoPro")
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.tipoPro).to.be.an("array").that.is.not.empty;
+        expect(res.body.tipoPro[0]).to.have.property("label", "Option1");
+        done();
+      });
+  });
+});
