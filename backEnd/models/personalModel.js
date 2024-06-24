@@ -68,8 +68,9 @@ export const Vehiculos = mongoose.model("Vehiculos", vehiculoSchema);
 
 const codVueloSchema = new mongoose.Schema({
   codVuelo: { type: String, required: true, unique: true },
-  aeropuerto: { type: String, required: true },
-  tipoVuelo: { type: String, required: true },
+  origen: { type: String, required: true },
+  partida: { type: String, required: true },
+  empresa: { type: String, required: true },
 });
 
 export const CodVuelo = mongoose.model("CodVuelo", codVueloSchema);

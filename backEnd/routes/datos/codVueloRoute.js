@@ -43,10 +43,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/codVuelo/:codVuelo", async (req, res) => {
+  try {
+    const { codigo } = req.params;
+    const codVuelo = await CodVuelo.findOne({
+      codvuelo: codigo,
+    });
+
+    if (!codVuelo) {
+      return res.status(404).json({ message: "No codVuelo" });
+    }
+    return res.status(200).json(matricula);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
-    const { codVuelo, aeropuerto, tipoVuelo } = req.body;
-    if (!codVuelo || !aeropuerto || !tipoVuelo) {
+    const { codVuelo, origen, partida, empresa } = req.body;
+    if (!codVuelo || !origen || !partida || !empresa) {
       return res.status(400).json({
         message: "Faltan datos de Vuelo",
       });
@@ -54,8 +71,9 @@ router.post("/", async (req, res) => {
 
     const newCodVuelo = await CodVuelo.create({
       codVuelo,
-      aeropuerto,
-      tipoVuelo,
+      origen,
+      partida,
+      empresa,
     });
     return res.status(201).json(newCodVuelo);
   } catch (error) {
