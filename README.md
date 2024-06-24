@@ -1,3 +1,5 @@
+[![tests](https://github.com/fedepaz/proyectoPlanillaControl/actions/workflows/test.yml/badge.svg)](https://github.com/fedepaz/proyectoPlanillaControl/actions/workflows/test.yml)
+
 # Proyecto Mayo 2024 - Primera Parte
 
 Este repositorio contiene una aplicación web basada en el stack MERN (MongoDB, Express, React, Node.js), construida a partir de un tutorial de freeCodeCamp. El objetivo principal de este proyecto es refactorizar los componentes existentes y agregar nuevas funcionalidades.
