@@ -42,17 +42,18 @@ router.get("/:id", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
-router.get("/numInterno/:numInterno", async (req, res) => {
+
+router.get("/numInterno/:interno", async (req, res) => {
   try {
-    const { numero } = req.params;
+    const { interno } = req.params;
     const numInterno = await Vehiculos.findOne({
-      numInterno: numero,
+      numInterno: interno,
     });
 
     if (!numInterno) {
       return res.status(404).json({ message: "No numInterno" });
     }
-    return res.status(200).json(matricula);
+    return res.status(200).json(numInterno);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });

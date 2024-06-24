@@ -43,6 +43,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/codIATA/:aero", async (req, res) => {
+  try {
+    const { aero } = req.params;
+    const aeropuerto = await Aeropuertos.findOne({
+      codIATA: aero.toUpperCase(),
+    });
+
+    if (!aeropuerto) {
+      return res.status(404).json({ message: "No aeropuerto" });
+    }
+    return res.status(200).json(aeropuerto);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { aeropuerto, codIATA, codOACI } = req.body;

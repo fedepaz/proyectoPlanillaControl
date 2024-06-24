@@ -53,7 +53,7 @@ router.get("/codVuelo/:codVuelo", async (req, res) => {
     if (!codVuelo) {
       return res.status(404).json({ message: "No codVuelo" });
     }
-    return res.status(200).json(matricula);
+    return res.status(200).json(codVuelo);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });
@@ -62,8 +62,8 @@ router.get("/codVuelo/:codVuelo", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { codVuelo, origen, partida, empresa } = req.body;
-    if (!codVuelo || !origen || !partida || !empresa) {
+    const { codVuelo, origen, destino, empresa } = req.body;
+    if (!codVuelo || !origen || !destino || !empresa) {
       return res.status(400).json({
         message: "Faltan datos de Vuelo",
       });
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
     const newCodVuelo = await CodVuelo.create({
       codVuelo,
       origen,
-      partida,
+      destino,
       empresa,
     });
     return res.status(201).json(newCodVuelo);

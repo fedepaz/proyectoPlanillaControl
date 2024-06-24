@@ -69,7 +69,7 @@ export const Vehiculos = mongoose.model("Vehiculos", vehiculoSchema);
 const codVueloSchema = new mongoose.Schema({
   codVuelo: { type: String, required: true, unique: true },
   origen: { type: String, required: true },
-  partida: { type: String, required: true },
+  destino: { type: String, required: true },
   empresa: { type: String, required: true },
 });
 

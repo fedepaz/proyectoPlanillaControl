@@ -20,6 +20,10 @@ const fetchOptions = async (model) => {
   }
 };
 
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "Connected successfully" });
+});
+
 router.get("/tipoControl", async (req, res) => {
   try {
     const tipoControl = await fetchOptions(TipoControl);
