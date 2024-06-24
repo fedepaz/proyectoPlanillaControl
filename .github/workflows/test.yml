@@ -2,7 +2,8 @@ name: tests
 
 on:
   push:
-    branches: -develop
+    branches:
+      - develop
 
 jobs:
   test-backEnd-index:
@@ -13,12 +14,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: "16"
+
       - name: Install dependencies
         run: npm install
+
       - name: Run index tests
         run: npm run test:index
 
@@ -29,13 +33,16 @@ jobs:
         working-directory: ./backEnd
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
+
       - name: Install dependencies
         run: npm install
+
       - name: Run dataRoute tests
         run: npm run test:dataRoute
 
@@ -46,7 +53,7 @@ jobs:
         working-directory: ./frontEnd
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
