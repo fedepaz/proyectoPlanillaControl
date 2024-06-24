@@ -5,8 +5,11 @@ on:
     branches: -develop
 
 jobs:
-  test-index:
+  test-backEnd-index:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backEnd
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,8 +22,11 @@ jobs:
       - name: Run index tests
         run: npm run test:index
 
-  test-dataRoute:
+  test-backEnd-dataRoute:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backEnd
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,3 +38,23 @@ jobs:
         run: npm install
       - name: Run dataRoute tests
         run: npm run test:dataRoute
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontEnd
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run frontend tests
+        run: npm run lint
