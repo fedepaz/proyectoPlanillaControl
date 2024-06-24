@@ -43,6 +43,24 @@ jobs:
 
       - name: Run dataRoute tests
         run: npm run test:dataRoute
+  test-backEnd-planillaRoute:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backEnd
+    steps:
+      - name: TestBackEnd
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run planillaRoute tests
+        run: npm run test:planillaRoute
 
   test-frontend:
     runs-on: ubuntu-latest
