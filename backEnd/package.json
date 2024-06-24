@@ -9,7 +9,8 @@
     "dev": "nodemon index.js",
     "test": "NODE_ENV=test mocha --require @babel/register 'test/**/*.test.js'",
     "test:index": "NODE_ENV=test mocha --require @babel/register 'test/index.test.js'",
-    "test:dataRoute": "NODE_ENV=test mocha --require @babel/register 'test/dataRoute.test.js'"
+    "test:dataRoute": "NODE_ENV=test mocha --require @babel/register 'test/dataRoute.test.js'",
+    "test:planillaRoute": "NODE_ENV=test mocha --require @babel/register 'test/planillaRoute.test.js'"
   },
   "keywords": [],
   "author": "fedePaz",

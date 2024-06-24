@@ -92,7 +92,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const planillas = await Planilla.find({});
+    const planillas = await Planilla.find({}).exec();
     return res.status(200).json({
       count: planillas.length,
       data: planillas,
