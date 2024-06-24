@@ -13,19 +13,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import {
-  useFieldArray,
-  useForm,
-  useFormContext,
-  useWatch,
-} from "react-hook-form";
-import {
-  Schema,
-  SchemaOficial,
-  defaultValues,
-  defaultValuesOfi,
-  schemaOficial,
-} from "../types/schema";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { Schema, defaultValues } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
   useDemora,
@@ -41,7 +30,6 @@ import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 import { RHFCheckBox } from "../../components/RHFCheckBox";
 import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
-import { RHFSlider } from "../../components/RHFSlider";
 import { RHFSwitch } from "../../components/RHFSwitch";
 import { RHFTextField } from "../../components/RHFTextField";
 import { Fragment, useEffect } from "react";
