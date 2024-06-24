@@ -1,11 +1,9 @@
-// test/index.test.js
-
 import { expect } from "chai";
 import request from "supertest";
-import app from "../index.js"; // Adjust the import based on your actual app export
+import app from "../index.js";
 
-describe("GET /", function () {
-  it("should return status 234 and contain <h1>PLanillas</h1>", function (done) {
+describe("home funciona", function () {
+  it("should return status 234 and <h1>PLanillas</h1>", function (done) {
     request(app)
       .get("/")
       .end((err, res) => {
@@ -16,17 +14,13 @@ describe("GET /", function () {
   });
 });
 
-// Add more tests for other routes
-describe("GET /data", function () {
-  it("should return status 200 and the expected data", function (done) {
+describe("data funciona", function () {
+  it("should return status 200", function (done) {
     request(app)
       .get("/data")
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        // Add more expectations based on your route's response
         done();
       });
   });
 });
-
-// Repeat for other routes

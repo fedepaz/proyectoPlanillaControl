@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 const fetchOptions = async (model) => {
-  const options = await model.find().select("value -_id");
+  const options = await model.find().select("value -_id").exec();
   return options.map((option) => option.value);
 };
 

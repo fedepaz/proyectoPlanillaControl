@@ -27,36 +27,18 @@ describe("GET /data/tipoControl", function () {
     findStub.restore();
   });
 
-  it("should return status 200", function (done) {
+  it("should return status 200 and fetch tipoControl options", function (done) {
     request(app)
       .get("/data/tipoControl")
       .end((_err, res) => {
-        console.log("Status Code:", res.status);
         expect(res.status).to.equal(200);
-        done();
-      });
-  });
-  it("should return array", function (done) {
-    request(app)
-      .get("/data/tipoControl")
-      .end((_err, res) => {
-        console.log("Response Body:", res.body);
         expect(res.body.tipoControl).to.be.an("array").that.is.not.empty;
-        done();
-      });
-  });
-  it("should return tipoControl options sinon", function (done) {
-    request(app)
-      .get("/data/tipoControl")
-      .end((_err, res) => {
-        console.log("First Option:", res.body.tipoControl[0]);
         expect(res.body.tipoControl[0]).to.have.property("label", "Option 1");
         done();
       });
   });
 });
 
-/*
 describe("GET /data/mediosTec", function () {
   let findStub;
 
@@ -82,6 +64,3 @@ describe("GET /data/mediosTec", function () {
       });
   });
 });
-
-
-*/

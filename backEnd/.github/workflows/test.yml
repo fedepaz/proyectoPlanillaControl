@@ -1,0 +1,32 @@
+name: Node.js CI
+
+on: [push, pull_request]
+
+jobs:
+  test-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        run: npm install
+      - name: Run index tests
+        run: npm run test:index
+
+  test-dataRoute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        run: npm install
+      - name: Run dataRoute tests
+        run: npm run test:dataRoute

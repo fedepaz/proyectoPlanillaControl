@@ -1,5 +1,7 @@
 import express, { request, response } from "express";
+import dotenv from "dotenv";
 import { PORT, mongoDBURL } from "./config.js";
+import { connectDB } from "./db.js";
 import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
@@ -13,6 +15,7 @@ import aeropuertoRoute from "./routes/datos/aeropuertoRoute.js";
 import vehiculosRoute from "./routes/datos/vehiculosRoute.js";
 import cors from "cors";
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -41,16 +44,16 @@ app.use("/codVuelo", codVueloRoute);
 app.use("/aeropuerto", aeropuertoRoute);
 app.use("/vehiculos", vehiculosRoute);
 
-mongoose
-  .connect(mongoDBURL)
-  .then(() => {
-    console.log("App connected to datbase.");
-    app.listen(PORT, () => {
-      console.log(`App is listening in port: ${PORT}`);
+if (process.env.NODE_ENV !== "test") {
+  connectDB()
+    .then(() => {
+      app.listen(process.env.PORT, () => {
+        console.log(`App is listening in port: ${process.env.PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+}
 
 export default app;
