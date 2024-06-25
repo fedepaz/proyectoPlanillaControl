@@ -27,6 +27,10 @@ app.use(cors());
   })
 );
 */
+app.get("/health", (req, res) => {
+  res.send("ok");
+});
+
 app.get("/", (request, response) => {
   return response.status(234).send("<h1>PLanillas</h1>");
 });
