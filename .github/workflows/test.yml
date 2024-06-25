@@ -10,12 +10,15 @@ on:
 
 jobs:
   avoid_reduncy:
+    name: Cancel Workflow
     runs-on: ubuntu-18.04
-    permissions:
-      actions: write
+    timeout-minutes: 3
     steps:
-      - name: Cancel Workflow
-        uses: action-pack/cancel@v1
+      - uses: styfle/cancel-workflow-action
+        with:
+          all_but_latest: true
+          only_status: "waiting"
+          access_token: ${{github.token}}
 
   test-backEnd-index:
     runs-on: ubuntu-latest
