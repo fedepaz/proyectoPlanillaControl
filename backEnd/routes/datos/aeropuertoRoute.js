@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const aeropuerto = await Aeropuertos.findById(id);
+    const aeropuerto = await Aeropuertos.findById(id).exec();
     return res.status(200).json(aeropuerto);
   } catch (error) {
     console.log(error.message);
@@ -48,7 +48,7 @@ router.get("/codIATA/:aero", async (req, res) => {
     const { aero } = req.params;
     const aeropuerto = await Aeropuertos.findOne({
       codIATA: aero.toUpperCase(),
-    });
+    }).exec();
 
     if (!aeropuerto) {
       return res.status(404).json({ message: "No aeropuerto" });
@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
       aeropuerto,
       codIATA,
       codOACI,
-    });
+    }).exec();
     return res.status(201).json(newAero);
   } catch (error) {
     console.error("Error generando Aeropuerto:", error);

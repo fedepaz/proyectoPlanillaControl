@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const matriculaAeronave = await MatriculaAeronave.findById(id);
+    const matriculaAeronave = await MatriculaAeronave.findById(id).exec();
     return res.status(200).json(matriculaAeronave);
   } catch (error) {
     console.log(error.message);
@@ -48,7 +48,7 @@ router.get("/matricula/:matricula", async (req, res) => {
     const { matricula } = req.params;
     const matriculaAeronave = await MatriculaAeronave.findOne({
       matricula: matricula,
-    });
+    }).exec();
 
     if (!matriculaAeronave) {
       return res.status(404).json({ message: "No MATRICULA" });
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
     const newMat = await MatriculaAeronave.create({
       matriculaAeronave,
       empresa,
-    });
+    }).exec();
     return res.status(201).json(newMat);
   } catch (error) {
     console.error("Error generando Aeronave:", error);

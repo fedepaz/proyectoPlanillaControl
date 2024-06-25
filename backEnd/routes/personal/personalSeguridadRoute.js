@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const personal = await PersonalSeguridadEmpresa.findById(id);
+    const personal = await PersonalSeguridadEmpresa.findById(id).exec();
     return res.status(200).json(personal);
   } catch (error) {
     console.log(error.message);
@@ -47,7 +47,9 @@ router.get("/:id", async (req, res) => {
 router.get("/dni/:dni", async (req, res) => {
   try {
     const { dni } = req.params;
-    const personal = await PersonalSeguridadEmpresa.findOne({ dni: dni });
+    const personal = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    }).exec();
 
     if (!personal) {
       return res.status(404).json({ message: "No DNI" });
@@ -74,7 +76,7 @@ router.post("/", async (req, res) => {
       lastname,
       empresa,
       legajo,
-    });
+    }).exec();
     return res.status(201).json(newPersonal);
   } catch (error) {
     console.error("Error generando Personal:", error);

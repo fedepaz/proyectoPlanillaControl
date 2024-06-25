@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const oficial = await Oficial.findById(id);
+    const oficial = await Oficial.findById(id).exec();
     return res.status(200).json(oficial);
   } catch (error) {
     console.log(error.message);
@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 router.get("/dni/:dni", async (req, res) => {
   try {
     const { dni } = req.params;
-    const oficial = await Oficial.findOne({ dni: dni });
+    const oficial = await Oficial.findOne({ dni: dni }).exec();
 
     if (!oficial) {
       return res.status(404).json({ message: "No DNI" });
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
       firstname,
       lastname,
       legajo,
-    });
+    }).exec();
     return res.status(201).json(newOficial);
   } catch (error) {
     console.error("Error generando Oficial:", error);
