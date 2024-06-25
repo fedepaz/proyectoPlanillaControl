@@ -142,14 +142,7 @@ jobs:
 
   lint-frontend:
     runs-on: ubuntu-latest
-    needs:
-      [
-        avoid_redundancy,
-        test-backEnd-index,
-        test-backEnd-planillaRoute,
-        test-backEnd-dataRoute,
-        dependenciesFront,
-      ]
+    needs: [avoid_redundancy, dependenciesFront]
     defaults:
       run:
         working-directory: ./frontEnd
