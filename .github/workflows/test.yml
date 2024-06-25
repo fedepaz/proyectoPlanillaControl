@@ -20,8 +20,7 @@ jobs:
 
   test-backEnd-index:
     runs-on: ubuntu-latest
-    needs:
-      [avoid_redundancy, test-backEnd-dataRoute, test-backEnd-planillaRoute]
+    needs: [avoid_redundancy]
     defaults:
       run:
         working-directory: ./backEnd
