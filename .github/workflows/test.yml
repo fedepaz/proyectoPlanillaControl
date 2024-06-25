@@ -9,32 +9,17 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  avoid_reduncy_back:
-    name: Cancel Workflow Back
-    runs-on: ubuntu-18.04
-    defaults:
-      run:
-        working-directory: ./backEnd
-    timeout-minutes: 3
+  avoid_redundancy:
+    name: Cancel Workflow
+    runs-on: ubuntu-latest
     steps:
       - uses: styfle/cancel-workflow-action@0.9.1
         with:
-          access_token: ${{github.token}}
-
-  avoid_reduncy_front:
-    name: Cancel Workflow Front
-    runs-on: ubuntu-18.04
-    defaults:
-      run:
-        working-directory: ./frontEnd
-    timeout-minutes: 3
-    steps:
-      - uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{github.token}}
+          access_token: ${{ github.token }}
 
   test-backEnd-index:
     runs-on: ubuntu-latest
+    needs: avoid_redundancy
     defaults:
       run:
         working-directory: ./backEnd
@@ -55,6 +40,7 @@ jobs:
 
   test-backEnd-dataRoute:
     runs-on: ubuntu-latest
+    needs: avoid_redundancy
     defaults:
       run:
         working-directory: ./backEnd
@@ -72,8 +58,10 @@ jobs:
 
       - name: Run dataRoute tests
         run: npm run test:dataRoute
+
   test-backEnd-planillaRoute:
     runs-on: ubuntu-latest
+    needs: avoid_redundancy
     defaults:
       run:
         working-directory: ./backEnd
@@ -94,6 +82,7 @@ jobs:
 
   test-frontend:
     runs-on: ubuntu-latest
+    needs: avoid_redundancy
     defaults:
       run:
         working-directory: ./frontEnd
