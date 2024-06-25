@@ -16,6 +16,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
+
   test-backEnd-index:
     runs-on: ubuntu-latest
     defaults:
@@ -24,7 +25,8 @@ jobs:
     steps:
       - name: TestIndex
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
@@ -43,7 +45,8 @@ jobs:
     steps:
       - name: TestBackEnd
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
@@ -61,7 +64,8 @@ jobs:
     steps:
       - name: TestBackEnd
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
@@ -80,7 +84,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
