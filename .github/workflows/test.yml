@@ -30,14 +30,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            backend-${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
   dependenciesFront:
     runs-on: ubuntu-latest
@@ -51,14 +52,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: frontend-${{ runner.os }}-node-${{ hashFiles('frontEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            frontend-${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci
 
   test-backEnd-index:
     runs-on: ubuntu-latest
@@ -74,14 +76,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            backend-${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
       - name: Run index tests
@@ -101,14 +102,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            backend-${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
       - name: Run dataRoute tests
@@ -128,14 +128,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            backend-${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
       - name: Run planillaRoute tests
@@ -162,14 +161,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: frontend-${{ runner.os }}-node-${{ hashFiles('frontEnd/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            frontend-${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci
       - name: Run frontend tests
