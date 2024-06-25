@@ -11,12 +11,11 @@ on:
 jobs:
   avoid_reduncy:
     runs-on: ubuntu-18.04
-    timeout-minutes: 2
+    permissions:
+      actions: write
     steps:
-      - name: Cancel Previous Redundant Builds
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
+      - name: Cancel Workflow
+        uses: action-pack/cancel@v1
 
   test-backEnd-index:
     runs-on: ubuntu-latest
