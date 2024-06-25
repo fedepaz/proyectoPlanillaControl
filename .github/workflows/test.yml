@@ -14,10 +14,8 @@ jobs:
     runs-on: ubuntu-18.04
     timeout-minutes: 3
     steps:
-      - uses: styfle/cancel-workflow-action
+      - uses: styfle/cancel-workflow-action@0.9.1
         with:
-          all_but_latest: true
-          only_status: "waiting"
           access_token: ${{github.token}}
 
   test-backEnd-index:
