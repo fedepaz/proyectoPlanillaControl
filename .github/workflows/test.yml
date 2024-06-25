@@ -20,6 +20,7 @@ jobs:
 
   dependenciesBack:
     runs-on: ubuntu-latest
+    needs: [avoid_redundancy]
     defaults:
       run:
         working-directory: ./backEnd
@@ -42,6 +43,7 @@ jobs:
 
   dependenciesFront:
     runs-on: ubuntu-latest
+    needs: [avoid_redundancy]
     defaults:
       run:
         working-directory: ./frontEnd
