@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const empresa = await Empresa.findById(id);
+    const empresa = await Empresa.findById(id).exec();
     return res.status(200).json(empresa);
   } catch (error) {
     console.log(error.message);
@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
 
     const newEmpresa = await Empresa.create({
       empresa,
-    });
+    }).exec();
     return res.status(201).json(newEmpresa);
   } catch (error) {
     console.error("Error generando Empresa:", error);

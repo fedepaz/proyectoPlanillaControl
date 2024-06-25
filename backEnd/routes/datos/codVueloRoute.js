@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const codVuelo = await CodVuelo.findById(id);
+    const codVuelo = await CodVuelo.findById(id).exec();
     return res.status(200).json(codVuelo);
   } catch (error) {
     console.log(error.message);
@@ -48,7 +48,7 @@ router.get("/codVuelo/:codVuelo", async (req, res) => {
     const { codigo } = req.params;
     const codVuelo = await CodVuelo.findOne({
       codvuelo: codigo,
-    });
+    }).exec();
 
     if (!codVuelo) {
       return res.status(404).json({ message: "No codVuelo" });
@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
       origen,
       destino,
       empresa,
-    });
+    }).exec();
     return res.status(201).json(newCodVuelo);
   } catch (error) {
     console.error("Error generando Vuelo:", error);

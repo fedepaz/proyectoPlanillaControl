@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
       novEquipajes,
       novInspeccion,
       novOtras,
-    });
+    }).exec();
 
     return res.status(201).json(newPlanilla);
   } catch (error) {
@@ -106,7 +106,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const planilla = await Planilla.findById(id);
+    const planilla = await Planilla.findById(id).exec();
     return res.status(200).json(planilla);
   } catch (error) {
     console.log(error.message);
@@ -166,7 +166,7 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const result = await Planilla.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    }).exec();
     if (!result) {
       return res.status(404).send({
         message: "Planilla not found",
@@ -184,7 +184,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Planilla.findByIdAndDelete(id);
+    const result = await Planilla.findByIdAndDelete(id).exec();
     if (!result) {
       return res.status(404).send({
         message: "Planilla not found",

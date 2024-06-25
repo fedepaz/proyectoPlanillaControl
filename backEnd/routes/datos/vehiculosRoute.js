@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const vehiculo = await Vehiculos.findById(id);
+    const vehiculo = await Vehiculos.findById(id).exec();
     return res.status(200).json(vehiculo);
   } catch (error) {
     console.log(error.message);
@@ -48,7 +48,7 @@ router.get("/numInterno/:interno", async (req, res) => {
     const { interno } = req.params;
     const numInterno = await Vehiculos.findOne({
       numInterno: interno,
-    });
+    }).exec();
 
     if (!numInterno) {
       return res.status(404).json({ message: "No numInterno" });
@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
       numInterno,
       empresa,
       tipoVehiculo,
-    });
+    }).exec();
     return res.status(201).json(newVehiculo);
   } catch (error) {
     console.error("Error generando Vehiculo:", error);
