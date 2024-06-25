@@ -9,9 +9,24 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  avoid_reduncy:
-    name: Cancel Workflow
+  avoid_reduncy_back:
+    name: Cancel Workflow Back
     runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: ./backEnd
+    timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{github.token}}
+
+  avoid_reduncy_front:
+    name: Cancel Workflow Front
+    runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: ./frontEnd
     timeout-minutes: 3
     steps:
       - uses: styfle/cancel-workflow-action@0.9.1
