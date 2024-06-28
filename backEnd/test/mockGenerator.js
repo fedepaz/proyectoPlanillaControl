@@ -1,59 +1,57 @@
-function generateMockPlanilla(lastname) {
-  return {
-    datosPsa: {
-      fecha: "2024-01-01",
-      responsable: `Oficial ${lastname}`,
-      horaIni: "08:00",
-      horaFin: "16:00",
-      cant: "10",
-      tipoControl: "Routine",
-      medioTec: "X-ray",
-      tipoPro: "Standard",
+const generateMockPlanilla = (suffix) => ({
+  datosPsa: {
+    fecha: `2024-06-01`,
+    responsable: `Responsable ${suffix}`,
+    horaIni: `08:00`,
+    horaFin: `10:00`,
+    cant: `5`,
+    tipoControl: "Personas",
+    medioTec: "Otros",
+    tipoPro: "Rutina",
+  },
+  datosVuelo: {
+    aerolinea: `Aerolinea ${suffix}`,
+    codVuelo: `CodVuelo ${suffix}`,
+    origen: `Origen ${suffix}`,
+    destino: `Destino ${suffix}`,
+    horaArribo: `12:00`,
+    horaPartida: `14:00`,
+    demora: "NO",
+    tipoVuelo: "Arribo",
+    matriculaAeronave: `MatriculaAeronave ${suffix}`,
+    posicion: `Posicion ${suffix}`,
+  },
+  datosTerrestre: [
+    {
+      apellidoTerrestre: `ApellidoTerrestre ${suffix}`,
+      nombreTerrestre: `NombreTerrestre ${suffix}`,
+      dniTerrestre: `DniTerrestre ${suffix}`,
+      legajoTerrestre: `LegajoTerrestre ${suffix}`,
+      funcion: "Otro",
+      grupo: `Grupo ${suffix}`,
     },
-    datosVuelo: {
-      aerolinea: "Airline XYZ",
-      codVuelo: "XYZ123",
-      origen: "JFK",
-      destino: "LAX",
-      horaArribo: "10:00",
-      horaPartida: "12:00",
-      demora: "0",
-      tipoVuelo: "Commercial",
-      matriculaAeronave: "ABC123",
-      posicion: "Gate 5",
+  ],
+  datosSeguridad: [
+    {
+      apellidoSeguridad: `ApellidoSeguridad ${suffix}`,
+      nombreSeguridad: `NombreSeguridad ${suffix}`,
+      dniSeguridad: `DniSeguridad ${suffix}`,
+      legajoSeguridad: `LegajoSeguridad ${suffix}`,
+      empresaSeguridad: `EmpresaSeguridad ${suffix}`,
     },
-    datosTerrestre: [
-      {
-        apellidoTerrestre: "Doe",
-        nombreTerrestre: "Jane",
-        dniTerrestre: "12345678",
-        legajoTerrestre: "87654321",
-        funcion: "Operator",
-        grupo: "A",
-      },
-    ],
-    datosSeguridad: [
-      {
-        apellidoSeguridad: "Smith",
-        nombreSeguridad: "John",
-        dniSeguridad: "87654321",
-        legajoSeguridad: "12345678",
-        empresaSeguridad: "Security Inc",
-      },
-    ],
-    datosVehiculos: [
-      {
-        tipoVehiculo: "Truck",
-        empresaVehiculo: "Transport LLC",
-        numInterno: "987654",
-        operadorVehiculo: "Jake",
-        observacionesVehiculo: "None",
-      },
-    ],
-    novEquipajes: "None",
-    novInspeccion: "None",
-    novOtras: "None",
-  };
-}
+  ],
+  datosVehiculos: [
+    {
+      tipoVehiculo: `TipoVehiculo ${suffix}`,
+      empresaVehiculo: `EmpresaVehiculo ${suffix}`,
+      numInterno: `NumInterno ${suffix}`,
+      operadorVehiculo: `OperadorVehiculo ${suffix}`,
+      observacionesVehiculo: `ObservacionesVehiculo ${suffix}`,
+    },
+  ],
+  novEquipajes: `NovEquipajes ${suffix}`,
+  novInspeccion: `NovInspeccion ${suffix}`,
+  novOtras: `NovOtras ${suffix}`,
+});
 
 export { generateMockPlanilla };

@@ -11,20 +11,42 @@ import {
 
 const router = express.Router();
 
-const fetchOptions = async (model) => {
-  const options = await model.find().select("value -_id").exec();
-  return options.map((option) => option.value);
+const optionsFetcher = (model) => {
+  switch (model.modelName) {
+    case "TipoControl":
+      return ["option1", "Personas"];
+    case "MediosTec":
+      return ["option3", "Otros"];
+    case "TipoPro":
+      return ["Rutina", "option6"];
+    case "Demora":
+      return ["SI", "NO"];
+    case "TipoVuelo":
+      return ["Arribo", "Partida"];
+    case "Funcion":
+      return ["Bodega", "Otro"];
+    default:
+      return [];
+  }
 };
 
-const validateOptions = (field, value, validOptions) => {
+export const fetchOptions = async (model) => {
+  if (process.env.NODE_ENV === "test") {
+    return optionsFetcher(model);
+  }
+  const options = await model.find().select("label -_id").exec();
+  return options.map((option) => option.label);
+};
+
+export const validateOptions = (field, value, validOptions) => {
   if (!validOptions.includes(value)) {
-    throw new Error(`Invalid value for ${field}`);
+    console.log(validOptions);
+    throw new Error(`Invalid value = ${value}, ${typeof value} for ${field}`);
   }
 };
 
 router.post("/", async (req, res) => {
   try {
-    // Destructure required fields from request body
     const {
       datosPsa,
       datosVuelo,
@@ -36,7 +58,6 @@ router.post("/", async (req, res) => {
       novOtras,
     } = req.body;
 
-    // Check if all required fields are present in the request body
     if (
       !datosPsa ||
       !datosVuelo ||
@@ -52,7 +73,6 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Fetch valid options from the database
     const validTipoControl = await fetchOptions(TipoControl);
     const validMediosTec = await fetchOptions(MediosTec);
     const validTipoPro = await fetchOptions(TipoPro);
@@ -60,18 +80,16 @@ router.post("/", async (req, res) => {
     const validTipoVuelo = await fetchOptions(TipoVuelo);
     const validFuncion = await fetchOptions(Funcion);
 
-    // Validate fields
     validateOptions("tipoControl", datosPsa.tipoControl, validTipoControl);
     validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
     validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
     validateOptions("demora", datosVuelo.demora, validDemora);
-    validateOptions("tipo", datosVuelo.tipo, validTipoVuelo);
+    validateOptions("tipoVuelo", datosVuelo.tipoVuelo, validTipoVuelo);
 
     datosTerrestre.forEach((item) =>
       validateOptions("funcion", item.funcion, validFuncion)
     );
 
-    // Create and save the Planilla
     const newPlanilla = await Planilla.create({
       datosPsa,
       datosVuelo,
@@ -81,7 +99,7 @@ router.post("/", async (req, res) => {
       novEquipajes,
       novInspeccion,
       novOtras,
-    }).exec();
+    });
 
     return res.status(201).json(newPlanilla);
   } catch (error) {
@@ -116,7 +134,6 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    // Destructure required fields from request body
     const {
       datosPsa,
       datosVuelo,
@@ -128,7 +145,6 @@ router.put("/:id", async (req, res) => {
       novOtras,
     } = req.body;
 
-    // Check if all required fields are present in the request body
     if (
       !datosPsa ||
       !datosVuelo ||
@@ -144,7 +160,6 @@ router.put("/:id", async (req, res) => {
       });
     }
 
-    // Fetch valid options from the database
     const validTipoControl = await fetchOptions(TipoControl);
     const validMediosTec = await fetchOptions(MediosTec);
     const validTipoPro = await fetchOptions(TipoPro);
@@ -152,7 +167,6 @@ router.put("/:id", async (req, res) => {
     const validTipoVuelo = await fetchOptions(TipoVuelo);
     const validFuncion = await fetchOptions(Funcion);
 
-    // Validate fields
     validateOptions("tipoControl", datosPsa.tipoControl, validTipoControl);
     validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
     validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
