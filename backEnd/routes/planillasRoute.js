@@ -128,7 +128,7 @@ router.get("/:id", async (req, res) => {
     return res.status(200).json(planilla);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: "Planilla not found" });
   }
 });
 
@@ -171,7 +171,7 @@ router.put("/:id", async (req, res) => {
     validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
     validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
     validateOptions("demora", datosVuelo.demora, validDemora);
-    validateOptions("tipo", datosVuelo.tipo, validTipoVuelo);
+    validateOptions("tipoVuelo", datosVuelo.tipoVuelo, validTipoVuelo);
 
     datosTerrestre.forEach((item) =>
       validateOptions("funcion", item.funcion, validFuncion)
@@ -180,7 +180,7 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const result = await Planilla.findByIdAndUpdate(id, req.body, {
       new: true,
-    }).exec();
+    });
     if (!result) {
       return res.status(404).send({
         message: "Planilla not found",
@@ -207,7 +207,7 @@ router.delete("/:id", async (req, res) => {
     return res.status(200).send({ message: "Planilla Deleted" });
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: "ID don't exists..." });
   }
 });
 
