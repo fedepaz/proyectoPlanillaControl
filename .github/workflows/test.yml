@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
@@ -56,7 +56,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: frontend-${{ runner.os }}-node-${{ hashFiles('frontEnd/package-lock.json') }}
@@ -80,7 +80,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
@@ -106,7 +106,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
@@ -132,7 +132,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: backend-${{ runner.os }}-node-${{ hashFiles('backEnd/package-lock.json') }}
@@ -158,7 +158,7 @@ jobs:
         with:
           node-version: "20"
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: frontend-${{ runner.os }}-node-${{ hashFiles('frontEnd/package-lock.json') }}
