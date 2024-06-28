@@ -66,7 +66,7 @@ router.post("/", async (req, res) => {
         message: "Faltan datos de Oficial",
       });
     }
-    //validate!!!
+    //validate!!! para probar el yml...
     const newOficial = await Oficial.create({
       dni,
       firstname,
