@@ -5,17 +5,11 @@ const router = express.Router();
 
 const fetchOptions = async (model) => {
   try {
-    const options = await model.find().select().exec();
+    const options = await model.find().exec();
     return options;
   } catch (error) {
     console.error(`Error fetching options: ${error.message}`);
     throw error;
-  }
-};
-
-const validateOptions = (field, value, validOptions) => {
-  if (!validOptions.includes(value)) {
-    throw new Error(`Invalid value for ${field}`);
   }
 };
 
@@ -66,13 +60,13 @@ router.post("/", async (req, res) => {
         message: "Faltan datos de Oficial",
       });
     }
-    //validate!!! para probar el yml...
+
     const newOficial = await Oficial.create({
       dni,
       firstname,
       lastname,
       legajo,
-    }).exec();
+    });
     return res.status(201).json(newOficial);
   } catch (error) {
     console.error("Error generando Oficial:", error);
