@@ -33,14 +33,14 @@ router.get("/:id", async (req, res) => {
     return res.status(200).json(oficial);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: "Oficial not found" });
   }
 });
 
 router.get("/dni/:dni", async (req, res) => {
   try {
     const { dni } = req.params;
-    const oficial = await Oficial.findOne({ dni: dni }).exec();
+    const oficial = await Oficial.findOne({ dni: dni });
 
     if (!oficial) {
       return res.status(404).json({ message: "No DNI" });
@@ -48,7 +48,7 @@ router.get("/dni/:dni", async (req, res) => {
     return res.status(200).json(oficial);
   } catch (error) {
     console.log(error.message);
-    return res.status(500).send({ message: error.message });
+    return res.status(500).send({ message: "Oficial not found" });
   }
 });
 

@@ -78,7 +78,7 @@ describe("GET /planillas", function () {
   });
 });
 
-describe("GET /planillas/:id", function () {
+describe("GET BY ID /planillas/:id", function () {
   let findStub;
 
   before(function () {
