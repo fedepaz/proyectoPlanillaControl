@@ -2,7 +2,7 @@ import { expect } from "chai";
 import request from "supertest";
 import app from "../index.js";
 
-describe("home funciona", function () {
+describe("GET HOME /", function () {
   it("should return status 234 and <h1>PLanillas</h1>", function (done) {
     request(app)
       .get("/")
@@ -14,7 +14,7 @@ describe("home funciona", function () {
   });
 });
 
-describe("data funciona", function () {
+describe("GET DATA /data", function () {
   it("should return status 200", function (done) {
     request(app)
       .get("/data")

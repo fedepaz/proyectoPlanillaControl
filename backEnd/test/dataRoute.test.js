@@ -12,7 +12,7 @@ import {
   Funcion,
 } from "../models/opcionesModel.js";
 
-describe("GET /data/tipoControl", function () {
+describe("GET TIPO CONTROL /data/tipoControl", function () {
   let findStub;
 
   before(function () {
@@ -39,7 +39,7 @@ describe("GET /data/tipoControl", function () {
   });
 });
 
-describe("GET /data/mediosTec", function () {
+describe("GET MEDIOS TEC /data/mediosTec", function () {
   let findStub;
 
   before(function () {
@@ -65,7 +65,7 @@ describe("GET /data/mediosTec", function () {
   });
 });
 
-describe("GET /data/tipoPro", function () {
+describe("GET TIPO PROCEDIMIENTOS /data/tipoPro", function () {
   let findStub;
 
   before(function () {
@@ -92,7 +92,7 @@ describe("GET /data/tipoPro", function () {
   });
 });
 
-describe("GET /data/demora", function () {
+describe("GET DEMORA /data/demora", function () {
   let findStub;
 
   before(function () {
@@ -119,7 +119,7 @@ describe("GET /data/demora", function () {
   });
 });
 
-describe("GET /data/tipoVuelo", function () {
+describe("GET TIPO VUELO /data/tipoVuelo", function () {
   let findStub;
 
   before(function () {
@@ -146,7 +146,7 @@ describe("GET /data/tipoVuelo", function () {
   });
 });
 
-describe("GET /data/funcion", function () {
+describe("GET FUNCION /data/funcion", function () {
   let findStub;
 
   before(function () {
