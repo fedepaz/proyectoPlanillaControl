@@ -1,6 +1,5 @@
 import express, { request, response } from "express";
 import dotenv from "dotenv";
-import { PORT, mongoDBURL } from "./config.js";
 import { connectDB } from "./db.js";
 import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
