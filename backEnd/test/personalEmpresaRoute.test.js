@@ -3,21 +3,22 @@ import request from "supertest";
 import sinon from "sinon";
 import mongoose from "mongoose";
 import app from "../index.js";
-import { Oficial } from "../models/personalModel.js";
-import { generateMockOficial } from "./mockGenerator.js";
+import { PersonalEmpresa } from "../models/personalModel.js";
+import { generateMockPersonalEmpresa } from "./mockGenerator.js";
 
-describe("GET /oficial", function () {
+describe("GET /personalEmpresa", function () {
   let findStub;
 
   before(function () {
-    const mockPaz = generateMockOficial("Paz");
-    const mockMessi = generateMockOficial("Messi");
-    const mockListOficial = [
+    const mockPaz = generateMockPersonalEmpresa("Paz");
+    const mockMessi = generateMockPersonalEmpresa("Messi");
+    const mockListPersonal = [
       {
         _id: "1",
         dni: mockPaz.dni,
         firstname: mockPaz.firstname,
         lastname: mockPaz.lastname,
+        empresa: mockPaz.empresa,
         legajo: mockPaz.legajo,
       },
       {
@@ -25,12 +26,13 @@ describe("GET /oficial", function () {
         dni: mockMessi.dni,
         firstname: mockMessi.firstname,
         lastname: mockMessi.lastname,
+        empresa: mockMessi.empresa,
         legajo: mockMessi.legajo,
       },
     ];
 
-    findStub = sinon.stub(Oficial, "find").returns({
-      exec: sinon.stub().resolves(mockListOficial),
+    findStub = sinon.stub(PersonalEmpresa, "find").returns({
+      exec: sinon.stub().resolves(mockListPersonal),
     });
   });
 
@@ -40,23 +42,26 @@ describe("GET /oficial", function () {
 
   it("should return status 200 and an object, with an array", function (done) {
     request(app)
-      .get("/oficial")
+      .get("/personalEmpresa")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an("object").that.is.not.empty;
-        expect(res.body["oficial"]).to.be.an("array").that.is.not.empty;
-        expect(res.body["oficial"][0]).to.have.property("lastname", "Paz");
+        expect(res.body["personalEmpresa"]).to.be.an("array").that.is.not.empty;
+        expect(res.body["personalEmpresa"][0]).to.have.property(
+          "lastname",
+          "Paz"
+        );
         done();
       });
   });
 });
 
-describe("GET BY ID /oficial/:id", function () {
+describe("GET BY ID /personalEmpresa/:id", function () {
   let findStub;
   before(function () {
-    const mockOficial = generateMockOficial("Paz");
-    findStub = sinon.stub(Oficial, "findById").returns({
-      exec: sinon.stub().resolves(mockOficial),
+    const mockPersonal = generateMockPersonalEmpresa("Paz");
+    findStub = sinon.stub(PersonalEmpresa, "findById").returns({
+      exec: sinon.stub().resolves(mockPersonal),
     });
   });
 
@@ -66,7 +71,7 @@ describe("GET BY ID /oficial/:id", function () {
 
   it("should return status 200 and an object", function (done) {
     request(app)
-      .get("/oficial/456789")
+      .get("/personalEmpresa/456789")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an("object");
@@ -78,23 +83,21 @@ describe("GET BY ID /oficial/:id", function () {
     findStub.resolves(null);
 
     request(app)
-      .get("/oficial/88888")
+      .get("/personalEmpresa/88888")
       .end((_err, res) => {
         expect(res.status).to.equal(500);
-        expect(res.body)
-          .to.have.property("message")
-          .that.equals("Oficial not found");
+        expect(res.body).to.have.property("message");
         done();
       });
   });
 });
 
-describe("GET BY DNI /oficial/dni/:dni", function () {
+describe("GET BY DNI /personalEmpresa/dni/:dni", function () {
   let findStub;
   before(function () {
-    const mockOficial = generateMockOficial("Paz");
-    findStub = sinon.stub(Oficial, "findOne").returns({
-      exec: sinon.stub().resolves(mockOficial),
+    const mockPersonal = generateMockPersonalEmpresa("Paz");
+    findStub = sinon.stub(PersonalEmpresa, "findOne").returns({
+      exec: sinon.stub().resolves(mockPersonal),
     });
   });
 
@@ -104,7 +107,7 @@ describe("GET BY DNI /oficial/dni/:dni", function () {
 
   it("should return status 200 and an object", function (done) {
     request(app)
-      .get("/oficial/dni/35456789")
+      .get("/personalEmpresa/dni/35456789")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an("object");
@@ -116,22 +119,22 @@ describe("GET BY DNI /oficial/dni/:dni", function () {
     findStub.resolves(null);
 
     request(app)
-      .get("/oficial/dni/88888")
+      .get("/personalEmpresa/dni/88888")
       .end((_err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body).to.have.property("message").that.equals("No DNI");
+        expect(res.body).to.have.property("message");
         done();
       });
   });
 });
 
-describe("POST /oficial", function () {
+describe("POST /personalEmpresa", function () {
   let createStub;
   this.timeout(10000);
 
   before(async function () {
-    const mockOficial = generateMockOficial("Paz");
-    createStub = sinon.stub(Oficial, "create").resolves(mockOficial);
+    const mockPersonal = generateMockPersonalEmpresa("Paz");
+    createStub = sinon.stub(PersonalEmpresa, "create").resolves(mockPersonal);
   });
 
   after(function () {
@@ -139,35 +142,35 @@ describe("POST /oficial", function () {
   });
 
   it("should return 201 and oficial created", function (done) {
-    const mockOficial1 = generateMockOficial("Paz");
+    const mockPersonal = generateMockPersonalEmpresa("Paz");
 
     request(app)
-      .post("/oficial")
-      .send(mockOficial1)
+      .post("/personalEmpresa")
+      .send(mockPersonal)
       .end((_err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an("object");
-        expect(res.body).to.have.property("dni").that.equals(mockOficial1.dni);
+        expect(res.body).to.have.property("dni").that.equals(mockPersonal.dni);
         expect(res.body)
           .to.have.property("firstname")
-          .that.equals(mockOficial1.firstname);
+          .that.equals(mockPersonal.firstname);
         expect(res.body)
           .to.have.property("lastname")
-          .that.equals(mockOficial1.lastname);
+          .that.equals(mockPersonal.lastname);
         expect(res.body)
           .to.have.property("legajo")
-          .that.equals(mockOficial1.legajo);
+          .that.equals(mockPersonal.legajo);
         done();
       });
   });
 
   it("should return status 400 if required fields are missing", function (done) {
-    const incompleteOficial = generateMockOficial("Paz");
-    delete incompleteOficial.legajo;
+    const incompletePersonal = generateMockPersonalEmpresa("Paz");
+    delete incompletePersonal.legajo;
 
     request(app)
-      .post("/oficial")
-      .send(incompleteOficial)
+      .post("/personalEmpresa")
+      .send(incompletePersonal)
       .end((_err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property("message");

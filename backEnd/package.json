@@ -11,7 +11,8 @@
     "test:index": "NODE_ENV=test mocha --require @babel/register 'test/index.test.js'",
     "test:dataRoute": "NODE_ENV=test mocha --require @babel/register 'test/dataRoute.test.js'",
     "test:planillaRoute": "NODE_ENV=test mocha --require @babel/register 'test/planillaRoute.test.js'",
-    "test:oficialRoute": "NODE_ENV=test mocha --require @babel/register 'test/oficialRoute.test.js'"
+    "test:oficialRoute": "NODE_ENV=test mocha --require @babel/register 'test/oficialRoute.test.js'",
+    "test:personalEmpresaRoute": "NODE_ENV=test mocha --require @babel/register 'test/personalEmpresaRoute.test.js'"
   },
   "keywords": [],
   "author": "fedePaz",
