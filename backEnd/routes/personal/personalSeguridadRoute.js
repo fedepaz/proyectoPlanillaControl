@@ -5,7 +5,7 @@ const router = express.Router();
 
 const fetchOptions = async (model) => {
   try {
-    const options = await model.find().select().exec();
+    const options = await model.find().exec();
     return options;
   } catch (error) {
     console.error(`Error fetching options: ${error.message}`);
@@ -49,7 +49,7 @@ router.get("/dni/:dni", async (req, res) => {
     const { dni } = req.params;
     const personal = await PersonalSeguridadEmpresa.findOne({
       dni: dni,
-    }).exec();
+    });
 
     if (!personal) {
       return res.status(404).json({ message: "No DNI" });
@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
       lastname,
       empresa,
       legajo,
-    }).exec();
+    });
     return res.status(201).json(newPersonal);
   } catch (error) {
     console.error("Error generando Personal:", error);
