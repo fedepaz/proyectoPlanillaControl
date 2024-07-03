@@ -1,7 +1,7 @@
-import express, { request, response } from "express";
+import express from "express";
+import helmet from "helmet";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
-import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
 import oficialRoute from "./routes/personal/oficialRoute.js";
@@ -16,6 +16,7 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
+app.use(helmet());
 app.use(express.json());
 app.use(cors());
 /*app.use(
