@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { planillaSchema, defaultValues } from "../types/schema";
+import { Schema, defaultValues } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
   useDemora,
