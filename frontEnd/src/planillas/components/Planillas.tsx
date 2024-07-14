@@ -13,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { Schema, defaultValues } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
@@ -30,9 +30,8 @@ import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 import { RHFCheckBox } from "../../components/RHFCheckBox";
 import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
-import { RHFSwitch } from "../../components/RHFSwitch";
 import { RHFTextField } from "../../components/RHFTextField";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 
 export function Planillas() {
   const tipoControlQuery = useTipoControl();
@@ -46,7 +45,7 @@ export function Planillas() {
   const { unregister, watch, control, reset, setValue } =
     useFormContext<Schema>();
 
-  const _id = useWatch({ control, name: "_id" });
+  const _id = useWatch({ name: "_id" });
 
   const ofiQuery = useOfi(_id);
 
@@ -57,23 +56,9 @@ export function Planillas() {
     return () => sub.unsubscribe();
   }, [watch]);
 
-  const isTeacher = useWatch({ control, name: "isTeacher" });
-
-  const { append, fields, remove, replace } = useFieldArray({
-    control,
-    name: "students",
-  });
-
   const handleOfiClick = (_id: string) => {
-    setValue("_id", _id);
+    setValue("datosPsa.responsable", _id);
   };
-
-  useEffect(() => {
-    if (!isTeacher) {
-      replace([]);
-      unregister("students");
-    }
-  }, [isTeacher, replace, unregister]);
 
   useEffect(() => {
     if (ofiQuery.data) {
@@ -131,61 +116,43 @@ export function Planillas() {
           sx={{ gap: 2, py: 3 }}
           divider={<Divider orientation="horizontal" flexItem />}
         >
-          <RHFTextField<Schema> name="name" label="Nombre" />
-          <RHFTextField<Schema> name="email" label="E-Mail" />
+          <RHFTextField<Schema> name="datosPsa.responsable" label="Nombre" />
+          <RHFTextField<Schema> name="datosVuelo.aerolinea" label="E-Mail" />
 
           <RHFAutocomplete<Schema>
-            name="tipoControl"
+            name="datosPsa.tipoControl"
             options={tipoControlQuery.data}
             label="Tipo de Controles"
           />
           <RHFToggleButtonGroup<Schema>
-            name="funcion"
+            name="datosTerrestre"
             options={funcionQuery.data}
           ></RHFToggleButtonGroup>
           <RHFRadioGroup<Schema>
-            name="demora"
+            name="datosVuelo.demora"
             options={demoraQuery.data}
             label="Demora"
           ></RHFRadioGroup>
           <RHFCheckBox<Schema>
-            name="mediosTec"
+            name="datosPsa.medioTec"
             options={medioTecQuery.data}
             label="Medios Técnicos"
           ></RHFCheckBox>
           <RHFDateTimePicker<Schema>
-            name="registrationDateAndTime"
+            name="datosPsa.horaIni"
             label="Comienzo Vuelo"
           />
           <RHFCheckBox<Schema>
-            name="tipoPro"
+            name="datosPsa.tipoPro"
             options={tipoProQuery.data}
             label="Tipo de Procedimientos"
           ></RHFCheckBox>
           <RHFRadioGroup<Schema>
-            name="tipoVuelo"
+            name="datosVuelo.tipoVuelo"
             options={tipoVueloQuery.data}
             label="Tipo de Vuelo"
           ></RHFRadioGroup>
 
-          <RHFSwitch<Schema> name="isTeacher" label="Sos o no" />
-          {isTeacher && (
-            <Button
-              variant="outlined"
-              onClick={() => append({ name: "" })}
-              type="button"
-            >
-              Add New Student
-            </Button>
-          )}
-          {fields.map((field, index) => (
-            <Fragment key={field.id}>
-              <RHFTextField name={`students.${index}.name`} label="Name" />
-              <Button color="error" onClick={() => remove(index)} type="button">
-                Remove
-              </Button>
-            </Fragment>
-          ))}
           <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Button type="submit">New User</Button>
             <Button onClick={handleReset}>Reset</Button>

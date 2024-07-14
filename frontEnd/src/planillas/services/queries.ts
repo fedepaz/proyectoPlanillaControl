@@ -91,7 +91,7 @@ export function useOficial() {
     queryFn: async (): Promise<OficialOption[]> => {
       try {
         const response = await axios.get<ApiResponse>(
-          "http://localhost:5555/personal/oficial"
+          "http://localhost:5555/oficial"
         );
         return response.data.oficial.map(
           (oficial) =>

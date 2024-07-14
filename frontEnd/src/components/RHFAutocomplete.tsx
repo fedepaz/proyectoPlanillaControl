@@ -20,51 +20,55 @@ export function RHFAutocomplete<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
-        <Autocomplete
-          options={options || []}
-          value={value.map((_id: string) =>
-            options?.find((item) => item._id === _id)
-          )}
-          getOptionLabel={(option) =>
-            options?.find((item) => item._id === option._id)?.label ?? ""
-          }
-          isOptionEqualToValue={(option, newValue) =>
-            option._id === newValue._id
-          }
-          onChange={(_, newValue) => {
-            onChange(newValue.map((item) => item._id));
-          }}
-          disableCloseOnSelect
-          multiple
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              fullWidth
-              inputRef={ref}
-              error={!!error}
-              helperText={error?.message}
-              label={label}
-            />
-          )}
-          renderOption={(props, option, { selected }) => {
-            const { key, ...restProps } = props as { key: React.Key } & Omit<
-              React.HTMLAttributes<HTMLLIElement>,
-              "key"
-            >;
-            return (
-              <Box component="li" key={key} {...restProps}>
-                <Checkbox
-                  icon={<CheckBoxOutlineBlank />}
-                  checkedIcon={<CheckBoxIcon />}
-                  checked={selected}
-                />
-                {option.label}
-              </Box>
-            );
-          }}
-        />
-      )}
+      render={({ field: { value, onChange, ref }, fieldState: { error } }) => {
+        const safeValue = Array.isArray(value) ? value : [];
+
+        return (
+          <Autocomplete
+            options={options || []}
+            value={safeValue.map((_id: string) =>
+              options?.find((item) => item._id === _id)
+            )}
+            getOptionLabel={(option) =>
+              options?.find((item) => item._id === option._id)?.label ?? ""
+            }
+            isOptionEqualToValue={(option, newValue) =>
+              option._id === newValue._id
+            }
+            onChange={(_, newValue) => {
+              onChange(newValue.map((item) => item._id));
+            }}
+            disableCloseOnSelect
+            multiple
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                fullWidth
+                inputRef={ref}
+                error={!!error}
+                helperText={error?.message}
+                label={label}
+              />
+            )}
+            renderOption={(props, option, { selected }) => {
+              const { key, ...restProps } = props as { key: React.Key } & Omit<
+                React.HTMLAttributes<HTMLLIElement>,
+                "key"
+              >;
+              return (
+                <Box component="li" key={key} {...restProps}>
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank />}
+                    checkedIcon={<CheckBoxIcon />}
+                    checked={selected}
+                  />
+                  {option.label}
+                </Box>
+              );
+            }}
+          />
+        );
+      }}
     />
   );
 }
