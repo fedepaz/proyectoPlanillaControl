@@ -15,7 +15,7 @@ const fetchOptions = async (model) => {
     const options = await model.find().select("_id label").exec();
     return options;
   } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
+    console.error(`Error fetching options of ${error.message}`);
     throw error;
   }
 };
