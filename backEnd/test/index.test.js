@@ -8,7 +8,7 @@ describe("GET HOME /", function () {
       .get("/")
       .end((err, res) => {
         expect(res.status).to.equal(234);
-        expect(res.text).to.contain("<h1>PLanillas</h1>");
+        expect(res.text).to.contain("planillasBackend");
         done();
       });
   });

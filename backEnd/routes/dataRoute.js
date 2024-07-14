@@ -22,7 +22,7 @@ const fetchOptions = async (model) => {
 
 router.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
-  return res.status(234).send("dataOptions connected");
+  return res.status(200).send("dataOptions connected");
 });
 
 router.get("/tipoControl", async (req, res) => {
