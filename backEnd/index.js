@@ -27,14 +27,7 @@ var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noCache());
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "trusted-cdn.com"],
-    },
-  })
-);
+app.use(helmet.contentSecurityPolicy());
 
 app.use(express.json());
 app.use(cors());
@@ -47,11 +40,13 @@ app.use(cors());
 );
 */
 app.get("/health", (req, res) => {
-  res.send("ok");
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return res.status(234).send("ok");
 });
 
 app.get("/", (request, response) => {
-  return response.status(234).send("<h1>PLanillas</h1>");
+  response.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return response.status(234).send("planillasBackend");
 });
 
 app.use("/data", dataRoute);
