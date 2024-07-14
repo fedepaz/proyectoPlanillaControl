@@ -15,13 +15,14 @@ const fetchOptions = async (model) => {
     const options = await model.find().select("_id label").exec();
     return options;
   } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
+    console.error(`Error fetching options of ${error.message}`);
     throw error;
   }
 };
 
 router.get("/", (req, res) => {
-  res.status(200).json({ message: "Connected successfully" });
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return res.status(200).send("dataOptions connected");
 });
 
 router.get("/tipoControl", async (req, res) => {

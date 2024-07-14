@@ -54,4 +54,23 @@ const generateMockPlanilla = (suffix) => ({
   novOtras: `NovOtras ${suffix}`,
 });
 
-export { generateMockPlanilla };
+const generateMockOficial = (apellido) => ({
+  dni: "35456789",
+  firstname: "Roberto",
+  lastname: `${apellido}`,
+  legajo: 123456,
+});
+
+const generateMockPersonalEmpresa = (apellido) => ({
+  dni: "35456789",
+  firstname: "Roberto",
+  lastname: `${apellido}`,
+  empresa: "lala SRL",
+  legajo: 123456,
+});
+
+export {
+  generateMockPlanilla,
+  generateMockOficial,
+  generateMockPersonalEmpresa,
+};

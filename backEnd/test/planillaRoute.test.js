@@ -78,7 +78,7 @@ describe("GET /planillas", function () {
   });
 });
 
-describe("GET /planillas/:id", function () {
+describe("GET BY ID /planillas/:id", function () {
   let findStub;
 
   before(function () {
@@ -118,6 +118,18 @@ describe("GET /planillas/:id", function () {
         done();
       });
   });
+  it("should return status 500 if id doesn't exist", function (done) {
+    findStub.resolves(null);
+    request(app)
+      .get("/planillas/888888")
+      .end((_err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body)
+          .to.have.property("message")
+          .that.equals("Planilla not found");
+        done();
+      });
+  });
 });
 
 describe("POST /planillas", function () {
@@ -129,7 +141,6 @@ describe("POST /planillas", function () {
     const mockPlanilla = generateMockPlanilla("Paz");
     createStub = sinon.stub(Planilla, "create").resolves(mockPlanilla);
 
-    // Pre-fetch valid options for validation
     global.validTipoControl = await fetchOptions(TipoControl);
     global.validMediosTec = await fetchOptions(MediosTec);
     global.validTipoPro = await fetchOptions(TipoPro);
@@ -202,5 +213,179 @@ describe("POST /planillas", function () {
         expect(res.body).to.have.property("message");
         done();
       });
+  });
+});
+
+describe("PUT /planillas/:id", function () {
+  let updateStub;
+
+  this.timeout(10000);
+
+  before(async function () {
+    const mockPlanilla = generateMockPlanilla("Paz");
+    updateStub = sinon
+      .stub(Planilla, "findByIdAndUpdate")
+      .resolves(mockPlanilla);
+
+    global.validTipoControl = await fetchOptions(TipoControl);
+    global.validMediosTec = await fetchOptions(MediosTec);
+    global.validTipoPro = await fetchOptions(TipoPro);
+    global.validDemora = await fetchOptions(Demora);
+    global.validTipoVuelo = await fetchOptions(TipoVuelo);
+    global.validFuncion = await fetchOptions(Funcion);
+  });
+
+  after(function () {
+    updateStub.restore();
+  });
+
+  it("should return 200 and planilla updated successfully", function (done) {
+    const mockPlanilla = generateMockPlanilla("Martinez");
+
+    validateOptions(
+      "tipoControl",
+      mockPlanilla.datosPsa.tipoControl,
+      global.validTipoControl
+    );
+    validateOptions(
+      "medioTec",
+      mockPlanilla.datosPsa.medioTec,
+      global.validMediosTec
+    );
+    validateOptions(
+      "tipoPro",
+      mockPlanilla.datosPsa.tipoPro,
+      global.validTipoPro
+    );
+    validateOptions(
+      "demora",
+      mockPlanilla.datosVuelo.demora,
+      global.validDemora
+    );
+    validateOptions(
+      "tipoVuelo",
+      mockPlanilla.datosVuelo.tipoVuelo,
+      global.validTipoVuelo
+    );
+    mockPlanilla.datosTerrestre.forEach((item) =>
+      validateOptions("funcion", item.funcion, global.validFuncion)
+    );
+
+    const id = "someMockId";
+
+    request(app)
+      .put(`/planillas/${id}`)
+      .send(mockPlanilla)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an("object");
+        expect(res.body)
+          .to.have.property("message")
+          .that.equals("Planilla updated successfully");
+        expect(res.body).to.have.property("data").that.is.an("object");
+        done();
+      });
+  });
+
+  it("should return status 400 if required fields are missing", function (done) {
+    const incompletePlanilla = generateMockPlanilla("Martinez");
+    delete incompletePlanilla.datosPsa;
+
+    const id = "someMockId";
+
+    request(app)
+      .put(`/planillas/${id}`)
+      .send(incompletePlanilla)
+      .end((_err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property("message");
+        done();
+      });
+  });
+
+  it("should return 404 if the planilla with the given 'id' does not exist", function (done) {
+    const mockPlanilla = generateMockPlanilla("Paz");
+
+    updateStub.resolves(null);
+
+    const invalidId = "8888";
+
+    request(app)
+      .put(`/planillas/${invalidId}`)
+      .send(mockPlanilla)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        expect(res.body)
+          .to.have.property("message")
+          .that.equals("Planilla not found");
+        done();
+      });
+  });
+
+  describe("DELETE /planillas/:id", function () {
+    let deleteStub;
+
+    this.timeout(10000);
+
+    before(async function () {
+      const mockPlanilla = generateMockPlanilla("Paz");
+      deleteStub = sinon.stub(Planilla, "findByIdAndDelete").callsFake((id) => {
+        if (id === "nonexistentId") {
+          return { exec: () => Promise.resolve(null) };
+        } else if (id === "8888") {
+          return Promise.resolve(null);
+        } else {
+          return { exec: () => Promise.resolve(mockPlanilla) };
+        }
+      });
+    });
+
+    after(function () {
+      deleteStub.restore();
+    });
+
+    it("should return 200 and planilla deleted successfully", function (done) {
+      const id = "11111";
+
+      request(app)
+        .delete(`/planillas/${id}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body)
+            .to.have.property("message")
+            .that.equals("Planilla Deleted");
+          done();
+        });
+    });
+
+    it("should return 404 if the planilla with the given 'id' does not exist", function (done) {
+      const invalidId = "nonexistentId";
+
+      request(app)
+        .delete(`/planillas/${invalidId}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(404);
+          expect(res.body)
+            .to.have.property("message")
+            .that.equals("Planilla not found");
+          done();
+        });
+    });
+    it("should return 500 if the given 'id' does not exist", function (done) {
+      request(app)
+        .delete(`/planillas/8888`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(500);
+          expect(res.body)
+            .to.have.property("message")
+            .that.equals("ID don't exists...");
+          done();
+        });
+    });
   });
 });

@@ -1,8 +1,7 @@
-import express, { request, response } from "express";
+import express from "express";
+import helmet from "helmet";
 import dotenv from "dotenv";
-import { PORT, mongoDBURL } from "./config.js";
 import { connectDB } from "./db.js";
-import mongoose from "mongoose";
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
 import oficialRoute from "./routes/personal/oficialRoute.js";
@@ -17,6 +16,19 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
+
+app.use(helmet());
+app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.xssFilter({}));
+app.use(helmet.noSniff());
+app.use(helmet.ieNoOpen());
+var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
+app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.noCache());
+app.use(helmet.contentSecurityPolicy());
+
 app.use(express.json());
 app.use(cors());
 /*app.use(
@@ -28,11 +40,13 @@ app.use(cors());
 );
 */
 app.get("/health", (req, res) => {
-  res.send("ok");
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return res.status(234).send("ok");
 });
 
 app.get("/", (request, response) => {
-  return response.status(234).send("<h1>PLanillas</h1>");
+  response.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return response.status(234).send("planillasBackend");
 });
 
 app.use("/data", dataRoute);

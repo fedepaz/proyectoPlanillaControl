@@ -23,7 +23,7 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.5",
+    "react-hook-form": "^7.52.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -36,7 +36,11 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "standard": "^17.1.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   }
 }
