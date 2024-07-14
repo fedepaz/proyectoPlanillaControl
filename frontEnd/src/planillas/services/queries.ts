@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Option, OficialOption } from "../../types/option";
 import { ApiGetOficial } from "../types/apiTypes";
-import { SchemaOficial } from "../types/schema";
+import { OficialSchema } from "../types/apiSchema";
 
 export function useTipoControl() {
   return useQuery({
@@ -114,7 +114,7 @@ export function useOficial() {
 export function useOfi(_id: string) {
   return useQuery({
     queryKey: ["oficial", { _id }],
-    queryFn: async (): Promise<SchemaOficial> => {
+    queryFn: async (): Promise<OficialSchema> => {
       if (!_id) {
         throw new Error("Invalid ID: _id is undefined");
       }
@@ -124,8 +124,6 @@ export function useOfi(_id: string) {
           `http://localhost:5555/personal/oficial/${_id}`
         );
         return {
-          variant: "edit",
-          _id: data._id,
           dni: data.dni,
           firstname: data.firstname,
           lastname: data.lastname,

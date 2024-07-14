@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Schema } from "../types/schema";
+import { Schema } from "../types/planillaSchema";
 import axios from "axios";
 
 export function useCreateOficial() {

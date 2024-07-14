@@ -60,9 +60,9 @@ const planillaSchema = z
 
 export { planillaSchema };
 
-export type Schema = z.infer<typeof planillaSchema>;
+export type PlanillaSchema = z.infer<typeof planillaSchema>;
 
-export const defaultValues: Schema = {
+export const defaultValuesPlanilla: PlanillaSchema = {
   datosPsa: {
     fecha: "",
     responsable: "",

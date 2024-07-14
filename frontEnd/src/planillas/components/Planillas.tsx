@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
-import { Schema, defaultValues } from "../types/schema";
+import { PlanillaSchema, defaultValuesPlanilla } from "../types/planillaSchema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
   useDemora,
@@ -42,8 +42,7 @@ export function Planillas() {
   const tipoVueloQuery = useTipoVuelo();
   const oficialQuery = useOficial();
 
-  const { unregister, watch, control, reset, setValue } =
-    useFormContext<Schema>();
+  const { watch, reset, setValue } = useFormContext<PlanillaSchema>();
 
   const _id = useWatch({ name: "_id" });
 
@@ -67,87 +66,55 @@ export function Planillas() {
   }, [reset, ofiQuery.data]);
 
   const handleReset = () => {
-    reset(defaultValues);
+    reset(defaultValuesPlanilla);
   };
 
   return (
     <Container maxWidth="sm" component="form">
-      <Stack sx={{ flexDirection: "row", gap: 2 }}>
-        <List
-          subheader={<ListSubheader>Oficiales</ListSubheader>}
-          sx={{ padding: 2 }}
-        >
-          {oficialQuery.data?.map((oficial) => (
-            <ListItem key={oficial._id} disablePadding>
-              <ListItemButton
-                onClick={() => handleOfiClick(oficial._id)}
-                selected={_id === oficial._id}
-              >
-                <ListItemText
-                  primary={oficial.firstname + " " + oficial.lastname}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-          {_id ? (
-            <Box>
-              <Card variant="outlined">
-                <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {ofiQuery.data?.lastname}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {ofiQuery.data?.firstname}
-                  </Typography>
-                  <Typography variant="body2">
-                    {ofiQuery.data?.legajo}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          ) : null}
-        </List>
+      <Stack sx={{ flexDirection: "row" }}>
         <Stack
           justifyContent="flex-start"
           sx={{ gap: 2, py: 3 }}
           divider={<Divider orientation="horizontal" flexItem />}
         >
-          <RHFTextField<Schema> name="datosPsa.responsable" label="Nombre" />
-          <RHFTextField<Schema> name="datosVuelo.aerolinea" label="E-Mail" />
+          <RHFTextField<PlanillaSchema>
+            name="datosPsa.responsable"
+            label="Nombre"
+          />
+          <RHFTextField<PlanillaSchema>
+            name="datosVuelo.aerolinea"
+            label="E-Mail"
+          />
 
-          <RHFAutocomplete<Schema>
+          <RHFAutocomplete<PlanillaSchema>
             name="datosPsa.tipoControl"
             options={tipoControlQuery.data}
             label="Tipo de Controles"
           />
-          <RHFToggleButtonGroup<Schema>
+          <RHFToggleButtonGroup<PlanillaSchema>
             name="datosTerrestre"
             options={funcionQuery.data}
           ></RHFToggleButtonGroup>
-          <RHFRadioGroup<Schema>
+          <RHFRadioGroup<PlanillaSchema>
             name="datosVuelo.demora"
             options={demoraQuery.data}
             label="Demora"
           ></RHFRadioGroup>
-          <RHFCheckBox<Schema>
+          <RHFCheckBox<PlanillaSchema>
             name="datosPsa.medioTec"
             options={medioTecQuery.data}
             label="Medios Técnicos"
           ></RHFCheckBox>
-          <RHFDateTimePicker<Schema>
+          <RHFDateTimePicker<PlanillaSchema>
             name="datosPsa.horaIni"
             label="Comienzo Vuelo"
           />
-          <RHFCheckBox<Schema>
+          <RHFCheckBox<PlanillaSchema>
             name="datosPsa.tipoPro"
             options={tipoProQuery.data}
             label="Tipo de Procedimientos"
           ></RHFCheckBox>
-          <RHFRadioGroup<Schema>
+          <RHFRadioGroup<PlanillaSchema>
             name="datosVuelo.tipoVuelo"
             options={tipoVueloQuery.data}
             label="Tipo de Vuelo"
