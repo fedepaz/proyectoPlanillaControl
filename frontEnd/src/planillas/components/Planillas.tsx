@@ -1,21 +1,6 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Divider, Stack, Typography } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 import { PlanillaSchema, defaultValuesPlanilla } from "../types/planillaSchema";
-import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import {
   useDemora,
   useFuncion,
@@ -40,13 +25,11 @@ export function Planillas() {
   const medioTecQuery = useMediosTec();
   const tipoProQuery = useTipoPro();
   const tipoVueloQuery = useTipoVuelo();
-  const oficialQuery = useOficial();
+  //const oficialQuery = useOficial();
 
   const { watch, reset, setValue } = useFormContext<PlanillaSchema>();
 
   const _id = useWatch({ name: "_id" });
-
-  const ofiQuery = useOfi(_id);
 
   useEffect(() => {
     const sub = watch((value) => {
@@ -54,7 +37,9 @@ export function Planillas() {
     });
     return () => sub.unsubscribe();
   }, [watch]);
-
+  /*
+  const ofiQuery = useOfi(_id);
+  
   const handleOfiClick = (_id: string) => {
     setValue("datosPsa.responsable", _id);
   };
@@ -64,7 +49,7 @@ export function Planillas() {
       reset(ofiQuery.data);
     }
   }, [reset, ofiQuery.data]);
-
+*/
   const handleReset = () => {
     reset(defaultValuesPlanilla);
   };
@@ -86,14 +71,15 @@ export function Planillas() {
             label="E-Mail"
           />
 
-          <RHFAutocomplete<PlanillaSchema>
+          <RHFToggleButtonGroup<PlanillaSchema>
             name="datosPsa.tipoControl"
             options={tipoControlQuery.data}
-            label="Tipo de Controles"
+            label="Tipo Control"
           />
           <RHFToggleButtonGroup<PlanillaSchema>
             name="datosTerrestre"
             options={funcionQuery.data}
+            label="Función"
           ></RHFToggleButtonGroup>
           <RHFRadioGroup<PlanillaSchema>
             name="datosVuelo.demora"

@@ -8,7 +8,7 @@ const planillaSchema = z
       horaIni: z.string().min(1),
       horaFin: z.string().min(1),
       cant: z.string().min(1),
-      tipoControl: z.string().min(1),
+      tipoControl: z.array(z.string()),
       medioTec: z.string().min(1),
       tipoPro: z.string().min(1),
     }),

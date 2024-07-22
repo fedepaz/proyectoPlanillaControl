@@ -30,15 +30,13 @@ app.use(helmet.noCache());
 app.use(helmet.contentSecurityPolicy());
 
 app.use(express.json());
-app.use(cors());
-/*app.use(
+app.use(
   cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
 );
-*/
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");
