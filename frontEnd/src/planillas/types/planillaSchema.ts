@@ -26,9 +26,9 @@ const planillaSchema = z
     }),
     datosTerrestre: z.array(
       z.object({
+        dniTerrestre: z.string().min(1),
         apellidoTerrestre: z.string().min(1),
         nombreTerrestre: z.string().min(1),
-        dniTerrestre: z.string().min(1),
         legajoTerrestre: z.string().min(1),
         funcion: z.string().min(1),
         grupo: z.string().min(1),
@@ -69,7 +69,7 @@ export const defaultValuesPlanilla: PlanillaSchema = {
     horaIni: "",
     horaFin: "",
     cant: "",
-    tipoControl: "",
+    tipoControl: [""],
     medioTec: "",
     tipoPro: "",
   },
@@ -87,9 +87,9 @@ export const defaultValuesPlanilla: PlanillaSchema = {
   },
   datosTerrestre: [
     {
+      dniTerrestre: "",
       apellidoTerrestre: "",
       nombreTerrestre: "",
-      dniTerrestre: "",
       legajoTerrestre: "",
       funcion: "",
       grupo: "",

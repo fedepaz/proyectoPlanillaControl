@@ -1,4 +1,4 @@
-import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { FormLabel, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";
 
@@ -20,7 +20,7 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
       name={name}
       render={({ field: { onChange, value, ...restField } }) => (
         <>
-          <Typography>{label}</Typography>
+          <FormLabel> {label}</FormLabel>
           <ToggleButtonGroup
             onChange={(_, newValue) => {
               if (newValue.length) {

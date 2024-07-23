@@ -57,3 +57,78 @@ export const defaultValuesPersonalSeguridad: PersonalSeguridadSchema = {
   empresa: "",
   legajo: "",
 };
+
+const empresaSchema = z.object({
+  empresa: z.string().min(1),
+});
+
+export { empresaSchema };
+
+export type EmpresaSchema = z.infer<typeof empresaSchema>;
+
+export const defaultValuesEmpresa: EmpresaSchema = {
+  empresa: "",
+};
+
+const matriculaAeronaveSchema = z.object({
+  matriculaAeronave: z.string().min(1),
+  empresa: z.string().min(1),
+});
+export { matriculaAeronaveSchema };
+
+export type MatriculaAeronaveSchema = z.infer<typeof matriculaAeronaveSchema>;
+
+export const defaultValuesMatricula: MatriculaAeronaveSchema = {
+  matriculaAeronave: "",
+  empresa: "",
+};
+
+const aeropuertosSchema = z.object({
+  aeropuerto: z.string().min(1),
+  codIATA: z.string().toUpperCase().min(1).max(3),
+  codOACI: z.string().toUpperCase().min(1).max(4),
+});
+
+export { aeropuertosSchema };
+
+export type AeropuertosSchema = z.infer<typeof aeropuertosSchema>;
+
+export const defaultValuesAeropuertos: AeropuertosSchema = {
+  aeropuerto: "",
+  codIATA: "DOZ",
+  codOACI: "SAME",
+};
+
+const vehiculoSchema = z.object({
+  numInterno: z.string().min(1),
+  empresa: z.string().min(1),
+  tipoVehiculo: z.string().min(1),
+});
+
+export { vehiculoSchema };
+
+export type VehiculosSchema = z.infer<typeof vehiculoSchema>;
+
+export const defaultValuesVehiculos: VehiculosSchema = {
+  numInterno: "",
+  empresa: "",
+  tipoVehiculo: "",
+};
+
+const codVueloSchema = z.object({
+  codVuelo: z.string().min(1),
+  origen: z.string().min(1),
+  destino: z.string().min(1),
+  empresa: z.string().min(1),
+});
+
+export { codVueloSchema };
+
+export type CodVueloSchema = z.infer<typeof codVueloSchema>;
+
+export const defaultValuesCodVuelos: CodVueloSchema = {
+  codVuelo: "",
+  origen: "",
+  destino: "",
+  empresa: "",
+};
