@@ -1,13 +1,17 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { Planillas } from "./Planillas";
-import { Schema, defaultValues, planillaSchema } from "../types/schema";
+import {
+  PlanillaSchema,
+  defaultValuesPlanilla,
+  planillaSchema,
+} from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function PlanillasProvider() {
-  const methods = useForm<Schema>({
+  const methods = useForm<PlanillaSchema>({
     mode: "all",
     resolver: zodResolver(planillaSchema),
-    defaultValues,
+    defaultValues: defaultValuesPlanilla,
   });
 
   return (

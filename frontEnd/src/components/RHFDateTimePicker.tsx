@@ -19,7 +19,12 @@ export function RHFDateTimePicker<T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-          <DateTimePicker label={label} {...field} />
+          <DateTimePicker
+            label={label}
+            {...field}
+            views={["hours", "minutes"]}
+            viewRenderers={{ year: null, month: null }}
+          />
         </LocalizationProvider>
       )}
     />

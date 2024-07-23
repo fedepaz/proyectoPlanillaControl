@@ -8,7 +8,7 @@ const planillaSchema = z
       horaIni: z.string().min(1),
       horaFin: z.string().min(1),
       cant: z.string().min(1),
-      tipoControl: z.string().min(1),
+      tipoControl: z.array(z.string()),
       medioTec: z.string().min(1),
       tipoPro: z.string().min(1),
     }),
@@ -26,9 +26,9 @@ const planillaSchema = z
     }),
     datosTerrestre: z.array(
       z.object({
+        dniTerrestre: z.string().min(1),
         apellidoTerrestre: z.string().min(1),
         nombreTerrestre: z.string().min(1),
-        dniTerrestre: z.string().min(1),
         legajoTerrestre: z.string().min(1),
         funcion: z.string().min(1),
         grupo: z.string().min(1),
@@ -60,16 +60,16 @@ const planillaSchema = z
 
 export { planillaSchema };
 
-export type Schema = z.infer<typeof planillaSchema>;
+export type PlanillaSchema = z.infer<typeof planillaSchema>;
 
-export const defaultValues: Schema = {
+export const defaultValuesPlanilla: PlanillaSchema = {
   datosPsa: {
     fecha: "",
     responsable: "",
     horaIni: "",
     horaFin: "",
     cant: "",
-    tipoControl: "",
+    tipoControl: [""],
     medioTec: "",
     tipoPro: "",
   },
@@ -87,9 +87,9 @@ export const defaultValues: Schema = {
   },
   datosTerrestre: [
     {
+      dniTerrestre: "",
       apellidoTerrestre: "",
       nombreTerrestre: "",
-      dniTerrestre: "",
       legajoTerrestre: "",
       funcion: "",
       grupo: "",
