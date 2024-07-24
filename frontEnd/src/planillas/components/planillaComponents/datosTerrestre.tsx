@@ -4,7 +4,7 @@ import {
   defaultValuesPlanilla,
   PlanillaSchema,
 } from "../../types/planillaSchema";
-import { PersonalComponent } from "./usuariosComponents/personalComponent";
+import { PersonalComponent } from "./components/personalComponent";
 import { RHFToggleButtonGroup } from "../../../components/RHFToggleButtonGroup";
 import { useFuncion } from "../../services/queries";
 import { FormProvider, useForm } from "react-hook-form";
@@ -27,6 +27,7 @@ export function DatosTerrestre() {
             Datos Terrestre
           </Typography>
           <PersonalComponent />
+
           <RHFToggleButtonGroup<PlanillaSchema>
             name="datosTerrestre.0.funcion"
             options={funcionQuery.data}

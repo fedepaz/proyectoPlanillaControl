@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const oficialSchema = z.object({
-  dni: z.number(),
-  firstname: z.string().min(1),
+  dni: z.string().min(1),
+  firstname: z.string().min(1).max(5),
   lastname: z.string().min(1),
-  legajo: z.number().max(6),
+  legajo: z.string().min(1),
 });
 
 export { oficialSchema };
@@ -12,10 +12,10 @@ export { oficialSchema };
 export type OficialSchema = z.infer<typeof oficialSchema>;
 
 export const defaultValuesOficial: OficialSchema = {
-  dni: 0,
-  firstname: "",
-  lastname: "",
-  legajo: 555555,
+  dni: "34617839",
+  firstname: "Fede",
+  lastname: "Paz",
+  legajo: "505771",
 };
 
 const personalEmpresaSchema = z.object({
@@ -31,11 +31,11 @@ export { personalEmpresaSchema };
 export type PersonalEmpresaSchema = z.infer<typeof personalEmpresaSchema>;
 
 export const defaultValuesPersonalEmpresa: PersonalEmpresaSchema = {
-  dni: "",
-  firstname: "",
-  lastname: "",
-  empresa: "",
-  legajo: "",
+  dni: "35189189",
+  firstname: "Alguno",
+  lastname: "Otro",
+  empresa: "Serza",
+  legajo: "8555",
 };
 
 const personalSeguridadSchema = z.object({
@@ -51,11 +51,11 @@ export { personalSeguridadSchema };
 export type PersonalSeguridadSchema = z.infer<typeof personalSeguridadSchema>;
 
 export const defaultValuesPersonalSeguridad: PersonalSeguridadSchema = {
-  dni: "",
-  firstname: "",
-  lastname: "",
-  empresa: "",
-  legajo: "",
+  dni: "35189189",
+  firstname: "Alguno",
+  lastname: "Otro",
+  empresa: "GPS",
+  legajo: "8555",
 };
 
 const empresaSchema = z.object({
@@ -67,7 +67,7 @@ export { empresaSchema };
 export type EmpresaSchema = z.infer<typeof empresaSchema>;
 
 export const defaultValuesEmpresa: EmpresaSchema = {
-  empresa: "",
+  empresa: "Aerolineas Argentinas",
 };
 
 const matriculaAeronaveSchema = z.object({
@@ -79,8 +79,8 @@ export { matriculaAeronaveSchema };
 export type MatriculaAeronaveSchema = z.infer<typeof matriculaAeronaveSchema>;
 
 export const defaultValuesMatricula: MatriculaAeronaveSchema = {
-  matriculaAeronave: "",
-  empresa: "",
+  matriculaAeronave: "LV-ZFO",
+  empresa: "Aerolineas Argentinas",
 };
 
 const aeropuertosSchema = z.object({
@@ -94,15 +94,15 @@ export { aeropuertosSchema };
 export type AeropuertosSchema = z.infer<typeof aeropuertosSchema>;
 
 export const defaultValuesAeropuertos: AeropuertosSchema = {
-  aeropuerto: "",
+  aeropuerto: "Mendoza",
   codIATA: "DOZ",
   codOACI: "SAME",
 };
 
 const vehiculoSchema = z.object({
-  numInterno: z.string().min(1),
-  empresa: z.string().min(1),
   tipoVehiculo: z.string().min(1),
+  empresa: z.string().min(1),
+  numInterno: z.string().min(1),
 });
 
 export { vehiculoSchema };
@@ -110,9 +110,9 @@ export { vehiculoSchema };
 export type VehiculosSchema = z.infer<typeof vehiculoSchema>;
 
 export const defaultValuesVehiculos: VehiculosSchema = {
-  numInterno: "",
-  empresa: "",
-  tipoVehiculo: "",
+  tipoVehiculo: "Cinta",
+  empresa: "Aerolineas Argentinas",
+  numInterno: "10587",
 };
 
 const codVueloSchema = z.object({
@@ -127,8 +127,8 @@ export { codVueloSchema };
 export type CodVueloSchema = z.infer<typeof codVueloSchema>;
 
 export const defaultValuesCodVuelos: CodVueloSchema = {
-  codVuelo: "",
-  origen: "",
-  destino: "",
-  empresa: "",
+  codVuelo: "1805",
+  origen: "DOZ",
+  destino: "AEP",
+  empresa: "Aerolineas Argentinas",
 };

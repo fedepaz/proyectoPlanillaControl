@@ -5,8 +5,8 @@ const planillaSchema = z
     datosPsa: z.object({
       fecha: z.string().min(1),
       responsable: z.string().min(1),
-      horaIni: z.string().min(1),
-      horaFin: z.string().min(1),
+      horaIni: z.string().time(),
+      horaFin: z.string().time(),
       cant: z.string().min(1),
       tipoControl: z.array(z.string()),
       medioTec: z.string().min(1),
@@ -66,8 +66,8 @@ export const defaultValuesPlanilla: PlanillaSchema = {
   datosPsa: {
     fecha: "",
     responsable: "",
-    horaIni: "",
-    horaFin: "",
+    horaIni: "00:00:00",
+    horaFin: "00:00:00",
     cant: "",
     tipoControl: [""],
     medioTec: "",
@@ -113,7 +113,7 @@ export const defaultValuesPlanilla: PlanillaSchema = {
       observacionesVehiculo: "",
     },
   ],
-  novEquipajes: "",
-  novInspeccion: "",
-  novOtras: "",
+  novEquipajes: "Equipaje Roto",
+  novInspeccion: "Alguna Boludez",
+  novOtras: "Pasó un pájaro",
 };

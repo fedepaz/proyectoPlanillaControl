@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { DatosPsa } from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
+import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
+import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
+import { RHFTextField } from "../../components/RHFTextField";
 
 export function Planillas() {
   //const oficialQuery = useOficial();
@@ -38,13 +41,31 @@ export function Planillas() {
     <Container maxWidth="sm" component="form">
       <Stack sx={{ flexDirection: "row" }}>
         <Stack
+          useFlexGap
+          flexWrap="wrap"
           justifyContent="flex-start"
           sx={{ gap: 2, py: 3 }}
           divider={<Divider orientation="horizontal" flexItem />}
         >
           <DatosPsa />
+          {/*
+           */}
           <DatosVuelo />
           <DatosTerrestre />
+          <DatosSeguridad />
+          <DatosVehiculos />
+          <RHFTextField<PlanillaSchema>
+            name="novEquipajes"
+            label="Novedades Equipajes"
+          />
+          <RHFTextField<PlanillaSchema>
+            name="novInspeccion"
+            label="Novedades Inspección"
+          />
+          <RHFTextField<PlanillaSchema>
+            name="novOtras"
+            label="Otras Novedades"
+          />
 
           <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Button type="submit">New User</Button>
