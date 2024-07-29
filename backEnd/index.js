@@ -64,7 +64,9 @@ if (process.env.NODE_ENV !== "test") {
   connectDB()
     .then(() => {
       app.listen(process.env.PORT, () => {
-        console.log(`App is listening in port: ${process.env.PORT}`);
+        console.log(
+          `App is listening in port: http://localhost:${process.env.PORT}/`
+        );
       });
     })
     .catch((error) => {

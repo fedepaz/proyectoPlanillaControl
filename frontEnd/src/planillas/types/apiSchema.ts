@@ -1,65 +1,111 @@
 import { z } from "zod";
 
 const oficialSchema = z.object({
-  dni: z.string().min(1),
-  firstname: z.string().min(1).max(5),
-  lastname: z.string().min(1),
-  legajo: z.string().min(1),
+  dni: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(30000000, "DNI insuficiente")
+    .max(99999999, "El DNI no puede tener más de 9 dígitos"),
+  firstname: z
+    .string()
+    .min(1, "El Nombre es requerido")
+    .max(20, "El Nombre es muy largo"),
+  lastname: z
+    .string()
+    .min(1, "El Apellido es requerido")
+    .max(20, "El Apellido es muy largo"),
+  legajo: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(500000, "Legajo insuficiente")
+    .max(550000, "El Legajo no existe"),
 });
 
 export { oficialSchema };
 
 export type OficialSchema = z.infer<typeof oficialSchema>;
 
-export const defaultValuesOficial: OficialSchema = {
-  dni: "34617839",
-  firstname: "Fede",
-  lastname: "Paz",
-  legajo: "505771",
+export const defaultValuesOficial: Partial<OficialSchema> = {
+  firstname: "",
+  lastname: "",
 };
 
 const personalEmpresaSchema = z.object({
-  dni: z.string().min(1),
-  firstname: z.string().min(1),
-  lastname: z.string().min(1),
-  empresa: z.string().min(1),
-  legajo: z.string().min(1),
+  dni: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(30000000, "DNI insuficiente")
+    .max(99999999, "El DNI no puede tener más de 9 dígitos"),
+  firstname: z
+    .string()
+    .min(1, "El Nombre es requerido")
+    .max(20, "El Nombre es muy largo"),
+  lastname: z
+    .string()
+    .min(1, "El Apellido es requerido")
+    .max(20, "El Apellido es muy largo"),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo"),
+  legajo: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(1, "Legajo insuficiente")
+    .max(999999, "El Legajo no existe"),
 });
 
 export { personalEmpresaSchema };
 
 export type PersonalEmpresaSchema = z.infer<typeof personalEmpresaSchema>;
 
-export const defaultValuesPersonalEmpresa: PersonalEmpresaSchema = {
-  dni: "35189189",
-  firstname: "Alguno",
-  lastname: "Otro",
-  empresa: "Serza",
-  legajo: "8555",
+export const defaultValuesPersonalEmpresa: Partial<PersonalEmpresaSchema> = {
+  firstname: "",
+  lastname: "",
+  empresa: "",
 };
 
 const personalSeguridadSchema = z.object({
-  dni: z.string().min(1),
-  firstname: z.string().min(1),
-  lastname: z.string().min(1),
-  empresa: z.string().min(1),
-  legajo: z.string().min(1),
+  dni: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(30000000, "DNI insuficiente")
+    .max(99999999, "El DNI no puede tener más de 9 dígitos"),
+  firstname: z
+    .string()
+    .min(1, "El Nombre es requerido")
+    .max(20, "El Nombre es muy largo"),
+  lastname: z
+    .string()
+    .min(1, "El Apellido es requerido")
+    .max(20, "El Apellido es muy largo"),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo"),
+  legajo: z
+    .number({ message: "Solo número se pueden ingresar" })
+    .int()
+    .min(1, "Legajo insuficiente")
+    .max(999999, "El Legajo no existe"),
 });
 
 export { personalSeguridadSchema };
 
 export type PersonalSeguridadSchema = z.infer<typeof personalSeguridadSchema>;
 
-export const defaultValuesPersonalSeguridad: PersonalSeguridadSchema = {
-  dni: "35189189",
-  firstname: "Alguno",
-  lastname: "Otro",
-  empresa: "GPS",
-  legajo: "8555",
-};
+export const defaultValuesPersonalSeguridad: Partial<PersonalSeguridadSchema> =
+  {
+    firstname: "",
+    lastname: "",
+    empresa: "",
+  };
 
 const empresaSchema = z.object({
-  empresa: z.string().min(1),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo"),
 });
 
 export { empresaSchema };
@@ -70,10 +116,16 @@ export const defaultValuesEmpresa: EmpresaSchema = {
   empresa: "Aerolineas Argentinas",
 };
 
+const regex = /[A-Za-z][A-Za-z]-[A-Za-z][A-Za-z][A-Za-z]/i;
+
 const matriculaAeronaveSchema = z.object({
-  matriculaAeronave: z.string().min(1),
-  empresa: z.string().min(1),
+  matriculaAeronave: z.string().toUpperCase().regex(regex),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo"),
 });
+
 export { matriculaAeronaveSchema };
 
 export type MatriculaAeronaveSchema = z.infer<typeof matriculaAeronaveSchema>;
@@ -84,9 +136,15 @@ export const defaultValuesMatricula: MatriculaAeronaveSchema = {
 };
 
 const aeropuertosSchema = z.object({
-  aeropuerto: z.string().min(1),
-  codIATA: z.string().toUpperCase().min(1).max(3),
-  codOACI: z.string().toUpperCase().min(1).max(4),
+  aeropuerto: z
+    .string()
+    .min(1, "El aeropuerto es requerido")
+    .max(50, "El Nombre es muy largo"),
+  codIATA: z
+    .string()
+    .toUpperCase()
+    .length(3, "Consiste en 3 letras del alfabeto latino"),
+  codOACI: z.string().toUpperCase().length(4, "Consiste en 4 letras Ej:SAME"),
 });
 
 export { aeropuertosSchema };
@@ -100,9 +158,16 @@ export const defaultValuesAeropuertos: AeropuertosSchema = {
 };
 
 const vehiculoSchema = z.object({
-  tipoVehiculo: z.string().min(1),
-  empresa: z.string().min(1),
-  numInterno: z.string().min(1),
+  tipoVehiculo: z
+    .string()
+    .max(50, "El tipo de vehículo es muy largo")
+    .optional(),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo")
+    .optional(),
+  numInterno: z.string().min(1).optional(),
 });
 
 export { vehiculoSchema };
@@ -116,18 +181,29 @@ export const defaultValuesVehiculos: VehiculosSchema = {
 };
 
 const codVueloSchema = z.object({
-  codVuelo: z.string().min(1),
-  origen: z.string().min(1),
-  destino: z.string().min(1),
-  empresa: z.string().min(1),
+  codVuelo: z
+    .number({ message: "Sólo número de vuelo" })
+    .min(1000, "Tiene que tener cuatro dígitos")
+    .max(9999, "Tiene que tener cuatro dígitos"),
+  origen: z
+    .string()
+    .toUpperCase()
+    .length(3, "Consiste en 3 letras del alfabeto latino"),
+  destino: z
+    .string()
+    .toUpperCase()
+    .length(3, "Consiste en 3 letras del alfabeto latino"),
+  empresa: z
+    .string()
+    .min(1, "La Empresa es requerida")
+    .max(50, "El Nombre es muy largo"),
 });
 
 export { codVueloSchema };
 
 export type CodVueloSchema = z.infer<typeof codVueloSchema>;
 
-export const defaultValuesCodVuelos: CodVueloSchema = {
-  codVuelo: "1805",
+export const defaultValuesCodVuelos: Partial<CodVueloSchema> = {
   origen: "DOZ",
   destino: "AEP",
   empresa: "Aerolineas Argentinas",

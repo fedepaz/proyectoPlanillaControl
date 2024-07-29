@@ -9,10 +9,10 @@ type Edit = {
 
 export type OficialCommon = {
   _id: string;
-  dni: string;
+  dni: number;
   firstname: string;
   lastname: string;
-  legajo: string;
+  legajo: number;
 };
 
 export type ApiCreateEditOficial = OficialCommon & (Create | Edit);
@@ -20,11 +20,11 @@ export type ApiGetOficial = Edit & OficialCommon;
 
 export type PersonalEmpresaCommon = {
   _id: string;
-  dni: string;
+  dni: number;
   firstname: string;
   lastname: string;
   empresa: string;
-  legajo: string;
+  legajo: number;
 };
 
 export type ApiCreateEditPersonalEmpresa = PersonalEmpresaCommon &
@@ -33,11 +33,11 @@ export type ApiGetPersonalEmpresa = Edit & PersonalEmpresaCommon;
 
 export type PersonalSeguridadCommon = {
   _id: string;
-  dni: string;
+  dni: number;
   firstname: string;
   lastname: string;
   empresa: string;
-  legajo: string;
+  legajo: number;
 };
 
 export type ApiCreateEditPersonalSeguridad = PersonalSeguridadCommon &

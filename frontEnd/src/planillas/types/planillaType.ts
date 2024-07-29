@@ -11,7 +11,7 @@ export type PlanillaCommon = {
   _id: string;
   datosPsa: {
     fecha: string;
-    responsable: string;
+    responsable: number;
     horaIni: string;
     horaFin: string;
     cant: string;
@@ -27,17 +27,17 @@ export type PlanillaCommon = {
     horaArribo: string;
     horaPartida: string;
     demora: string;
-    tipo: string;
+    tipoVuelo: string;
     matriculaAeronave: string;
     posicion: string;
   };
   datosTerrestre: {
     apellidoTerrestre: string;
     nombreTerrestre: string;
-    dniTerrestre: string;
-    legajoTerrestre: string;
+    dniTerrestre: number;
+    legajoTerrestre: number;
     funcion: string;
-    grupo: string;
+    grupo: number;
   }[];
   datosSeguridad: {
     apellidoSeguridad: string;

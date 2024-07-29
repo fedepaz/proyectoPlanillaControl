@@ -4,11 +4,14 @@ const planillaSchema = z
   .object({
     datosPsa: z.object({
       fecha: z.string().min(1),
-      responsable: z.string().min(1),
+      responsable: z
+        .number()
+        .min(1, "Legajo es requerido")
+        .max(6, "El Legajo no puede tener más de 6 dígitos"),
       horaIni: z.string().time(),
       horaFin: z.string().time(),
       cant: z.string().min(1),
-      tipoControl: z.array(z.string()),
+      tipoControl: z.string().min(1),
       medioTec: z.string().min(1),
       tipoPro: z.string().min(1),
     }),
@@ -26,10 +29,18 @@ const planillaSchema = z
     }),
     datosTerrestre: z.array(
       z.object({
-        dniTerrestre: z.string().min(1),
+        dniTerrestre: z
+          .number({ message: "Solo número se pueden ingresar" })
+          .int()
+          .min(30000000, "DNI insuficiente")
+          .max(99999999, "El DNI no puede tener más de 9 dígitos"),
         apellidoTerrestre: z.string().min(1),
         nombreTerrestre: z.string().min(1),
-        legajoTerrestre: z.string().min(1),
+        legajoTerrestre: z
+          .number({ message: "Solo número se pueden ingresar" })
+          .int()
+          .min(1, "Legajo insuficiente")
+          .max(999999, "El Legajo no existe"),
         funcion: z.string().min(1),
         grupo: z.string().min(1),
       })
@@ -38,8 +49,16 @@ const planillaSchema = z
       z.object({
         apellidoSeguridad: z.string().min(1),
         nombreSeguridad: z.string().min(1),
-        dniSeguridad: z.string().min(1),
-        legajoSeguridad: z.string().min(1),
+        dniSeguridad: z
+          .number({ message: "Solo número se pueden ingresar" })
+          .int()
+          .min(30000000, "DNI insuficiente")
+          .max(99999999, "El DNI no puede tener más de 9 dígitos"),
+        legajoSeguridad: z
+          .number({ message: "Solo número se pueden ingresar" })
+          .int()
+          .min(1, "Legajo insuficiente")
+          .max(999999, "El Legajo no existe"),
         empresaSeguridad: z.string().min(1),
       })
     ),
@@ -69,7 +88,7 @@ export const defaultValuesPlanilla: PlanillaSchema = {
     horaIni: "00:00:00",
     horaFin: "00:00:00",
     cant: "",
-    tipoControl: [""],
+    tipoControl: "",
     medioTec: "",
     tipoPro: "",
   },

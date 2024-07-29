@@ -1,6 +1,14 @@
-import { FormLabel, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  Box,
+  Container,
+  FormLabel,
+  Grid,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";
+import React from "react";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -19,9 +27,16 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { onChange, value, ...restField } }) => (
-        <>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="stretch"
+        >
           <FormLabel> {label}</FormLabel>
           <ToggleButtonGroup
+            size="small"
+            orientation="vertical"
             onChange={(_, newValue) => {
               if (newValue.length) {
                 onChange(newValue);
@@ -36,7 +51,7 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-        </>
+        </Grid>
       )}
     ></Controller>
   );

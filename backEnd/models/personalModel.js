@@ -14,7 +14,7 @@ const personalEmpresaSchema = new mongoose.Schema({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   empresa: { type: String, required: true },
-  legajo: { type: String, required: true, unique: true },
+  legajo: { type: Number, required: true, unique: true },
 });
 
 export const PersonalEmpresa = mongoose.model(
@@ -27,7 +27,7 @@ const personalSeguridadSchema = new mongoose.Schema({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   empresa: { type: String, required: true },
-  legajo: { type: String, required: true, unique: true },
+  legajo: { type: Number, required: true, unique: true },
 });
 
 export const PersonalSeguridadEmpresa = mongoose.model(

@@ -14,7 +14,7 @@ export function MatriculaComponent() {
     <FormProvider {...methods}>
       <form>
         <Stack sx={{ gap: 1 }}>
-          <FormLabel>Responsable</FormLabel>
+          <FormLabel>Matricula</FormLabel>
           <RHFTextField<MatriculaAeronaveSchema>
             name="matriculaAeronave"
             label="Matrícula"
