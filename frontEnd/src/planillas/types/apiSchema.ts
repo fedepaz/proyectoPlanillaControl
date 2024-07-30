@@ -119,7 +119,17 @@ export const defaultValuesEmpresa: EmpresaSchema = {
 const regex = /[A-Za-z][A-Za-z]-[A-Za-z][A-Za-z][A-Za-z]/i;
 
 const matriculaAeronaveSchema = z.object({
-  matriculaAeronave: z.string().toUpperCase().regex(regex),
+  matriculaAeronave: z
+    .string()
+    .max(
+      6,
+      "Debe colocar la matricula con dos letras guion tres letras: ej LV-ZFO "
+    )
+    .toUpperCase()
+    .regex(
+      regex,
+      "Debe colocar la matricula con dos letras guion tres letras: ej LV-ZFO "
+    ),
   empresa: z
     .string()
     .min(1, "La Empresa es requerida")
@@ -131,8 +141,8 @@ export { matriculaAeronaveSchema };
 export type MatriculaAeronaveSchema = z.infer<typeof matriculaAeronaveSchema>;
 
 export const defaultValuesMatricula: MatriculaAeronaveSchema = {
-  matriculaAeronave: "LV-ZFO",
-  empresa: "Aerolineas Argentinas",
+  matriculaAeronave: "",
+  empresa: "",
 };
 
 const aeropuertosSchema = z.object({

@@ -46,14 +46,16 @@ router.get("/:id", async (req, res) => {
 router.get("/matricula/:matricula", async (req, res) => {
   try {
     const { matricula } = req.params;
-    const matriculaAeronave = await MatriculaAeronave.findOne({
-      matricula: matricula,
-    }).exec();
+    const matriculaAeronaveRE = await MatriculaAeronave.findOne({
+      matriculaAeronave: matricula,
+    });
 
-    if (!matriculaAeronave) {
-      return res.status(404).json({ message: "No MATRICULA" });
+    if (!matriculaAeronaveRE) {
+      return res.status(404).json({
+        message: " No MATRICULA ",
+      });
     }
-    return res.status(200).json(matricula);
+    return res.status(200).json(matriculaAeronaveRE);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });
