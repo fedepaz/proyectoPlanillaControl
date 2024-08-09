@@ -1,6 +1,4 @@
 import {
-  Box,
-  Container,
   FormLabel,
   Grid,
   ToggleButton,
@@ -8,7 +6,6 @@ import {
 } from "@mui/material";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";
-import React from "react";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;

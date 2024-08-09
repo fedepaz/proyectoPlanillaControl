@@ -113,7 +113,7 @@ export { empresaSchema };
 export type EmpresaSchema = z.infer<typeof empresaSchema>;
 
 export const defaultValuesEmpresa: EmpresaSchema = {
-  empresa: "Aerolineas Argentinas",
+  empresa: "",
 };
 
 const regex = /[A-Za-z][A-Za-z]-[A-Za-z][A-Za-z][A-Za-z]/i;

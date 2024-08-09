@@ -5,9 +5,10 @@ const planillaSchema = z
     datosPsa: z.object({
       fecha: z.string().min(1),
       responsable: z
-        .number()
-        .min(1, "Legajo es requerido")
-        .max(6, "El Legajo no puede tener más de 6 dígitos"),
+        .number({ message: "Solo número se pueden ingresar" })
+        .int()
+        .min(500000, "Legajo insuficiente")
+        .max(550000, "El Legajo no existe"),
       horaIni: z.string().time(),
       horaFin: z.string().time(),
       cant: z.string().min(1),
@@ -81,12 +82,12 @@ export { planillaSchema };
 
 export type PlanillaSchema = z.infer<typeof planillaSchema>;
 
-export const defaultValuesPlanilla: PlanillaSchema = {
+export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
   datosPsa: {
     fecha: "",
-    responsable: "",
-    horaIni: "00:00:00",
-    horaFin: "00:00:00",
+    responsable: 0,
+    horaIni: "",
+    horaFin: "",
     cant: "",
     tipoControl: "",
     medioTec: "",
@@ -106,10 +107,10 @@ export const defaultValuesPlanilla: PlanillaSchema = {
   },
   datosTerrestre: [
     {
-      dniTerrestre: "",
+      dniTerrestre: 0,
       apellidoTerrestre: "",
       nombreTerrestre: "",
-      legajoTerrestre: "",
+      legajoTerrestre: 0,
       funcion: "",
       grupo: "",
     },
@@ -118,8 +119,8 @@ export const defaultValuesPlanilla: PlanillaSchema = {
     {
       apellidoSeguridad: "",
       nombreSeguridad: "",
-      dniSeguridad: "",
-      legajoSeguridad: "",
+      dniSeguridad: 0,
+      legajoSeguridad: 0,
       empresaSeguridad: "",
     },
   ],

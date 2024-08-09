@@ -14,23 +14,21 @@ export function DatosVehiculos() {
 
   return (
     <FormProvider {...methods}>
-      <form>
-        <Stack
-          justifyContent="center"
-          sx={{ gap: 2, py: 3 }}
-          divider={<Divider orientation="horizontal" flexItem />}
-        >
-          <VehiculoComponent />
-          <RHFTextField<PlanillaSchema>
-            name="datosVehiculos.0.operadorVehiculo"
-            label="Operador"
-          />
-          <RHFTextField<PlanillaSchema>
-            name="datosVehiculos.0.observacionesVehiculo"
-            label="Observaciones"
-          />
-        </Stack>
-      </form>
+      <Stack
+        justifyContent="center"
+        sx={{ gap: 2, py: 3 }}
+        divider={<Divider orientation="horizontal" flexItem />}
+      >
+        <VehiculoComponent />
+        <RHFTextField<PlanillaSchema>
+          name="datosVehiculos.0.operadorVehiculo"
+          label="Operador"
+        />
+        <RHFTextField<PlanillaSchema>
+          name="datosVehiculos.0.observacionesVehiculo"
+          label="Observaciones"
+        />
+      </Stack>
     </FormProvider>
   );
 }

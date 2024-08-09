@@ -1,5 +1,4 @@
-import { FormLabel, Stack } from "@mui/material";
-import { RHFTextField } from "../../../../components/RHFTextField";
+import { Stack } from "@mui/material";
 import {
   defaultValuesMatricula,
   matriculaAeronaveSchema,
@@ -8,7 +7,8 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useMatricula } from "../../../services/queries";
+import { useMatricula, useMatriculaId } from "../../../services/queries";
+import { RHFDropDownMatricula } from "../../../../components/RHFDropDownMatricula";
 
 interface MatriculaComponentProps {
   onMatriculaSelected: (matricula: string) => void;
@@ -22,13 +22,14 @@ export function MatriculaComponent({
     defaultValues: defaultValuesMatricula,
     mode: "onChange",
   });
+  const matriculaQuery = useMatricula();
 
   const { setValue, watch, trigger } = methods;
   const [isNewMatricula, setIsNewMatricula] = useState(false);
   const [matToCheck, setMatToCheck] = useState("");
 
   const matricula = watch("matriculaAeronave");
-  const { data: matriculaAeronave, refetch } = useMatricula(matToCheck);
+  const { data: matriculaAeronave, refetch } = useMatriculaId(matToCheck);
 
   const handleMatriculaBlur = () => {
     if (matricula && matricula !== matToCheck) {
@@ -64,9 +65,9 @@ export function MatriculaComponent({
   return (
     <FormProvider {...methods}>
       <Stack sx={{ gap: 1 }}>
-        <FormLabel>Matricula</FormLabel>
-        <RHFTextField<MatriculaAeronaveSchema>
+        <RHFDropDownMatricula<MatriculaAeronaveSchema>
           name="matriculaAeronave"
+          options={matriculaQuery.data}
           label="Matrícula"
           onBlur={handleMatriculaBlur}
         />

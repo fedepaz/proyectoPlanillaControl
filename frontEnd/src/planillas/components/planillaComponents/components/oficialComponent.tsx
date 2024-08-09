@@ -9,12 +9,13 @@ import {
   defaultValuesOficial,
 } from "../../../types/apiSchema";
 import { RHFTextField } from "../../../../components/RHFTextField";
+import React from "react";
 
 interface OficialComponentProps {
   onOficialSelected: (legajo: number) => void;
 }
 
-export function OficialComponent({ onOficialSelected }: OficialComponentProps) {
+function OficialComponent({ onOficialSelected }: OficialComponentProps) {
   const methods = useForm<OficialSchema>({
     resolver: zodResolver(oficialSchema),
     defaultValues: defaultValuesOficial,
@@ -36,6 +37,7 @@ export function OficialComponent({ onOficialSelected }: OficialComponentProps) {
 
   useEffect(() => {
     if (dniToCheck) {
+      console.log(dniToCheck + " oficialComponent");
       refetch();
     }
   }, [dniToCheck, refetch]);
@@ -83,3 +85,5 @@ export function OficialComponent({ onOficialSelected }: OficialComponentProps) {
     </FormProvider>
   );
 }
+
+export default React.memo(OficialComponent);

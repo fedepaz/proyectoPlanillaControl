@@ -1,34 +1,52 @@
-import { Button, Container, Divider, Grid, Stack } from "@mui/material";
+import { Button, Container, Divider, Stack } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
-import { useEffect } from "react";
-import { DatosPsa } from "../components/planillaComponents/datosPsa";
+import { useCallback, useEffect, useRef } from "react";
+import DatosPsa from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { RHFTextField } from "../../components/RHFTextField";
 import { useCreatePlanilla } from "../services/mutations";
+import React from "react";
 
-export function Planillas() {
-  const { watch, control, unregister, reset, setValue, handleSubmit } =
-    useFormContext<PlanillaSchema>();
+interface PlanillaProps {
+  onPlanillas: (fecha: string) => void;
+}
+
+function Planillas({ onPlanillas }: PlanillaProps) {
+  const { watch, setValue, handleSubmit } = useFormContext<PlanillaSchema>();
+  const prevValuesRef = useRef();
 
   useEffect(() => {
-    const sub = watch((value) => {
-      console.log(value);
-      value;
+    const subscription = watch((currentValues) => {
+      const prevValues = prevValuesRef.current || {};
+      const changedValues: Partial<PlanillaSchema> = {};
+
+      // Compare previous values with current values to find changes
+      for (const key in currentValues) {
+        if (currentValues[key] !== prevValues[key]) {
+          changedValues[key] = currentValues[key];
+        }
+      }
+
+      // Log only the changed values
+      for (const key in changedValues) {
+        console.log(`${key} - ${changedValues[key]}`);
+        console.log(changedValues[key]);
+      }
+
+      // Update previous values
+      prevValuesRef.current = currentValues;
     });
-    return () => sub.unsubscribe();
+
+    return () => subscription.unsubscribe();
   }, [watch]);
 
-  /*
-  
-  const handleOfiClick = (_id: string) => {
-    setValue("datosPsa.responsable", _id);
-  };
-
-  */
+  useEffect(() => {
+    onPlanillas("Mensaje de planillas");
+  });
 
   const createPlanillaMutation = useCreatePlanilla();
 
@@ -37,9 +55,13 @@ export function Planillas() {
     createPlanillaMutation.mutate(data);
   };
 
-  const handleDatosPsaSelected = (fecha: string) => {
-    setValue("datosPsa.fecha", fecha);
-  };
+  const handleDatosPsaSelected = useCallback(
+    (fecha: string) => {
+      console.log(fecha + " Planillas");
+      setValue("datosPsa.fecha", fecha);
+    },
+    [setValue]
+  );
 
   return (
     <Container maxWidth="xs" component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -116,3 +138,5 @@ export function Planillas() {
     </Container>
   );
 }
+
+export default React.memo(Planillas);

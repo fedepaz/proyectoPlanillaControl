@@ -6,6 +6,16 @@ export type OficialOption = {
   lastname: string;
   legajo: string;
 };
+export type MatriculaOption = {
+  _id: string;
+  matriculaAeronave: string;
+  empresa: string;
+};
+
+export type EmpresaOption = {
+  _id: string;
+  empresa: string;
+};
 
 export type PlanillaOption = {
   _id: string;

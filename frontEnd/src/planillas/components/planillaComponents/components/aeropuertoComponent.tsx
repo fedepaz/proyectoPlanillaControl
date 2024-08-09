@@ -16,17 +16,12 @@ export function AeropuertoComponent({ label }: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <form>
-        <Stack sx={{ gap: 1 }}>
-          <FormLabel>{label}</FormLabel>
-          <RHFTextField<AeropuertosSchema>
-            name="aeropuerto"
-            label="Aeropuerto"
-          />
-          <RHFTextField<AeropuertosSchema> name="codIATA" label="Código IATA" />
-          <RHFTextField<AeropuertosSchema> name="codOACI" label="Código OACI" />
-        </Stack>
-      </form>
+      <Stack sx={{ gap: 1 }}>
+        <FormLabel>{label}</FormLabel>
+        <RHFTextField<AeropuertosSchema> name="aeropuerto" label="Aeropuerto" />
+        <RHFTextField<AeropuertosSchema> name="codIATA" label="Código IATA" />
+        <RHFTextField<AeropuertosSchema> name="codOACI" label="Código OACI" />
+      </Stack>
     </FormProvider>
   );
 }

@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
     const newMat = await MatriculaAeronave.create({
       matriculaAeronave,
       empresa,
-    }).exec();
+    });
     return res.status(201).json(newMat);
   } catch (error) {
     console.error("Error generando Aeronave:", error);

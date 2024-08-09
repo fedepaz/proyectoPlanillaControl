@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { Option, PlanillaOption } from "../../types/option";
+import { MatriculaOption, Option, PlanillaOption } from "../../types/option";
 import {
   ApiGetMatriculaAeronave,
   ApiGetOficial,
@@ -352,12 +352,64 @@ export function usePersonalEmpresaSeg(dni: number) {
 
 export function createMatricula() {}
 
-export function useMatricula(matriculaAeronave: string) {
+export function useMatricula() {
+  return useQuery({
+    queryKey: ["matriculaAeronave"],
+    queryFn: async () => {
+      const response = await axios.get<{
+        matriculaAeronave: MatriculaOption[];
+      }>("http://localhost:5555/aeronave");
+      const matriculaAeronave = response.data.matriculaAeronave;
+      return matriculaAeronave;
+    },
+  });
+}
+
+export function useMatriculaId(matriculaAeronave: string) {
   return useQuery({
     queryKey: ["matriculaAeronave", { matriculaAeronave }],
     queryFn: async (): Promise<MatriculaAeronaveSchema> => {
       if (!matriculaAeronave) {
-        throw new Error("Invalid DNI: DNI is undefined");
+        throw new Error("Invalid Matricula: Matricula is undefined");
+      }
+
+      try {
+        const { data } = await axios.get<ApiGetMatriculaAeronave>(
+          `http://localhost:5555/aeronave/matricula/${matriculaAeronave}`
+        );
+        return {
+          matriculaAeronave: data.matriculaAeronave,
+          empresa: data.empresa,
+        };
+      } catch (error) {
+        throw new Error(`Failed to fetch matricula data: ${error}`);
+      }
+    },
+    enabled: !!matriculaAeronave,
+  });
+}
+
+export function createEmpresa() {}
+
+export function useEmpresa() {
+  return useQuery({
+    queryKey: ["matriculaAeronave"],
+    queryFn: async () => {
+      const response = await axios.get<{
+        matriculaAeronave: MatriculaOption[];
+      }>("http://localhost:5555/aeronave");
+      const matriculaAeronave = response.data.matriculaAeronave;
+      return matriculaAeronave;
+    },
+  });
+}
+
+export function useEmpresaId(matriculaAeronave: string) {
+  return useQuery({
+    queryKey: ["matriculaAeronave", { matriculaAeronave }],
+    queryFn: async (): Promise<MatriculaAeronaveSchema> => {
+      if (!matriculaAeronave) {
+        throw new Error("Invalid Matricula: Matricula is undefined");
       }
 
       try {
