@@ -36,6 +36,7 @@ export const PersonalSeguridadEmpresa = mongoose.model(
 );
 const empresaSchema = new mongoose.Schema({
   empresa: { type: String, required: true, unique: true },
+  tipoEmpresa: { type: String, required: true },
 });
 
 export const Empresa = mongoose.model("Empresa", empresaSchema);

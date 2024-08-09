@@ -45,7 +45,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { empresa } = req.body;
+    const { empresa, tipoEmpresa } = req.body;
     if (!empresa) {
       return res.status(400).json({
         message: "Faltan datos de Empresa",
@@ -54,7 +54,8 @@ router.post("/", async (req, res) => {
 
     const newEmpresa = await Empresa.create({
       empresa,
-    }).exec();
+      tipoEmpresa,
+    });
     return res.status(201).json(newEmpresa);
   } catch (error) {
     console.error("Error generando Empresa:", error);
