@@ -6,6 +6,7 @@ import {
   Demora,
   TipoVuelo,
   Funcion,
+  TipoEmpresa,
 } from "../models/opcionesModel.js";
 
 const router = express.Router();
@@ -99,6 +100,35 @@ router.get("/funcion", async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
+  }
+});
+
+router.get("/tipoEmpresa", async (req, res) => {
+  try {
+    const tipoEmpresa = await fetchOptions(TipoEmpresa);
+
+    res.status(200).json({
+      tipoEmpresa,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+router.post("/tipoEmpresa", async (req, res) => {
+  try {
+    const { label } = req.body;
+    if (!label)
+      res.status(400).json({
+        message: "Falta tipo empresa",
+      });
+    const newTipo = await TipoEmpresa.create({
+      label,
+    });
+    return res.status(201).json(newTipo);
+  } catch (error) {
+    console.error("Error generando tipo Empresa:", error);
+    return res.status(500).json({ message: "Internal server error " + error });
   }
 });
 

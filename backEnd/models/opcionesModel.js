@@ -35,3 +35,9 @@ const funcionSchema = new mongoose.Schema({
 });
 
 export const Funcion = mongoose.model("Funcion", funcionSchema);
+
+const tipoEmpresaSchema = new mongoose.Schema({
+  label: { type: String, required: true },
+});
+
+export const TipoEmpresa = mongoose.model("TipoEmpresa", tipoEmpresaSchema);
