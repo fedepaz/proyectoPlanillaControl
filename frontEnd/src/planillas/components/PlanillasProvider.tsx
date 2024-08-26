@@ -6,7 +6,6 @@ import {
   planillaSchema,
 } from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Grid } from "@mui/material";
 import { useCallback } from "react";
 
 export function PlanillasProvider() {
@@ -27,15 +26,7 @@ export function PlanillasProvider() {
 
   return (
     <FormProvider {...methods}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-evenly"
-        alignItems="center"
-        maxWidth="small"
-      >
-        <Planillas onPlanillas={handlePlanillaSelected} />
-      </Grid>
+      <Planillas onPlanillas={handlePlanillaSelected} />
     </FormProvider>
   );
 }

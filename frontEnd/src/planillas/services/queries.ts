@@ -1,13 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { MatriculaOption, Option, PlanillaOption } from "../../types/option";
 import {
+  EmpresaOption,
+  MatriculaOption,
+  Option,
+  PlanillaOption,
+} from "../../types/option";
+import {
+  ApiGetEmpresa,
   ApiGetMatriculaAeronave,
   ApiGetOficial,
   ApiGetPersonalEmpresa,
   ApiGetPersonalSeguridad,
 } from "../types/apiTypes";
 import {
+  EmpresaSchema,
   MatriculaAeronaveSchema,
   OficialSchema,
   PersonalEmpresaSchema,
@@ -352,15 +359,20 @@ export function usePersonalEmpresaSeg(dni: number) {
 
 export function createMatricula() {}
 
-export function useMatricula() {
+export function useMatricula(empresa?: string) {
   return useQuery({
-    queryKey: ["matriculaAeronave"],
+    queryKey: ["matriculaAeronave", empresa],
     queryFn: async () => {
       const response = await axios.get<{
         matriculaAeronave: MatriculaOption[];
       }>("http://localhost:5555/aeronave");
-      const matriculaAeronave = response.data.matriculaAeronave;
-      return matriculaAeronave;
+      const matriculaAeronaveRes = response.data.matriculaAeronave;
+      if (empresa) {
+        return matriculaAeronaveRes.filter(
+          (matricula) => matricula.empresa === empresa
+        );
+      }
+      return matriculaAeronaveRes;
     },
   });
 }
@@ -391,39 +403,45 @@ export function useMatriculaId(matriculaAeronave: string) {
 
 export function createEmpresa() {}
 
-export function useEmpresa() {
+export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
-    queryKey: ["matriculaAeronave"],
+    queryKey: ["empresa", tipoEmpresa],
     queryFn: async () => {
       const response = await axios.get<{
-        matriculaAeronave: MatriculaOption[];
-      }>("http://localhost:5555/aeronave");
-      const matriculaAeronave = response.data.matriculaAeronave;
-      return matriculaAeronave;
+        empresa: EmpresaOption[];
+      }>("http://localhost:5555/empresa");
+      const empresaRes = response.data.empresa;
+
+      if (tipoEmpresa) {
+        return empresaRes.filter(
+          (empresa) => empresa.tipoEmpresa === tipoEmpresa
+        );
+      }
+      return empresaRes;
     },
   });
 }
 
-export function useEmpresaId(matriculaAeronave: string) {
+export function useEmpresaId(empresa: string) {
   return useQuery({
-    queryKey: ["matriculaAeronave", { matriculaAeronave }],
-    queryFn: async (): Promise<MatriculaAeronaveSchema> => {
-      if (!matriculaAeronave) {
+    queryKey: ["empresa", { empresa }],
+    queryFn: async (): Promise<EmpresaSchema> => {
+      if (!empresa) {
         throw new Error("Invalid Matricula: Matricula is undefined");
       }
 
       try {
-        const { data } = await axios.get<ApiGetMatriculaAeronave>(
-          `http://localhost:5555/aeronave/matricula/${matriculaAeronave}`
+        const { data } = await axios.get<ApiGetEmpresa>(
+          `http://localhost:5555/aeronave/empresa/${empresa}`
         );
         return {
-          matriculaAeronave: data.matriculaAeronave,
           empresa: data.empresa,
+          tipoEmpresa: data.tipoEmpresa,
         };
       } catch (error) {
         throw new Error(`Failed to fetch matricula data: ${error}`);
       }
     },
-    enabled: !!matriculaAeronave,
+    enabled: !!empresa,
   });
 }

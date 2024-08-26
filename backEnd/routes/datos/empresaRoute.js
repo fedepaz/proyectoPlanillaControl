@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { empresa, tipoEmpresa } = req.body;
-    if (!empresa) {
+    if (!empresa | !tipoEmpresa) {
       return res.status(400).json({
         message: "Faltan datos de Empresa",
       });

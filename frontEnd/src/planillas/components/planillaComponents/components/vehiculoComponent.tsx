@@ -1,15 +1,9 @@
 import { FormLabel, Stack } from "@mui/material";
-import { FormProvider, useForm } from "react-hook-form";
+//import {  useForm } from "react-hook-form";
 import { RHFTextField } from "../../../../components/RHFTextField";
-import {
-  defaultValuesVehiculos,
-  VehiculosSchema,
-} from "../../../types/apiSchema";
+import { VehiculosSchema } from "../../../types/apiSchema";
 
 export function VehiculoComponent() {
-  const methods = useForm<VehiculosSchema>({
-    defaultValues: defaultValuesVehiculos,
-  });
   return (
     <Stack sx={{ gap: 1 }}>
       <FormLabel>Vehículo</FormLabel>

@@ -6,8 +6,8 @@ import {
 } from "../../../types/apiSchema";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { useMatricula, useMatriculaId } from "../../../services/queries";
+import { useEffect } from "react";
+import { useMatricula } from "../../../services/queries";
 import { RHFDropDownMatricula } from "../../../../components/RHFDropDownMatricula";
 
 interface MatriculaComponentProps {
@@ -24,43 +24,22 @@ export function MatriculaComponent({
   });
   const matriculaQuery = useMatricula();
 
-  const { setValue, watch, trigger } = methods;
-  const [isNewMatricula, setIsNewMatricula] = useState(false);
-  const [matToCheck, setMatToCheck] = useState("");
+  const { setValue, watch } = methods;
 
-  const matricula = watch("matriculaAeronave");
-  const { data: matriculaAeronave, refetch } = useMatriculaId(matToCheck);
-
-  const handleMatriculaBlur = () => {
-    if (matricula && matricula !== matToCheck) {
-      setMatToCheck(matricula);
-    }
-  };
+  const matriculaWatch = watch("matriculaAeronave");
 
   useEffect(() => {
-    if (matToCheck) {
-      refetch();
+    if (matriculaWatch) {
+      const matriculaAeronave = matriculaQuery.data?.find(
+        (m) => m.matriculaAeronave === matriculaWatch
+      );
+      if (matriculaAeronave) {
+        onMatriculaSelected(matriculaAeronave.matriculaAeronave);
+        setValue("matriculaAeronave", matriculaAeronave.matriculaAeronave);
+        setValue("empresa", matriculaAeronave.empresa);
+      }
     }
-  }, [matToCheck, refetch]);
-
-  useEffect(() => {
-    if (matriculaAeronave) {
-      onMatriculaSelected(matriculaAeronave.matriculaAeronave);
-      setValue("matriculaAeronave", matriculaAeronave.matriculaAeronave);
-      setValue("empresa", matriculaAeronave.empresa);
-      setIsNewMatricula(false);
-      trigger();
-    } else if (matToCheck) {
-      setIsNewMatricula(true);
-    }
-  }, [
-    matriculaAeronave,
-    matToCheck,
-    onMatriculaSelected,
-    setValue,
-    trigger,
-    isNewMatricula,
-  ]);
+  }, [matriculaWatch, matriculaQuery.data, onMatriculaSelected, setValue]);
 
   return (
     <FormProvider {...methods}>
@@ -69,7 +48,6 @@ export function MatriculaComponent({
           name="matriculaAeronave"
           options={matriculaQuery.data}
           label="Matrícula"
-          onBlur={handleMatriculaBlur}
         />
       </Stack>
     </FormProvider>

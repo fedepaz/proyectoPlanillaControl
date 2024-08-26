@@ -106,6 +106,7 @@ const empresaSchema = z.object({
     .string()
     .min(1, "La Empresa es requerida")
     .max(50, "El Nombre es muy largo"),
+  tipoEmpresa: z.string().min(1, "TipoEmpresa requerido"),
 });
 
 export { empresaSchema };
@@ -114,6 +115,7 @@ export type EmpresaSchema = z.infer<typeof empresaSchema>;
 
 export const defaultValuesEmpresa: EmpresaSchema = {
   empresa: "",
+  tipoEmpresa: "",
 };
 
 const regex = /[A-Za-z][A-Za-z]-[A-Za-z][A-Za-z][A-Za-z]/i;
@@ -162,9 +164,9 @@ export { aeropuertosSchema };
 export type AeropuertosSchema = z.infer<typeof aeropuertosSchema>;
 
 export const defaultValuesAeropuertos: AeropuertosSchema = {
-  aeropuerto: "Mendoza",
-  codIATA: "DOZ",
-  codOACI: "SAME",
+  aeropuerto: "",
+  codIATA: "",
+  codOACI: "",
 };
 
 const vehiculoSchema = z.object({
@@ -214,7 +216,7 @@ export { codVueloSchema };
 export type CodVueloSchema = z.infer<typeof codVueloSchema>;
 
 export const defaultValuesCodVuelos: Partial<CodVueloSchema> = {
-  origen: "DOZ",
-  destino: "AEP",
-  empresa: "Aerolineas Argentinas",
+  origen: "",
+  destino: "",
+  empresa: "",
 };

@@ -1,13 +1,10 @@
 import { Stack, Divider, Typography } from "@mui/material";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import {
-  PlanillaSchema,
-  defaultValuesPlanilla,
-} from "../../types/planillaSchema";
+import { useFormContext } from "react-hook-form";
+import { PlanillaSchema } from "../../types/planillaSchema";
 import { SeguridadComponent } from "./components/seguridadComponent";
 
 export function DatosSeguridad() {
-  const { control, setValue } = useFormContext<PlanillaSchema>();
+  const { setValue } = useFormContext<PlanillaSchema>();
   const handlePersonalSelected = (
     lastname: string,
     firstname: string,

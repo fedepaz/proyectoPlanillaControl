@@ -12,13 +12,12 @@ import {
 import { RHFCheckBox } from "../../../components/RHFCheckBox";
 import { useFormContext } from "react-hook-form";
 import { useCallback, useEffect } from "react";
-import React from "react";
 
 interface DatosPsaProps {
   onDatosPsaSelected: (fecha: string) => void;
 }
 
-function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
+export function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
   const tipoControlQuery = useTipoControl();
   const medioTecQuery = useMediosTec();
   const tipoProQuery = useTipoPro();
@@ -77,5 +76,3 @@ function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
     </Stack>
   );
 }
-
-export default React.memo(DatosPsa);

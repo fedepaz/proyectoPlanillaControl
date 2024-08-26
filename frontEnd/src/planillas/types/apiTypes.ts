@@ -47,6 +47,7 @@ export type ApiGetPersonalSeguridad = Edit & PersonalSeguridadCommon;
 export type EmpresaCommon = {
   _id: string;
   empresa: string;
+  tipoEmpresa: string;
 };
 
 export type ApiCreateEditEmpresa = EmpresaCommon & (Create | Edit);

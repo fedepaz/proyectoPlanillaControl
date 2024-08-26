@@ -15,6 +15,7 @@ export type MatriculaOption = {
 export type EmpresaOption = {
   _id: string;
   empresa: string;
+  tipoEmpresa: string;
 };
 
 export type PlanillaOption = {

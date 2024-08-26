@@ -1,7 +1,14 @@
-import { Button, Container, Divider, Stack } from "@mui/material";
+import {
+  Button,
+  Container,
+  Divider,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import DatosPsa from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
@@ -9,40 +16,13 @@ import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { RHFTextField } from "../../components/RHFTextField";
 import { useCreatePlanilla } from "../services/mutations";
-import React from "react";
 
 interface PlanillaProps {
   onPlanillas: (fecha: string) => void;
 }
 
-function Planillas({ onPlanillas }: PlanillaProps) {
-  const { watch, setValue, handleSubmit } = useFormContext<PlanillaSchema>();
-  const prevValuesRef = useRef();
-
-  useEffect(() => {
-    const subscription = watch((currentValues) => {
-      const prevValues = prevValuesRef.current || {};
-      const changedValues: Partial<PlanillaSchema> = {};
-
-      // Compare previous values with current values to find changes
-      for (const key in currentValues) {
-        if (currentValues[key] !== prevValues[key]) {
-          changedValues[key] = currentValues[key];
-        }
-      }
-
-      // Log only the changed values
-      for (const key in changedValues) {
-        console.log(`${key} - ${changedValues[key]}`);
-        console.log(changedValues[key]);
-      }
-
-      // Update previous values
-      prevValuesRef.current = currentValues;
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch]);
+export function Planillas({ onPlanillas }: PlanillaProps) {
+  const { setValue, handleSubmit } = useFormContext<PlanillaSchema>();
 
   useEffect(() => {
     onPlanillas("Mensaje de planillas");
@@ -62,11 +42,21 @@ function Planillas({ onPlanillas }: PlanillaProps) {
     },
     [setValue]
   );
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Container maxWidth="xs" component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Container
+      maxWidth={isMobile ? "sm" : "md"}
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Stack
-        sx={{ gap: 2, py: 3 }}
+        sx={{
+          gap: 1,
+          border: "1px solid blue",
+          padding: theme.spacing(2),
+        }}
         divider={<Divider orientation="horizontal" flexItem />}
       >
         {/*
@@ -130,7 +120,18 @@ function Planillas({ onPlanillas }: PlanillaProps) {
         <RHFTextField<PlanillaSchema> name="novOtras" label="Otras Novedades" />
 
         <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            fullWidth
+            size={isMobile ? "large" : "medium"}
+            sx={{
+              mt: 2,
+              position: "sticky",
+              bottom: theme.spacing(2),
+              zIndex: 1,
+            }}
+          >
             Nueva Planilla
           </Button>
         </Stack>
@@ -138,5 +139,3 @@ function Planillas({ onPlanillas }: PlanillaProps) {
     </Container>
   );
 }
-
-export default React.memo(Planillas);

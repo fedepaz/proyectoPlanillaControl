@@ -1,17 +1,14 @@
 import { Stack, Divider, Typography } from "@mui/material";
 import { RHFTextField } from "../../../components/RHFTextField";
-import {
-  defaultValuesPlanilla,
-  PlanillaSchema,
-} from "../../types/planillaSchema";
+import { PlanillaSchema } from "../../types/planillaSchema";
 import { PersonalComponent } from "./components/personalComponent";
 import { RHFToggleButtonGroup } from "../../../components/RHFToggleButtonGroup";
 import { useFuncion } from "../../services/queries";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 export function DatosTerrestre() {
   const funcionQuery = useFuncion();
-  const { control, setValue } = useFormContext<PlanillaSchema>();
+  const { setValue } = useFormContext<PlanillaSchema>();
 
   const handlePersonalSelected = (
     lastname: string,

@@ -1,5 +1,5 @@
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
-import { MatriculaOption } from "../types/option";
+import { EmpresaOption } from "../types/option";
 import {
   TextFieldProps,
   Box,
@@ -11,7 +11,7 @@ import {
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
-  options?: MatriculaOption[];
+  options?: EmpresaOption[];
   label: string;
 } & TextFieldProps;
 
@@ -42,7 +42,7 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
             >
               {options?.map((option) => (
                 <MenuItem value={option._id} key={option._id}>
-                  {option.matriculaAeronave}
+                  {option.empresa}
                 </MenuItem>
               ))}
             </Select>
