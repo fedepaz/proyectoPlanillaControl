@@ -1,5 +1,5 @@
 import express from "express";
-import { Planilla } from "../models/planillaModel.js";
+import { Planilla } from "../schemas/planillaModel.js";
 import {
   TipoControl,
   MediosTec,
@@ -7,7 +7,7 @@ import {
   Demora,
   TipoVuelo,
   Funcion,
-} from "../models/opcionesModel.js";
+} from "../schemas/opcionesModel.js";
 
 const router = express.Router();
 

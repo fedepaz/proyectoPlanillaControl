@@ -7,7 +7,7 @@ import {
   TipoVuelo,
   Funcion,
   TipoEmpresa,
-} from "../models/opcionesModel.js";
+} from "../schemas/opcionesModel.js";
 
 const router = express.Router();
 

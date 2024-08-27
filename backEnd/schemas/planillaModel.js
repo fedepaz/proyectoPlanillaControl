@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const planillaSchema = mongoose.Schema(
+const planillaSchema = Schema(
   {
     datosPsa: {
       fecha: { type: String, required: true },
@@ -68,4 +68,12 @@ const planillaSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-export const Planilla = mongoose.model("Planilla", planillaSchema);
+planillaSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const Planilla = model("Planilla", planillaSchema);

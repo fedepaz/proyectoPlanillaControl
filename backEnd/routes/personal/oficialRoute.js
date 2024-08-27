@@ -1,5 +1,5 @@
 import express from "express";
-import { Oficial } from "../../models/personalModel.js";
+import { Oficial } from "../../schemas/personalModel.js";
 
 const router = express.Router();
 

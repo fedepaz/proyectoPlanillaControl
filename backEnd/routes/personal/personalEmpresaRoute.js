@@ -1,5 +1,5 @@
 import express from "express";
-import { PersonalEmpresa } from "../../models/personalModel.js";
+import { PersonalEmpresa } from "../../schemas/personalModel.js";
 
 const router = express.Router();
 

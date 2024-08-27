@@ -1,5 +1,5 @@
 import express from "express";
-import { MatriculaAeronave } from "../../models/personalModel.js";
+import { MatriculaAeronave } from "../../schemas/personalModel.js";
 
 const router = express.Router();
 
