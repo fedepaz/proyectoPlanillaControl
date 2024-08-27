@@ -15,13 +15,14 @@ oficialSchema.set("toJSON", {
   },
 });
 
-export const Oficial = model("Oficial", oficialSchema);
+const Oficial = model("Oficial", oficialSchema);
+module.exports = Oficial;
 
 const personalEmpresaSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  empresa: { type: String, required: true },
+  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
   legajo: { type: Number, required: true, unique: true },
 });
 
@@ -33,13 +34,14 @@ personalEmpresaSchema.set("toJSON", {
   },
 });
 
-export const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
+const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
+module.exports = PersonalEmpresa;
 
 const personalSeguridadSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  empresa: { type: String, required: true },
+  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
   legajo: { type: Number, required: true, unique: true },
 });
 
@@ -51,10 +53,12 @@ personalSeguridadSchema.set("toJSON", {
   },
 });
 
-export const PersonalSeguridadEmpresa = model(
+const PersonalSeguridadEmpresa = model(
   "PersonalSeguridadEmpresa",
   personalSeguridadSchema
 );
+module.exports = PersonalSeguridadEmpresa;
+
 const empresaSchema = new Schema({
   empresa: { type: String, required: true, unique: true },
   tipoEmpresa: { type: String, required: true },
@@ -68,11 +72,12 @@ empresaSchema.set("toJSON", {
   },
 });
 
-export const Empresa = model("Empresa", empresaSchema);
+const Empresa = model("Empresa", empresaSchema);
+module.exports = Empresa;
 
 const matriculaAeronaveSchema = new Schema({
   matriculaAeronave: { type: String, required: true, unique: true },
-  empresa: { type: String, required: true },
+  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
 });
 
 matriculaAeronaveSchema.set("toJSON", {
@@ -83,18 +88,16 @@ matriculaAeronaveSchema.set("toJSON", {
   },
 });
 
-export const MatriculaAeronave = model(
-  "MatriculaAeronave",
-  matriculaAeronaveSchema
-);
+const MatriculaAeronave = model("MatriculaAeronave", matriculaAeronaveSchema);
+module.exports = MatriculaAeronave;
 
-const aeropuertosSchema = new Schema({
+const aeropuertoSchema = new Schema({
   aeropuerto: { type: String, required: true, unique: true },
   codIATA: { type: String, required: true },
   codOACI: { type: String, required: true },
 });
 
-aeropuertosSchema.set("toJSON", {
+aeropuertoSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
@@ -102,11 +105,12 @@ aeropuertosSchema.set("toJSON", {
   },
 });
 
-export const Aeropuertos = model("Aeropuertos", aeropuertosSchema);
+const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
+module.exports = Aeropuerto;
 
 const vehiculoSchema = new Schema({
   numInterno: { type: String, required: true, unique: true },
-  empresa: { type: String, required: true },
+  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
   tipoVehiculo: { type: String, required: true },
 });
 
@@ -118,13 +122,14 @@ vehiculoSchema.set("toJSON", {
   },
 });
 
-export const Vehiculos = model("Vehiculos", vehiculoSchema);
+const Vehiculo = model("Vehiculo", vehiculoSchema);
+module.exports = Vehiculo;
 
 const codVueloSchema = new Schema({
   codVuelo: { type: String, required: true, unique: true },
-  origen: { type: String, required: true },
-  destino: { type: String, required: true },
-  empresa: { type: String, required: true },
+  origen: [{ type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true }],
+  destino: [{ type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true }],
+  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
 });
 
 codVueloSchema.set("toJSON", {
@@ -135,4 +140,5 @@ codVueloSchema.set("toJSON", {
   },
 });
 
-export const CodVuelo = model("CodVuelo", codVueloSchema);
+const CodVuelo = model("CodVuelo", codVueloSchema);
+module.exports = CodVuelo;

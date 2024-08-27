@@ -1,11 +1,21 @@
 import mongoose from "mongoose";
 
-export const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.mongoDBURL);
-    console.log("Database connected!");
-  } catch (error) {
-    console.error("Database connection error:", error);
-    process.exit(1);
-  }
-};
+const connectionString = process.env.mongoDBURL;
+
+mongoose
+  .connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+process.on("uncaughtException", () => {
+  mongoose.connection.disconnect();
+});

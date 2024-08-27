@@ -12,7 +12,8 @@ tipoControlSchema.set("toJSON", {
   },
 });
 
-export const TipoControl = model("TipoControl", tipoControlSchema);
+const TipoControl = model("TipoControl", tipoControlSchema);
+module.exports = TipoControl;
 
 const mediosTecSchema = new Schema({
   label: { type: String, required: true },
@@ -26,7 +27,8 @@ mediosTecSchema.set("toJSON", {
   },
 });
 
-export const MediosTec = model("MediosTec", mediosTecSchema);
+const MediosTec = model("MediosTec", mediosTecSchema);
+module.exports = MediosTec;
 
 const tipoProSchema = new Schema({
   label: { type: String, required: true },
@@ -40,7 +42,8 @@ tipoProSchema.set("toJSON", {
   },
 });
 
-export const TipoPro = model("TipoPro", tipoProSchema);
+const TipoPro = model("TipoPro", tipoProSchema);
+module.exports = TipoPro;
 
 const demoraSchema = new Schema({
   label: { type: String, required: true },
@@ -54,7 +57,8 @@ demoraSchema.set("toJSON", {
   },
 });
 
-export const Demora = model("Demora", demoraSchema);
+const Demora = model("Demora", demoraSchema);
+module.exports = Demora;
 
 const tipoVueloSchema = new Schema({
   label: { type: String, required: true },
@@ -67,7 +71,9 @@ tipoVueloSchema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
-export const TipoVuelo = model("TipoVuelo", tipoVueloSchema);
+
+const TipoVuelo = model("TipoVuelo", tipoVueloSchema);
+module.exports = TipoVuelo;
 
 const funcionSchema = new Schema({
   label: { type: String, required: true },
@@ -81,7 +87,8 @@ funcionSchema.set("toJSON", {
   },
 });
 
-export const Funcion = model("Funcion", funcionSchema);
+const Funcion = model("Funcion", funcionSchema);
+module.exports = Funcion;
 
 const tipoEmpresaSchema = new Schema({
   label: { type: String, required: true },
@@ -95,4 +102,5 @@ tipoEmpresaSchema.set("toJSON", {
   },
 });
 
-export const TipoEmpresa = model("TipoEmpresa", tipoEmpresaSchema);
+const TipoEmpresa = model("TipoEmpresa", tipoEmpresaSchema);
+module.exports = TipoEmpresa;

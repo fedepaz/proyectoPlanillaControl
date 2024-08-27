@@ -1,7 +1,11 @@
 import express from "express";
 import helmet from "helmet";
-import dotenv from "dotenv";
-import { connectDB } from "./db.js";
+require("dotenv").config();
+require("./db");
+import cors from "cors";
+const notFound = require("./middleware/notFound.js");
+const handleErrors = require("./middleware/handleErrors.js");
+
 import planillasRoute from "./routes/planillasRoute.js";
 import dataRoute from "./routes/dataRoute.js";
 import oficialRoute from "./routes/personal/oficialRoute.js";
@@ -12,9 +16,7 @@ import codVueloRoute from "./routes/datos/codVueloRoute.js";
 import empresaRoute from "./routes/datos/empresaRoute.js";
 import aeropuertoRoute from "./routes/datos/aeropuertoRoute.js";
 import vehiculosRoute from "./routes/datos/vehiculosRoute.js";
-import cors from "cors";
 
-dotenv.config();
 const app = express();
 
 app.use(helmet());
