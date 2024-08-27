@@ -107,5 +107,4 @@ planillaSchema.set("toJSON", {
   },
 });
 
-const Planilla = model("Planilla", planillaSchema);
-module.exports = Planilla;
+export const Planilla = model("Planilla", planillaSchema);

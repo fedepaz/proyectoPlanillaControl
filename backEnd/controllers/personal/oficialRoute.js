@@ -1,5 +1,5 @@
 import express from "express";
-const Oficial = require("../../models/personalModel");
+import { Oficial } from "../../models/personalModel.js";
 
 const oficialRouter = express.Router();
 
@@ -45,4 +45,4 @@ oficialRouter.post("/", async (req, res) => {
   return res.status(201).json(savedOficial);
 });
 
-module.exports = oficialRouter;
+export default oficialRouter;

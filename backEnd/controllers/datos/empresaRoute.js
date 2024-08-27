@@ -1,5 +1,5 @@
 import express from "express";
-const Empresa = require("../../models/personalModel");
+import { Empresa } from "../../models/personalModel.js";
 
 const empresaRouter = express.Router();
 
@@ -33,4 +33,4 @@ empresaRouter.post("/", async (req, res) => {
   return res.status(201).json(savedEmpresa);
 });
 
-module.exports = empresaRouter;
+export default empresaRouter;

@@ -12,7 +12,6 @@ import {
   TipoVuelo,
   Funcion,
 } from "../models/opcionesModel.js";
-import { fetchOptions, validateOptions } from "../routes/planillasRoute.js";
 import { generateMockPlanilla } from "./mockGenerator.js";
 
 describe("GET /planillas", function () {
@@ -156,32 +155,6 @@ describe("POST /planillas", function () {
   it("should return 201 and planilla created", function (done) {
     const mockPlanilla = generateMockPlanilla("Paz");
 
-    validateOptions(
-      "tipoControl",
-      mockPlanilla.datosPsa.tipoControl,
-      global.validTipoControl
-    );
-    validateOptions(
-      "medioTec",
-      mockPlanilla.datosPsa.medioTec,
-      global.validMediosTec
-    );
-    validateOptions(
-      "tipoPro",
-      mockPlanilla.datosPsa.tipoPro,
-      global.validTipoPro
-    );
-    validateOptions(
-      "demora",
-      mockPlanilla.datosVuelo.demora,
-      global.validDemora
-    );
-    validateOptions(
-      "tipoVuelo",
-      mockPlanilla.datosVuelo.tipoVuelo,
-      global.validTipoVuelo
-    );
-
     request(app)
       .post("/planillas")
       .send(mockPlanilla)
@@ -226,13 +199,6 @@ describe("PUT /planillas/:id", function () {
     updateStub = sinon
       .stub(Planilla, "findByIdAndUpdate")
       .resolves(mockPlanilla);
-
-    global.validTipoControl = await fetchOptions(TipoControl);
-    global.validMediosTec = await fetchOptions(MediosTec);
-    global.validTipoPro = await fetchOptions(TipoPro);
-    global.validDemora = await fetchOptions(Demora);
-    global.validTipoVuelo = await fetchOptions(TipoVuelo);
-    global.validFuncion = await fetchOptions(Funcion);
   });
 
   after(function () {
@@ -241,35 +207,6 @@ describe("PUT /planillas/:id", function () {
 
   it("should return 200 and planilla updated successfully", function (done) {
     const mockPlanilla = generateMockPlanilla("Martinez");
-
-    validateOptions(
-      "tipoControl",
-      mockPlanilla.datosPsa.tipoControl,
-      global.validTipoControl
-    );
-    validateOptions(
-      "medioTec",
-      mockPlanilla.datosPsa.medioTec,
-      global.validMediosTec
-    );
-    validateOptions(
-      "tipoPro",
-      mockPlanilla.datosPsa.tipoPro,
-      global.validTipoPro
-    );
-    validateOptions(
-      "demora",
-      mockPlanilla.datosVuelo.demora,
-      global.validDemora
-    );
-    validateOptions(
-      "tipoVuelo",
-      mockPlanilla.datosVuelo.tipoVuelo,
-      global.validTipoVuelo
-    );
-    mockPlanilla.datosTerrestre.forEach((item) =>
-      validateOptions("funcion", item.funcion, global.validFuncion)
-    );
 
     const id = "someMockId";
 

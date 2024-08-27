@@ -1,5 +1,5 @@
 import express from "express";
-const {
+import {
   TipoControl,
   MediosTec,
   TipoPro,
@@ -7,7 +7,7 @@ const {
   TipoVuelo,
   Funcion,
   TipoEmpresa,
-} = require("../models/opcionesModel");
+} from "../models/opcionesModel.js";
 
 const dataRouter = express.Router();
 
@@ -74,4 +74,4 @@ dataRouter.post("/tipoEmpresa", async (req, res) => {
   return res.status(201).json(savedTipo);
 });
 
-module.exports = dataRouter;
+export default dataRouter;

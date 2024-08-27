@@ -1,5 +1,5 @@
 import express from "express";
-const Vehiculo = require("../../models/personalModel");
+import { Vehiculo } from "../../models/personalModel.js";
 
 const vehiculoRouter = express.Router();
 
@@ -46,4 +46,4 @@ vehiculoRouter.post("/", async (req, res) => {
   return res.status(201).json(savedVehiculo);
 });
 
-module.exports = vehiculoRouter;
+export default vehiculoRouter;

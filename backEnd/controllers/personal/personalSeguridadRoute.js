@@ -1,5 +1,5 @@
 import express from "express";
-const PersonalSeguridadEmpresa = require("../../models/personalModel");
+import { PersonalSeguridadEmpresa } from "../../models/personalModel.js";
 
 const personalSeguridadRouter = express.Router();
 
@@ -47,4 +47,4 @@ personalSeguridadRouter.post("/", async (req, res) => {
   return res.status(201).json(savedPersonal);
 });
 
-module.exports = personalSeguridadRouter;
+export default personalSeguridadRouter;

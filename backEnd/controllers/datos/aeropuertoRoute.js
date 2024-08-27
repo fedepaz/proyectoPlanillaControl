@@ -1,5 +1,5 @@
 import express from "express";
-const Aeropuerto = require("../../models/personalModel");
+import { Aeropuerto } from "../../models/personalModel.js";
 
 const aeropuertoRouter = express.Router();
 
@@ -46,4 +46,4 @@ aeropuertoRouter.post("/", async (req, res) => {
   return res.status(201).json(savedAero);
 });
 
-module.exports = aeropuertoRouter;
+export default aeropuertoRouter;

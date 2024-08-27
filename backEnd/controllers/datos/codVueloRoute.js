@@ -1,5 +1,5 @@
 import express from "express";
-const CodVuelo = require("../../models/personalModel");
+import { CodVuelo } from "../../models/personalModel.js";
 
 const codVueloRouter = express.Router();
 
@@ -47,4 +47,4 @@ codVueloRouter.post("/", async (req, res) => {
   return res.status(201).json(savedCodVuelo);
 });
 
-module.exports = codVueloRouter;
+export default codVueloRouter;

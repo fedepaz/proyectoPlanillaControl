@@ -1,13 +1,13 @@
 import express from "express";
-const Planilla = require("../schemas/planillaModel.js");
-const {
+import { Planilla } from "../models/planillaModel.js";
+import {
   TipoControl,
   MediosTec,
   TipoPro,
   Demora,
   TipoVuelo,
   Funcion,
-} = require("../models/opcionesModel");
+} from "../models/opcionesModel.js";
 
 const planillasRouter = express.Router();
 
@@ -118,4 +118,4 @@ planillasRouter.delete("/:id", async (req, res) => {
   return res.send({ message: "Planilla Deleted" });
 });
 
-module.exports = planillasRouter;
+export default planillasRouter;

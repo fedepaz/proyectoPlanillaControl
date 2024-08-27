@@ -15,8 +15,7 @@ oficialSchema.set("toJSON", {
   },
 });
 
-const Oficial = model("Oficial", oficialSchema);
-module.exports = Oficial;
+export const Oficial = model("Oficial", oficialSchema);
 
 const personalEmpresaSchema = new Schema({
   dni: { type: String, required: true, unique: true },
@@ -34,8 +33,7 @@ personalEmpresaSchema.set("toJSON", {
   },
 });
 
-const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
-module.exports = PersonalEmpresa;
+export const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
 
 const personalSeguridadSchema = new Schema({
   dni: { type: String, required: true, unique: true },
@@ -53,11 +51,10 @@ personalSeguridadSchema.set("toJSON", {
   },
 });
 
-const PersonalSeguridadEmpresa = model(
+export const PersonalSeguridadEmpresa = model(
   "PersonalSeguridadEmpresa",
   personalSeguridadSchema
 );
-module.exports = PersonalSeguridadEmpresa;
 
 const empresaSchema = new Schema({
   empresa: { type: String, required: true, unique: true },
@@ -72,8 +69,7 @@ empresaSchema.set("toJSON", {
   },
 });
 
-const Empresa = model("Empresa", empresaSchema);
-module.exports = Empresa;
+export const Empresa = model("Empresa", empresaSchema);
 
 const matriculaAeronaveSchema = new Schema({
   matriculaAeronave: { type: String, required: true, unique: true },
@@ -88,8 +84,10 @@ matriculaAeronaveSchema.set("toJSON", {
   },
 });
 
-const MatriculaAeronave = model("MatriculaAeronave", matriculaAeronaveSchema);
-module.exports = MatriculaAeronave;
+export const MatriculaAeronave = model(
+  "MatriculaAeronave",
+  matriculaAeronaveSchema
+);
 
 const aeropuertoSchema = new Schema({
   aeropuerto: { type: String, required: true, unique: true },
@@ -105,8 +103,7 @@ aeropuertoSchema.set("toJSON", {
   },
 });
 
-const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
-module.exports = Aeropuerto;
+export const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
 
 const vehiculoSchema = new Schema({
   numInterno: { type: String, required: true, unique: true },
@@ -122,8 +119,7 @@ vehiculoSchema.set("toJSON", {
   },
 });
 
-const Vehiculo = model("Vehiculo", vehiculoSchema);
-module.exports = Vehiculo;
+export const Vehiculo = model("Vehiculo", vehiculoSchema);
 
 const codVueloSchema = new Schema({
   codVuelo: { type: String, required: true, unique: true },
@@ -140,5 +136,4 @@ codVueloSchema.set("toJSON", {
   },
 });
 
-const CodVuelo = model("CodVuelo", codVueloSchema);
-module.exports = CodVuelo;
+export const CodVuelo = model("CodVuelo", codVueloSchema);

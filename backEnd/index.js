@@ -1,23 +1,24 @@
 import express from "express";
 import helmet from "helmet";
-require("dotenv").config();
-require("./db");
+import dotenv from "dotenv";
+import { connectDB } from "./db.js";
 import cors from "cors";
-const notFound = require("./middleware/notFound.js");
-const handleErrors = require("./middleware/handleErrors.js");
+//import { notFound } from "./middleware/notFound.js";
+//import { handleErrors } from "./middleware/handleErrors.js";
 
-import planillasRoute from "./controllers/planillasRoute.js";
-import dataRoute from "./controllers/dataRoute.js";
-import oficialRoute from "./controllers/personal/oficialRoute.js";
-import personalEmpresaRoute from "./controllers/personal/personalEmpresaRoute.js";
-import personalSeguridadRoute from "./controllers/personal/personalSeguridadRoute.js";
-import aeronaveRoute from "./controllers/datos/aeronaveRoute.js";
-import codVueloRoute from "./controllers/datos/codVueloRoute.js";
-import empresaRoute from "./controllers/datos/empresaRoute.js";
-import aeropuertoRoute from "./controllers/datos/aeropuertoRoute.js";
-import vehiculosRoute from "./controllers/datos/vehiculosRoute.js";
+import planillasRouter from "./controllers/planillasRoute.js";
+import dataRouter from "./controllers/dataRoute.js";
+import oficialRouter from "./controllers/personal/oficialRoute.js";
+import personalEmpresaRouter from "./controllers/personal/personalEmpresaRoute.js";
+import personalSeguridadRouter from "./controllers/personal/personalSeguridadRoute.js";
+import aeronaveRouter from "./controllers/datos/aeronaveRoute.js";
+import codVueloRouter from "./controllers/datos/codVueloRoute.js";
+import empresaRouter from "./controllers/datos/empresaRoute.js";
+import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
+import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 
 const app = express();
+dotenv.config();
 
 app.use(helmet());
 app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
@@ -49,18 +50,18 @@ app.get("/", (request, response) => {
   return response.status(234).send("planillasBackend");
 });
 
-app.use("/data", dataRoute);
+app.use("/data", dataRouter);
 
-app.use("/planillas", planillasRoute);
-app.use("/oficial", oficialRoute);
-app.use("/personalEmpresa", personalEmpresaRoute);
-app.use("/personalSeguridad", personalSeguridadRoute);
+app.use("/planillas", planillasRouter);
+app.use("/oficial", oficialRouter);
+app.use("/personalEmpresa", personalEmpresaRouter);
+app.use("/personalSeguridad", personalSeguridadRouter);
 
-app.use("/aeronave", aeronaveRoute);
-app.use("/empresa", empresaRoute);
-app.use("/codVuelo", codVueloRoute);
-app.use("/aeropuerto", aeropuertoRoute);
-app.use("/vehiculos", vehiculosRoute);
+app.use("/aeronave", aeronaveRouter);
+app.use("/empresa", empresaRouter);
+app.use("/codVuelo", codVueloRouter);
+app.use("/aeropuerto", aeropuertoRouter);
+app.use("/vehiculos", vehiculosRouter);
 
 if (process.env.NODE_ENV !== "test") {
   connectDB()

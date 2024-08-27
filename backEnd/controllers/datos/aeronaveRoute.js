@@ -1,5 +1,5 @@
 import express from "express";
-const MatriculaAeronave = require("../../models/personalModel");
+import { MatriculaAeronave } from "../../models/personalModel.js";
 
 const aeronaveRouter = express.Router();
 
@@ -47,4 +47,4 @@ aeronaveRouter.post("/", async (req, res) => {
   return res.status(201).json(savedMat);
 });
 
-module.exports = aeronaveRouter;
+export default aeronaveRouter;

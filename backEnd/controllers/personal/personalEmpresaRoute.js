@@ -1,5 +1,5 @@
 import express from "express";
-const PersonalEmpresa = require("../../models/personalModel");
+import { PersonalEmpresa } from "../../models/personalModel.js";
 
 const personalEmpresaRouter = express.Router();
 
@@ -46,4 +46,4 @@ personalEmpresaRouter.post("/", async (req, res) => {
   return res.status(201).json(savedPersonal);
 });
 
-module.exports = personalEmpresaRouter;
+export default personalEmpresaRouter;
