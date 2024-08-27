@@ -6,16 +6,16 @@ import cors from "cors";
 const notFound = require("./middleware/notFound.js");
 const handleErrors = require("./middleware/handleErrors.js");
 
-import planillasRoute from "./routes/planillasRoute.js";
-import dataRoute from "./routes/dataRoute.js";
-import oficialRoute from "./routes/personal/oficialRoute.js";
-import personalEmpresaRoute from "./routes/personal/personalEmpresaRoute.js";
-import personalSeguridadRoute from "./routes/personal/personalSeguridadRoute.js";
-import aeronaveRoute from "./routes/datos/aeronaveRoute.js";
-import codVueloRoute from "./routes/datos/codVueloRoute.js";
-import empresaRoute from "./routes/datos/empresaRoute.js";
-import aeropuertoRoute from "./routes/datos/aeropuertoRoute.js";
-import vehiculosRoute from "./routes/datos/vehiculosRoute.js";
+import planillasRoute from "./controllers/planillasRoute.js";
+import dataRoute from "./controllers/dataRoute.js";
+import oficialRoute from "./controllers/personal/oficialRoute.js";
+import personalEmpresaRoute from "./controllers/personal/personalEmpresaRoute.js";
+import personalSeguridadRoute from "./controllers/personal/personalSeguridadRoute.js";
+import aeronaveRoute from "./controllers/datos/aeronaveRoute.js";
+import codVueloRoute from "./controllers/datos/codVueloRoute.js";
+import empresaRoute from "./controllers/datos/empresaRoute.js";
+import aeropuertoRoute from "./controllers/datos/aeropuertoRoute.js";
+import vehiculosRoute from "./controllers/datos/vehiculosRoute.js";
 
 const app = express();
 
