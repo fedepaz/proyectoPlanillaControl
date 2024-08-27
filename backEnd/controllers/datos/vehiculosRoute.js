@@ -1,84 +1,49 @@
 import express from "express";
-import { Vehiculos } from "../../schemas/personalModel.js";
+const Vehiculo = require("../../models/personalModel");
 
-const router = express.Router();
+const vehiculoRouter = express.Router();
 
-const fetchOptions = async (model) => {
-  try {
-    const options = await model.find().select().exec();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+vehiculoRouter.get("/", async (req, res) => {
+  const vehiculo = await Vehiculo.find();
+
+  res.json(vehiculo);
+});
+
+vehiculoRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const vehiculo = await Vehiculo.findById(id);
+  return res.json(vehiculo);
+});
+
+vehiculoRouter.get("/numInterno/:interno", async (req, res) => {
+  const { interno } = req.params;
+  const numInterno = await Vehiculo.findOne({
+    numInterno: interno,
+  });
+
+  if (!numInterno) {
+    return res.status(404).json({ message: "No numInterno" });
   }
-};
+  return res.json(numInterno);
+});
 
-const validateOptions = (field, value, validOptions) => {
-  if (!validOptions.includes(value)) {
-    throw new Error(`Invalid value for ${field}`);
-  }
-};
-
-router.get("/", async (req, res) => {
-  try {
-    const vehiculo = await fetchOptions(Vehiculos);
-
-    res.status(200).json({
-      vehiculo,
+vehiculoRouter.post("/", async (req, res) => {
+  const { body } = req;
+  const { numInterno, empresa, tipoVehiculo } = body;
+  if (!numInterno || !empresa || !tipoVehiculo) {
+    return res.status(400).json({
+      message: "Faltan datos de Vehiculo",
     });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
   }
+
+  const newVehiculo = new Vehiculo({
+    numInterno,
+    empresa,
+    tipoVehiculo,
+  });
+
+  const savedVehiculo = newVehiculo.save();
+  return res.status(201).json(savedVehiculo);
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const vehiculo = await Vehiculos.findById(id).exec();
-    return res.status(200).json(vehiculo);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-router.get("/numInterno/:interno", async (req, res) => {
-  try {
-    const { interno } = req.params;
-    const numInterno = await Vehiculos.findOne({
-      numInterno: interno,
-    }).exec();
-
-    if (!numInterno) {
-      return res.status(404).json({ message: "No numInterno" });
-    }
-    return res.status(200).json(numInterno);
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).send({ message: error.message });
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { numInterno, empresa, tipoVehiculo } = req.body;
-    if (!numInterno || !empresa || !tipoVehiculo) {
-      return res.status(400).json({
-        message: "Faltan datos de Vehiculo",
-      });
-    }
-
-    const newVehiculo = await Vehiculos.create({
-      numInterno,
-      empresa,
-      tipoVehiculo,
-    }).exec();
-    return res.status(201).json(newVehiculo);
-  } catch (error) {
-    console.error("Error generando Vehiculo:", error);
-    return res.status(500).json({ message: "Internal server error " + error });
-  }
-});
-
-export default router;
+module.exports = vehiculoRouter;
