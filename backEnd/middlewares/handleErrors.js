@@ -14,24 +14,24 @@ const ERROR_HANDLERS = {
     res.status(500).end();
   },
   OficialNotFound: (res) =>
-    res.status(404).send({ error: "Oficial ID Not Found" }),
+    res.status(404).send({ error: "Oficial Not Found" }),
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
   MongoServerError: (res, error) => {
     if (error.code === 11000) {
-      if (error.keyPattern.dni) {
-        res.status(409).send({ error: "Duplicate value. DNI already exists" });
-      } else if (error.keyPattern.legajo) {
-        res
-          .status(409)
-          .send({ error: "Duplicate value. Legajo already exists" });
-      }
+      const field = Object.keys(error.keyPattern)[0];
+      res.status(409).send({
+        error: `Duplicate value. ${field.toUpperCase()} already exists`,
+      });
     } else {
       res.status(400).send({ error: "Database Operation Error" });
     }
   },
+  PersonalNotFound: (res) =>
+    res.status(404).send({ error: "Personal Not Found" }),
 };
 
 export const handleErrors = (error, request, response, next) => {
+  console.log(error.name, error.message);
   const handler = ERROR_HANDLERS[error.name] || ERROR_HANDLERS.defaultError;
 
   handler(response, error);

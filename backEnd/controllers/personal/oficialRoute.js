@@ -55,8 +55,16 @@ oficialRouter.post("/", async (req, res, next) => {
   const { body } = req;
   try {
     const { dni, firstname, lastname, legajo } = body;
-    if (!dni || !firstname || !lastname || !legajo) {
-      const error = new Error("Missing required fields");
+    const requiredFields = ["dni", "firstname", "lastname", "legajo"];
+
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
       error.status = 400;
       error.name = "MissingData";
       throw error;

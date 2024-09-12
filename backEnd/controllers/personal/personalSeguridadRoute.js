@@ -17,43 +17,78 @@ personalSeguridadRouter.get("/", async (req, res) => {
   const personalSeguridadEmpresa = await fetchOptions(PersonalSeguridadEmpresa);
   res.json(personalSeguridadEmpresa);
 });
-personalSeguridadRouter.get("/:id", async (req, res) => {
+personalSeguridadRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const personal = await PersonalSeguridadEmpresa.findById(id);
-  return res.json(personal);
+  try {
+    const personal = await PersonalSeguridadEmpresa.findById(id);
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (err) {
+    next(err);
+  }
 });
 
-personalSeguridadRouter.get("/dni/:dni", async (req, res) => {
+personalSeguridadRouter.get("/dni/:dni", async (req, res, next) => {
   const { dni } = req.params;
-  const personal = await PersonalSeguridadEmpresa.findOne({
-    dni: dni,
-  });
-
-  if (!personal) {
-    return res.status(404).json({ message: "No DNI" });
+  try {
+    const personal = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    });
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (err) {
+    next(err);
   }
-  return res.json(personal);
 });
 
-personalSeguridadRouter.post("/", async (req, res) => {
+personalSeguridadRouter.post("/", async (req, res, next) => {
   const { body } = req;
-  const { dni, firstname, lastname, empresa, legajo } = body;
-  if (!dni || !firstname || !lastname || !empresa || !legajo) {
-    return res.status(400).json({
-      message: "Faltan datos de Personal",
+  try {
+    const { dni, firstname, lastname, empresa, legajo } = body;
+    const requiredFields = [
+      "dni",
+      "firstname",
+      "lastname",
+      "empresa",
+      "legajo",
+    ];
+
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const newPersonal = new PersonalSeguridadEmpresa({
+      dni,
+      firstname,
+      lastname,
+      empresa,
+      legajo,
     });
+
+    const savedPersonal = await newPersonal.save();
+    return res.status(201).json(savedPersonal);
+  } catch (err) {
+    next(err);
   }
-
-  const newPersonal = new PersonalSeguridadEmpresa({
-    dni,
-    firstname,
-    lastname,
-    empresa,
-    legajo,
-  });
-
-  const savedPersonal = newPersonal.save();
-  return res.status(201).json(savedPersonal);
 });
 
 export default personalSeguridadRouter;
