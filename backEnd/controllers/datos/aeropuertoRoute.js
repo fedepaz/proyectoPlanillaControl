@@ -3,9 +3,18 @@ import { Aeropuerto } from "../../models/personalModel.js";
 
 const aeropuertoRouter = express.Router();
 
-aeropuertoRouter.get("/", async (req, res) => {
-  const aeropuerto = await Aeropuerto.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().select();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+aeropuertoRouter.get("/", async (req, res) => {
+  const aeropuerto = await fetchOptions(Aeropuerto);
   res.json(aeropuerto);
 });
 

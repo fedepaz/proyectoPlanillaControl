@@ -3,9 +3,18 @@ import { CodVuelo } from "../../models/personalModel.js";
 
 const codVueloRouter = express.Router();
 
-codVueloRouter.get("/", async (req, res) => {
-  const codVuelo = await CodVuelo.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().select();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+codVueloRouter.get("/", async (req, res) => {
+  const codVuelo = await fetchOptions(CodVuelo);
   res.json(codVuelo);
 });
 

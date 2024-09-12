@@ -3,46 +3,75 @@ import { Oficial } from "../../models/personalModel.js";
 
 const oficialRouter = express.Router();
 
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().exec();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
+
 oficialRouter.get("/", async (req, res) => {
-  const oficial = await Oficial.find();
+  const oficial = await fetchOptions(Oficial);
 
   res.json(oficial);
 });
 
-oficialRouter.get("/:id", async (req, res) => {
+oficialRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const oficial = await Oficial.findById(id);
-  return res.json(oficial);
+  try {
+    const oficial = await Oficial.findById(id);
+    if (!oficial) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "OficialNotFound";
+      throw error;
+    }
+    return res.json(oficial);
+  } catch (err) {
+    next(err);
+  }
 });
 
-oficialRouter.get("/dni/:dni", async (req, res) => {
+oficialRouter.get("/dni/:dni", async (req, res, next) => {
   const { dni } = req.params;
-  const oficial = await Oficial.findOne({ dni: dni });
-
-  if (!oficial) {
-    return res.status(404).json({ message: "No DNI" });
+  try {
+    const oficial = await Oficial.findOne({ dni: dni });
+    if (!oficial) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "OficialNotFound";
+      throw error;
+    }
+    return res.json(oficial);
+  } catch (err) {
+    next(err);
   }
-  return res.json(oficial);
 });
 
-oficialRouter.post("/", async (req, res) => {
+oficialRouter.post("/", async (req, res, next) => {
   const { body } = req;
-  const { dni, firstname, lastname, legajo } = body;
-  if (!dni || !firstname || !lastname || !legajo) {
-    return res.status(400).json({
-      message: "Faltan datos de Oficial",
+  try {
+    const { dni, firstname, lastname, legajo } = body;
+    if (!dni || !firstname || !lastname || !legajo) {
+      const error = new Error("Missing required fields");
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+    const newOficial = new Oficial({
+      dni,
+      firstname,
+      lastname,
+      legajo,
     });
+    const savedOficial = await newOficial.save();
+    return res.status(201).json(savedOficial);
+  } catch (err) {
+    next(err);
   }
-
-  const newOficial = new Oficial({
-    dni,
-    firstname,
-    lastname,
-    legajo,
-  });
-
-  const savedOficial = newOficial.save();
-  return res.status(201).json(savedOficial);
 });
 
 export default oficialRouter;

@@ -1,7 +1,7 @@
 import { Divider, FormLabel, Stack, Typography } from "@mui/material";
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
 import { PlanillaSchema } from "../../types/planillaSchema";
-import OficialComponent from "./components/oficialComponent";
+import { OficialComponent } from "./components/oficialComponent";
 import { RHFTextField } from "../../../components/RHFTextField";
 import { RHFToggleButtonGroup } from "../../../components/RHFToggleButtonGroup";
 import {

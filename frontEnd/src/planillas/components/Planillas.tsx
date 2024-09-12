@@ -9,7 +9,7 @@ import {
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
 import { useCallback, useEffect } from "react";
-import DatosPsa from "../components/planillaComponents/datosPsa";
+import { DatosPsa } from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";

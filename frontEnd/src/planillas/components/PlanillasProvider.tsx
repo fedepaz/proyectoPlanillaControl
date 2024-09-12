@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import Planillas from "./Planillas";
+import { Planillas } from "./Planillas";
 import {
   PlanillaSchema,
   defaultValuesPlanilla,

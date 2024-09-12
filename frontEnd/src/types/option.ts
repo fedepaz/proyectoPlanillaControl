@@ -13,7 +13,7 @@ export type MatriculaOption = {
 };
 
 export type EmpresaOption = {
-  _id: string;
+  id: string;
   empresa: string;
   tipoEmpresa: string;
 };

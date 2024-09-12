@@ -3,9 +3,18 @@ import { PersonalSeguridadEmpresa } from "../../models/personalModel.js";
 
 const personalSeguridadRouter = express.Router();
 
-personalSeguridadRouter.get("/", async (req, res) => {
-  const personalSeguridadEmpresa = await PersonalSeguridadEmpresa.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+personalSeguridadRouter.get("/", async (req, res) => {
+  const personalSeguridadEmpresa = await fetchOptions(PersonalSeguridadEmpresa);
   res.json(personalSeguridadEmpresa);
 });
 personalSeguridadRouter.get("/:id", async (req, res) => {

@@ -3,9 +3,18 @@ import { Vehiculo } from "../../models/personalModel.js";
 
 const vehiculoRouter = express.Router();
 
-vehiculoRouter.get("/", async (req, res) => {
-  const vehiculo = await Vehiculo.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().select();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+vehiculoRouter.get("/", async (req, res) => {
+  const vehiculo = await fetchOptions(Vehiculo);
   res.json(vehiculo);
 });
 

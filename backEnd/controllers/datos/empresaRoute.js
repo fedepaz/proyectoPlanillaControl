@@ -3,9 +3,18 @@ import { Empresa } from "../../models/personalModel.js";
 
 const empresaRouter = express.Router();
 
-empresaRouter.get("/", async (req, res) => {
-  const empresa = await Empresa.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().select();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+empresaRouter.get("/", async (req, res) => {
+  const empresa = await fetchOptions(Empresa);
   res.json(empresa);
 });
 

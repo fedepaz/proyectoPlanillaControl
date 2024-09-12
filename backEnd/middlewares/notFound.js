@@ -1,3 +1,3 @@
-export default (request, response, next) => {
+export const notFound = (error, request, response, next) => {
   response.status(404).end();
 };

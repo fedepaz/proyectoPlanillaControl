@@ -3,9 +3,18 @@ import { MatriculaAeronave } from "../../models/personalModel.js";
 
 const aeronaveRouter = express.Router();
 
-aeronaveRouter.get("/", async (req, res) => {
-  const matriculaAeronave = await MatriculaAeronave.find();
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().select();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
 
+aeronaveRouter.get("/", async (req, res) => {
+  const matriculaAeronave = await fetchOptions(MatriculaAeronave);
   res.json(matriculaAeronave);
 });
 

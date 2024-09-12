@@ -3,8 +3,8 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import cors from "cors";
-//import { notFound } from "./middleware/notFound.js";
-//import { handleErrors } from "./middleware/handleErrors.js";
+import { handleErrors } from "./middlewares/handleErrors.js";
+import limiter from "./middlewares/limiter.js";
 
 import planillasRouter from "./controllers/planillasRoute.js";
 import dataRouter from "./controllers/dataRoute.js";
@@ -18,9 +18,11 @@ import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
 import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 
 const app = express();
+
 dotenv.config();
 
 app.use(helmet());
+app.use(limiter);
 app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
 app.use(helmet.frameguard({ action: "deny" }));
 app.use(helmet.xssFilter({}));
@@ -29,7 +31,6 @@ app.use(helmet.ieNoOpen());
 var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
 app.use(helmet.dnsPrefetchControl());
-app.use(helmet.noCache());
 app.use(helmet.contentSecurityPolicy());
 
 app.use(express.json());
@@ -63,6 +64,9 @@ app.use("/codVuelo", codVueloRouter);
 app.use("/aeropuerto", aeropuertoRouter);
 app.use("/vehiculos", vehiculosRouter);
 
+//app.use(notFound);
+app.use(handleErrors);
+
 if (process.env.NODE_ENV !== "test") {
   connectDB()
     .then(() => {
@@ -73,7 +77,7 @@ if (process.env.NODE_ENV !== "test") {
       });
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.name);
     });
 }
 

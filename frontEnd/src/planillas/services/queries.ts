@@ -411,6 +411,8 @@ export function useEmpresa(tipoEmpresa?: string) {
         empresa: EmpresaOption[];
       }>("http://localhost:5555/empresa");
       const empresaRes = response.data.empresa;
+      const { empresa, tipoEmpresa, id } = empresaRes;
+      console.log();
 
       if (tipoEmpresa) {
         return empresaRes.filter(
