@@ -1,5 +1,5 @@
 import express from "express";
-import { PersonalEmpresa } from "../../models/personalModel.js";
+import { PersonalEmpresa, Empresa } from "../../models/personalModel.js";
 
 const personalEmpresaRouter = express.Router();
 
@@ -18,41 +18,82 @@ personalEmpresaRouter.get("/", async (req, res) => {
   res.json(personalEmpresa);
 });
 
-personalEmpresaRouter.get("/:id", async (req, res) => {
+personalEmpresaRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const personal = await PersonalEmpresa.findById(id);
-  return res.json(personal);
+  try {
+    const personal = await PersonalEmpresa.findById(id);
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (err) {
+    next(err);
+  }
 });
 
-personalEmpresaRouter.get("/dni/:dni", async (req, res) => {
+personalEmpresaRouter.get("/dni/:dni", async (req, res, next) => {
   const { dni } = req.params;
-  const personal = await PersonalEmpresa.findOne({ dni: dni });
-
-  if (!personal) {
-    return res.status(404).json({ message: "No DNI" });
+  try {
+    const personal = await PersonalEmpresa.findOne({ dni: dni });
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (err) {
+    next(err);
   }
-  return res.json(personal);
 });
 
-personalEmpresaRouter.post("/", async (req, res) => {
+personalEmpresaRouter.post("/", async (req, res, next) => {
   const { body } = req;
-  const { dni, firstname, lastname, empresa, legajo } = body;
-  if (!dni || !firstname || !lastname || !empresa || !legajo) {
-    return res.status(400).json({
-      message: "Faltan datos de Personal",
+  try {
+    const { dni, firstname, lastname, empresa, legajo } = body;
+    const requiredFields = [
+      "dni",
+      "firstname",
+      "lastname",
+      "empresa",
+      "legajo",
+    ];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaExists = await Empresa.findById(empresa);
+    if (empresaExists === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const newPersonal = new PersonalEmpresa({
+      dni,
+      firstname,
+      lastname,
+      empresa,
+      legajo,
     });
+
+    const savedPersonal = await newPersonal.save();
+    return res.status(201).json(savedPersonal);
+  } catch (err) {
+    next(err);
   }
-
-  const newPersonal = new PersonalEmpresa({
-    dni,
-    firstname,
-    lastname,
-    empresa,
-    legajo,
-  });
-
-  const savedPersonal = newPersonal.save();
-  return res.status(201).json(savedPersonal);
 });
 
 export default personalEmpresaRouter;

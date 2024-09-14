@@ -10,11 +10,13 @@ const ERROR_HANDLERS = {
   TokenExpirerError: (res) => res.status(401).json({ error: "token expired" }),
 
   defaultError: (res, error) => {
-    console.log(error.name);
-    res.status(500).end();
+    console.error("Unhandled error:", error);
+    res.status(500).send({ error: "An unexpected error occurred" });
   },
   OficialNotFound: (res) =>
     res.status(404).send({ error: "Oficial Not Found" }),
+  EmpresaNotFound: (res) =>
+    res.status(404).send({ error: "Empresa Not Found" }),
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
   MongoServerError: (res, error) => {
     if (error.code === 11000) {
@@ -23,7 +25,10 @@ const ERROR_HANDLERS = {
         error: `Duplicate value. ${field.toUpperCase()} already exists`,
       });
     } else {
-      res.status(400).send({ error: "Database Operation Error" });
+      res.status(500).send({
+        error: "Database Operation Error",
+        details: `MongoDB error ${error.code}: ${error.message}`,
+      });
     }
   },
   PersonalNotFound: (res) =>
@@ -31,7 +36,7 @@ const ERROR_HANDLERS = {
 };
 
 export const handleErrors = (error, request, response, next) => {
-  console.log(error.name, error.message);
+  //console.log(error.name, error.message);
   const handler = ERROR_HANDLERS[error.name] || ERROR_HANDLERS.defaultError;
 
   handler(response, error);

@@ -1,5 +1,8 @@
 import express from "express";
-import { PersonalSeguridadEmpresa } from "../../models/personalModel.js";
+import {
+  PersonalSeguridadEmpresa,
+  Empresa,
+} from "../../models/personalModel.js";
 
 const personalSeguridadRouter = express.Router();
 
@@ -73,6 +76,14 @@ personalSeguridadRouter.post("/", async (req, res, next) => {
       );
       error.status = 400;
       error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaExists = await Empresa.findById(empresa);
+    if (empresaExists === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
       throw error;
     }
 
