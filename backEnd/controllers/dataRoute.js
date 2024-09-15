@@ -21,11 +21,6 @@ const fetchOptions = async (model) => {
   }
 };
 
-dataRouter.get("/", (req, res) => {
-  res.setHeader("Content-Type", "text/plain; charset=utf-8");
-  return res.send("dataOptions connected");
-});
-
 dataRouter.get("/tipoControl", async (req, res) => {
   const tipoControl = await fetchOptions(TipoControl);
 
@@ -60,22 +55,6 @@ dataRouter.get("/funcion", async (req, res) => {
 dataRouter.get("/tipoEmpresa", async (req, res) => {
   const tipoEmpresa = await fetchOptions(TipoEmpresa);
   res.json(tipoEmpresa);
-});
-
-dataRouter.post("/tipoEmpresa", async (req, res) => {
-  const { body } = req;
-  const { label } = body;
-  if (!label)
-    res.status(400).json({
-      message: "Falta tipo empresa",
-    });
-
-  const newTipo = new TipoEmpresa({
-    label,
-  });
-
-  const savedTipo = newTipo.save();
-  return res.status(201).json(savedTipo);
 });
 
 export default dataRouter;
