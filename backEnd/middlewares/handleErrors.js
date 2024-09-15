@@ -12,8 +12,14 @@ const ERROR_HANDLERS = {
     res.status(404).send({ error: "Personal Not Found" }),
   MatriculaNotFound: (res) =>
     res.status(404).send({ error: "Matricula Not Found" }),
+  AeropuertoNotFound: (res) =>
+    res.status(404).send({ error: "Aeropuerto Not Found" }),
+  VueloNotFound: (res) => res.status(404).send({ error: "Vuelo Not Found" }),
 
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
+  AeropuertoDuplicate: (res, { message }) =>
+    res.status(409).send({ error: message }),
+
   MongoServerError: (res, error) => {
     if (error.code === 11000) {
       const field = Object.keys(error.keyPattern)[0];
@@ -33,7 +39,7 @@ const ERROR_HANDLERS = {
   TokenExpirerError: (res) => res.status(401).json({ error: "token expired" }),
 
   defaultError: (res, error) => {
-    console.error("Unhandled error:", error);
+    console.log(error);
     res.status(500).send({ error: "An unexpected error occurred" });
   },
 };

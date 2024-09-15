@@ -91,8 +91,8 @@ export const MatriculaAeronave = model(
 
 const aeropuertoSchema = new Schema({
   aeropuerto: { type: String, required: true, unique: true },
-  codIATA: { type: String, required: true },
-  codOACI: { type: String, required: true },
+  codIATA: { type: String, required: true, unique: true },
+  codOACI: { type: String, required: true, unique: true },
 });
 
 aeropuertoSchema.set("toJSON", {
