@@ -1,5 +1,5 @@
 import express from "express";
-import { CodVuelo } from "../../models/personalModel.js";
+import { CodVuelo, Aeropuerto, Empresa } from "../../models/personalModel.js";
 
 const codVueloRouter = express.Router();
 
@@ -18,42 +18,88 @@ codVueloRouter.get("/", async (req, res) => {
   res.json(codVuelo);
 });
 
-codVueloRouter.get("/:id", async (req, res) => {
+codVueloRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const codVuelo = await CodVuelo.findById(id);
-  return res.json(codVuelo);
-});
-
-codVueloRouter.get("/codVuelo/:codVuelo", async (req, res) => {
-  const { codigo } = req.params;
-  const codVuelo = await CodVuelo.findOne({
-    codvuelo: codigo,
-  });
-
-  if (!codVuelo) {
-    return res.status(404).json({ message: "No codVuelo" });
+  try {
+    const codVuelo = await CodVuelo.findById(id);
+    if (!codVuelo) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "CodVueloNotFound";
+      throw error;
+    }
+    return res.json(codVuelo);
+  } catch (error) {
+    next(error);
   }
-  return res.json(codVuelo);
 });
 
-codVueloRouter.post("/", async (req, res) => {
-  const { body } = req;
-  const { codVuelo, origen, destino, empresa } = body;
-  if (!codVuelo || !origen || !destino || !empresa) {
-    return res.status(400).json({
-      message: "Faltan datos de Vuelo",
+codVueloRouter.get("/codVuelo/:codVuelo", async (req, res, next) => {
+  const { codVuelo } = req.params;
+  try {
+    const codVueloRes = await CodVuelo.findOne({
+      codVuelo: codVuelo,
     });
+
+    if (!codVueloRes) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "CodVueloNotFound";
+      throw error;
+    }
+    return res.json(codVueloRes);
+  } catch (error) {
+    next(error);
   }
+});
 
-  const newCodVuelo = new CodVuelo({
-    codVuelo,
-    origen,
-    destino,
-    empresa,
-  });
+codVueloRouter.post("/", async (req, res, next) => {
+  const { body } = req;
 
-  const savedCodVuelo = await newCodVuelo.save();
-  return res.status(201).json(savedCodVuelo);
+  try {
+    const { codVuelo, origen, destino, empresa } = body;
+
+    const requiredFields = ["codVuelo", "origen", "destino", "empresa"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+    const aeropuertoOrigenExist = await Aeropuerto.findById(origen);
+    const aeropuertoDestinoExist = await Aeropuerto.findById(destino);
+    const empresaExist = await Empresa.findById(empresa);
+    if (!aeropuertoOrigenExist || !aeropuertoDestinoExist) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "AeropuertoNotFound";
+      throw error;
+    }
+    if (!empresaExist) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const newCodVuelo = new CodVuelo({
+      codVuelo,
+      origen,
+      destino,
+      empresa,
+    });
+
+    const savedCodVuelo = await newCodVuelo.save();
+    return res.status(201).json(savedCodVuelo);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default codVueloRouter;

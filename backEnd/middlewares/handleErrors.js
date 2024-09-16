@@ -21,6 +21,8 @@ const ERROR_HANDLERS = {
     res.status(404).send({ error: "Empresa Not Found" }),
   TipoEmpresaNotFound: (res) =>
     res.status(404).send({ error: "TipoEmpresa Not Found" }),
+  CodVueloNotFound: (res) =>
+    res.status(404).send({ error: "CodVuelo Not Found" }),
 
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
   AeropuertoDuplicate: (res, { message }) =>
