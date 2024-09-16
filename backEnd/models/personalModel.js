@@ -58,7 +58,11 @@ export const PersonalSeguridadEmpresa = model(
 
 const empresaSchema = new Schema({
   empresa: { type: String, required: true, unique: true },
-  tipoEmpresa: { type: String, required: true },
+  tipoEmpresa: {
+    type: Schema.Types.ObjectId,
+    ref: "TipoEmpresa",
+    required: true,
+  },
 });
 
 empresaSchema.set("toJSON", {

@@ -15,6 +15,8 @@ const ERROR_HANDLERS = {
   AeropuertoNotFound: (res) =>
     res.status(404).send({ error: "Aeropuerto Not Found" }),
   VueloNotFound: (res) => res.status(404).send({ error: "Vuelo Not Found" }),
+  VehiculoNotFound: (res) =>
+    res.status(404).send({ error: "Vehiculo Not Found" }),
 
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
   AeropuertoDuplicate: (res, { message }) =>
