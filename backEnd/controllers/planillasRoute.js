@@ -223,41 +223,103 @@ planillasRouter.get("/:id", async (req, res, next) => {
 
 planillasRouter.put("/:id", async (req, res, next) => {
   const { id } = req.params;
+  const { body } = req;
   try {
-    const {
-      datosPsa,
-      datosVuelo,
-      datosTerrestre,
-      datosSeguridad,
-      datosVehiculos,
-      novEquipajes,
-      novInspeccion,
-      novOtras,
-    } = req.body;
+    const planilla = await Planilla.findById(id);
+    if (!planilla) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PlanillaNotFound";
+      throw error;
+    }
+    const requiredFields = [
+      "datosPsa.fecha",
+      "datosPsa.responsable",
+      "datosPsa.horaIni",
+      "datosPsa.horaFin",
+      "datosPsa.cant",
+      "datosPsa.tipoControl",
+      "datosPsa.medioTec",
+      "datosPsa.tipoPro",
+      "datosVuelo.codVuelo",
+      "datosVuelo.horaArribo",
+      "datosVuelo.horaPartida",
+      "datosVuelo.demora",
+      "datosVuelo.tipoVuelo",
+      "datosVuelo.matriculaAeronave",
+      "datosVuelo.posicion",
+      "novEquipajes",
+      "novInspeccion",
+      "novOtras",
+    ];
 
-    if (
-      !datosPsa ||
-      !datosVuelo ||
-      !datosTerrestre ||
-      !datosSeguridad ||
-      !datosVehiculos ||
-      !novEquipajes ||
-      !novInspeccion ||
-      !novOtras
-    ) {
-      return res.status(400).json({
-        message: "Please provide all required fields for Planilla update.",
-      });
+    const missingFields = requiredFields.filter((field) => {
+      const fieldParts = field.split(".");
+      let value = body;
+      for (const part of fieldParts) {
+        value = value[part];
+        if (value === undefined) return true;
+      }
+      return false;
+    });
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
     }
 
-    const result = await Planilla.findByIdAndUpdate(id, req.body, {
+    const validateReference = async (model, id) => {
+      const result = await model.findById(id);
+      if (!result) {
+        const error = new Error(`${model.modelName} with id ${id} not found`);
+        error.status = 404;
+        error.name = `NotFound`;
+        throw error;
+      }
+    };
+
+    // Validate all references
+    await validateReference(Oficial, body.datosPsa.responsable);
+    await validateReference(TipoControl, body.datosPsa.tipoControl);
+    await validateReference(MediosTec, body.datosPsa.medioTec);
+    await validateReference(TipoPro, body.datosPsa.tipoPro);
+    await validateReference(CodVuelo, body.datosVuelo.codVuelo);
+    await validateReference(Demora, body.datosVuelo.demora);
+    await validateReference(TipoVuelo, body.datosVuelo.tipoVuelo);
+    await validateReference(
+      MatriculaAeronave,
+      body.datosVuelo.matriculaAeronave
+    );
+
+    // Validate nested arrays (assuming they are arrays of IDs)
+    for (const personalEmpresa of body.datosTerrestre) {
+      await validateReference(PersonalEmpresa, personalEmpresa.personalEmpresa);
+      await validateReference(Funcion, personalEmpresa.funcion);
+    }
+
+    for (const seguridad of body.datosSeguridad) {
+      await validateReference(
+        PersonalSeguridadEmpresa,
+        seguridad.personalSegEmpresa
+      );
+      await validateReference(Empresa, seguridad.empresaSeguridad);
+    }
+
+    for (const vehiculo of body.datosVehiculos) {
+      await validateReference(Vehiculo, vehiculo.vehiculo);
+      await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
+    }
+
+    const result = await Planilla.findByIdAndUpdate(id, body, {
       new: true,
     });
-    if (!result) {
-      return res.status(404).send({
-        message: "Planilla not found",
-      });
-    }
+
     return res.send({ message: "Planilla updated successfully", data: result });
   } catch (error) {
     next(error);
