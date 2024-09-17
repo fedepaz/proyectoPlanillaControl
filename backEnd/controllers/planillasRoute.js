@@ -197,12 +197,31 @@ planillasRouter.post("/", async (req, res, next) => {
   }
 });
 
-planillasRouter.get("/", async (req, res) => {
-  const planillas = await Planilla.find({});
-  return res.json({
-    count: planillas.length,
-    data: planillas,
-  });
+planillasRouter.get("/", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+
+    const totalCount = await Planilla.countDocuments();
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    const validPage = Math.min(Math.max(1, page), totalPages);
+
+    const planillas = await Planilla.find()
+      .sort({ createdAt: -1 })
+      .skip((validPage - 1) * pageSize)
+      .limit(pageSize);
+
+    return res.json({
+      data: planillas,
+      currentPage: validPage,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      pageSize: pageSize,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 planillasRouter.get("/:id", async (req, res, next) => {
