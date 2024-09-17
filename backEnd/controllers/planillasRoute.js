@@ -8,6 +8,15 @@ import {
   TipoVuelo,
   Funcion,
 } from "../models/opcionesModel.js";
+import {
+  Oficial,
+  CodVuelo,
+  MatriculaAeronave,
+  PersonalEmpresa,
+  PersonalSeguridadEmpresa,
+  Empresa,
+  Vehiculo,
+} from "../models/personalModel.js";
 
 const planillasRouter = express.Router();
 
@@ -38,70 +47,154 @@ export const fetchOptions = async (model) => {
   return options.map((option) => option.label);
 };
 
-export const validateOptions = (field, value, validOptions) => {
-  if (!validOptions.includes(value)) {
-    console.log(validOptions);
-    throw new Error(`Invalid value = ${value}, ${typeof value} for ${field}`);
-  }
-};
-
 planillasRouter.post("/", async (req, res, next) => {
-  const {
-    datosPsa,
-    datosVuelo,
-    datosTerrestre,
-    datosSeguridad,
-    datosVehiculos,
-    novEquipajes,
-    novInspeccion,
-    novOtras,
-  } = req.body;
+  const { body } = req;
+  try {
+    const {
+      datosPsa: {
+        fecha,
+        responsable,
+        horaIni,
+        horaFin,
+        cant,
+        tipoControl,
+        medioTec,
+        tipoPro,
+      },
+      datosVuelo: {
+        codVuelo,
+        horaArribo,
+        horaPartida,
+        demora,
+        tipoVuelo,
+        matriculaAeronave,
+        posicion,
+      },
+      datosTerrestre,
+      datosSeguridad,
+      datosVehiculos,
+      novEquipajes,
+      novInspeccion,
+      novOtras,
+    } = req.body;
+    const requiredFields = [
+      "datosPsa.fecha",
+      "datosPsa.responsable",
+      "datosPsa.horaIni",
+      "datosPsa.horaFin",
+      "datosPsa.cant",
+      "datosPsa.tipoControl",
+      "datosPsa.medioTec",
+      "datosPsa.tipoPro",
+      "datosVuelo.codVuelo",
+      "datosVuelo.horaArribo",
+      "datosVuelo.horaPartida",
+      "datosVuelo.demora",
+      "datosVuelo.tipoVuelo",
+      "datosVuelo.matriculaAeronave",
+      "datosVuelo.posicion",
+      "novEquipajes",
+      "novInspeccion",
+      "novOtras",
+    ];
 
-  if (
-    !datosPsa ||
-    !datosVuelo ||
-    !datosTerrestre ||
-    !datosSeguridad ||
-    !datosVehiculos ||
-    !novEquipajes ||
-    !novInspeccion ||
-    !novOtras
-  ) {
-    return res.status(400).json({
-      message: "Please provide all required fields for Planilla creation.",
+    const missingFields = requiredFields.filter((field) => {
+      const fieldParts = field.split(".");
+      let value = body;
+      for (const part of fieldParts) {
+        value = value[part];
+        if (value === undefined) return true;
+      }
+      return false;
     });
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const validateReference = async (model, id) => {
+      const result = await model.findById(id);
+      if (!result) {
+        const error = new Error(`${model.modelName} with id ${id} not found`);
+        error.status = 404;
+        error.name = `NotFound`;
+        throw error;
+      }
+    };
+
+    // Validate all references
+    await validateReference(Oficial, body.datosPsa.responsable);
+    await validateReference(TipoControl, body.datosPsa.tipoControl);
+    await validateReference(MediosTec, body.datosPsa.medioTec);
+    await validateReference(TipoPro, body.datosPsa.tipoPro);
+    await validateReference(CodVuelo, body.datosVuelo.codVuelo);
+    await validateReference(Demora, body.datosVuelo.demora);
+    await validateReference(TipoVuelo, body.datosVuelo.tipoVuelo);
+    await validateReference(
+      MatriculaAeronave,
+      body.datosVuelo.matriculaAeronave
+    );
+
+    // Validate nested arrays (assuming they are arrays of IDs)
+    for (const personalEmpresa of body.datosTerrestre) {
+      await validateReference(PersonalEmpresa, personalEmpresa.personalEmpresa);
+      await validateReference(Funcion, personalEmpresa.funcion);
+    }
+
+    for (const seguridad of body.datosSeguridad) {
+      await validateReference(
+        PersonalSeguridadEmpresa,
+        seguridad.personalSegEmpresa
+      );
+      await validateReference(Empresa, seguridad.empresaSeguridad);
+    }
+
+    for (const vehiculo of body.datosVehiculos) {
+      await validateReference(Vehiculo, vehiculo.vehiculo);
+      await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
+    }
+
+    const newPlanilla = new Planilla({
+      datosPsa: {
+        fecha,
+        responsable,
+        horaIni,
+        horaFin,
+        cant,
+        tipoControl,
+        medioTec,
+        tipoPro,
+      },
+      datosVuelo: {
+        codVuelo,
+        horaArribo,
+        horaPartida,
+        demora,
+        tipoVuelo,
+        matriculaAeronave,
+        posicion,
+      },
+      datosTerrestre,
+      datosSeguridad,
+      datosVehiculos,
+      novEquipajes,
+      novInspeccion,
+      novOtras,
+    });
+
+    const savedPlanilla = await newPlanilla.save();
+
+    return res.status(201).json(savedPlanilla);
+  } catch (error) {
+    next(error);
   }
-  const validTipoControl = await fetchOptions(TipoControl);
-  const validMediosTec = await fetchOptions(MediosTec);
-  const validTipoPro = await fetchOptions(TipoPro);
-  const validDemora = await fetchOptions(Demora);
-  const validTipoVuelo = await fetchOptions(TipoVuelo);
-  const validFuncion = await fetchOptions(Funcion);
-
-  validateOptions("tipoControl", datosPsa.tipoControl, validTipoControl);
-  validateOptions("medioTec", datosPsa.medioTec, validMediosTec);
-  validateOptions("tipoPro", datosPsa.tipoPro, validTipoPro);
-  validateOptions("demora", datosVuelo.demora, validDemora);
-  validateOptions("tipoVuelo", datosVuelo.tipoVuelo, validTipoVuelo);
-
-  datosTerrestre.forEach((item) =>
-    validateOptions("funcion", item.funcion, validFuncion)
-  );
-
-  const newPlanilla = new Planilla({
-    datosPsa,
-    datosVuelo,
-    datosTerrestre,
-    datosSeguridad,
-    datosVehiculos,
-    novEquipajes,
-    novInspeccion,
-    novOtras,
-  });
-
-  const savedPlanilla = newPlanilla.save();
-
-  return res.status(201).json(savedPlanilla);
 });
 
 planillasRouter.get("/", async (req, res) => {
@@ -112,60 +205,79 @@ planillasRouter.get("/", async (req, res) => {
   });
 });
 
-planillasRouter.get("/:id", async (req, res) => {
+planillasRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const planilla = await Planilla.findById(id);
-  return res.json(planilla);
+  try {
+    const planilla = await Planilla.findById(id);
+    if (!planilla) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PlanillaNotFound";
+      throw error;
+    }
+    return res.json(planilla);
+  } catch (error) {
+    next(error);
+  }
 });
 
-planillasRouter.put("/:id", async (req, res) => {
+planillasRouter.put("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const {
-    datosPsa,
-    datosVuelo,
-    datosTerrestre,
-    datosSeguridad,
-    datosVehiculos,
-    novEquipajes,
-    novInspeccion,
-    novOtras,
-  } = req.body;
+  try {
+    const {
+      datosPsa,
+      datosVuelo,
+      datosTerrestre,
+      datosSeguridad,
+      datosVehiculos,
+      novEquipajes,
+      novInspeccion,
+      novOtras,
+    } = req.body;
 
-  if (
-    !datosPsa ||
-    !datosVuelo ||
-    !datosTerrestre ||
-    !datosSeguridad ||
-    !datosVehiculos ||
-    !novEquipajes ||
-    !novInspeccion ||
-    !novOtras
-  ) {
-    return res.status(400).json({
-      message: "Please provide all required fields for Planilla update.",
-    });
-  }
+    if (
+      !datosPsa ||
+      !datosVuelo ||
+      !datosTerrestre ||
+      !datosSeguridad ||
+      !datosVehiculos ||
+      !novEquipajes ||
+      !novInspeccion ||
+      !novOtras
+    ) {
+      return res.status(400).json({
+        message: "Please provide all required fields for Planilla update.",
+      });
+    }
 
-  const result = await Planilla.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
-  if (!result) {
-    return res.status(404).send({
-      message: "Planilla not found",
+    const result = await Planilla.findByIdAndUpdate(id, req.body, {
+      new: true,
     });
+    if (!result) {
+      return res.status(404).send({
+        message: "Planilla not found",
+      });
+    }
+    return res.send({ message: "Planilla updated successfully", data: result });
+  } catch (error) {
+    next(error);
   }
-  return res.send({ message: "Planilla updated successfully", data: result });
 });
 
-planillasRouter.delete("/:id", async (req, res) => {
+planillasRouter.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const result = await Planilla.findByIdAndDelete(id);
-  if (!id) {
-    return res.status(404).send({
-      message: "Planilla not found",
-    });
+  try {
+    const result = await Planilla.findByIdAndDelete(id);
+    if (!result) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PlanillaNotFound";
+      throw error;
+    }
+    return res.send({ message: "Planilla Deleted" });
+  } catch (error) {
+    next(error);
   }
-  return res.send({ message: "Planilla Deleted" });
 });
 
 export default planillasRouter;

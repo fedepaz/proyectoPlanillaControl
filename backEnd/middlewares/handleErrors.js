@@ -1,5 +1,12 @@
 const ERROR_HANDLERS = {
-  CastError: (res) => res.status(400).send({ error: "ID used is malformed" }),
+  CastError: (res, error) => {
+    const { model } = error;
+    res.status(400).send({
+      error: `ID of ${model.modelName} is malformed`,
+      value: error.value,
+      field: error.field,
+    });
+  },
 
   ValidationError: (res, { message }) =>
     res.status(409).send({ error: message }),
@@ -23,6 +30,9 @@ const ERROR_HANDLERS = {
     res.status(404).send({ error: "TipoEmpresa Not Found" }),
   CodVueloNotFound: (res) =>
     res.status(404).send({ error: "CodVuelo Not Found" }),
+  PlanillaNotFound: (res) =>
+    res.status(404).send({ error: "Planilla Not Found" }),
+  NotFound: (res, { message }) => res.status(404).send({ error: message }),
 
   MissingData: (res, { message }) => res.status(400).send({ error: message }),
   AeropuertoDuplicate: (res, { message }) =>
