@@ -38,7 +38,7 @@ export function useTipoControl() {
       const response = await axios.get<{ tipoControl: Option[] }>(
         "http://localhost:5555/data/tipoControl"
       );
-      const { tipoControl } = response.data;
+      const tipoControl = response.data;
       return tipoControl;
     },
   });
@@ -51,7 +51,7 @@ export function useMediosTec() {
       const response = await axios.get<{ mediosTec: Option[] }>(
         "http://localhost:5555/data/mediosTec"
       );
-      const { mediosTec } = response.data;
+      const mediosTec = response.data;
       return mediosTec;
     },
   });
@@ -64,7 +64,7 @@ export function useTipoPro() {
       const response = await axios.get<{ tipoPro: Option[] }>(
         "http://localhost:5555/data/tipoPro"
       );
-      const { tipoPro } = response.data;
+      const tipoPro = response.data;
       return tipoPro;
     },
   });
@@ -77,7 +77,7 @@ export function useDemora() {
       const response = await axios.get<{ demora: Option[] }>(
         "http://localhost:5555/data/demora"
       );
-      const { demora } = response.data;
+      const demora = response.data;
       return demora;
     },
   });
@@ -90,7 +90,7 @@ export function useTipoVuelo() {
       const response = await axios.get<{ tipoVuelo: Option[] }>(
         "http://localhost:5555/data/tipoVuelo"
       );
-      const { tipoVuelo } = response.data;
+      const tipoVuelo = response.data;
       return tipoVuelo;
     },
   });
@@ -103,7 +103,7 @@ export function useFuncion() {
       const response = await axios.get<{ funcion: Option[] }>(
         "http://localhost:5555/data/funcion"
       );
-      const { funcion } = response.data;
+      const funcion = response.data;
       return funcion;
     },
   });
@@ -128,8 +128,6 @@ export function useCreateOficial() {
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["oficial"]);
-
       queryClient.setQueryData(["oficial", { _id: data._id }], data);
     },
     onError: (error) => {
@@ -176,7 +174,7 @@ export function usePlanillas(page: number = 1, pageSize: number = 10) {
         return {
           ...response.data,
           data: response.data.data.map((planilla) => ({
-            _id: planilla._id,
+            id: planilla.id,
             datosPsa: {
               fecha: planilla.datosPsa.fecha,
               responsable: planilla.datosPsa.responsable,
@@ -247,7 +245,7 @@ export function usePlanillaID(_id: string) {
           `http://localhost:5555/planillas/${_id}`
         );
         return {
-          _id: data._id,
+          id: data.id,
           datosPsa: {
             fecha: data.datosPsa.fecha,
             responsable: data.datosPsa.responsable,
@@ -371,12 +369,8 @@ export function useMatricula(empresa?: string) {
       const response = await axios.get<{
         matriculaAeronave: MatriculaOption[];
       }>("http://localhost:5555/aeronave");
-      const matriculaAeronaveRes = response.data.matriculaAeronave;
-      if (empresa) {
-        return matriculaAeronaveRes.filter(
-          (matricula) => matricula.empresa === empresa
-        );
-      }
+      const matriculaAeronaveRes = response.data;
+
       return matriculaAeronaveRes;
     },
   });
@@ -415,15 +409,7 @@ export function useEmpresa(tipoEmpresa?: string) {
       const response = await axios.get<{
         empresa: EmpresaOption[];
       }>("http://localhost:5555/empresa");
-      const empresaRes = response.data.empresa;
-      const { empresa, tipoEmpresa, id } = empresaRes;
-      console.log();
-
-      if (tipoEmpresa) {
-        return empresaRes.filter(
-          (empresa) => empresa.tipoEmpresa === tipoEmpresa
-        );
-      }
+      const empresaRes = response.data;
       return empresaRes;
     },
   });

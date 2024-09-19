@@ -4,71 +4,40 @@ const planillaSchema = z
   .object({
     datosPsa: z.object({
       fecha: z.string().min(1),
-      responsable: z
-        .number({ message: "Solo número se pueden ingresar" })
-        .int()
-        .min(500000, "Legajo insuficiente")
-        .max(550000, "El Legajo no existe"),
+      responsable: z.string().min(1), // Changed to string to represent ObjectId
       horaIni: z.string().time(),
       horaFin: z.string().time(),
       cant: z.string().min(1),
-      tipoControl: z.string().min(1),
-      medioTec: z.string().min(1),
-      tipoPro: z.string().min(1),
+      tipoControl: z.string().min(1), // Changed to array of strings to represent ObjectIds
+      medioTec: z.string().min(1), // Changed to array of strings to represent ObjectIds
+      tipoPro: z.string().min(1), // Changed to array of strings to represent ObjectIds
     }),
     datosVuelo: z.object({
-      aerolinea: z.string().min(1),
-      codVuelo: z.string().min(1),
-      origen: z.string().min(1),
-      destino: z.string().min(1),
+      codVuelo: z.string().min(1), // Changed to string to represent ObjectId
       horaArribo: z.string().min(1),
       horaPartida: z.string().min(1),
-      demora: z.string().min(1),
-      tipoVuelo: z.string().min(1),
-      matriculaAeronave: z.string().min(1),
+      demora: z.string().min(1), // Changed to string to represent ObjectId
+      tipoVuelo: z.string().min(1), // Changed to string to represent ObjectId
+      matriculaAeronave: z.string().min(1), // Changed to string to represent ObjectId
       posicion: z.string().min(1),
     }),
     datosTerrestre: z.array(
       z.object({
-        dniTerrestre: z
-          .number({ message: "Solo número se pueden ingresar" })
-          .int()
-          .min(30000000, "DNI insuficiente")
-          .max(99999999, "El DNI no puede tener más de 9 dígitos"),
-        apellidoTerrestre: z.string().min(1),
-        nombreTerrestre: z.string().min(1),
-        legajoTerrestre: z
-          .number({ message: "Solo número se pueden ingresar" })
-          .int()
-          .min(1, "Legajo insuficiente")
-          .max(999999, "El Legajo no existe"),
-        funcion: z.string().min(1),
+        personalEmpresa: z.string().min(1), // Changed to array of strings to represent ObjectIds
+        funcion: z.string().min(1), // Changed to string to represent ObjectId
         grupo: z.string().min(1),
       })
     ),
     datosSeguridad: z.array(
       z.object({
-        apellidoSeguridad: z.string().min(1),
-        nombreSeguridad: z.string().min(1),
-        dniSeguridad: z
-          .number({ message: "Solo número se pueden ingresar" })
-          .int()
-          .min(30000000, "DNI insuficiente")
-          .max(99999999, "El DNI no puede tener más de 9 dígitos"),
-        legajoSeguridad: z
-          .number({ message: "Solo número se pueden ingresar" })
-          .int()
-          .min(1, "Legajo insuficiente")
-          .max(999999, "El Legajo no existe"),
-        empresaSeguridad: z.string().min(1),
+        personalSegEmpresa: z.string().min(1), // Changed to array of strings to represent ObjectIds
+        empresaSeguridad: z.string().min(1), // Changed to string to represent ObjectId
       })
     ),
     datosVehiculos: z.array(
       z.object({
-        tipoVehiculo: z.string().min(1),
-        empresaVehiculo: z.string().min(1),
-        numInterno: z.string().min(1),
-        operadorVehiculo: z.string().min(1),
+        vehiculo: z.string().min(1), // Changed to string to represent ObjectId
+        operadorVehiculo: z.string().min(1), // Changed to string to represent ObjectId
         observacionesVehiculo: z.string().min(1),
       })
     ),
@@ -81,11 +50,10 @@ const planillaSchema = z
 export { planillaSchema };
 
 export type PlanillaSchema = z.infer<typeof planillaSchema>;
-
 export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
   datosPsa: {
     fecha: "",
-    responsable: 0,
+    responsable: "",
     horaIni: "",
     horaFin: "",
     cant: "",
@@ -94,10 +62,7 @@ export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
     tipoPro: "",
   },
   datosVuelo: {
-    aerolinea: "",
     codVuelo: "",
-    origen: "",
-    destino: "",
     horaArribo: "",
     horaPartida: "",
     demora: "",
@@ -107,33 +72,67 @@ export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
   },
   datosTerrestre: [
     {
-      dniTerrestre: 0,
-      apellidoTerrestre: "",
-      nombreTerrestre: "",
-      legajoTerrestre: 0,
+      personalEmpresa: "",
       funcion: "",
       grupo: "",
     },
   ],
   datosSeguridad: [
     {
-      apellidoSeguridad: "",
-      nombreSeguridad: "",
-      dniSeguridad: 0,
-      legajoSeguridad: 0,
+      personalSegEmpresa: "",
       empresaSeguridad: "",
     },
   ],
   datosVehiculos: [
     {
-      tipoVehiculo: "",
-      empresaVehiculo: "",
-      numInterno: "",
+      vehiculo: "",
       operadorVehiculo: "",
       observacionesVehiculo: "",
     },
   ],
-  novEquipajes: "Equipaje Roto",
-  novInspeccion: "Alguna Boludez",
-  novOtras: "Pasó un pájaro",
+  novEquipajes: "",
+  novInspeccion: "",
+  novOtras: "",
 };
+
+function formatPlanillaData(data: PlanillaSchema) {
+  return {
+    datosPsa: {
+      fecha: data.datosPsa.fecha,
+      responsable: data.datosPsa.responsable, // Assuming this is already an ObjectId
+      horaIni: data.datosPsa.horaIni,
+      horaFin: data.datosPsa.horaFin,
+      cant: data.datosPsa.cant,
+      tipoControl: data.datosPsa.tipoControl, // Assuming this is already an array of ObjectIds
+      medioTec: data.datosPsa.medioTec, // Assuming this is already an array of ObjectIds
+      tipoPro: data.datosPsa.tipoPro, // Assuming this is already an array of ObjectIds
+    },
+    datosVuelo: {
+      codVuelo: data.datosVuelo.codVuelo, // Assuming this is already an ObjectId
+      horaArribo: data.datosVuelo.horaArribo,
+      horaPartida: data.datosVuelo.horaPartida,
+      demora: data.datosVuelo.demora, // Assuming this is already an ObjectId
+      tipoVuelo: data.datosVuelo.tipoVuelo, // Assuming this is already an ObjectId
+      matriculaAeronave: data.datosVuelo.matriculaAeronave, // Assuming this is already an ObjectId
+      posicion: data.datosVuelo.posicion,
+    },
+    datosTerrestre: data.datosTerrestre.map((terrestre) => ({
+      personalEmpresa: terrestre.personalEmpresa, // Assuming this is already an array of ObjectIds
+      funcion: terrestre.funcion, // Assuming this is already an ObjectId
+      grupo: terrestre.grupo,
+    })),
+    datosSeguridad: data.datosSeguridad.map((seguridad) => ({
+      personalSegEmpresa: seguridad.personalSegEmpresa, // Assuming this is already an array of ObjectIds
+      empresaSeguridad: seguridad.empresaSeguridad, // Assuming this is already an ObjectId
+    })),
+    datosVehiculos: data.datosVehiculos.map((vehiculo) => ({
+      vehiculo: vehiculo.vehiculo, // Assuming this is already an ObjectId
+      operadorVehiculo: vehiculo.operadorVehiculo, // Assuming this is already an ObjectId
+      observacionesVehiculo: vehiculo.observacionesVehiculo,
+    })),
+    novEquipajes: data.novEquipajes,
+    novInspeccion: data.novInspeccion,
+    novOtras: data.novOtras,
+  };
+}
+export { formatPlanillaData };

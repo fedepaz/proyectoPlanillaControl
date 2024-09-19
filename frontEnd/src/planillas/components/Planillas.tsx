@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { PlanillaSchema } from "../types/planillaSchema";
+import { PlanillaSchema, formatPlanillaData } from "../types/planillaSchema";
 import { useCallback, useEffect } from "react";
 import { DatosPsa } from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
@@ -30,9 +30,14 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
 
   const createPlanillaMutation = useCreatePlanilla();
 
-  const onSubmit: SubmitHandler<PlanillaSchema> = (data) => {
-    console.log("submit " + data);
-    createPlanillaMutation.mutate(data);
+  const onSubmit: SubmitHandler<PlanillaSchema> = async (data) => {
+    try {
+      const formattedData = formatPlanillaData(data);
+      await createPlanillaMutation.mutateAsync(formattedData);
+      console.log("Planilla created successfully");
+    } catch (error) {
+      console.error("Error creating planilla:", error);
+    }
   };
 
   const handleDatosPsaSelected = useCallback(
@@ -50,12 +55,16 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
       maxWidth={isMobile ? "sm" : "md"}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
+      sx={{
+        pb: isMobile ? 6 : 4,
+        overflowY: "auto",
+      }}
     >
       <Stack
         sx={{
           gap: 1,
-          border: "1px solid blue",
-          padding: theme.spacing(2),
+          minHeight: "100vh",
+          justifyContent: "space-between",
         }}
         divider={<Divider orientation="horizontal" flexItem />}
       >
@@ -127,9 +136,15 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
             size={isMobile ? "large" : "medium"}
             sx={{
               mt: 2,
-              position: "sticky",
-              bottom: theme.spacing(2),
-              zIndex: 1,
+              ...(isMobile
+                ? {
+                    position: "static",
+                  }
+                : {
+                    position: "sticky",
+                    bottom: theme.spacing(2),
+                    zIndex: 1,
+                  }),
             }}
           >
             Nueva Planilla
