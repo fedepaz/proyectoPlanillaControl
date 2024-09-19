@@ -210,7 +210,8 @@ planillasRouter.get("/", async (req, res, next) => {
     const planillas = await Planilla.find()
       .sort({ createdAt: -1 })
       .skip((validPage - 1) * pageSize)
-      .limit(pageSize);
+      .limit(pageSize)
+      .exec();
 
     return res.json({
       data: planillas,

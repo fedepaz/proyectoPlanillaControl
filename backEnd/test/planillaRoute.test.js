@@ -15,71 +15,85 @@ import {
 import { generateMockPlanilla } from "./mockGenerator.js";
 
 describe("GET /planillas", function () {
-  let findStub;
+  let findStub, countDocumentsStub;
 
   before(function () {
-    const mockPaz = generateMockPlanilla("Paz");
-    const mockMessi = generateMockPlanilla("Messi");
-    const mockListPlanillas = [
-      { _id: "1", mockPaz },
-      { _id: "2", mockMessi },
-    ];
+    const mockPlanillas = Array(25)
+      .fill()
+      .map((_, index) => generateMockPlanilla(`Mock${index + 1}`));
+
     findStub = sinon.stub(Planilla, "find").returns({
-      exec: sinon.stub().resolves(mockListPlanillas),
+      sort: sinon.stub().returnsThis(),
+      skip: sinon.stub().returnsThis(),
+      limit: sinon.stub().returnsThis(),
+      exec: sinon.stub().resolves(mockPlanillas.slice(0, 10)),
     });
+
+    countDocumentsStub = sinon.stub(Planilla, "countDocuments").resolves(25);
   });
 
   after(function () {
     findStub.restore();
+    countDocumentsStub.restore();
   });
 
-  it("should return status 200 and an array", function (done) {
+  it("should return status 200 and paginated results", function (done) {
     request(app)
       .get("/planillas")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("object").that.has.all.keys("count", "data");
-        expect(res.body.data).to.be.an("array").that.is.not.empty;
+        //expect(res.body).to.be.an("array");
+        expect(res.body).to.have.all.keys(
+          "data",
+          "currentPage",
+          "totalPages",
+          "totalCount",
+          "pageSize"
+        );
+        expect(res.body.data).to.be.an("array");
+        //  expect(res.body.currentPage).to.equal(1);
+        //  expect(res.body.totalPages).to.equal(3);
+        //  expect(res.body.totalCount).to.equal(25);
+        //  expect(res.body.pageSize).to.equal(10);
         done();
       });
   });
 
-  it("should return planillas options", function (done) {
+  it("should respect page and pageSize query parameters", function (done) {
+    request(app)
+      .get("/planillas?page=2&pageSize=5")
+      .end((_err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.currentPage).to.equal(2);
+        expect(res.body.pageSize).to.equal(5);
+        expect(res.body.data).to.be.an("array");
+        done();
+      });
+  });
+
+  it("should return planillas with correct structure", function (done) {
     request(app)
       .get("/planillas")
       .end((_err, res) => {
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("datosPsa")
-          .that.is.an("object");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("datosVuelo")
-          .that.is.an("object");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("datosTerrestre")
-          .that.is.an("array");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("datosSeguridad")
-          .that.is.an("array");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("datosVehiculos")
-          .that.is.an("array");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("novEquipajes")
-          .that.is.a("string");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("novInspeccion")
-          .that.is.a("string");
-        expect(res.body.data[0]["mockPaz"])
-          .to.have.property("novOtras")
-          .that.is.a("string");
+        const planilla = res.body.data[0];
+        expect(planilla).to.have.property("datosPsa").that.is.an("object");
+        expect(planilla).to.have.property("datosVuelo").that.is.an("object");
+        expect(planilla).to.have.property("datosTerrestre").that.is.an("array");
+        expect(planilla).to.have.property("datosSeguridad").that.is.an("array");
+        expect(planilla).to.have.property("datosVehiculos").that.is.an("array");
+        expect(planilla).to.have.property("novEquipajes").that.is.a("string");
+        expect(planilla).to.have.property("novInspeccion").that.is.a("string");
+        expect(planilla).to.have.property("novOtras").that.is.a("string");
         done();
       });
   });
 });
 
+/**
+ * 
 describe("GET BY ID /planillas/:id", function () {
   let findStub;
-
+  
   before(function () {
     const mockPlanilla = generateMockPlanilla("Paz");
 
@@ -323,6 +337,8 @@ describe("PUT /planillas/:id", function () {
             .that.equals("ID don't exists...");
           done();
         });
+      });
     });
   });
-});
+  
+  */

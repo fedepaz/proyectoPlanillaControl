@@ -8,7 +8,7 @@ const personalSeguridadRouter = express.Router();
 
 const fetchOptions = async (model) => {
   try {
-    const options = await model.find();
+    const options = await model.find().exec();
     return options;
   } catch (error) {
     console.error(`Error fetching options: ${error.message}`);

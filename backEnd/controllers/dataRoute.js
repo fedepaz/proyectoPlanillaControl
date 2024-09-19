@@ -13,13 +13,16 @@ const dataRouter = express.Router();
 
 const fetchOptions = async (model) => {
   try {
-    const options = await model.find().select("_id label");
+    const options = await model.find().select("_id label").exec();
     return options;
   } catch (error) {
     console.error(`Error fetching options of ${error.message}`);
     throw error;
   }
 };
+dataRouter.get("/", (req, res) => {
+  res.status(200).json({ message: "Data Connected" });
+});
 
 dataRouter.get("/tipoControl", async (req, res) => {
   const tipoControl = await fetchOptions(TipoControl);

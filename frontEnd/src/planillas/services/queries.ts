@@ -23,6 +23,14 @@ import {
 import { PlanillaGet } from "../types/planillaType";
 import { PlanillaSchema } from "../types/planillaSchema";
 
+interface PaginatedResponse {
+  data: PlanillaOption[];
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+  pageSize: number;
+}
+
 export function useTipoControl() {
   return useQuery({
     queryKey: ["tipoControl"],
@@ -156,71 +164,68 @@ export function useOficial(dni: number) {
   });
 }
 
-interface ApiResponsePlanilla {
-  planilla: PlanillaGet[];
-}
-
-export function usePlanillas() {
-  return useQuery<PlanillaOption[], Error>({
-    queryKey: ["planillas"],
-    queryFn: async (): Promise<PlanillaOption[]> => {
+export function usePlanillas(page: number = 1, pageSize: number = 10) {
+  return useQuery<PaginatedResponse, Error>({
+    queryKey: ["planillas", page, pageSize],
+    queryFn: async (): Promise<PaginatedResponse> => {
       try {
-        const response = await axios.get<ApiResponsePlanilla>(
-          "http://localhost:5555/planillas"
+        const response = await axios.get<PaginatedResponse>(
+          `http://localhost:5555/planillas?page=${page}&pageSize=${pageSize}`
         );
-        return response.data.planilla.map(
-          (planilla) =>
-            ({
-              _id: planilla._id,
-              datosPsa: {
-                fecha: planilla.datosPsa.fecha,
-                responsable: planilla.datosPsa.responsable,
-                horaIni: planilla.datosPsa.horaIni,
-                horaFin: planilla.datosPsa.horaFin,
-                cant: planilla.datosPsa.cant,
-                tipoControl: planilla.datosPsa.tipoControl,
-                medioTec: planilla.datosPsa.medioTec,
-                tipoPro: planilla.datosPsa.tipoPro,
-              },
-              datosVuelo: {
-                aerolinea: planilla.datosVuelo.aerolinea,
-                codVuelo: planilla.datosVuelo.codVuelo,
-                origen: planilla.datosVuelo.origen,
-                destino: planilla.datosVuelo.destino,
-                horaArribo: planilla.datosVuelo.horaArribo,
-                horaPartida: planilla.datosVuelo.horaPartida,
-                demora: planilla.datosVuelo.demora,
-                tipoVuelo: planilla.datosVuelo.tipoVuelo,
-                matriculaAeronave: planilla.datosVuelo.matriculaAeronave,
-                posicion: planilla.datosVuelo.posicion,
-              },
-              datosTerrestre: planilla.datosTerrestre.map((terrestre) => ({
-                dniTerrestre: terrestre.dniTerrestre,
-                apellidoTerrestre: terrestre.apellidoTerrestre,
-                nombreTerrestre: terrestre.nombreTerrestre,
-                legajoTerrestre: terrestre.legajoTerrestre,
-                funcion: terrestre.funcion,
-                grupo: terrestre.grupo,
-              })),
-              datosSeguridad: planilla.datosSeguridad.map((seguridad) => ({
-                apellidoSeguridad: seguridad.apellidoSeguridad,
-                nombreSeguridad: seguridad.nombreSeguridad,
-                dniSeguridad: seguridad.dniSeguridad,
-                legajoSeguridad: seguridad.legajoSeguridad,
-                empresaSeguridad: seguridad.empresaSeguridad,
-              })),
-              datosVehiculos: planilla.datosVehiculos.map((vehiculo) => ({
-                tipoVehiculo: vehiculo.tipoVehiculo,
-                empresaVehiculo: vehiculo.empresaVehiculo,
-                numInterno: vehiculo.numInterno,
-                operadorVehiculo: vehiculo.operadorVehiculo,
-                observacionesVehiculo: vehiculo.observacionesVehiculo,
-              })),
-              novEquipajes: planilla.novEquipajes,
-              novInspeccion: planilla.novInspeccion,
-              novOtras: planilla.novOtras,
-            } satisfies PlanillaOption)
-        );
+
+        return {
+          ...response.data,
+          data: response.data.data.map((planilla) => ({
+            _id: planilla._id,
+            datosPsa: {
+              fecha: planilla.datosPsa.fecha,
+              responsable: planilla.datosPsa.responsable,
+              horaIni: planilla.datosPsa.horaIni,
+              horaFin: planilla.datosPsa.horaFin,
+              cant: planilla.datosPsa.cant,
+              tipoControl: planilla.datosPsa.tipoControl,
+              medioTec: planilla.datosPsa.medioTec,
+              tipoPro: planilla.datosPsa.tipoPro,
+            },
+            datosVuelo: {
+              aerolinea: planilla.datosVuelo.aerolinea,
+              codVuelo: planilla.datosVuelo.codVuelo,
+              origen: planilla.datosVuelo.origen,
+              destino: planilla.datosVuelo.destino,
+              horaArribo: planilla.datosVuelo.horaArribo,
+              horaPartida: planilla.datosVuelo.horaPartida,
+              demora: planilla.datosVuelo.demora,
+              tipoVuelo: planilla.datosVuelo.tipoVuelo,
+              matriculaAeronave: planilla.datosVuelo.matriculaAeronave,
+              posicion: planilla.datosVuelo.posicion,
+            },
+            datosTerrestre: planilla.datosTerrestre.map((terrestre) => ({
+              dniTerrestre: terrestre.dniTerrestre,
+              apellidoTerrestre: terrestre.apellidoTerrestre,
+              nombreTerrestre: terrestre.nombreTerrestre,
+              legajoTerrestre: terrestre.legajoTerrestre,
+              funcion: terrestre.funcion,
+              grupo: terrestre.grupo,
+            })),
+            datosSeguridad: planilla.datosSeguridad.map((seguridad) => ({
+              apellidoSeguridad: seguridad.apellidoSeguridad,
+              nombreSeguridad: seguridad.nombreSeguridad,
+              dniSeguridad: seguridad.dniSeguridad,
+              legajoSeguridad: seguridad.legajoSeguridad,
+              empresaSeguridad: seguridad.empresaSeguridad,
+            })),
+            datosVehiculos: planilla.datosVehiculos.map((vehiculo) => ({
+              tipoVehiculo: vehiculo.tipoVehiculo,
+              empresaVehiculo: vehiculo.empresaVehiculo,
+              numInterno: vehiculo.numInterno,
+              operadorVehiculo: vehiculo.operadorVehiculo,
+              observacionesVehiculo: vehiculo.observacionesVehiculo,
+            })),
+            novEquipajes: planilla.novEquipajes,
+            novInspeccion: planilla.novInspeccion,
+            novOtras: planilla.novOtras,
+          })),
+        };
       } catch (error) {
         console.error("Error fetching data:", error);
         throw new Error("Failed to fetch data");
