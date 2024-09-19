@@ -4,9 +4,12 @@ const planillaSchema = Schema(
   {
     datosPsa: {
       fecha: { type: String, required: true },
-      responsable: [
-        { type: Schema.Types.ObjectId, ref: "Oficial", required: true },
-      ],
+      responsable: {
+        type: Schema.Types.ObjectId,
+        ref: "Oficial",
+        required: true,
+      },
+
       horaIni: { type: String, required: true },
       horaFin: { type: String, required: true },
       cant: { type: String, required: true },
@@ -21,22 +24,26 @@ const planillaSchema = Schema(
       ],
     },
     datosVuelo: {
-      codVuelo: [
-        { type: Schema.Types.ObjectId, ref: "CodVuelo", required: true },
-      ],
+      codVuelo: {
+        type: Schema.Types.ObjectId,
+        ref: "CodVuelo",
+        required: true,
+      },
+
       horaArribo: { type: String, required: true },
       horaPartida: { type: String, required: true },
-      demora: [{ type: Schema.Types.ObjectId, ref: "Demora", required: true }],
-      tipoVuelo: [
-        { type: Schema.Types.ObjectId, ref: "TipoVuelo", required: true },
-      ],
-      matriculaAeronave: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: "MatriculaAeronave",
-          required: true,
-        },
-      ],
+      demora: { type: Schema.Types.ObjectId, ref: "Demora", required: true },
+      tipoVuelo: {
+        type: Schema.Types.ObjectId,
+        ref: "TipoVuelo",
+        required: true,
+      },
+
+      matriculaAeronave: {
+        type: Schema.Types.ObjectId,
+        ref: "MatriculaAeronave",
+        required: true,
+      },
       posicion: { type: String, required: true },
     },
     datosTerrestre: [
@@ -48,9 +55,12 @@ const planillaSchema = Schema(
             required: true,
           },
         ],
-        funcion: [
-          { type: Schema.Types.ObjectId, ref: "Funcion", required: true },
-        ],
+        funcion: {
+          type: Schema.Types.ObjectId,
+          ref: "Funcion",
+          required: true,
+        },
+
         grupo: { type: String, required: true },
       },
     ],
@@ -63,23 +73,27 @@ const planillaSchema = Schema(
             required: true,
           },
         ],
-        empresaSeguridad: [
-          { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
-        ],
+        empresaSeguridad: {
+          type: Schema.Types.ObjectId,
+          ref: "Empresa",
+          required: true,
+        },
       },
     ],
     datosVehiculos: [
       {
-        vehiculo: [
-          { type: Schema.Types.ObjectId, ref: "Vehiculo", required: true },
-        ],
-        operadorVehiculo: [
-          {
-            type: Schema.Types.ObjectId,
-            ref: "PersonalEmpresa",
-            required: true,
-          },
-        ],
+        vehiculo: {
+          type: Schema.Types.ObjectId,
+          ref: "Vehiculo",
+          required: true,
+        },
+
+        operadorVehiculo: {
+          type: Schema.Types.ObjectId,
+          ref: "PersonalEmpresa",
+          required: true,
+        },
+
         observacionesVehiculo: { type: String, required: true },
       },
     ],

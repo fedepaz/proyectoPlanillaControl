@@ -1,13 +1,13 @@
-export type Option = { _id: string; label: string };
+export type Option = { id: string; label: string };
 export type OficialOption = {
-  _id: string;
+  id: string;
   dni: string;
   firstname: string;
   lastname: string;
   legajo: string;
 };
 export type MatriculaOption = {
-  _id: string;
+  id: string;
   matriculaAeronave: string;
   empresa: string;
 };
@@ -19,7 +19,7 @@ export type EmpresaOption = {
 };
 
 export type PlanillaOption = {
-  _id: string;
+  id: string;
   datosPsa: {
     fecha: string;
     responsable: string;

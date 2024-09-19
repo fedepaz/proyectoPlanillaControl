@@ -6,24 +6,21 @@ import {
 
 const personalSeguridadRouter = express.Router();
 
-const fetchOptions = async (model) => {
+personalSeguridadRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().exec();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+    const personalSeguridadEmpresa =
+      await PersonalSeguridadEmpresa.find().populate("empresa");
+    res.json(personalSeguridadEmpresa);
+  } catch (err) {
+    next(err);
   }
-};
-
-personalSeguridadRouter.get("/", async (req, res) => {
-  const personalSeguridadEmpresa = await fetchOptions(PersonalSeguridadEmpresa);
-  res.json(personalSeguridadEmpresa);
 });
 personalSeguridadRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const personal = await PersonalSeguridadEmpresa.findById(id);
+    const personal = await PersonalSeguridadEmpresa.findById(id).populate(
+      "empresa"
+    );
     if (!personal) {
       const error = new Error();
       error.status = 404;
@@ -41,7 +38,7 @@ personalSeguridadRouter.get("/dni/:dni", async (req, res, next) => {
   try {
     const personal = await PersonalSeguridadEmpresa.findOne({
       dni: dni,
-    });
+    }).populate("empresa");
     if (!personal) {
       const error = new Error();
       error.status = 404;
@@ -51,6 +48,23 @@ personalSeguridadRouter.get("/dni/:dni", async (req, res, next) => {
     return res.json(personal);
   } catch (err) {
     next(err);
+  }
+});
+personalSeguridadRouter.get("/empresaID/:empresaID", async (req, res, next) => {
+  const { empresaID } = req.params;
+  try {
+    const personal = await PersonalSeguridadEmpresa.find({
+      empresa: empresaID,
+    }).populate("empresa");
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (error) {
+    next(error);
   }
 });
 

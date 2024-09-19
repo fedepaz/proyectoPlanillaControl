@@ -4,11 +4,11 @@ type Create = {
 
 type Edit = {
   variant: "edit";
-  _id: string;
+  id: string;
 };
 
 export type PlanillaCommon = {
-  _id: string;
+  id: string;
   datosPsa: {
     fecha: string;
     responsable: number;

@@ -3,25 +3,26 @@ import { CodVuelo, Aeropuerto, Empresa } from "../../models/personalModel.js";
 
 const codVueloRouter = express.Router();
 
-const fetchOptions = async (model) => {
+codVueloRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().select();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
-  }
-};
+    const codVuelo = await CodVuelo.find()
+      .populate("origen", { codIATA: 1 })
+      .populate("destino", { codIATA: 1 })
+      .populate("empresa");
 
-codVueloRouter.get("/", async (req, res) => {
-  const codVuelo = await fetchOptions(CodVuelo);
-  res.json(codVuelo);
+    res.json(codVuelo);
+  } catch (error) {
+    next(error);
+  }
 });
 
 codVueloRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const codVuelo = await CodVuelo.findById(id);
+    const codVuelo = await CodVuelo.findById(id)
+      .populate("origen", { codIATA: 1 })
+      .populate("destino", { codIATA: 1 })
+      .populate("empresa");
     if (!codVuelo) {
       const error = new Error();
       error.status = 404;
@@ -39,7 +40,10 @@ codVueloRouter.get("/codVuelo/:codVuelo", async (req, res, next) => {
   try {
     const codVueloRes = await CodVuelo.findOne({
       codVuelo: codVuelo,
-    });
+    })
+      .populate("origen", { codIATA: 1 })
+      .populate("destino", { codIATA: 1 })
+      .populate("empresa");
 
     if (!codVueloRes) {
       const error = new Error();

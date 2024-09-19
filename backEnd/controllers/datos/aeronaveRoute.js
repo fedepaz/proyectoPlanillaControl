@@ -3,25 +3,21 @@ import { MatriculaAeronave, Empresa } from "../../models/personalModel.js";
 
 const aeronaveRouter = express.Router();
 
-const fetchOptions = async (model) => {
+aeronaveRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().exec();
-    return options;
+    const matricula = await MatriculaAeronave.find().populate("empresa");
+    return res.json(matricula);
   } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+    next(error);
   }
-};
-
-aeronaveRouter.get("/", async (req, res) => {
-  const matriculaAeronave = await fetchOptions(MatriculaAeronave);
-  res.json(matriculaAeronave);
 });
 
 aeronaveRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const matriculaAeronave = await MatriculaAeronave.findById(id);
+    const matriculaAeronave = await MatriculaAeronave.findById(id).populate(
+      "empresa"
+    );
     if (!matriculaAeronave) {
       const error = new Error();
       error.status = 404;
@@ -39,7 +35,8 @@ aeronaveRouter.get("/matricula/:matricula", async (req, res, next) => {
   try {
     const matriculaAeronave = await MatriculaAeronave.findOne({
       matriculaAeronave: matricula,
-    });
+    }).populate("empresa");
+
     if (!matriculaAeronave) {
       const error = new Error();
       error.status = 404;

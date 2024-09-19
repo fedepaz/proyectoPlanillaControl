@@ -4,25 +4,15 @@ import { TipoEmpresa } from "../../models/opcionesModel.js";
 
 const empresaRouter = express.Router();
 
-const fetchOptions = async (model) => {
-  try {
-    const options = await model.find().exec();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
-  }
-};
-
 empresaRouter.get("/", async (req, res) => {
-  const empresa = await fetchOptions(Empresa);
+  const empresa = await Empresa.find({}).populate("tipoEmpresa");
   res.json(empresa);
 });
 
 empresaRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const empresa = await Empresa.findById(id);
+    const empresa = await Empresa.findById(id).populate("tipoEmpresa");
     if (!empresa) {
       const error = new Error();
       error.status = 404;
@@ -35,10 +25,12 @@ empresaRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-empresaRouter.get("/tipo/:tipo", async (req, res, next) => {
+empresaRouter.get("/tipoID/:tipo", async (req, res, next) => {
   const { tipo } = req.params;
   try {
-    const empresa = await Empresa.find({ tipoEmpresa: tipo });
+    const empresa = await Empresa.find({ tipoEmpresa: tipo }).populate(
+      "tipoEmpresa"
+    );
     if (!empresa) {
       const error = new Error();
       error.status = 404;

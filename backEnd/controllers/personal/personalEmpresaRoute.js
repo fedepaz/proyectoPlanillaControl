@@ -3,25 +3,19 @@ import { PersonalEmpresa, Empresa } from "../../models/personalModel.js";
 
 const personalEmpresaRouter = express.Router();
 
-const fetchOptions = async (model) => {
+personalEmpresaRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().exec();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+    const personalEmpresa = await PersonalEmpresa.find().populate("empresa");
+    res.json(personalEmpresa);
+  } catch (err) {
+    next(err);
   }
-};
-
-personalEmpresaRouter.get("/", async (req, res) => {
-  const personalEmpresa = await fetchOptions(PersonalEmpresa);
-  res.json(personalEmpresa);
 });
 
 personalEmpresaRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const personal = await PersonalEmpresa.findById(id);
+    const personal = await PersonalEmpresa.findById(id).populate("empresa");
     if (!personal) {
       const error = new Error();
       error.status = 404;
@@ -37,7 +31,9 @@ personalEmpresaRouter.get("/:id", async (req, res, next) => {
 personalEmpresaRouter.get("/dni/:dni", async (req, res, next) => {
   const { dni } = req.params;
   try {
-    const personal = await PersonalEmpresa.findOne({ dni: dni });
+    const personal = await PersonalEmpresa.findOne({ dni: dni }).populate(
+      "empresa"
+    );
     if (!personal) {
       const error = new Error();
       error.status = 404;
@@ -47,6 +43,24 @@ personalEmpresaRouter.get("/dni/:dni", async (req, res, next) => {
     return res.json(personal);
   } catch (err) {
     next(err);
+  }
+});
+
+personalEmpresaRouter.get("/empresaID/:empresaID", async (req, res, next) => {
+  const { empresaID } = req.params;
+  try {
+    const personal = await PersonalEmpresa.find({
+      empresa: empresaID,
+    }).populate("empresa");
+    if (!personal) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "PersonalNotFound";
+      throw error;
+    }
+    return res.json(personal);
+  } catch (error) {
+    next(error);
   }
 });
 

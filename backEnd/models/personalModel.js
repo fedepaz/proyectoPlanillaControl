@@ -21,7 +21,7 @@ const personalEmpresaSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   legajo: { type: Number, required: true, unique: true },
 });
 
@@ -39,7 +39,7 @@ const personalSeguridadSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   legajo: { type: Number, required: true, unique: true },
 });
 
@@ -77,7 +77,7 @@ export const Empresa = model("Empresa", empresaSchema);
 
 const matriculaAeronaveSchema = new Schema({
   matriculaAeronave: { type: String, required: true, unique: true },
-  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
 });
 
 matriculaAeronaveSchema.set("toJSON", {
@@ -110,8 +110,8 @@ aeropuertoSchema.set("toJSON", {
 export const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
 
 const vehiculoSchema = new Schema({
-  numInterno: { type: String, required: true, unique: true },
-  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
+  numInterno: { type: String, required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   tipoVehiculo: { type: String, required: true },
 });
 
@@ -127,9 +127,9 @@ export const Vehiculo = model("Vehiculo", vehiculoSchema);
 
 const codVueloSchema = new Schema({
   codVuelo: { type: String, required: true, unique: true },
-  origen: [{ type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true }],
-  destino: [{ type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true }],
-  empresa: [{ type: Schema.Types.ObjectId, ref: "Empresa", required: true }],
+  origen: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
+  destino: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
 });
 
 codVueloSchema.set("toJSON", {

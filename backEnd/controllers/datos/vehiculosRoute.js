@@ -3,25 +3,19 @@ import { Vehiculo, Empresa } from "../../models/personalModel.js";
 
 const vehiculoRouter = express.Router();
 
-const fetchOptions = async (model) => {
+vehiculoRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().exec();
-    return options;
+    const vehiculo = await Vehiculo.find().populate("empresa");
+    res.json(vehiculo);
   } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+    next(error);
   }
-};
-
-vehiculoRouter.get("/", async (req, res) => {
-  const vehiculo = await fetchOptions(Vehiculo);
-  res.json(vehiculo);
 });
 
 vehiculoRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const vehiculo = await Vehiculo.findById(id);
+    const vehiculo = await Vehiculo.findById(id).populate("empresa");
     if (!vehiculo) {
       const error = new Error();
       error.status = 404;
@@ -34,19 +28,19 @@ vehiculoRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-vehiculoRouter.get("/numInterno/:interno", async (req, res, next) => {
-  const { interno } = req.params;
+vehiculoRouter.get("/empresaID/:empresaID", async (req, res, next) => {
+  const { empresaID } = req.params;
   try {
-    const numInterno = await Vehiculo.findOne({
-      numInterno: interno,
-    });
-    if (!numInterno) {
+    const vehiculos = await Vehiculo.find({
+      empresa: empresaID,
+    }).populate("empresa");
+    if (!vehiculos) {
       const error = new Error();
       error.status = 404;
       error.name = "VehiculoNotFound";
       throw error;
     }
-    return res.json(numInterno);
+    return res.json(vehiculos);
   } catch (error) {
     next(error);
   }

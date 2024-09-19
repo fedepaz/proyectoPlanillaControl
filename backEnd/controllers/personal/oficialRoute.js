@@ -3,20 +3,13 @@ import { Oficial } from "../../models/personalModel.js";
 
 const oficialRouter = express.Router();
 
-const fetchOptions = async (model) => {
+oficialRouter.get("/", async (req, res, next) => {
   try {
-    const options = await model.find().exec();
-    return options;
-  } catch (error) {
-    console.error(`Error fetching options: ${error.message}`);
-    throw error;
+    const oficial = await Oficial.find();
+    res.json(oficial);
+  } catch (err) {
+    next(err);
   }
-};
-
-oficialRouter.get("/", async (req, res) => {
-  const oficial = await fetchOptions(Oficial);
-
-  res.json(oficial);
 });
 
 oficialRouter.get("/:id", async (req, res, next) => {

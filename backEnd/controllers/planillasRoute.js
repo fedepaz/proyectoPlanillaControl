@@ -208,6 +208,50 @@ planillasRouter.get("/", async (req, res, next) => {
     const validPage = Math.min(Math.max(1, page), totalPages);
 
     const planillas = await Planilla.find()
+      .populate({ path: "datosPsa.responsable", select: "firstname lastname" })
+      .populate({ path: "datosPsa.tipoControl", select: "label" })
+      .populate({ path: "datosPsa.medioTec", select: "label" })
+      .populate({ path: "datosPsa.tipoPro", select: "label" })
+      .populate({
+        path: "datosVuelo.codVuelo",
+        select: "codVuelo",
+      })
+      .populate({
+        path: "datosVuelo.demora",
+        select: "label",
+      })
+      .populate({
+        path: "datosVuelo.tipoVuelo",
+        select: "label",
+      })
+      .populate({
+        path: "datosVuelo.matriculaAeronave",
+        select: "matriculaAeronave",
+      })
+      .populate({
+        path: "datosTerrestre.personalEmpresa",
+        select: "firstname lastname",
+      })
+      .populate({
+        path: "datosTerrestre.funcion",
+        select: "label",
+      })
+      .populate({
+        path: "datosSeguridad.personalSegEmpresa",
+        select: "firstname lastname",
+      })
+      .populate({
+        path: "datosSeguridad.empresaSeguridad",
+        select: "nombre",
+      })
+      .populate({
+        path: "datosVehiculos.vehiculo",
+        select: "matricula",
+      })
+      .populate({
+        path: "datosVehiculos.operadorVehiculo",
+        select: "firstname lastname",
+      })
       .sort({ createdAt: -1 })
       .skip((validPage - 1) * pageSize)
       .limit(pageSize)
@@ -228,7 +272,52 @@ planillasRouter.get("/", async (req, res, next) => {
 planillasRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const planilla = await Planilla.findById(id);
+    const planilla = await Planilla.findById(id)
+
+      .populate({ path: "datosPsa.responsable", select: "firstname lastname" })
+      .populate({ path: "datosPsa.tipoControl", select: "label" })
+      .populate({ path: "datosPsa.medioTec", select: "label" })
+      .populate({ path: "datosPsa.tipoPro", select: "label" })
+      .populate({
+        path: "datosVuelo.codVuelo",
+        select: "codVuelo",
+      })
+      .populate({
+        path: "datosVuelo.demora",
+        select: "label",
+      })
+      .populate({
+        path: "datosVuelo.tipoVuelo",
+        select: "label",
+      })
+      .populate({
+        path: "datosVuelo.matriculaAeronave",
+        select: "matriculaAeronave",
+      })
+      .populate({
+        path: "datosTerrestre.personalEmpresa",
+        select: "firstname lastname",
+      })
+      .populate({
+        path: "datosTerrestre.funcion",
+        select: "label",
+      })
+      .populate({
+        path: "datosSeguridad.personalSegEmpresa",
+        select: "firstname lastname",
+      })
+      .populate({
+        path: "datosSeguridad.empresaSeguridad",
+        select: "nombre",
+      })
+      .populate({
+        path: "datosVehiculos.vehiculo",
+        select: "matricula",
+      })
+      .populate({
+        path: "datosVehiculos.operadorVehiculo",
+        select: "firstname lastname",
+      });
     if (!planilla) {
       const error = new Error();
       error.status = 404;
