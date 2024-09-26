@@ -7,8 +7,8 @@ import {
   Box,
   useMediaQuery,
 } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import WbSunnyTwoToneIcon from "@mui/icons-material/WbSunnyTwoTone";
+import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -38,9 +38,9 @@ export function PlanillasNavbar({ toggleColorMode }: PlanillasNavbarProps) {
               color="inherit"
             >
               {theme.palette.mode === "dark" ? (
-                <Brightness7Icon />
+                <WbSunnyTwoToneIcon />
               ) : (
-                <Brightness4Icon />
+                <Brightness2TwoToneIcon />
               )}
             </IconButton>
           </Toolbar>

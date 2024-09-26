@@ -6,8 +6,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { SubmitHandler, useFormContext } from "react-hook-form";
-import { PlanillaSchema, formatPlanillaData } from "../types/planillaSchema";
+import { useFormContext } from "react-hook-form";
+import { PlanillaSchema } from "../types/planillaSchema";
 import { useCallback, useEffect } from "react";
 import { DatosPsa } from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
@@ -15,37 +15,25 @@ import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { RHFTextField } from "../../components/RHFTextField";
-import { useCreatePlanilla } from "../services/mutations";
 
 interface PlanillaProps {
   onPlanillas: (fecha: string) => void;
 }
 
 export function Planillas({ onPlanillas }: PlanillaProps) {
-  const { setValue, handleSubmit } = useFormContext<PlanillaSchema>();
+  const { setValue } = useFormContext<PlanillaSchema>();
 
   useEffect(() => {
-    onPlanillas("Mensaje de planillas");
-  });
-
-  const createPlanillaMutation = useCreatePlanilla();
-
-  const onSubmit: SubmitHandler<PlanillaSchema> = async (data) => {
-    try {
-      const formattedData = formatPlanillaData(data);
-      await createPlanillaMutation.mutateAsync(formattedData);
-      console.log("Planilla created successfully");
-    } catch (error) {
-      console.error("Error creating planilla:", error);
-    }
-  };
+    console.log("Mensaje de planillas lalala");
+  }, []);
 
   const handleDatosPsaSelected = useCallback(
     (fecha: string) => {
       console.log(fecha + " Planillas");
       setValue("datosPsa.fecha", fecha);
+      onPlanillas(fecha);
     },
-    [setValue]
+    [setValue, onPlanillas]
   );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -53,10 +41,8 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
   return (
     <Container
       maxWidth={isMobile ? "sm" : "md"}
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
-        pb: isMobile ? 6 : 4,
+        pb: isMobile ? 4 : 2,
         overflowY: "auto",
       }}
     >

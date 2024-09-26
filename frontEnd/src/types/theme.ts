@@ -1,19 +1,18 @@
 import { createTheme } from "@mui/material/styles";
-
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#0b57d0", // Gmail's blue
+      main: "#3a73b2", // Blue-gray for accents
       contrastText: "#ffffff",
     },
     background: {
-      default: "#ffffff",
-      paper: "#f6f8fc", // Light gray background
+      default: "#d0d3d8", // Darker grayish blue
+      paper: "#e0e3e8", // Slightly lighter grayish blue
     },
     text: {
-      primary: "#202124", // Almost black
-      secondary: "#5f6368", // Dark gray
+      primary: "#202124", // Darker gray for text
+      secondary: "#606368", // Medium gray
     },
   },
 });
@@ -22,16 +21,16 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#8ab4f8", // Light blue for dark mode
-      contrastText: "#202124",
+      main: "#6c96c5", // Lighter blue-gray for accents
+      contrastText: "#1a1c20", // Dark text to contrast with lighter blueish elements
     },
     background: {
-      default: "#202124", // Very dark gray
-      paper: "#2d2e30", // Slightly lighter dark gray
+      default: "#2a2d32", // Lighter dark gray with blue tint
+      paper: "#36393e", // Slightly lighter gray for paper components
     },
     text: {
-      primary: "#e8eaed", // Off-white
-      secondary: "#9aa0a6", // Light gray
+      primary: "#dce0e5", // Lighter grayish-white text
+      secondary: "#9aa0a6", // Light grayish-blue for secondary text
     },
   },
 });

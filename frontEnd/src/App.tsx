@@ -41,7 +41,7 @@ export function App() {
               p: { xs: 1, sm: 2, md: 3 },
             }}
           >
-            <PlanillasProvider />;
+            <PlanillasProvider />
           </Box>
         </Box>
       </ThemeProvider>
