@@ -5,6 +5,7 @@ import { darkTheme, lightTheme } from "./types/theme";
 import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { LoginPage } from "./login/components/LoginPage";
+import { RegisterPage } from "./login/components/RegisterPage";
 
 export function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -42,10 +43,11 @@ export function App() {
               p: { xs: 1, sm: 2, md: 3 },
             }}
           >
-            <LoginPage />
-
+            <RegisterPage />
             {/*
             <PlanillasProvider />
+            <LoginPage />
+
             */}
           </Box>
         </Box>

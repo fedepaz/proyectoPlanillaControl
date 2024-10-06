@@ -10,34 +10,51 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useLogin } from "../services/login";
+import { useOficialSubmit } from "../services/oficialSubmit";
 import {
-  LoginSchema,
-  loginSchema,
-  defaultValuesLogin,
+  oficialSchema,
+  OficialSchema,
+  defaultValuesOficial,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 
-export function LoginPage() {
-  const methods = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: defaultValuesLogin,
+interface SuccessData {
+  dni: string;
+  oficialId: string;
+}
+
+interface OficialSubmitPageProps {
+  onSuccess: (data: SuccessData) => void;
+}
+
+export function OficialSubmitPage({ onSuccess }: OficialSubmitPageProps) {
+  const methods = useForm<OficialSchema>({
+    resolver: zodResolver(oficialSchema),
+    defaultValues: defaultValuesOficial,
     mode: "onChange",
   });
 
   const { handleSubmit } = methods;
-  const { mutate: login, isPending, isSuccess, isError, error } = useLogin();
-  const [successMessage, setSuccessMessage] = useState("");
+  const {
+    mutate: oficialSubmit,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+    data: mutationData,
+  } = useOficialSubmit();
 
   useEffect(() => {
-    if (isSuccess) {
-      setSuccessMessage("Inicio de sesión exitoso");
+    if (isSuccess && mutationData) {
+      onSuccess({
+        dni: mutationData.dni,
+        oficialId: mutationData.id,
+      });
     }
-  }, [isSuccess]);
+  }, [isSuccess, mutationData, onSuccess]);
 
-  const onSubmit = (data: LoginSchema) => {
-    login(data);
-    console.log("LoginPage.tsx attempt with:", data);
+  const onSubmit = (formData: OficialSchema) => {
+    oficialSubmit(formData);
   };
 
   return (
@@ -54,7 +71,7 @@ export function LoginPage() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Iniciar sesión
+            Registro de Usuario
           </Typography>
           {isError && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
@@ -63,18 +80,13 @@ export function LoginPage() {
                 : "Ocurrió un error inesperado"}
             </Alert>
           )}
-          {isSuccess && (
-            <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
-              {successMessage}
-            </Alert>
-          )}
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1, width: "100%" }}
           >
-            <RHFTextField<LoginSchema>
+            <RHFTextField<OficialSchema>
               margin="normal"
               required
               fullWidth
@@ -84,15 +96,35 @@ export function LoginPage() {
               autoComplete="dni"
               autoFocus
             />
-            <RHFTextField<LoginSchema>
+            <RHFTextField<OficialSchema>
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              id="firstname"
+              label="Nombre"
+              name="firstname"
+              autoComplete="firstname"
+              autoFocus
+            />
+            <RHFTextField<OficialSchema>
+              margin="normal"
+              required
+              fullWidth
+              id="lastname"
+              label="Apellido"
+              name="lastname"
+              autoComplete="lastname"
+              autoFocus
+            />
+            <RHFTextField<OficialSchema>
+              margin="normal"
+              required
+              fullWidth
+              id="legajo"
+              label="Legajo"
+              name="legajo"
+              autoComplete="legajo"
+              autoFocus
             />
             <Button
               type="submit"
@@ -104,7 +136,7 @@ export function LoginPage() {
               {isPending ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "Iniciar sesión"
+                "Registrar Usuario"
               )}
             </Button>
           </Box>

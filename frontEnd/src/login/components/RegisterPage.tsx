@@ -10,37 +10,65 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useLogin } from "../services/login";
+import { useRegister } from "../services/register";
 import {
-  LoginSchema,
-  loginSchema,
-  defaultValuesLogin,
+  registerSchema,
+  defaultValuesRegister,
+  RegisterSchema,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
+import { OficialSubmitPage } from "./OficialSubmitPage";
 
-export function LoginPage() {
-  const methods = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: defaultValuesLogin,
+interface SuccessData {
+  dni: string;
+  oficialId: string;
+}
+export function RegisterPage() {
+  const [isNewOficial, setIsNewOficial] = useState(true);
+  const [oficialData, setOficialData] = useState<SuccessData | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const methods = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: defaultValuesRegister,
     mode: "onChange",
   });
 
-  const { handleSubmit } = methods;
-  const { mutate: login, isPending, isSuccess, isError, error } = useLogin();
-  const [successMessage, setSuccessMessage] = useState("");
+  const { handleSubmit, setValue } = methods;
+  const {
+    mutate: register,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+  } = useRegister();
 
   useEffect(() => {
     if (isSuccess) {
-      setSuccessMessage("Inicio de sesión exitoso");
+      setShowSuccessMessage(true);
     }
   }, [isSuccess]);
 
-  const onSubmit = (data: LoginSchema) => {
-    login(data);
-    console.log("LoginPage.tsx attempt with:", data);
+  const handleOficialSubmit = (data: SuccessData) => {
+    setOficialData(data);
+    setIsNewOficial(false);
+
+    setValue("dni", data.dni);
+    setValue("oficialId", data.oficialId);
   };
 
-  return (
+  const onSubmit = (data: RegisterSchema) => {
+    const completeData = {
+      ...data,
+      dni: oficialData?.dni || "",
+      oficialId: oficialData?.oficialId || "",
+    };
+    register(completeData);
+  };
+
+  return isNewOficial ? (
+    <OficialSubmitPage onSuccess={handleOficialSubmit} />
+  ) : (
     <FormProvider {...methods}>
       <Container component="main" maxWidth="xs">
         <Paper
@@ -54,7 +82,7 @@ export function LoginPage() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Iniciar sesión
+            Complete su registro
           </Typography>
           {isError && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
@@ -63,28 +91,29 @@ export function LoginPage() {
                 : "Ocurrió un error inesperado"}
             </Alert>
           )}
-          {isSuccess && (
+          {showSuccessMessage && (
             <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
-              {successMessage}
+              Registro exitoso
             </Alert>
           )}
+
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1, width: "100%" }}
           >
-            <RHFTextField<LoginSchema>
+            <RHFTextField<RegisterSchema>
               margin="normal"
               required
               fullWidth
-              id="dni"
-              label="DNI"
-              name="dni"
-              autoComplete="dni"
+              id="email"
+              label="Correo electrónico"
+              name="email"
+              autoComplete="email"
               autoFocus
             />
-            <RHFTextField<LoginSchema>
+            <RHFTextField<RegisterSchema>
               margin="normal"
               required
               fullWidth
@@ -92,7 +121,7 @@ export function LoginPage() {
               label="Contraseña"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
             />
             <Button
               type="submit"
@@ -104,7 +133,7 @@ export function LoginPage() {
               {isPending ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "Iniciar sesión"
+                "Completar Registro"
               )}
             </Button>
           </Box>

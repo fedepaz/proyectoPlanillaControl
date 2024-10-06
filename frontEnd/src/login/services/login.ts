@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { LoginSchema } from "../types/loginSchema";
+import { LoginSchema } from "../types/modelsSchema";
 import {
   useMutation,
   UseMutationResult,
