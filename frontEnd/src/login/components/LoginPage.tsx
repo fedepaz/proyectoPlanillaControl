@@ -37,7 +37,7 @@ export function LoginPage() {
 
   const onSubmit = (data: LoginSchema) => {
     login(data);
-    console.log("Login attempt with:", data);
+    console.log("LoginPage.tsx attempt with:", data);
   };
 
   return (

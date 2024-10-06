@@ -16,6 +16,7 @@ import codVueloRouter from "./controllers/datos/codVueloRoute.js";
 import empresaRouter from "./controllers/datos/empresaRoute.js";
 import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
 import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
+import sessionRouter from "./controllers/session/loginRoute.js";
 
 const app = express();
 
@@ -53,6 +54,8 @@ app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(234).send("planillasBackend");
 });
+
+app.use("/session", sessionRouter);
 
 app.use("/data", dataRouter);
 
