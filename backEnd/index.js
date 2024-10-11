@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import cors from "cors";
 import { handleErrors } from "./middlewares/handleErrors.js";
+import { cookieVerify } from "./middlewares/cookieVerify.js";
 import limiter from "./middlewares/limiter.js";
+import cookieParser from "cookie-parser";
 
 import planillasRouter from "./controllers/planillasRoute.js";
 import dataRouter from "./controllers/dataRoute.js";
@@ -26,6 +28,7 @@ dotenv.config();
  */
 
 app.use(helmet());
+app.use(cookieParser());
 //app.use(limiter);
 app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
 app.use(helmet.frameguard({ action: "deny" }));
@@ -36,6 +39,7 @@ var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.contentSecurityPolicy());
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(
@@ -43,12 +47,15 @@ app.use(
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
+    credentials: true,
   })
 );
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");
 });
+
+app.use(cookieVerify);
 
 app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");

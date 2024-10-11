@@ -25,9 +25,13 @@ interface SuccessData {
 
 interface OficialSubmitPageProps {
   onSuccess: (data: SuccessData) => void;
+  onRegisterBack: (data: boolean) => void;
 }
 
-export function OficialSubmitPage({ onSuccess }: OficialSubmitPageProps) {
+export function OficialSubmitPage({
+  onSuccess,
+  onRegisterBack,
+}: OficialSubmitPageProps) {
   const methods = useForm<OficialSchema>({
     resolver: zodResolver(oficialSchema),
     defaultValues: defaultValuesOficial,
@@ -35,6 +39,7 @@ export function OficialSubmitPage({ onSuccess }: OficialSubmitPageProps) {
   });
 
   const { handleSubmit } = methods;
+  const [regreso, setRegreso] = useState(false);
   const {
     mutate: oficialSubmit,
     isPending,
@@ -55,6 +60,10 @@ export function OficialSubmitPage({ onSuccess }: OficialSubmitPageProps) {
 
   const onSubmit = (formData: OficialSchema) => {
     oficialSubmit(formData);
+  };
+  const onRegreso = () => {
+    setRegreso(true);
+    onRegisterBack(regreso);
   };
 
   return (
@@ -137,6 +146,21 @@ export function OficialSubmitPage({ onSuccess }: OficialSubmitPageProps) {
                 <CircularProgress size={24} color="inherit" />
               ) : (
                 "Registrar Usuario"
+              )}
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              color="secondary"
+              variant="outlined"
+              disabled={isPending}
+              onClick={onRegreso}
+            >
+              {" "}
+              {isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Regresar"
               )}
             </Button>
           </Box>

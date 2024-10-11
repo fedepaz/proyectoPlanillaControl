@@ -18,9 +18,10 @@ import { RHFTextField } from "../../components/RHFTextField";
 
 interface PlanillaProps {
   onPlanillas: (fecha: string) => void;
+  onBack: (data: boolean) => void;
 }
 
-export function Planillas({ onPlanillas }: PlanillaProps) {
+export function Planillas({ onPlanillas, onBack }: PlanillaProps) {
   const { setValue } = useFormContext<PlanillaSchema>();
 
   useEffect(() => {
@@ -37,6 +38,10 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
   );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const sendBack = () => {
+    onBack(false);
+  };
 
   return (
     <Container
@@ -114,26 +119,26 @@ export function Planillas({ onPlanillas }: PlanillaProps) {
         {/*novOtras: string;*/}
         <RHFTextField<PlanillaSchema> name="novOtras" label="Otras Novedades" />
 
-        <Stack sx={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Stack
+          sx={{ flexDirection: "column", justifyContent: "space-between" }}
+        >
           <Button
-            variant="contained"
             type="submit"
             fullWidth
-            size={isMobile ? "large" : "medium"}
-            sx={{
-              mt: 2,
-              ...(isMobile
-                ? {
-                    position: "static",
-                  }
-                : {
-                    position: "sticky",
-                    bottom: theme.spacing(2),
-                    zIndex: 1,
-                  }),
-            }}
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            Nueva Planilla
+            Generar Planilla{" "}
+          </Button>
+          <Button
+            type="button"
+            fullWidth
+            color="secondary"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={sendBack}
+          >
+            Regresar
           </Button>
         </Stack>
       </Stack>

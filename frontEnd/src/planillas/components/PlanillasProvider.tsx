@@ -9,7 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
 import { Alert, AlertProps, Snackbar } from "@mui/material";
 
-export function PlanillasProvider() {
+interface PlanillasProviderProps {
+  onBack: (data: boolean) => void;
+}
+
+export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const methods = useForm<PlanillaSchema>({
     mode: "all",
     resolver: zodResolver(planillaSchema),
@@ -81,10 +85,14 @@ export function PlanillasProvider() {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const sendBack = (data: boolean) => {
+    onBack(data);
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Planillas onPlanillas={handlePlanillaSelected} />
+        <Planillas onPlanillas={handlePlanillaSelected} onBack={sendBack} />
       </form>
       <Snackbar
         open={snackbar.open}

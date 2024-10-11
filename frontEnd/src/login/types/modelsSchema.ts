@@ -56,3 +56,15 @@ export const defaultValuesOficial: Partial<OficialSchema> = {
   firstname: "",
   lastname: "",
 };
+
+const logoutSchema = z.object({
+  email: z.string().email("El email no es válido"),
+});
+
+export { logoutSchema };
+
+export type LogoutSchema = z.infer<typeof logoutSchema>;
+
+export const defaultValuesLogout: Partial<LogoutSchema> = {
+  email: "",
+};

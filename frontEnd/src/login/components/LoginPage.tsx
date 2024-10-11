@@ -18,7 +18,16 @@ import {
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 
-export function LoginPage() {
+interface LoginResponse {
+  dni: string;
+}
+
+interface LoginPageProps {
+  onLogin: (data: LoginResponse) => void;
+  onRegister: (data: boolean) => void;
+}
+
+export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
   const methods = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: defaultValuesLogin,
@@ -26,18 +35,33 @@ export function LoginPage() {
   });
 
   const { handleSubmit } = methods;
-  const { mutate: login, isPending, isSuccess, isError, error } = useLogin();
+  const {
+    mutate: login,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+    data: mutationData,
+  } = useLogin();
   const [successMessage, setSuccessMessage] = useState("");
+  const [register, setRegister] = useState(false);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && mutationData) {
       setSuccessMessage("Inicio de sesión exitoso");
+      const timeout = setTimeout(() => {
+        onLogin(mutationData);
+      }, 1000);
+      return () => clearTimeout(timeout);
     }
-  }, [isSuccess]);
+  }, [isSuccess, mutationData, onLogin]);
 
   const onSubmit = (data: LoginSchema) => {
     login(data);
-    console.log("LoginPage.tsx attempt with:", data);
+  };
+  const onRegisterButton = () => {
+    setRegister(true);
+    onRegister(register);
   };
 
   return (
@@ -105,6 +129,21 @@ export function LoginPage() {
                 <CircularProgress size={24} color="inherit" />
               ) : (
                 "Iniciar sesión"
+              )}
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              color="secondary"
+              variant="outlined"
+              disabled={isPending}
+              onClick={onRegisterButton}
+            >
+              {" "}
+              {isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Registrar Usuario"
               )}
             </Button>
           </Box>

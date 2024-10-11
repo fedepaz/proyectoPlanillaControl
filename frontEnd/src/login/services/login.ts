@@ -7,9 +7,12 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 const loginUrl = "http://localhost:5555/session/login";
+interface LoginResponse {
+  dni: string;
+}
 
 export function useLogin(): UseMutationResult<
-  void,
+  LoginResponse,
   Error,
   LoginSchema,
   unknown
@@ -17,11 +20,12 @@ export function useLogin(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: LoginSchema) => {
-      const res = await axios.post(loginUrl, data);
+      const res = await axios.post<LoginResponse>(loginUrl, data, {
+        withCredentials: true,
+      });
       return res.data;
     },
     onSuccess: async (data) => {
-      console.log("login success", data);
       await queryClient.invalidateQueries({ queryKey: [""] });
     },
     onError: (error) => {

@@ -23,7 +23,9 @@ export function useRegister(): UseMutationResult<
     mutationFn: async (data: RegisterSchema) => {
       console.log("Sending registration data:", data);
       try {
-        const res = await axios.post<RegisterResponse>(registerUrl, data);
+        const res = await axios.post<RegisterResponse>(registerUrl, data, {
+          withCredentials: true,
+        });
         return res.data;
       } catch (error) {
         if (axios.isAxiosError(error)) {

@@ -29,7 +29,7 @@ export class UserRepository {
   }
 
   static async login({ dni, password }) {
-    const user = await User.findOne({ dni });
+    const user = await User.findOne({ dni }).populate("oficialId");
     if (!user) {
       throw new Error("El usuario no existe");
     }

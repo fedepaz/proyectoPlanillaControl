@@ -11,14 +11,26 @@ import WbSunnyTwoToneIcon from "@mui/icons-material/WbSunnyTwoTone";
 import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import CloseSessionButton from "./CLoseSessionButton";
+import { useState } from "react";
 
 interface PlanillasNavbarProps {
   toggleColorMode: () => void;
+  onLogout: (data: boolean) => void;
+  isLoggedIn: boolean;
 }
 
-export function PlanillasNavbar({ toggleColorMode }: PlanillasNavbarProps) {
+export function PlanillasNavbar({
+  toggleColorMode,
+  onLogout,
+  isLoggedIn,
+}: PlanillasNavbarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const onLogoutButton = () => {
+    onLogout(true);
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -32,6 +44,7 @@ export function PlanillasNavbar({ toggleColorMode }: PlanillasNavbarProps) {
             >
               {isMobile ? "Planillas" : "Planillas Page"}
             </Typography>
+            {isLoggedIn && <CloseSessionButton onLogout={onLogoutButton} />}
             <IconButton
               sx={{ ml: 1 }}
               onClick={toggleColorMode}

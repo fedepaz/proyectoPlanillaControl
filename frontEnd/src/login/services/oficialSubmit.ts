@@ -22,7 +22,9 @@ export function useOficialSubmit(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: OficialSchema) => {
-      const res = await axios.post<OficialResponse>(loginUrl, data);
+      const res = await axios.post<OficialResponse>(loginUrl, data, {
+        withCredentials: true,
+      });
       return res.data;
     },
     onSuccess: async () => {

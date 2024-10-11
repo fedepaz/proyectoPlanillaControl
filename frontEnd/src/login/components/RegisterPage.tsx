@@ -23,7 +23,11 @@ interface SuccessData {
   dni: string;
   oficialId: string;
 }
-export function RegisterPage() {
+
+interface RegisterPageProps {
+  onRegisterBack: (data: boolean) => void;
+}
+export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
   const [isNewOficial, setIsNewOficial] = useState(true);
   const [oficialData, setOficialData] = useState<SuccessData | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -35,6 +39,7 @@ export function RegisterPage() {
   });
 
   const { handleSubmit, setValue } = methods;
+  const [regreso, setRegreso] = useState(false);
   const {
     mutate: register,
     isPending,
@@ -65,9 +70,16 @@ export function RegisterPage() {
     };
     register(completeData);
   };
+  const onRegreso = () => {
+    setRegreso(true);
+    onRegisterBack(regreso);
+  };
 
   return isNewOficial ? (
-    <OficialSubmitPage onSuccess={handleOficialSubmit} />
+    <OficialSubmitPage
+      onSuccess={handleOficialSubmit}
+      onRegisterBack={onRegreso}
+    />
   ) : (
     <FormProvider {...methods}>
       <Container component="main" maxWidth="xs">
