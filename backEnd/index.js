@@ -5,6 +5,8 @@ import { connectDB } from "./db.js";
 import cors from "cors";
 import { handleErrors } from "./middlewares/handleErrors.js";
 import { cookieVerify } from "./middlewares/cookieVerify.js";
+import { notFound } from "./middlewares/notFound.js";
+import { debugMiddleware } from "./middlewares/debug.js";
 import limiter from "./middlewares/limiter.js";
 import cookieParser from "cookie-parser";
 
@@ -23,9 +25,8 @@ import sessionRouter from "./controllers/session/loginRoute.js";
 const app = express();
 
 dotenv.config();
-/**
- *
- */
+
+//app.use(debugMiddleware);
 
 app.use(helmet());
 app.use(cookieParser());
@@ -39,7 +40,6 @@ var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.contentSecurityPolicy());
-app.use(cookieParser());
 
 app.use(express.json());
 app.use(
@@ -59,7 +59,7 @@ app.use(cookieVerify);
 
 app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
-  return response.status(234).send("planillasBackend");
+  return response.status(200).send("planillasBackend");
 });
 
 app.use("/session", sessionRouter);
@@ -77,7 +77,7 @@ app.use("/codVuelo", codVueloRouter);
 app.use("/aeropuerto", aeropuertoRouter);
 app.use("/vehiculos", vehiculosRouter);
 
-//app.use(notFound);
+app.use(notFound);
 app.use(handleErrors);
 
 if (process.env.NODE_ENV !== "test") {

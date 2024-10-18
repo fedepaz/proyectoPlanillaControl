@@ -9,7 +9,7 @@ export default function Dashboard({ onGeneratePlanillas }: DashboardProps) {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ mt: 0 }}>
+    <Container component="main" maxWidth="xs">
       <Paper
         elevation={3}
         sx={{
@@ -20,18 +20,14 @@ export default function Dashboard({ onGeneratePlanillas }: DashboardProps) {
           alignItems: "center",
         }}
       >
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleGenerarPlanillas}
-            >
-              Generar Planillas
-            </Button>
-          </Grid>
-        </Grid>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleGenerarPlanillas}
+        >
+          Generar Planillas
+        </Button>
       </Paper>
     </Container>
   );

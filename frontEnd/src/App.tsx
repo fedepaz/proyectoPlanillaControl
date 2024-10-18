@@ -54,12 +54,6 @@ export function App() {
     setShowRegister(info);
   };
 
-  const toggleLogout = (show: boolean) => {
-    setShowLogoutPage(show);
-  };
-  const toggleGeneratePlanillas = (show: boolean) => {
-    setShowGeneratePlanillas(show);
-  };
   const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
 
   const handleLogout = () => {
@@ -81,7 +75,7 @@ export function App() {
   const renderLoggedInContent = () => {
     switch (currentView) {
       case View.LOGOUT:
-        return <LogoutPage dni={dni} />;
+        return <LogoutPage darkMode={isDarkMode} />;
       case View.GENERATE_PLANILLAS:
         return <PlanillasProvider onBack={handleBackToDashboard} />;
       default:
@@ -128,6 +122,7 @@ export function App() {
             toggleColorMode={toggleColorMode}
             onLogout={handleLogout}
             isLoggedIn={isLoggedIn}
+            onBackHome={handleBackToDashboard}
           />
           <Box
             component="main"

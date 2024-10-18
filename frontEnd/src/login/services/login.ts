@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { LoginSchema } from "../types/modelsSchema";
 import {
@@ -25,12 +25,15 @@ export function useLogin(): UseMutationResult<
       });
       return res.data;
     },
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [""] });
     },
     onError: (error) => {
-      console.log(error);
-      return error;
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response?.data?.message
+          : "Ocurrió un error inesperado";
+      return errorMessage;
     },
   });
 }

@@ -39,7 +39,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
   });
 
   const { handleSubmit, setValue } = methods;
-  const [regreso, setRegreso] = useState(false);
+
   const {
     mutate: register,
     isPending,
@@ -69,10 +69,10 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
       oficialId: oficialData?.oficialId || "",
     };
     register(completeData);
+    onRegisterBack(true);
   };
   const onRegreso = () => {
-    setRegreso(true);
-    onRegisterBack(regreso);
+    onRegisterBack(true);
   };
 
   return isNewOficial ? (

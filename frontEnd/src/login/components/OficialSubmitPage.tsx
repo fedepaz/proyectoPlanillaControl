@@ -17,6 +17,7 @@ import {
   defaultValuesOficial,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
+import { AxiosError } from "axios";
 
 interface SuccessData {
   dni: string;
@@ -39,7 +40,7 @@ export function OficialSubmitPage({
   });
 
   const { handleSubmit } = methods;
-  const [regreso, setRegreso] = useState(false);
+
   const {
     mutate: oficialSubmit,
     isPending,
@@ -62,8 +63,7 @@ export function OficialSubmitPage({
     oficialSubmit(formData);
   };
   const onRegreso = () => {
-    setRegreso(true);
-    onRegisterBack(regreso);
+    onRegisterBack(true);
   };
 
   return (
@@ -80,12 +80,12 @@ export function OficialSubmitPage({
           }}
         >
           <Typography component="h1" variant="h5">
-            Registro de Usuario
+            Registro de Oficial
           </Typography>
           {isError && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
-              {error instanceof Error
-                ? error.message
+              {error instanceof AxiosError
+                ? error.response?.data?.error
                 : "Ocurrió un error inesperado"}
             </Alert>
           )}

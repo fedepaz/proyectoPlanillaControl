@@ -1,14 +1,8 @@
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Container, Paper } from "@mui/material";
 import { useLogout } from "../services/logout";
 import { LogoutSchema } from "../types/modelsSchema";
 
-export function LogoutPage({ dni }: { dni: string }) {
+export function LogoutPage({ darkMode }: { darkMode: boolean }) {
   const { mutate: logout, isPending } = useLogout();
 
   const onSubmit = (data: LogoutSchema) => {
@@ -27,13 +21,11 @@ export function LogoutPage({ dni }: { dni: string }) {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Cerrar Sesión {dni}
-        </Typography>
         <Button
           type="submit"
           fullWidth
           variant="contained"
+          color={darkMode ? "error" : "warning"}
           sx={{ mt: 3, mb: 2 }}
           disabled={isPending}
           onClick={() => {

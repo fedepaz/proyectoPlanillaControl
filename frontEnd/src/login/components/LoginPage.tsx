@@ -17,6 +17,7 @@ import {
   defaultValuesLogin,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
+import { AxiosError } from "axios";
 
 interface LoginResponse {
   dni: string;
@@ -40,11 +41,10 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
     isPending,
     isSuccess,
     isError,
-    error,
+    error: mutationError,
     data: mutationData,
   } = useLogin();
   const [successMessage, setSuccessMessage] = useState("");
-  const [register, setRegister] = useState(false);
 
   useEffect(() => {
     if (isSuccess && mutationData) {
@@ -60,8 +60,7 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
     login(data);
   };
   const onRegisterButton = () => {
-    setRegister(true);
-    onRegister(register);
+    onRegister(true);
   };
 
   return (
@@ -82,8 +81,8 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
           </Typography>
           {isError && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
-              {error instanceof Error
-                ? error.message
+              {mutationError instanceof AxiosError
+                ? mutationError.response?.data?.message
                 : "Ocurrió un error inesperado"}
             </Alert>
           )}

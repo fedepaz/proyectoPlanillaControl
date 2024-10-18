@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { OficialSchema } from "../types/modelsSchema";
 import {
@@ -31,7 +31,11 @@ export function useOficialSubmit(): UseMutationResult<
       await queryClient.invalidateQueries({ queryKey: [""] });
     },
     onError: (error) => {
-      return error;
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response?.data?.error
+          : "Ocurrió un error inesperado";
+      return errorMessage;
     },
   });
 }

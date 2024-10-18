@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { RegisterSchema } from "../types/modelsSchema";
 import {
@@ -41,7 +41,12 @@ export function useRegister(): UseMutationResult<
       await queryClient.invalidateQueries({ queryKey: [""] });
     },
     onError: (error) => {
-      console.error("Registration error:", error);
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response?.data?.message
+          : "Ocurrió un error inesperado";
+      console.log(errorMessage);
+      return errorMessage;
     },
   });
 }

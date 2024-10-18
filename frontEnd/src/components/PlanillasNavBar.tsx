@@ -12,17 +12,20 @@ import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import CloseSessionButton from "./CLoseSessionButton";
-import { useState } from "react";
+
+import BackHomeButton from "./BackHomeButton";
 
 interface PlanillasNavbarProps {
   toggleColorMode: () => void;
   onLogout: (data: boolean) => void;
+  onBackHome: (data: boolean) => void;
   isLoggedIn: boolean;
 }
 
 export function PlanillasNavbar({
   toggleColorMode,
   onLogout,
+  onBackHome,
   isLoggedIn,
 }: PlanillasNavbarProps) {
   const theme = useTheme();
@@ -30,6 +33,9 @@ export function PlanillasNavbar({
 
   const onLogoutButton = () => {
     onLogout(true);
+  };
+  const onBackButton = () => {
+    onBackHome(true);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -40,13 +46,22 @@ export function PlanillasNavbar({
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1, minWidth: isMobile ? "auto" : 150, mr: 2 }}
+              sx={{
+                flexGrow: 1,
+                minWidth: isMobile ? "auto" : 150,
+                mr: 2,
+                placeItems: "flex-start",
+              }}
             >
-              {isMobile ? "Planillas" : "Planillas Page"}
+              {isMobile ? (
+                <BackHomeButton onComeBackHome={onBackButton} />
+              ) : (
+                <BackHomeButton onComeBackHome={onBackButton} />
+              )}
             </Typography>
             {isLoggedIn && <CloseSessionButton onLogout={onLogoutButton} />}
             <IconButton
-              sx={{ ml: 1 }}
+              sx={{ display: "grid", placeItems: "center" }}
               onClick={toggleColorMode}
               color="inherit"
             >
@@ -55,6 +70,9 @@ export function PlanillasNavbar({
               ) : (
                 <Brightness2TwoToneIcon />
               )}
+              <Typography variant="caption" component="span">
+                {theme.palette.mode === "dark" ? "Modo Claro" : "Modo Oscuro"}
+              </Typography>
             </IconButton>
           </Toolbar>
         </AppBar>

@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 
@@ -17,10 +17,19 @@ export default function CloseSessionButton({
   };
 
   return (
-    <Button color="inherit" onClick={onLogoutButton} startIcon={<LogoutIcon />}>
-      <Typography variant="caption" color="inherit">
-        Cerrar Sesión
+    <IconButton
+      color="inherit"
+      onClick={onLogoutButton}
+      sx={{
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <LogoutIcon />
+
+      <Typography variant="caption" component="span">
+        Cerrar Sesion
       </Typography>
-    </Button>
+    </IconButton>
   );
 }

@@ -1,10 +1,26 @@
 import { Schema, model } from "mongoose";
 
 const oficialSchema = new Schema({
-  dni: { type: String, required: true, unique: true },
+  dni: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{8}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid DNI!`,
+    },
+  },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  legajo: { type: Number, required: true, unique: true },
+  legajo: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: [500000, "Legajo no corresponde"],
+    max: [600000, "Legajo no corresponde"],
+  },
 });
 
 oficialSchema.set("toJSON", {
