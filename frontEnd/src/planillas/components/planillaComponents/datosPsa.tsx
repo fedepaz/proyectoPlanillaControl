@@ -1,4 +1,4 @@
-import { Divider, FormLabel, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { OficialComponent } from "./components/oficialComponent";
@@ -11,33 +11,46 @@ import {
 } from "../../services/queries";
 import { RHFCheckBox } from "../../../components/RHFCheckBox";
 import { useFormContext } from "react-hook-form";
-import { useCallback, useEffect } from "react";
+import Loading from "../../../components/Loading";
+import { useEffect } from "react";
 
-interface DatosPsaProps {
-  onDatosPsaSelected: (fecha: string) => void;
-}
-
-export function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
-  const tipoControlQuery = useTipoControl();
-  const medioTecQuery = useMediosTec();
-  const tipoProQuery = useTipoPro();
-  const today = new Date();
-  const day = today.getDate();
-  const month = today.getMonth() + 1;
-  const fechaActual = "Fecha Control: " + day + " / " + month;
-  const { setValue } = useFormContext<PlanillaSchema>();
-
-  const handleOficialSelected = useCallback(
-    (legajo: number) => {
-      console.log(legajo + " datosPsa");
-      setValue("datosPsa.responsable", legajo);
-    },
-    [setValue]
-  );
+export function DatosPsa() {
+  const {
+    data: tipoControlQuery,
+    isLoading: tipoControlQueryIsLoading,
+    error: tipoControlQueryError,
+  } = useTipoControl();
+  const {
+    data: medioTecQuery,
+    isLoading: medioTecQueryIsLoading,
+    error: medioTecQueryError,
+  } = useMediosTec();
+  const {
+    data: tipoProQuery,
+    isLoading: tipoProQueryIsLoading,
+    error: tipoProQueryError,
+  } = useTipoPro();
 
   useEffect(() => {
-    onDatosPsaSelected(fechaActual);
-  });
+    if (tipoControlQueryError) {
+      console.log(tipoControlQueryError);
+    }
+    if (medioTecQueryError) {
+      console.log(medioTecQueryError);
+    }
+    if (tipoProQueryError) {
+      console.log(tipoProQueryError);
+    }
+  }, [tipoControlQueryError, medioTecQueryError, tipoProQueryError]);
+
+  if (
+    tipoControlQueryIsLoading ||
+    medioTecQueryIsLoading ||
+    tipoProQueryIsLoading
+  ) {
+    return <Loading />;
+  }
+  //const { setValue } = useFormContext<PlanillaSchema>();
 
   return (
     <Stack
@@ -47,8 +60,7 @@ export function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Psa
       </Typography>
-      <FormLabel>{fechaActual}</FormLabel>
-      <OficialComponent onOficialSelected={handleOficialSelected} />
+      <OficialComponent />
       <RHFDateTimePicker<PlanillaSchema>
         name="datosPsa.horaIni"
         label="Comienzo"
@@ -60,17 +72,17 @@ export function DatosPsa({ onDatosPsaSelected }: DatosPsaProps) {
       <RHFTextField<PlanillaSchema> name="datosPsa.cant" label="Cantidad" />
       <RHFToggleButtonGroup<PlanillaSchema>
         name="datosPsa.tipoControl"
-        options={tipoControlQuery.data}
+        options={tipoControlQuery}
         label="Tipo Control"
       />
       <RHFCheckBox<PlanillaSchema>
         name="datosPsa.medioTec"
-        options={medioTecQuery.data}
+        options={medioTecQuery}
         label="Medios Técnicos"
       />
       <RHFCheckBox<PlanillaSchema>
         name="datosPsa.tipoPro"
-        options={tipoProQuery.data}
+        options={tipoProQuery}
         label="Tipo de Procedimientos"
       />
     </Stack>

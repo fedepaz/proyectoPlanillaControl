@@ -4,7 +4,16 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 const sessionUrl = "http://localhost:5555/session/";
 
 interface SessionResponse {
-  dni?: string;
+  user: {
+    dni: string;
+    oficialId: {
+      dni: string;
+      firstname: string;
+      lastname: string;
+      legajo: string;
+      id: string;
+    };
+  };
 }
 
 export function useSession(): UseQueryResult<SessionResponse, Error> {
@@ -21,5 +30,7 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
       }
     },
     staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 }

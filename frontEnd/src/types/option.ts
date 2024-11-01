@@ -1,4 +1,7 @@
-export type Option = { id: string; label: string };
+export type Option = {
+  label: string;
+  id: string;
+};
 export type OficialOption = {
   id: string;
   dni: string;

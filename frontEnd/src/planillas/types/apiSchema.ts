@@ -1,11 +1,7 @@
 import { z } from "zod";
 
 const oficialSchema = z.object({
-  dni: z
-    .number({ message: "Solo número se pueden ingresar" })
-    .int()
-    .min(30000000, "DNI insuficiente")
-    .max(99999999, "El DNI no puede tener más de 9 dígitos"),
+  dni: z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números"),
   firstname: z
     .string()
     .min(1, "El Nombre es requerido")
@@ -14,11 +10,8 @@ const oficialSchema = z.object({
     .string()
     .min(1, "El Apellido es requerido")
     .max(20, "El Apellido es muy largo"),
-  legajo: z
-    .number({ message: "Solo número se pueden ingresar" })
-    .int()
-    .min(500000, "Legajo insuficiente")
-    .max(550000, "El Legajo no existe"),
+  legajo: z.string().regex(/^\d{6}$/, "Legajo debe tener 6 números"),
+  id: z.string().optional(),
 });
 
 export { oficialSchema };

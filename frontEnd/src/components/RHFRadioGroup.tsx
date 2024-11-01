@@ -30,9 +30,9 @@ export function RHFRadioGroup<T extends FieldValues>({
           <RadioGroup>
             {options?.map((option) => (
               <FormControlLabel
-                key={option._id}
-                value={option._id}
-                control={<Radio checked={field.value === option._id} />}
+                key={option.id}
+                value={option.id}
+                control={<Radio checked={field.value === option.id} />}
                 label={option.label}
               />
             ))}

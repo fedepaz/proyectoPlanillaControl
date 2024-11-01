@@ -1,17 +1,41 @@
+import { isBefore } from "date-fns";
 import { z } from "zod";
 
 const planillaSchema = z
   .object({
-    datosPsa: z.object({
-      fecha: z.string().min(1),
-      responsable: z.string().min(1), // Changed to string to represent ObjectId
-      horaIni: z.string().time(),
-      horaFin: z.string().time(),
-      cant: z.string().min(1),
-      tipoControl: z.string().min(1), // Changed to array of strings to represent ObjectIds
-      medioTec: z.string().min(1), // Changed to array of strings to represent ObjectIds
-      tipoPro: z.string().min(1), // Changed to array of strings to represent ObjectIds
-    }),
+    datosPsa: z
+      .object({
+        fecha: z.string().min(1),
+        responsable: z.string().min(1),
+        horaIni: z.string().datetime(),
+        horaFin: z.string().datetime(),
+        cant: z.string().min(1),
+        tipoControl: z.string().min(1),
+        medioTec: z.string().min(1),
+        tipoPro: z.string().min(1),
+      })
+      .refine(
+        (data) => {
+          const start = new Date(data.horaIni);
+          const end = new Date(data.horaFin);
+          return isBefore(end, start);
+        },
+        {
+          message: "End time must be after start time",
+          path: ["horaFin"],
+        }
+      )
+      .refine(
+        (data) => {
+          const start = new Date(data.horaIni);
+          const now = new Date();
+          return !isBefore(start, now);
+        },
+        {
+          message: "Start time cannot be in the past",
+          path: ["horaIni"],
+        }
+      ),
     datosVuelo: z.object({
       codVuelo: z.string().min(1), // Changed to string to represent ObjectId
       horaArribo: z.string().min(1),
@@ -95,44 +119,7 @@ export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
   novOtras: "",
 };
 
-function formatPlanillaData(data: PlanillaSchema) {
-  return {
-    datosPsa: {
-      fecha: data.datosPsa.fecha,
-      responsable: data.datosPsa.responsable, // Assuming this is already an ObjectId
-      horaIni: data.datosPsa.horaIni,
-      horaFin: data.datosPsa.horaFin,
-      cant: data.datosPsa.cant,
-      tipoControl: data.datosPsa.tipoControl, // Assuming this is already an array of ObjectIds
-      medioTec: data.datosPsa.medioTec, // Assuming this is already an array of ObjectIds
-      tipoPro: data.datosPsa.tipoPro, // Assuming this is already an array of ObjectIds
-    },
-    datosVuelo: {
-      codVuelo: data.datosVuelo.codVuelo, // Assuming this is already an ObjectId
-      horaArribo: data.datosVuelo.horaArribo,
-      horaPartida: data.datosVuelo.horaPartida,
-      demora: data.datosVuelo.demora, // Assuming this is already an ObjectId
-      tipoVuelo: data.datosVuelo.tipoVuelo, // Assuming this is already an ObjectId
-      matriculaAeronave: data.datosVuelo.matriculaAeronave, // Assuming this is already an ObjectId
-      posicion: data.datosVuelo.posicion,
-    },
-    datosTerrestre: data.datosTerrestre.map((terrestre) => ({
-      personalEmpresa: terrestre.personalEmpresa, // Assuming this is already an array of ObjectIds
-      funcion: terrestre.funcion, // Assuming this is already an ObjectId
-      grupo: terrestre.grupo,
-    })),
-    datosSeguridad: data.datosSeguridad.map((seguridad) => ({
-      personalSegEmpresa: seguridad.personalSegEmpresa, // Assuming this is already an array of ObjectIds
-      empresaSeguridad: seguridad.empresaSeguridad, // Assuming this is already an ObjectId
-    })),
-    datosVehiculos: data.datosVehiculos.map((vehiculo) => ({
-      vehiculo: vehiculo.vehiculo, // Assuming this is already an ObjectId
-      operadorVehiculo: vehiculo.operadorVehiculo, // Assuming this is already an ObjectId
-      observacionesVehiculo: vehiculo.observacionesVehiculo,
-    })),
-    novEquipajes: data.novEquipajes,
-    novInspeccion: data.novInspeccion,
-    novOtras: data.novOtras,
-  };
+function formatPlanillaData(data: PlanillaSchema): PlanillaSchema {
+  return data;
 }
 export { formatPlanillaData };

@@ -12,7 +12,15 @@ import Dashboard from "./login/components/Dashboard";
 import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
 
 interface LoginResponse {
-  dni: string;
+  user: {
+    dni: string;
+    oficialId: {
+      dni: string;
+      firstname: string;
+      lastname: string;
+      legajo: string;
+    };
+  };
 }
 enum View {
   DASHBOARD = "dashboard",
@@ -24,7 +32,6 @@ export function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [dni, setDni] = useState<string>("");
   const [showRegister, setShowRegister] = useState(false);
   const [showLogoutPage, setShowLogoutPage] = useState(false);
   const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
@@ -34,14 +41,13 @@ export function App() {
   useEffect(() => {
     if (!isLoading) {
       if (data && !error) {
-        setDni(data.dni || "");
         setIsLoggedIn(true);
       }
     }
   }, [data, error, isLoading]);
 
-  const handleLogin = (data: LoginResponse) => {
-    setDni(data.dni);
+  const handleLogin = (loginData: LoginResponse) => {
+    console.log(loginData);
     setIsLoggedIn(true);
   };
 

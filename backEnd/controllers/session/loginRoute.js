@@ -12,8 +12,20 @@ sessionRouter.get("/", (req, res) => {
     const { dni } = "";
     res.status(200).json(dni);
   }
-  const { dni } = user;
-  res.status(200).json(dni);
+  const response = {
+    user: {
+      dni: user.dni,
+      oficialId: {
+        dni: user.oficialId.dni,
+        firstname: user.oficialId.firstname,
+        lastname: user.oficialId.lastname,
+        legajo: user.oficialId.legajo,
+        id: user.oficialId.id,
+      },
+    },
+  };
+
+  res.status(200).json(response);
 });
 
 sessionRouter.post("/login", async (req, res) => {

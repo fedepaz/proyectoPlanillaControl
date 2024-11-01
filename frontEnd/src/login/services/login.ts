@@ -8,7 +8,15 @@ import {
 } from "@tanstack/react-query";
 const loginUrl = "http://localhost:5555/session/login";
 interface LoginResponse {
-  dni: string;
+  user: {
+    dni: string;
+    oficialId: {
+      dni: string;
+      firstname: string;
+      lastname: string;
+      legajo: string;
+    };
+  };
 }
 
 export function useLogin(): UseMutationResult<
@@ -23,10 +31,11 @@ export function useLogin(): UseMutationResult<
       const res = await axios.post<LoginResponse>(loginUrl, data, {
         withCredentials: true,
       });
+      console.log("Response: ", res.data);
       return res.data;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: [""] });
+      await queryClient.invalidateQueries({ queryKey: ["session"] });
     },
     onError: (error) => {
       const errorMessage =

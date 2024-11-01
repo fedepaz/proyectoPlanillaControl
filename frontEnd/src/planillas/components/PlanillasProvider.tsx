@@ -6,12 +6,26 @@ import {
   planillaSchema,
 } from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useState } from "react";
-import { Alert, AlertProps, Snackbar } from "@mui/material";
+import { useEffect } from "react";
+import { useOficial } from "../services/queries";
+import { OficialSchema } from "../types/apiSchema";
+import { useUserContext } from "../../services/useUserContext";
+import { useSession } from "../../services/session";
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
 }
+//interface LoginResponse {
+//  user: {
+//    dni: string;
+//    oficialId: {
+//      dni: string;
+//      firstname: string;
+//      lastname: string;
+//      legajo: string;
+//    };
+//  };
+//}
 
 export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const methods = useForm<PlanillaSchema>({
@@ -21,68 +35,23 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   });
   const { setValue, handleSubmit } = methods;
 
-  const [snackbar, setSnackbar] = useState<{
-    open: boolean;
-    message: string;
-    severity: AlertProps["severity"];
-  }>({
-    open: false,
-    message: "",
-    severity: "info",
-  });
+  const { data, error } = useSession();
 
-  const handlePlanillaSelected = useCallback(
-    (mensaje: string) => {
-      console.log(mensaje + " PlanillasProvider");
-      setValue("novOtras", mensaje);
-    },
-    [setValue]
-  );
+  useEffect(() => {
+    if (data && !error) {
+      setValue("datosPsa.responsable", data?.user.oficialId.id);
+    }
+  }, [data, setValue, error]);
 
   const onSubmit = async (data: PlanillaSchema) => {
     console.log("Form submitted with data:", data);
     try {
       const validationResult = planillaSchema.safeParse(data);
 
-      if (!validationResult.success) {
-        const errorMessages = validationResult.error.issues.map((issue) => {
-          const path = issue.path.join(".");
-          return `${path}: ${issue.message}`;
-        });
-        console.log("Validation failed:", errorMessages);
-        setSnackbar({
-          open: true,
-          message: `Missing or invalid values: ${errorMessages.join(", ")}`,
-          severity: "error",
-        });
-      } else {
-        console.log("Validation passed");
-        setSnackbar({
-          open: true,
-          message: "Form submitted successfully!",
-          severity: "success",
-        });
-        // Here you would typically send the data to your backend
-      }
+      console.log("Validation passed " + validationResult);
     } catch (error) {
       console.error("Error in onSubmit:", error);
-      setSnackbar({
-        open: true,
-        message: "Error submitting form. Please try again.",
-        severity: "error",
-      });
     }
-  };
-
-  const handleCloseSnackbar = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    console.log("Snackbar closing, reason:", reason);
-    if (reason === "clickaway") {
-      return;
-    }
-    setSnackbar({ ...snackbar, open: false });
   };
 
   const sendBack = (data: boolean) => {
@@ -92,22 +61,8 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Planillas onPlanillas={handlePlanillaSelected} onBack={sendBack} />
+        <Planillas onBack={sendBack} />
       </form>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </FormProvider>
   );
 }

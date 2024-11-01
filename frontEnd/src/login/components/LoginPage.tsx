@@ -20,7 +20,15 @@ import { RHFTextField } from "../../components/RHFTextField";
 import { AxiosError } from "axios";
 
 interface LoginResponse {
-  dni: string;
+  user: {
+    dni: string;
+    oficialId: {
+      dni: string;
+      firstname: string;
+      lastname: string;
+      legajo: string;
+    };
+  };
 }
 
 interface LoginPageProps {
@@ -50,6 +58,7 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
     if (isSuccess && mutationData) {
       setSuccessMessage("Inicio de sesión exitoso");
       const timeout = setTimeout(() => {
+        console.log(mutationData.user);
         onLogin(mutationData);
       }, 1000);
       return () => clearTimeout(timeout);

@@ -35,7 +35,7 @@ export function useTipoControl() {
   return useQuery({
     queryKey: ["tipoControl"],
     queryFn: async () => {
-      const response = await axios.get<{ tipoControl: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/tipoControl"
       );
       const tipoControl = response.data;
@@ -48,7 +48,7 @@ export function useMediosTec() {
   return useQuery({
     queryKey: ["mediosTec"],
     queryFn: async () => {
-      const response = await axios.get<{ mediosTec: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/mediosTec"
       );
       const mediosTec = response.data;
@@ -61,7 +61,7 @@ export function useTipoPro() {
   return useQuery({
     queryKey: ["tipoPro"],
     queryFn: async () => {
-      const response = await axios.get<{ tipoPro: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/tipoPro"
       );
       const tipoPro = response.data;
@@ -74,7 +74,7 @@ export function useDemora() {
   return useQuery({
     queryKey: ["demora"],
     queryFn: async () => {
-      const response = await axios.get<{ demora: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/demora"
       );
       const demora = response.data;
@@ -87,7 +87,7 @@ export function useTipoVuelo() {
   return useQuery({
     queryKey: ["tipoVuelo"],
     queryFn: async () => {
-      const response = await axios.get<{ tipoVuelo: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/tipoVuelo"
       );
       const tipoVuelo = response.data;
@@ -100,7 +100,7 @@ export function useFuncion() {
   return useQuery({
     queryKey: ["funcion"],
     queryFn: async () => {
-      const response = await axios.get<{ funcion: Option[] }>(
+      const response = await axios.get<Option[]>(
         "http://localhost:5555/data/funcion"
       );
       const funcion = response.data;
@@ -114,6 +114,7 @@ interface CreateOficialResponse {
   firstname: string;
   lastname: string;
   legajo: number;
+  id: string;
 }
 
 export function useCreateOficial() {
@@ -136,7 +137,7 @@ export function useCreateOficial() {
   });
 }
 
-export function useOficial(dni: number) {
+export function useOficial(dni: string) {
   return useQuery({
     queryKey: ["oficial", { dni }],
     queryFn: async (): Promise<OficialSchema> => {
@@ -153,6 +154,7 @@ export function useOficial(dni: number) {
           firstname: data.firstname,
           lastname: data.lastname,
           legajo: data.legajo,
+          id: data.id,
         };
       } catch (error) {
         throw new Error(`Failed to fetch oficial data: ${error}`);

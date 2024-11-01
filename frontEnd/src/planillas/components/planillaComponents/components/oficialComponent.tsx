@@ -1,86 +1,44 @@
-import { FormLabel, Stack } from "@mui/material";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
-import { useOficial } from "../../../services/queries";
 import {
   OficialSchema,
   oficialSchema,
   defaultValuesOficial,
 } from "../../../types/apiSchema";
-import { RHFTextField } from "../../../../components/RHFTextField";
+import CardComponent from "../../../../components/CardComponent";
+import { useSession } from "../../../../services/session";
+import { useEffect } from "react";
 
-interface OficialComponentProps {
-  onOficialSelected: (legajo: number) => void;
-}
-
-export function OficialComponent({ onOficialSelected }: OficialComponentProps) {
+export function OficialComponent() {
   const methods = useForm<OficialSchema>({
     resolver: zodResolver(oficialSchema),
     defaultValues: defaultValuesOficial,
     mode: "onChange",
   });
 
-  const { setValue, watch, trigger } = methods;
-  const [isNewOficial, setIsNewOficial] = useState(false);
-  const [dniToCheck, setDniToCheck] = useState<number>(0);
-
-  const dni = watch("dni");
-  const { data: oficial, refetch } = useOficial(dniToCheck);
-
-  const handleDniBlur = () => {
-    if (dni && dni !== dniToCheck) {
-      setDniToCheck(dni);
-    }
+  const { data } = useSession();
+  const oficialObject = {
+    dni: methods.watch("dni"),
+    firstname: methods.watch("firstname"),
+    lastname: methods.watch("lastname"),
+    legajo: methods.watch("legajo"),
   };
 
   useEffect(() => {
-    if (dniToCheck) {
-      console.log(dniToCheck + " oficialComponent");
-      refetch();
+    if (data) {
+      methods.setValue("dni", data.user.dni);
+      methods.setValue("firstname", data.user.oficialId.firstname);
+      methods.setValue("lastname", data.user.oficialId.lastname);
+      methods.setValue("legajo", data.user.oficialId.legajo);
+      if (data.user.oficialId.id)
+        methods.setValue("id", data.user.oficialId.id);
     }
-  }, [dniToCheck, refetch]);
-
-  useEffect(() => {
-    if (oficial) {
-      onOficialSelected(oficial.legajo);
-      setValue("firstname", oficial.firstname);
-      setValue("lastname", oficial.lastname);
-      setValue("legajo", oficial.legajo);
-      setIsNewOficial(false);
-      trigger();
-    } else if (dniToCheck) {
-      setIsNewOficial(true);
-    }
-  }, [oficial, dniToCheck, onOficialSelected, setValue, trigger, isNewOficial]);
-
+  }, [methods, data]);
   return (
-    <FormProvider {...methods}>
-      <Stack sx={{ gap: 1 }}>
-        <FormLabel>Oficial</FormLabel>
-        <RHFTextField<OficialSchema>
-          name="dni"
-          label="DNI"
-          valueAsNumber
-          onBlur={handleDniBlur}
-        />
-        <RHFTextField<OficialSchema>
-          name="firstname"
-          label="Nombre"
-          disabled={!!oficial}
-        />
-        <RHFTextField<OficialSchema>
-          name="lastname"
-          label="Apellido"
-          disabled={!!oficial}
-        />
-        <RHFTextField<OficialSchema>
-          name="legajo"
-          label="Legajo"
-          valueAsNumber
-          disabled={!!oficial}
-        />
-      </Stack>
-    </FormProvider>
+    <div>
+      <FormProvider {...methods}>
+        <CardComponent oficialObject={oficialObject} />
+      </FormProvider>
+    </div>
   );
 }

@@ -8,34 +8,26 @@ import {
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DatosPsa } from "../components/planillaComponents/datosPsa";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { RHFTextField } from "../../components/RHFTextField";
+import { OficialSchema } from "../types/apiSchema";
 
 interface PlanillaProps {
-  onPlanillas: (fecha: string) => void;
   onBack: (data: boolean) => void;
 }
 
-export function Planillas({ onPlanillas, onBack }: PlanillaProps) {
+export function Planillas({ onBack }: PlanillaProps) {
   const { setValue } = useFormContext<PlanillaSchema>();
 
   useEffect(() => {
-    console.log("Mensaje de planillas lalala");
+    //console.log("Mensaje de planillas lalala");
   }, []);
 
-  const handleDatosPsaSelected = useCallback(
-    (fecha: string) => {
-      console.log(fecha + " Planillas");
-      setValue("datosPsa.fecha", fecha);
-      onPlanillas(fecha);
-    },
-    [setValue, onPlanillas]
-  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -69,7 +61,7 @@ export function Planillas({ onPlanillas, onBack }: PlanillaProps) {
             medioTec: string;
             tipoPro: string;
            */}
-        <DatosPsa onDatosPsaSelected={handleDatosPsaSelected} />
+        <DatosPsa />
         {/*aerolinea: string;
             codVuelo: string;
             origen: string;
@@ -81,8 +73,8 @@ export function Planillas({ onPlanillas, onBack }: PlanillaProps) {
             matriculaAeronave: string;
             posicion: string;
             
-            */}
         <DatosVuelo />
+            */}
         {/*apellidoTerrestre: string;
             nombreTerrestre: string;
             dniTerrestre: string;
@@ -90,22 +82,22 @@ export function Planillas({ onPlanillas, onBack }: PlanillaProps) {
             funcion: string;
             grupo: string;
             
-            */}
         <DatosTerrestre />
+            */}
         {/*apellidoSeguridad: string;
             nombreSeguridad: string;
             dniSeguridad: string;
             legajoSeguridad: string;
             empresaSeguridad: string;
-           */}
         <DatosSeguridad />
+           */}
         {/*tipoVehiculo: string;
              empresaVehiculo: string;
              numInterno: string;
              operadorVehiculo: string;
              observacionesVehiculo: string;
-             */}
         <DatosVehiculos />
+             */}
         {/*novEquipajes: string;*/}
         <RHFTextField<PlanillaSchema>
           name="novEquipajes"

@@ -41,7 +41,7 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
               {...restField}
             >
               {options?.map((option) => (
-                <MenuItem value={option._id} key={option._id}>
+                <MenuItem value={option.id} key={option.id}>
                   {option.empresa}
                 </MenuItem>
               ))}

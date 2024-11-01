@@ -39,11 +39,11 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
                 onChange(newValue);
               }
             }}
-            value={value.length ? value : [options?.[0]._id]}
+            value={value.length ? value : [options?.[0].id]}
             {...restField}
           >
             {options?.map((option) => (
-              <ToggleButton value={option._id} key={option._id}>
+              <ToggleButton value={option.id} key={option.id}>
                 {option.label}
               </ToggleButton>
             ))}

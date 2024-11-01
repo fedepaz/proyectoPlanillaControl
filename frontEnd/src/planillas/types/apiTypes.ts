@@ -9,10 +9,10 @@ type Edit = {
 
 export type OficialCommon = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
-  legajo: number;
+  legajo: string;
 };
 
 export type ApiCreateEditOficial = OficialCommon & (Create | Edit);
