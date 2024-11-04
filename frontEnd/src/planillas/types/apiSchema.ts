@@ -99,16 +99,15 @@ const empresaSchema = z.object({
     .string()
     .min(1, "La Empresa es requerida")
     .max(50, "El Nombre es muy largo"),
-  tipoEmpresa: z.string().min(1, "TipoEmpresa requerido"),
+  tipoEmpresa: z.string(),
 });
 
 export { empresaSchema };
 
 export type EmpresaSchema = z.infer<typeof empresaSchema>;
 
-export const defaultValuesEmpresa: EmpresaSchema = {
+export const defaultValuesEmpresa: Partial<EmpresaSchema> = {
   empresa: "",
-  tipoEmpresa: "",
 };
 
 const regex = /[A-Za-z][A-Za-z]-[A-Za-z][A-Za-z][A-Za-z]/i;

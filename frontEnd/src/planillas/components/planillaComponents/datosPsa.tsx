@@ -60,7 +60,6 @@ export function DatosPsa() {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Psa
       </Typography>
-      <OficialComponent />
       <RHFDateTimePicker<PlanillaSchema>
         name="datosPsa.horaIni"
         label="Comienzo"
@@ -85,6 +84,7 @@ export function DatosPsa() {
         options={tipoProQuery}
         label="Tipo de Procedimientos"
       />
+      <OficialComponent />
     </Stack>
   );
 }

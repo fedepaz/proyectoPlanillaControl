@@ -24,6 +24,11 @@ const planillaSchema = Schema(
       ],
     },
     datosVuelo: {
+      empresa: {
+        type: Schema.Types.ObjectId,
+        ref: "Empresa",
+        required: true,
+      },
       codVuelo: {
         type: Schema.Types.ObjectId,
         ref: "CodVuelo",

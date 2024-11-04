@@ -10,6 +10,7 @@ import { useSession } from "./services/session";
 import Loading from "./components/Loading";
 import Dashboard from "./login/components/Dashboard";
 import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
+import ErrorPage from "./components/Error";
 
 interface LoginResponse {
   user: {
@@ -36,7 +37,7 @@ export function App() {
   const [showLogoutPage, setShowLogoutPage] = useState(false);
   const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
 
-  const { data, error, isLoading } = useSession();
+  const { data, error, isError, isLoading, refetch } = useSession();
 
   useEffect(() => {
     if (!isLoading) {
@@ -110,6 +111,32 @@ export function App() {
       </>
     );
   }
+
+  if (isError) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            minHeight: "100vh",
+            width: "100%",
+            overflow: "hidden",
+          }}
+        >
+          <ErrorPage
+            error={error}
+            onRetry={() => {
+              refetch();
+            }}
+          />
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>

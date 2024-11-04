@@ -5,7 +5,7 @@ import { PlanillaSchema } from "../../types/planillaSchema";
 import { RHFRadioGroup } from "../../../components/RHFRadioGroup";
 import { useDemora, useTipoVuelo } from "../../services/queries";
 import { useFormContext } from "react-hook-form";
-import { AerolineaComponent } from "./components/empresaComponent";
+import { EmpresaComponent } from "./components/empresaComponent";
 import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
@@ -18,10 +18,10 @@ export function DatosVuelo() {
   const handleMatSelected = (matriculaAeronave: string) => {
     setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
   };
-  const handleEmpresaSelected = (aerolinea: string) => {
+  const sendEmoresa = (empresa: string) => {
     console.log("recibida de aerolinea ");
-    console.log(aerolinea);
-    setValue("datosVuelo.aerolinea", aerolinea);
+    const tipoEmpresa = "aerolinea";
+    console.log(tipoEmpresa);
   };
 
   return (
@@ -34,7 +34,7 @@ export function DatosVuelo() {
         Datos Vuelo
       </Typography>
       {/*aerolinea*/}
-      <AerolineaComponent onEmpresaSelected={handleEmpresaSelected} />
+      <EmpresaComponent onEmpresaSelected={sendEmoresa} />
       {/*codVuelo*/}
       <CodVueloComponent />
       {/*origen*/}

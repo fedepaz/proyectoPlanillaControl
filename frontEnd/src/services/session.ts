@@ -20,17 +20,43 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
   return useQuery({
     queryKey: ["session"],
     queryFn: async () => {
-      const res = await axios.get<SessionResponse>(sessionUrl, {
-        withCredentials: true,
-      });
-      if (res.data === null) {
-        return res.data;
-      } else {
-        return res.data;
+      try {
+        const res = await axios.get<SessionResponse>(sessionUrl, {
+          withCredentials: true,
+        });
+        if (res.data === null) {
+          return res.data;
+        } else {
+          return res.data;
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (!error.response) {
+            throw new Error(
+              "Unable to connect to the server. Please check your connection and try again."
+            );
+          }
+        }
+
+        throw new Error(
+          "An unexpected error occurred while fetching session data."
+        );
       }
     },
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
-    retry: false,
+    retry: (failureCount, error) => {
+      if (error instanceof Error) {
+        const message = error.message.toLowerCase();
+        if (
+          message.includes("unable to connect") ||
+          message.includes("internal server error")
+        ) {
+          return failureCount < 3;
+        }
+        return false;
+      }
+      return false;
+    },
   });
 }

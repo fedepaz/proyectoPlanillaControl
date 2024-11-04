@@ -43,6 +43,19 @@ export function useTipoControl() {
     },
   });
 }
+export function useTipoEmpresa() {
+  return useQuery({
+    queryKey: ["tipoEmpresa"],
+    queryFn: async () => {
+      const response = await axios.get<Option[]>(
+        "http://localhost:5555/data/tipoEmpresa"
+      );
+      const tipoEmpresa = response.data;
+      console.log(tipoEmpresa);
+      return tipoEmpresa;
+    },
+  });
+}
 
 export function useMediosTec() {
   return useQuery({
@@ -408,21 +421,36 @@ export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
     queryKey: ["empresa", tipoEmpresa],
     queryFn: async () => {
-      const response = await axios.get<{
-        empresa: EmpresaOption[];
-      }>("http://localhost:5555/empresa");
+      const response = await axios.get<EmpresaOption[]>(
+        "http://localhost:5555/empresa"
+      );
       const empresaRes = response.data;
+      console.log(empresaRes);
       return empresaRes;
     },
   });
 }
+export const useEmpresaTipoId = (tipoEmpresaId: string) => {
+  return useQuery({
+    queryKey: ["empresa", tipoEmpresaId],
+    queryFn: async () => {
+      const response = await axios.get<EmpresaOption[]>(
+        `http://localhost:5555/empresa/tipoID/${tipoEmpresaId}`
+      );
+      const empresaRes = response.data;
+      console.log(empresaRes);
+      return empresaRes;
+    },
+    enabled: !!tipoEmpresaId, // Only run query when we have a tipoEmpresaId
+  });
+};
 
 export function useEmpresaId(empresa: string) {
   return useQuery({
     queryKey: ["empresa", { empresa }],
     queryFn: async (): Promise<EmpresaSchema> => {
       if (!empresa) {
-        throw new Error("Invalid Matricula: Matricula is undefined");
+        throw new Error("Invalid Empresa: Empresa is undefined");
       }
 
       try {

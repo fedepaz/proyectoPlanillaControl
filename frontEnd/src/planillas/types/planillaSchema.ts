@@ -37,12 +37,13 @@ const planillaSchema = z
         }
       ),
     datosVuelo: z.object({
-      codVuelo: z.string().min(1), // Changed to string to represent ObjectId
+      empresa: z.string().min(1),
+      codVuelo: z.string().min(1),
       horaArribo: z.string().min(1),
       horaPartida: z.string().min(1),
-      demora: z.string().min(1), // Changed to string to represent ObjectId
-      tipoVuelo: z.string().min(1), // Changed to string to represent ObjectId
-      matriculaAeronave: z.string().min(1), // Changed to string to represent ObjectId
+      demora: z.string().min(1),
+      tipoVuelo: z.string().min(1),
+      matriculaAeronave: z.string().min(1),
       posicion: z.string().min(1),
     }),
     datosTerrestre: z.array(
@@ -86,6 +87,7 @@ export const defaultValuesPlanilla: Partial<PlanillaSchema> = {
     tipoPro: "",
   },
   datosVuelo: {
+    empresa: "",
     codVuelo: "",
     horaArribo: "",
     horaPartida: "",

@@ -51,17 +51,6 @@ export function Planillas({ onBack }: PlanillaProps) {
         }}
         divider={<Divider orientation="horizontal" flexItem />}
       >
-        {/*
-            fecha: string;
-            responsable: string;
-            horaIni: string;
-            horaFin: string;
-            cant: string;
-            tipoControl: string;
-            medioTec: string;
-            tipoPro: string;
-           */}
-        <DatosPsa />
         {/*aerolinea: string;
             codVuelo: string;
             origen: string;
@@ -73,8 +62,8 @@ export function Planillas({ onBack }: PlanillaProps) {
             matriculaAeronave: string;
             posicion: string;
             
-        <DatosVuelo />
             */}
+        <DatosVuelo />
         {/*apellidoTerrestre: string;
             nombreTerrestre: string;
             dniTerrestre: string;
@@ -90,7 +79,7 @@ export function Planillas({ onBack }: PlanillaProps) {
             legajoSeguridad: string;
             empresaSeguridad: string;
         <DatosSeguridad />
-           */}
+            */}
         {/*tipoVehiculo: string;
              empresaVehiculo: string;
              numInterno: string;
@@ -110,6 +99,17 @@ export function Planillas({ onBack }: PlanillaProps) {
         />
         {/*novOtras: string;*/}
         <RHFTextField<PlanillaSchema> name="novOtras" label="Otras Novedades" />
+        {/*
+              fecha: string;
+              responsable: string;
+              horaIni: string;
+              horaFin: string;
+              cant: string;
+              tipoControl: string;
+              medioTec: string;
+              tipoPro: string;
+        <DatosPsa />
+             */}
 
         <Stack
           sx={{ flexDirection: "column", justifyContent: "space-between" }}

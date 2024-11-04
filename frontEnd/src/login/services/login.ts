@@ -31,7 +31,6 @@ export function useLogin(): UseMutationResult<
       const res = await axios.post<LoginResponse>(loginUrl, data, {
         withCredentials: true,
       });
-      console.log("Response: ", res.data);
       return res.data;
     },
     onSuccess: async () => {

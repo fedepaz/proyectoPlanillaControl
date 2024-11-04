@@ -18,7 +18,6 @@ export type MatriculaOption = {
 export type EmpresaOption = {
   id: string;
   empresa: string;
-  tipoEmpresa: string;
 };
 
 export type PlanillaOption = {
