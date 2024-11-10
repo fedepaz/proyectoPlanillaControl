@@ -20,7 +20,7 @@ export function DatosVuelo() {
   };
   const sendEmoresa = (empresa: string) => {
     console.log("recibida de aerolinea ");
-    const tipoEmpresa = "aerolinea";
+    const tipoEmpresa = empresa;
     console.log(tipoEmpresa);
   };
 
