@@ -28,7 +28,7 @@ sessionRouter.get("/", (req, res) => {
   res.status(200).json(response);
 });
 
-sessionRouter.post("/login", async (req, res) => {
+sessionRouter.post("/", async (req, res) => {
   const { dni, password } = req.body;
   try {
     const user = await UserRepository.login({ dni, password });
@@ -55,7 +55,7 @@ sessionRouter.post("/login", async (req, res) => {
   }
 });
 
-sessionRouter.post("/logout", (req, res) => {
+sessionRouter.delete("/", (req, res) => {
   res
     .clearCookie("access_token")
     .status(200)

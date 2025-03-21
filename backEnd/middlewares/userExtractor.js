@@ -1,22 +1,7 @@
-import { verify } from "jsonwebtoken";
-
-export default (request, response, next) => {
-  const authorization = request.get("authorization");
-  let token = "";
-
-  if (authorization && authorization.toLowerCase().startsWith("bearer")) {
-    token = authorization.substring(7);
+export function requireUser(req, res, next) {
+  if (!req.user) {
+    return res.status(403).send("Invalid session");
   }
 
-  const decodedToken = verify(token, process.env.SECRET);
-
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: "token missing or invalid" });
-  }
-
-  const { id: userId } = decodedToken;
-
-  request.userId = userId;
-
-  next();
-};
+  return next();
+}

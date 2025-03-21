@@ -4,11 +4,11 @@ import bcrypt from "bcrypt";
 export class UserRepository {
   static async create({ dni, password, email, oficialId }) {
     const userDNI = await User.findOne({ dni });
-    if (userDNI) {
+    if (userDNI !== null) {
       throw new Error("El usuario ya existe");
     }
     const userOficial = await User.findOne({ oficialId });
-    if (userOficial) {
+    if (userOficial !== null) {
       throw new Error("El oficial ya existe");
     }
 
