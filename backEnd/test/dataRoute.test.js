@@ -32,8 +32,7 @@ describe("GET TIPO CONTROL /data/tipoControl", function () {
       .get("/data/tipoControl")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.tipoControl).to.be.an("array").that.is.not.empty;
-        expect(res.body.tipoControl[0]).to.have.property("label", "Option 1");
+        expect(res.body[0]).to.have.property("label", "Option 1");
         done();
       });
   });
@@ -58,8 +57,7 @@ describe("GET MEDIOS TEC /data/mediosTec", function () {
       .get("/data/mediosTec")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.mediosTec).to.be.an("array").that.is.not.empty;
-        expect(res.body.mediosTec[0]).to.have.property("label", "Option 2");
+        expect(res.body[0]).to.have.property("label", "Option 2");
         done();
       });
   });
@@ -85,8 +83,7 @@ describe("GET TIPO PROCEDIMIENTOS /data/tipoPro", function () {
       .get("/data/tipoPro")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.tipoPro).to.be.an("array").that.is.not.empty;
-        expect(res.body.tipoPro[0]).to.have.property("label", "Option1");
+        expect(res.body[0]).to.have.property("label", "Option1");
         done();
       });
   });
@@ -112,8 +109,7 @@ describe("GET DEMORA /data/demora", function () {
       .get("/data/demora")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.demora).to.be.an("array").that.is.not.empty;
-        expect(res.body.demora[0]).to.have.property("label", "Si");
+        expect(res.body[0]).to.have.property("label", "Si");
         done();
       });
   });
@@ -139,8 +135,7 @@ describe("GET TIPO VUELO /data/tipoVuelo", function () {
       .get("/data/tipoVuelo")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.tipoVuelo).to.be.an("array").that.is.not.empty;
-        expect(res.body.tipoVuelo[0]).to.have.property("label", "arribo");
+        expect(res.body[0]).to.have.property("label", "arribo");
         done();
       });
   });
@@ -166,8 +161,7 @@ describe("GET FUNCION /data/funcion", function () {
       .get("/data/funcion")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.funcion).to.be.an("array").that.is.not.empty;
-        expect(res.body.funcion[0]).to.have.property("label", "supervisor");
+        expect(res.body[0]).to.have.property("label", "supervisor");
         done();
       });
   });

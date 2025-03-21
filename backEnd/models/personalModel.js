@@ -1,76 +1,159 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const oficialSchema = new mongoose.Schema({
+const oficialSchema = new Schema({
+  dni: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{8}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid DNI!`,
+    },
+  },
+  firstname: { type: String, required: true },
+  lastname: { type: String, required: true },
+  legajo: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: [500000, "Legajo no corresponde"],
+    max: [600000, "Legajo no corresponde"],
+  },
+});
+
+oficialSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const Oficial = model("Oficial", oficialSchema);
+
+const personalEmpresaSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   legajo: { type: Number, required: true, unique: true },
 });
 
-export const Oficial = mongoose.model("Oficial", oficialSchema);
+personalEmpresaSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const personalEmpresaSchema = new mongoose.Schema({
+export const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
+
+const personalSeguridadSchema = new Schema({
   dni: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  empresa: { type: String, required: true },
-  legajo: { type: String, required: true, unique: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
+  legajo: { type: Number, required: true, unique: true },
 });
 
-export const PersonalEmpresa = mongoose.model(
-  "PersonalEmpresa",
-  personalEmpresaSchema
-);
-
-const personalSeguridadSchema = new mongoose.Schema({
-  dni: { type: String, required: true, unique: true },
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
-  empresa: { type: String, required: true },
-  legajo: { type: String, required: true, unique: true },
+personalSeguridadSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
 });
 
-export const PersonalSeguridadEmpresa = mongoose.model(
+export const PersonalSeguridadEmpresa = model(
   "PersonalSeguridadEmpresa",
   personalSeguridadSchema
 );
-const empresaSchema = new mongoose.Schema({
+
+const empresaSchema = new Schema({
   empresa: { type: String, required: true, unique: true },
+  tipoEmpresa: {
+    type: Schema.Types.ObjectId,
+    ref: "TipoEmpresa",
+    required: true,
+  },
 });
 
-export const Empresa = mongoose.model("Empresa", empresaSchema);
+empresaSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const matriculaAeronaveSchema = new mongoose.Schema({
+export const Empresa = model("Empresa", empresaSchema);
+
+const matriculaAeronaveSchema = new Schema({
   matriculaAeronave: { type: String, required: true, unique: true },
-  empresa: { type: String, required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
 });
 
-export const MatriculaAeronave = mongoose.model(
+matriculaAeronaveSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const MatriculaAeronave = model(
   "MatriculaAeronave",
   matriculaAeronaveSchema
 );
 
-const aeropuertosSchema = new mongoose.Schema({
+const aeropuertoSchema = new Schema({
   aeropuerto: { type: String, required: true, unique: true },
-  codIATA: { type: String, required: true },
-  codOACI: { type: String, required: true },
+  codIATA: { type: String, required: true, unique: true },
+  codOACI: { type: String, required: true, unique: true },
 });
 
-export const Aeropuertos = mongoose.model("Aeropuertos", aeropuertosSchema);
+aeropuertoSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const vehiculoSchema = new mongoose.Schema({
-  numInterno: { type: String, required: true, unique: true },
-  empresa: { type: String, required: true },
+export const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
+
+const vehiculoSchema = new Schema({
+  numInterno: { type: String, required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   tipoVehiculo: { type: String, required: true },
 });
 
-export const Vehiculos = mongoose.model("Vehiculos", vehiculoSchema);
-
-const codVueloSchema = new mongoose.Schema({
-  codVuelo: { type: String, required: true, unique: true },
-  origen: { type: String, required: true },
-  destino: { type: String, required: true },
-  empresa: { type: String, required: true },
+vehiculoSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
 });
 
-export const CodVuelo = mongoose.model("CodVuelo", codVueloSchema);
+export const Vehiculo = model("Vehiculo", vehiculoSchema);
+
+const codVueloSchema = new Schema({
+  codVuelo: { type: String, required: true, unique: true },
+  origen: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
+  destino: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
+  empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
+});
+
+codVueloSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const CodVuelo = model("CodVuelo", codVueloSchema);

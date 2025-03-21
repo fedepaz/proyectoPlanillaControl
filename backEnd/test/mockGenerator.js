@@ -1,51 +1,44 @@
+import mongoose from "mongoose";
+
+const generateObjectId = () => new mongoose.Types.ObjectId().toString();
+
 const generateMockPlanilla = (suffix) => ({
   datosPsa: {
     fecha: `2024-06-01`,
-    responsable: `Responsable ${suffix}`,
+    responsable: [generateObjectId()],
     horaIni: `08:00`,
     horaFin: `10:00`,
     cant: `5`,
-    tipoControl: "Personas",
-    medioTec: "Otros",
-    tipoPro: "Rutina",
+    tipoControl: [generateObjectId()],
+    medioTec: [generateObjectId()],
+    tipoPro: [generateObjectId()],
   },
   datosVuelo: {
-    aerolinea: `Aerolinea ${suffix}`,
-    codVuelo: `CodVuelo ${suffix}`,
-    origen: `Origen ${suffix}`,
-    destino: `Destino ${suffix}`,
+    codVuelo: [generateObjectId()],
     horaArribo: `12:00`,
     horaPartida: `14:00`,
-    demora: "NO",
-    tipoVuelo: "Arribo",
-    matriculaAeronave: `MatriculaAeronave ${suffix}`,
+    demora: [generateObjectId()],
+    tipoVuelo: [generateObjectId()],
+    matriculaAeronave: [generateObjectId()],
     posicion: `Posicion ${suffix}`,
   },
   datosTerrestre: [
     {
-      apellidoTerrestre: `ApellidoTerrestre ${suffix}`,
-      nombreTerrestre: `NombreTerrestre ${suffix}`,
-      dniTerrestre: `DniTerrestre ${suffix}`,
-      legajoTerrestre: `LegajoTerrestre ${suffix}`,
-      funcion: "Otro",
+      personalEmpresa: [generateObjectId()],
+      funcion: [generateObjectId()],
       grupo: `Grupo ${suffix}`,
     },
   ],
   datosSeguridad: [
     {
-      apellidoSeguridad: `ApellidoSeguridad ${suffix}`,
-      nombreSeguridad: `NombreSeguridad ${suffix}`,
-      dniSeguridad: `DniSeguridad ${suffix}`,
-      legajoSeguridad: `LegajoSeguridad ${suffix}`,
-      empresaSeguridad: `EmpresaSeguridad ${suffix}`,
+      personalSegEmpresa: [generateObjectId()],
+      empresaSeguridad: [generateObjectId()],
     },
   ],
   datosVehiculos: [
     {
-      tipoVehiculo: `TipoVehiculo ${suffix}`,
-      empresaVehiculo: `EmpresaVehiculo ${suffix}`,
-      numInterno: `NumInterno ${suffix}`,
-      operadorVehiculo: `OperadorVehiculo ${suffix}`,
+      vehiculo: [generateObjectId()],
+      operadorVehiculo: [generateObjectId()],
       observacionesVehiculo: `ObservacionesVehiculo ${suffix}`,
     },
   ],
@@ -55,6 +48,7 @@ const generateMockPlanilla = (suffix) => ({
 });
 
 const generateMockOficial = (apellido) => ({
+  _id: generateObjectId(),
   dni: "35456789",
   firstname: "Roberto",
   lastname: `${apellido}`,
@@ -62,10 +56,11 @@ const generateMockOficial = (apellido) => ({
 });
 
 const generateMockPersonalEmpresa = (apellido) => ({
+  _id: generateObjectId(),
   dni: "35456789",
   firstname: "Roberto",
   lastname: `${apellido}`,
-  empresa: "lala SRL",
+  empresa: generateObjectId(), // Assuming empresa is now a reference to Empresa model
   legajo: 123456,
 });
 

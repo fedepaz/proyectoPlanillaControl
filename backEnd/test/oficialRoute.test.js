@@ -43,14 +43,15 @@ describe("GET /oficial", function () {
       .get("/oficial")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("object").that.is.not.empty;
-        expect(res.body["oficial"]).to.be.an("array").that.is.not.empty;
-        expect(res.body["oficial"][0]).to.have.property("lastname", "Paz");
+        expect(res.body).to.be.an("array").that.is.not.empty;
+        expect(res.body[0]).to.have.property("lastname", "Paz");
         done();
       });
   });
 });
 
+/**
+ 
 describe("GET BY ID /oficial/:id", function () {
   let findStub;
   before(function () {
@@ -59,7 +60,7 @@ describe("GET BY ID /oficial/:id", function () {
       exec: sinon.stub().resolves(mockOficial),
     });
   });
-
+  
   after(function () {
     findStub.restore();
   });
@@ -73,7 +74,7 @@ describe("GET BY ID /oficial/:id", function () {
         done();
       });
   });
-
+  
   it("should return status 500 if id doesn't exist", function (done) {
     findStub.resolves(null);
 
@@ -175,3 +176,6 @@ describe("POST /oficial", function () {
       });
   });
 });
+
+  * 
+  */

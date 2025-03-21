@@ -1,37 +1,99 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const tipoControlSchema = new mongoose.Schema({
+const tipoControlSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const TipoControl = mongoose.model("TipoControl", tipoControlSchema);
+tipoControlSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const mediosTecSchema = new mongoose.Schema({
+export const TipoControl = model("TipoControl", tipoControlSchema);
+
+const mediosTecSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const MediosTec = mongoose.model("MediosTec", mediosTecSchema);
+mediosTecSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const tipoProSchema = new mongoose.Schema({
+export const MediosTec = model("MediosTec", mediosTecSchema);
+
+const tipoProSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const TipoPro = mongoose.model("TipoPro", tipoProSchema);
+tipoProSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const demoraSchema = new mongoose.Schema({
+export const TipoPro = model("TipoPro", tipoProSchema);
+
+const demoraSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const Demora = mongoose.model("Demora", demoraSchema);
+demoraSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const tipoVueloSchema = new mongoose.Schema({
+export const Demora = model("Demora", demoraSchema);
+
+const tipoVueloSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const TipoVuelo = mongoose.model("TipoVuelo", tipoVueloSchema);
+tipoVueloSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const funcionSchema = new mongoose.Schema({
+export const TipoVuelo = model("TipoVuelo", tipoVueloSchema);
+
+const funcionSchema = new Schema({
   label: { type: String, required: true },
 });
 
-export const Funcion = mongoose.model("Funcion", funcionSchema);
+funcionSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const Funcion = model("Funcion", funcionSchema);
+
+const tipoEmpresaSchema = new Schema({
+  label: { type: String, required: true },
+});
+
+tipoEmpresaSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const TipoEmpresa = model("TipoEmpresa", tipoEmpresaSchema);

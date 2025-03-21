@@ -33,23 +33,23 @@ export function RHFCheckBox<T extends FieldValues>({
               <FormControlLabel
                 control={
                   <Checkbox
-                    id={option._id}
-                    checked={value.includes(option._id)}
+                    id={option.id}
+                    checked={value.includes(option.id)}
                     onChange={() => {
-                      if (value.includes(option._id)) {
+                      if (value.includes(option.id)) {
                         onChange(
                           (value as string[]).filter(
-                            (item) => item !== option._id
+                            (item) => item !== option.id
                           )
                         );
                       } else {
-                        onChange([...value, option._id]);
+                        onChange([...value, option.id]);
                       }
                     }}
-                    key={option._id}
+                    key={option.id}
                   />
                 }
-                key={option._id}
+                key={option.id}
                 label={option.label}
               />
             ))}

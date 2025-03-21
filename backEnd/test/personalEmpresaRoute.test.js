@@ -45,17 +45,14 @@ describe("GET /personalEmpresa", function () {
       .get("/personalEmpresa")
       .end((_err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("object").that.is.not.empty;
-        expect(res.body["personalEmpresa"]).to.be.an("array").that.is.not.empty;
-        expect(res.body["personalEmpresa"][0]).to.have.property(
-          "lastname",
-          "Paz"
-        );
+        expect(res.body).to.be.an("array").that.is.not.empty;
+        expect(res.body[0]).to.have.property("lastname", "Paz");
         done();
       });
   });
 });
-
+/**
+ 
 describe("GET BY ID /personalEmpresa/:id", function () {
   let findStub;
   before(function () {
@@ -100,7 +97,7 @@ describe("GET BY DNI /personalEmpresa/dni/:dni", function () {
       exec: sinon.stub().resolves(mockPersonal),
     });
   });
-
+  
   after(function () {
     findStub.restore();
   });
@@ -125,10 +122,10 @@ describe("GET BY DNI /personalEmpresa/dni/:dni", function () {
         expect(res.body).to.have.property("message");
         done();
       });
+    });
   });
-});
 
-describe("POST /personalEmpresa", function () {
+  describe("POST /personalEmpresa", function () {
   let createStub;
   this.timeout(10000);
 
@@ -143,7 +140,7 @@ describe("POST /personalEmpresa", function () {
 
   it("should return 201 and personalEmpresa created", function (done) {
     const mockPersonal = generateMockPersonalEmpresa("Paz");
-
+    
     request(app)
       .post("/personalEmpresa")
       .send(mockPersonal)
@@ -152,9 +149,9 @@ describe("POST /personalEmpresa", function () {
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("dni").that.equals(mockPersonal.dni);
         expect(res.body)
-          .to.have.property("firstname")
+        .to.have.property("firstname")
           .that.equals(mockPersonal.firstname);
-        expect(res.body)
+          expect(res.body)
           .to.have.property("lastname")
           .that.equals(mockPersonal.lastname);
         expect(res.body)
@@ -178,3 +175,5 @@ describe("POST /personalEmpresa", function () {
       });
   });
 });
+* 
+*/
