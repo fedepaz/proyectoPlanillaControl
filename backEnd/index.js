@@ -26,6 +26,7 @@ const app = express();
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3000;
 //app.use(debugMiddleware);
 
 app.use(helmet());
@@ -83,10 +84,8 @@ app.use(handleErrors);
 if (process.env.NODE_ENV !== "test") {
   connectDB()
     .then(() => {
-      app.listen(process.env.PORT, () => {
-        console.log(
-          `App is listening in port: http://localhost:${process.env.PORT}/`
-        );
+      app.listen(PORT, () => {
+        console.log(`App is listening in port: http://localhost:${PORT}/`);
       });
     })
     .catch((error) => {
