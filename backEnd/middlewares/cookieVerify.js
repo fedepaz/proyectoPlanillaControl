@@ -1,15 +1,20 @@
-import jwt from "jsonwebtoken";
+import { verifyJWT, signJWT } from "../utils/jwt.utils.js";
 
 const SECRET = toString(process.env.SECRET_JWT_KEY);
 
-export const cookieVerify = (req, res, next) => {
-  const token = req.cookies.access_token;
+function desearializeUser(req, res, next) {
+  const { accessToken } = req.cookies;
+  if (!accessToken) {
+    return next();
+  }
 
-  req.session = { user: null };
-  try {
-    const data = jwt.verify(token, SECRET);
+  const { payload, expired } = verifyJWT(accessToken);
+  if (payload) {
+    req.user = payload;
+    return next();
+  }
 
-    req.session.user = data;
-  } catch {}
-  next();
-};
+  return next();
+}
+
+export default desearializeUser;

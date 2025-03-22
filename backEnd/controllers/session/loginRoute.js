@@ -1,8 +1,6 @@
 import express from "express";
 import { UserRepository } from "./userRepository.js";
-import jwt from "jsonwebtoken";
-
-const SECRET = toString(process.env.SECRET_JWT_KEY);
+import { signJWT } from "../../utils/jwt.utils.js";
 
 const sessionRouter = express.Router();
 
@@ -32,34 +30,26 @@ sessionRouter.post("/", async (req, res) => {
   const { dni, password } = req.body;
   try {
     const user = await UserRepository.login({ dni, password });
-    const userInfo = {
-      dni: user.dni,
-      oficialId: user.oficialId,
-    };
 
-    const token = jwt.sign(
-      { dni: userInfo.dni, oficialId: userInfo.oficialId },
-      SECRET,
-      { expiresIn: "24h" }
-    );
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-        maxAge: 86400000,
-        sameSite: "None",
-        secure: true,
-      })
-      .send({ user, token });
+    const accessToken = signJWT(user, process.env.ACCESS_TOKEN_EXPIRES);
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ message: "Login succesful" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
 sessionRouter.delete("/", (req, res) => {
-  res
-    .clearCookie("access_token")
-    .status(200)
-    .json({ message: "Logout succesful" });
+  res.cookie("accessToken", "", {
+    maxAge: 0,
+    httpOnly: true,
+  });
+  return res.status(200).json({ message: "Logout succesful" });
 });
 
 sessionRouter.post("/register", async (req, res) => {
