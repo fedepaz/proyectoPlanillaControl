@@ -1494,3 +1494,15 @@
     ---------------------
 
     
+    [2025-03-24T00:45:06.169Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
