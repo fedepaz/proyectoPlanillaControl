@@ -1,3 +1,6 @@
+import logError from "../utils/logError.utils.js";
+import logErrorDB from "../utils/logErrorDB.utils.js";
+
 const ERROR_HANDLERS = {
   CastError: (error) => ({
     status: 400,
@@ -13,6 +16,26 @@ const ERROR_HANDLERS = {
     body: {
       error: message.includes("Legajo") ? "Legajo no corresponde" : message,
     },
+  }),
+
+  AuthenticationError: ({ message }) => ({
+    status: 401,
+    body: { error: message },
+  }),
+
+  AuthorizationError: ({ message }) => ({
+    status: 403,
+    body: { error: message },
+  }),
+
+  DuplicateData: ({ message }) => ({
+    status: 409,
+    body: { error: message },
+  }),
+
+  UserNotFound: ({ message }) => ({
+    status: 404,
+    body: { error: message },
   }),
 
   OficialNotFound: () => ({
@@ -82,19 +105,32 @@ const ERROR_HANDLERS = {
     body: { error: "token missing or invalid" },
   }),
 
-  TokenExpirerError: () => ({
-    status: 401,
-    body: { error: "token expired" },
-  }),
-
   defaultError: () => ({
     status: 500,
     body: { error: "An unexpected error occurred" },
   }),
 };
 
+const STATUS_CODES = {
+  400: "Bad Request",
+  401: "Unauthorized",
+  403: "Forbidden",
+  404: "Not Found",
+  409: "Conflict",
+  500: "Internal Server Error",
+};
+
 export const handleErrors = (error, request, response, next) => {
-  console.error("Error:", error);
+  logError(error);
+
+  logErrorDB(error, request);
+  if (process.env.NODE_ENV === "development") {
+    console.error(`[${new Date().toISOString()}] ${error}`);
+  } else {
+    console.error(
+      `[${new Date().toISOString()}]Error: contact your administrator`
+    );
+  }
 
   if (response.headersSent) {
     console.warn(
@@ -104,12 +140,16 @@ export const handleErrors = (error, request, response, next) => {
   }
 
   const handler = ERROR_HANDLERS[error.name] || ERROR_HANDLERS.defaultError;
-  const { status, body } = handler(error);
 
+  const { status, body } = handler(error);
   response.status(status).json({
-    error: body.error,
-    statusCode: status,
-    statusMessage: STATUS_CODES[status],
-    ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
+    error: handler(error),
+
+    ...(process.env.NODE_ENV === "development" && {
+      name: error.name,
+      message: error.message,
+      statusCode: error.status,
+      stack: error.stack.split("\n"),
+    }),
   });
 };

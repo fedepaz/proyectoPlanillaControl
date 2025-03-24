@@ -43,7 +43,8 @@ oficialRouter.get("/dni/:dni", async (req, res, next) => {
     next(err);
   }
 });
-
+/**
+ *
 oficialRouter.post("/", async (req, res, next) => {
   const { body } = req;
   try {
@@ -74,5 +75,6 @@ oficialRouter.post("/", async (req, res, next) => {
     next(err);
   }
 });
+*/
 
 export default oficialRouter;

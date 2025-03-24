@@ -3,9 +3,9 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import cors from "cors";
+import { csrfProtection } from "./middlewares/csrf.js";
 import { handleErrors } from "./middlewares/handleErrors.js";
-import { cookieVerify } from "./middlewares/cookieVerify.js";
-import { notFound } from "./middlewares/notFound.js";
+import { authenticate } from "./middlewares/authenticate.js";
 import { debugMiddleware } from "./middlewares/debug.js";
 import limiter from "./middlewares/limiter.js";
 import cookieParser from "cookie-parser";
@@ -21,49 +21,63 @@ import empresaRouter from "./controllers/datos/empresaRoute.js";
 import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
 import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 import sessionRouter from "./controllers/session/loginRoute.js";
+import resetPasswordRouter from "./controllers/session/resetPassword.js";
 
 const app = express();
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
+//env varialbes for debug
+
 //app.use(debugMiddleware);
 
+app.use(cookieParser(process.env.COOKIE_SECRET));
+if (process.env.NODE_ENV === "production") {
+  app.use(limiter);
+}
 app.use(helmet());
-app.use(cookieParser());
-//app.use(limiter);
-app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
-app.use(helmet.frameguard({ action: "deny" }));
-app.use(helmet.xssFilter({}));
-app.use(helmet.noSniff());
-app.use(helmet.ieNoOpen());
-var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
-app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
-app.use(helmet.dnsPrefetchControl());
 app.use(helmet.contentSecurityPolicy());
-
-app.use(express.json());
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.hidePoweredBy({ setTo: "PHP 4.2.0" }));
+var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-    credentials: true,
+  helmet.hsts({
+    maxAge: ninetyDaysInSeconds,
+    force: true,
+    includeSubDomains: true,
+    preload: true,
   })
 );
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter({}));
+
+app.use(express.json({ limit: "100kb" }));
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type"],
+      credentials: true,
+    })
+  );
+}
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");
 });
-
-app.use(cookieVerify);
-
 app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(200).send("planillasBackend");
 });
-
 app.use("/session", sessionRouter);
+app.use("/resetPassword", resetPasswordRouter);
+
+app.use(authenticate);
+app.use(csrfProtection);
 
 app.use("/data", dataRouter);
 
@@ -78,7 +92,6 @@ app.use("/codVuelo", codVueloRouter);
 app.use("/aeropuerto", aeropuertoRouter);
 app.use("/vehiculos", vehiculosRouter);
 
-app.use(notFound);
 app.use(handleErrors);
 
 if (process.env.NODE_ENV !== "test") {

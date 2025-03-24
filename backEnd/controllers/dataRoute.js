@@ -13,7 +13,7 @@ const dataRouter = express.Router();
 
 const fetchOptions = async (model) => {
   try {
-    const options = await model.find().select("_id label").exec();
+    const options = await model.find().select("id label").exec();
     return options;
   } catch (error) {
     console.error(`Error fetching options of ${error.message}`);

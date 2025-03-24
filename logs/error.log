@@ -1,0 +1,1496 @@
+
+    [2025-03-23T12:25:23.048Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:10)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:31:45.183Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:31:49.060Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:33:43.970Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:33:48.965Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:34:08.459Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:34:09.112Z] TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.session' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T12:34:57.391Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at verifyJWT (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/utils/jwt.utils.js:19:11)
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:12:21)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    ---------------------
+
+    
+    [2025-03-23T12:35:28.804Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:35:32.560Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:37:48.544Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:38:28.412Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:39:16.907Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:39:41.189Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:40:54.486Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:42:35.067Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:42:50.904Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:42:58.268Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:43:10.366Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:43:33.718Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:43:45.441Z] Error: [object Object]
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: [object Object]
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:44:15.181Z] Error: NoTokenError
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: NoTokenError
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:45:06.616Z] Error: NoTokenError
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: NoTokenError
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:45:08.550Z] Error: NoTokenError
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: NoTokenError
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:46:25.363Z] Error: NoTokenError
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: NoTokenError
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:46:56.653Z] Error: NoTokenError
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: NoTokenError
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:11)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:47:44.446Z] ReferenceError: NoTokenError is not defined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ReferenceError: NoTokenError is not defined
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:5)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:55:12.977Z] ReferenceError: error is not defined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ReferenceError: error is not defined
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:5)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:56:57.301Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:58:05.868Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:58:48.378Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T12:59:58.448Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T13:01:00.361Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T13:01:03.050Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T13:01:47.274Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/auth.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T13:15:34.389Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:7:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T14:51:51.396Z] NoTokenError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: NoTokenError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:11:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:21:57.701Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:22:19.610Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:22:52.021Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:23:00.144Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:26:07.535Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:26:12.317Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T17:26:42.042Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T19:01:09.740Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T19:13:36.522Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:13:48.711Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:14:53.134Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:15:46.352Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:15:47.979Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:15:49.387Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:16:32.815Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:93:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:34:18
+    ---------------------
+
+    
+    [2025-03-23T19:18:22.960Z] TypeError: Cannot destructure property 'user' of 'req.user' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'user' of 'req.user' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:11
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T19:20:26.800Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-23T20:02:19.364Z] MissingData: Missing required fields: EMPRESA
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: MissingData: Missing required fields: EMPRESA
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeronaveRoute.js:61:21
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:02:29.514Z] EmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: EmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeronaveRoute.js:72:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:06:53.968Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:08:53.634Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:09:01.494Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:09:48.355Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:10:30.957Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:10:32.959Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:11:27.249Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:12:20.189Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:12:21.527Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:12:27.407Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:13:05.140Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:13:07.337Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:13:33.388Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:13:36.907Z] TipoEmpresaNotFound: 
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TipoEmpresaNotFound
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:65:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T20:29:17.505Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:49:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:30:06.621Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:49:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:31:23.227Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:31:52.045Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:32:08.158Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:33:33.252Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:34:03.251Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:40:23.987Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:40:40.038Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:42:59.611Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:44:26.435Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:46:35.785Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:47:10.297Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:47:41.963Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:49:03.278Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:49:30.264Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:49:54.999Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:50:14.222Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:52:38.846Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:53:46.576Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:55:48.755Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:56:31.346Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:57:24.551Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T20:58:05.090Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:50:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:00:49.511Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:53:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:02:06.894Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:53:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:02:35.018Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:53:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:03:17.312Z] TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot destructure property 'empresa' of 'body' as it is undefined.
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/empresaRoute.js:53:13
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:03:50.333Z] MongoServerError: E11000 duplicate key error collection: books-coleccion.empresas index: empresa_1 dup key: { empresa: "LADEsa" }
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.empresas index: empresa_1 dup key: { empresa: "LADEsa" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    
+    [2025-03-23T21:13:38.673Z] TypeError: user.includes is not a function
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: user.includes is not a function
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:35:14
+    ---------------------
+
+    
+    [2025-03-23T21:14:40.846Z] Error: "expiresIn" should be a number of seconds or string representing a timespan eg: "1d", "20h", 60
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: "expiresIn" should be a number of seconds or string representing a timespan eg: "1d", "20h", 60
+    at module.exports [as sign] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/jsonwebtoken@9.0.2/node_modules/jsonwebtoken/sign.js:213:22)
+    at signJWT (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/utils/jwt.utils.js:8:14)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:19
+    ---------------------
+
+    
+    [2025-03-23T21:15:05.561Z] Error: "expiresIn" should be a number of seconds or string representing a timespan eg: "1d", "20h", 60
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: "expiresIn" should be a number of seconds or string representing a timespan eg: "1d", "20h", 60
+    at module.exports [as sign] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/jsonwebtoken@9.0.2/node_modules/jsonwebtoken/sign.js:213:22)
+    at signJWT (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/utils/jwt.utils.js:8:14)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:19
+    ---------------------
+
+    
+    [2025-03-23T21:20:33.072Z] TypeError: Cannot read properties of undefined (reading 'user')
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: TypeError: Cannot read properties of undefined (reading 'user')
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:9:24
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    
+    [2025-03-23T21:27:10.350Z] Error: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error: No token provided
+    at verifyJWT (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/utils/jwt.utils.js:19:11)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:8:16
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    ---------------------
+
+    
+    [2025-03-23T21:34:00.038Z] ReferenceError: body is not defined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ReferenceError: body is not defined
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:35:60
+    at Array.filter (<anonymous>)
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:35:42)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:44
+    ---------------------
+
+    
+    [2025-03-23T21:36:22.686Z] ValidationError: Oficial validation failed: firstname: Path `firstname` is required., lastname: Path `lastname` is required., legajo: Path `legajo` is required.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: firstname: Path `firstname` is required., lastname: Path `lastname` is required., legajo: Path `legajo` is required.
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-23T22:00:36.910Z] DuplicateData: El oficial ya existe, comunicarse con el administrador
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:38:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:23
+    ---------------------
+
+    
+    [2025-03-23T22:02:12.556Z] DuplicateData: El oficial ya existe, comunicarse con el administrador
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:38:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:23
+    ---------------------
+
+    
+    [2025-03-23T22:02:49.272Z] MongoServerError: E11000 duplicate key error collection: books-coleccion.users index: email_1 dup key: { email: "fdafdsafsa" }
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.users index: email_1 dup key: { email: "fdafdsafsa" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    
+    [2025-03-23T22:03:13.969Z] DuplicateData: El oficial ya existe, comunicarse con el administrador
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:38:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:23
+    ---------------------
+
+    
+    [2025-03-23T22:06:50.057Z] DuplicateData: El oficial ya existe, comunicarse con el administrador
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:38:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:23
+    ---------------------
+
+    
+    [2025-03-23T22:10:40.828Z] MongoServerError: E11000 duplicate key error collection: books-coleccion.users index: email_1 dup key: { email: "noexistemail" }
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.users index: email_1 dup key: { email: "noexistemail" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    
+    [2025-03-23T22:13:12.470Z] DuplicateData: El oficial ya existe, comunicarse con el administrador
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at UserRepository.createOficial (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:38:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:83:23
+    ---------------------
+
+    
+    [2025-03-23T23:40:43.679Z] DuplicateData: {
+  _id: new ObjectId('67e086e05b57d189525757a2'),
+  dni: '12345699',
+  firstname: 'pio',
+  lastname: 'papa',
+  legajo: 500004,
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e086e05b57d189525757a2'),
+  dni: '12345699',
+  firstname: 'pio',
+  lastname: 'papa',
+    ---------------------
+
+    
+    [2025-03-23T23:50:43.007Z] DuplicateData: {
+  _id: new ObjectId('67e086e05b57d189525757a2'),
+  dni: '12345699',
+  firstname: 'pio',
+  lastname: 'papa',
+  legajo: 500004,
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e086e05b57d189525757a2'),
+  dni: '12345699',
+  firstname: 'pio',
+  lastname: 'papa',
+    ---------------------
+
+    
+    [2025-03-23T23:51:46.542Z] DuplicateData: {
+  _id: new ObjectId('67e09e8908688b8c4f90351b'),
+  dni: '12345799',
+  firstname: 'pio',
+  lastname: 'papa',
+  legajo: 500005,
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e09e8908688b8c4f90351b'),
+  dni: '12345799',
+  firstname: 'pio',
+  lastname: 'papa',
+    ---------------------
+
+    
+    [2025-03-23T23:52:00.234Z] DuplicateData: undefined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:90:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-23T23:54:57.230Z] DuplicateData: {
+  _id: new ObjectId('67e09e8908688b8c4f90351e'),
+  dni: '12345799',
+  email: 'noexistemail2',
+  password: '$2b$10$mdFj8VWZBI.zA3Z389onRe9.QowNfeR.TQL1bdY/UJ5fXV6s6cuPu',
+  role: 'auxiliar',
+  oficialId: new ObjectId('67e09e8908688b8c4f90351b'),
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e09e8908688b8c4f90351e'),
+  dni: '12345799',
+  email: 'noexistemail2',
+  password: '$2b$10$mdFj8VWZBI.zA3Z389onRe9.QowNfeR.TQL1bdY/UJ5fXV6s6cuPu',
+    ---------------------
+
+    
+    [2025-03-23T23:58:48.297Z] DuplicateData: {
+  _id: new ObjectId('67e0a0264b7c69ca844f2e33'),
+  dni: '12345899',
+  firstname: 'pio',
+  lastname: 'papa',
+  legajo: 500007,
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e0a0264b7c69ca844f2e33'),
+  dni: '12345899',
+  firstname: 'pio',
+  lastname: 'papa',
+    ---------------------
+
+    
+    [2025-03-23T23:58:58.916Z] DuplicateData: {
+  _id: new ObjectId('67e0a0264b7c69ca844f2e36'),
+  dni: '12345899',
+  email: 'noexistemail3',
+  password: '$2b$10$hec0GWCaRyYiEbx95NF4h.Ni52wadS2o3qvRNdn271bl/H1XelbFe',
+  role: 'auxiliar',
+  oficialId: new ObjectId('67e0a0264b7c69ca844f2e33'),
+  __v: 0
+}
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: {
+  _id: new ObjectId('67e0a0264b7c69ca844f2e36'),
+  dni: '12345899',
+  email: 'noexistemail3',
+  password: '$2b$10$hec0GWCaRyYiEbx95NF4h.Ni52wadS2o3qvRNdn271bl/H1XelbFe',
+    ---------------------
+
+    
+    [2025-03-23T23:59:07.526Z] ValidationError: Oficial validation failed: dni: Path `dni` is required., legajo: Legajo no corresponde
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: Path `dni` is required., legajo: Legajo no corresponde
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-23T23:59:56.801Z] ValidationError: Oficial validation failed: dni: Path `dni` is required.
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: Path `dni` is required.
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-24T00:00:06.260Z] ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-24T00:03:25.237Z] ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-24T00:03:45.061Z] ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
