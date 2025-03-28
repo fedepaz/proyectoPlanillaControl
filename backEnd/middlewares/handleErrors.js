@@ -148,7 +148,7 @@ export const handleErrors = (error, request, response, next) => {
     ...(process.env.NODE_ENV === "development" && {
       name: error.name,
       message: error.message,
-      statusCode: error.status,
+      statusCode: STATUS_CODES[status],
       stack: error.stack.split("\n"),
     }),
   });

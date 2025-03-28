@@ -55,7 +55,9 @@ export class UserRepository {
   }
   static async resetPassword({ dni, password }) {
     try {
-      const editUser = await User.findOne({ dni });
+      console.log(dni);
+      console.log(password);
+      const editUser = await User.findOne({ dni }).populate("oficialId");
       if (!editUser) {
         const error = new Error();
         error.name = "UserNotFound";
@@ -66,7 +68,14 @@ export class UserRepository {
       const hashedPassword = await bcrypt.hash(password, saltRounds);
       editUser.password = hashedPassword;
       await editUser.save();
-      return editUser.id;
+      const userWithoutPassword = {
+        dni: editUser.dni,
+        email: editUser.email,
+        role: editUser.role,
+        name: `${editUser.oficialId.firstname} ${editUser.oficialId.lastname}`,
+        legajo: editUser.oficialId.legajo,
+      };
+      return userWithoutPassword;
     } catch (error) {
       throw error;
     }

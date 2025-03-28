@@ -45,7 +45,8 @@ const resetPasswordSchema = new Schema({
     required: true,
     unique: true,
   },
-  askedAt: { type: Date, required: true },
+  timesAsked: { type: Number, required: true },
+  askedAtLast: { type: Date, required: true },
 });
 
 resetPasswordSchema.set("toJSON", {

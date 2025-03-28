@@ -33,8 +33,8 @@ resetRouter.get("/", async (req, res, next) => {
   }
 });
 
-resetRouter.post("/:requestId", async (req, res, next) => {
-  const { requestId } = req.params;
+resetRouter.patch("/", async (req, res, next) => {
+  const { requestId } = req.body;
   try {
     const [dni, password] = await ResetPasswordRepository.resetPassword({
       requestId,

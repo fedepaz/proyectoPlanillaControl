@@ -9,7 +9,6 @@ export const authenticate = (req, res, next) => {
   if (PublicRoutes.includes(req.path) || req.path === "/public") {
     return next();
   }
-
   const token = req.signedCookies.access_token;
 
   if (!token) {

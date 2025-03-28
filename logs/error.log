@@ -1506,3 +1506,554 @@
     ---------------------
 
     
+    [2025-03-27T22:57:07.942Z] AuthenticationError: Credenciales inválidas
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:86:23)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:35:18
+    ---------------------
+
+    
+    [2025-03-27T23:00:19.807Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:00:49.847Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:01:31.619Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:02:57.704Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:03:05.615Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:03:25.293Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:03:40.211Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:05:08.252Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:05:25.131Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:05:25.196Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:07:30.817Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:07:35.086Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:08:58.684Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:08:58.765Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:09:39.900Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:09:40.007Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:09:46.171Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:09:46.249Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:10:32.757Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:11:07.796Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:11:14.003Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:11:14.086Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:11:48.554Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:13:49.743Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:14:38.304Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:16:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:16:14.856Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:17:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:21:23.327Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:21:55.521Z] ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: Oficial validation failed: dni: 25 is not a valid DNI!
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+    ---------------------
+
+    
+    [2025-03-27T23:22:09.635Z] AuthenticationError: Credenciales inválidas
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:86:23)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:35:18
+    ---------------------
+
+    
+    [2025-03-27T23:22:21.426Z] Error: Cannot set headers after they are sent to the client
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.append (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/response.js:755:15)
+    at res.cookie (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/response.js:892:8)
+    ---------------------
+
+    
+    [2025-03-27T23:27:33.303Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:27:52.611Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:29:27.193Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:32:51.149Z] AuthenticationError: No token provided
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    
+    [2025-03-27T23:33:08.588Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:79:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:35:18
+    ---------------------
+
+    
+    [2025-03-27T23:36:38.340Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:12:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-27T23:38:30.967Z] DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:9:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    
+    [2025-03-27T23:42:32.414Z] ValidationError: ResetPassword validation failed: timesAsked: Cast to Number failed for value "NaN" (type number) at path "timesAsked"
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: ResetPassword validation failed: timesAsked: Cast to Number failed for value "NaN" (type number) at path "timesAsked"
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at model.$set (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:1474:12)
+    at model.set [as timesAsked] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/helpers/document/compile.js:205:19)
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:9:31)
+    ---------------------
+
+    
+    [2025-03-27T23:44:00.284Z] ValidationError: ResetPassword validation failed: timesAsked: Cast to Number failed for value "NaN" (type number) at path "timesAsked"
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ValidationError: ResetPassword validation failed: timesAsked: Cast to Number failed for value "NaN" (type number) at path "timesAsked"
+    at Document.invalidate (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at model.$set (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:1474:12)
+    at model.set [as timesAsked] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/helpers/document/compile.js:205:19)
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:9:31)
+    ---------------------
+
+    
+    [2025-03-27T23:44:34.579Z] DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:13:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    
+    [2025-03-27T23:50:09.947Z] ReferenceError: user is not defined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ReferenceError: user is not defined
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:35:16
+    at Array.map (<anonymous>)
+    at ResetPasswordRepository.findAll (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:33:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-27T23:50:12.670Z] ReferenceError: user is not defined
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: ReferenceError: user is not defined
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:35:16
+    at Array.map (<anonymous>)
+    at ResetPasswordRepository.findAll (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:33:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    
+    [2025-03-27T23:51:59.521Z] DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El usuario ya ha solicitado una contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:13:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    
+    [2025-03-27T23:54:07.456Z] DuplicateData: El usuario noexistemail2 ya ha solicitado una contraseña, debe ser medio imbécil
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: DuplicateData: El usuario noexistemail2 ya ha solicitado una contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:13:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    
+    [2025-03-28T00:23:03.187Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:60:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:18
+    ---------------------
+
+    
+    [2025-03-28T00:25:46.655Z] UserNotFound: El usuario no existe
+    URL: undefined||undefined
+    Method: N/A
+    Body: N/A
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:62:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:18
+    ---------------------
+
+    

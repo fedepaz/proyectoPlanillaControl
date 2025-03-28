@@ -35,7 +35,7 @@ sessionRouter.post("/login", async (req, res, next) => {
     const user = await UserRepository.login({ dni, password });
     if (user.password || user.defaultPassword) {
       // aca se devuelve el mensaje que tiene que cambiar la contraseña
-      res.status(200).json({
+      return res.status(200).json({
         message: "Debe cambiar la contraseña",
         user,
       });
