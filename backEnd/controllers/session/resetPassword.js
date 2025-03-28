@@ -41,7 +41,7 @@ resetRouter.patch("/", async (req, res, next) => {
         requestId,
       });
 
-    if (!okToChangePassword) {
+    if (okToChangePassword === false) {
       const error = new Error();
       error.name = "AuthorizationError";
       error.message = "No se encuentra autorizado para cambiar la contraseña";
@@ -49,9 +49,13 @@ resetRouter.patch("/", async (req, res, next) => {
     }
 
     const user = await UserRepository.resetPassword({ dni, password });
+    const dateChanged = await ResetPasswordRepository.passwordChanged({
+      requestId,
+    });
     res.status(200).json({
+      ...user,
+      dateUpdated: dateChanged,
       message: "Contraseña reseteada correctamente",
-      user,
     });
   } catch (error) {
     next(error);

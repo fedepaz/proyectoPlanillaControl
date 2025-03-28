@@ -45,9 +45,11 @@ const resetPasswordSchema = new Schema({
     required: true,
     unique: true,
   },
-  okToChangePassword: { type: Boolean, required: true },
+  okToChangePassword: { type: Boolean, required: true, default: false },
   timesAsked: { type: Number, required: true },
   askedAtLast: { type: Date, required: true },
+  changed: { type: Boolean, required: false, default: false },
+  changedAt: { type: Date, required: false },
 });
 
 resetPasswordSchema.set("toJSON", {

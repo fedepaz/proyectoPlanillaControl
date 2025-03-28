@@ -68,10 +68,26 @@ export class ResetPasswordRepository {
         error.message = "La solicitud de contraseña no existe";
         throw error;
       }
-      resetPassword.okToChangePassword = true;
       await resetPassword.save();
-      console.log(resetPassword);
       return [resetPassword.user.dni, resetPassword.okToChangePassword];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async passwordChanged(requestId) {
+    try {
+      const resetPassword = await ResetPassword.findById({ requestId });
+      if (!resetPassword) {
+        const error = new Error();
+        error.name = "NotFound";
+        error.message = "La solicitud de contraseña no existe";
+        throw error;
+      }
+
+      resetPassword.changed = true;
+      (resetPassword.changedAt = new Date()), resetPassword.save();
+      return resetPassword.changedAt;
     } catch (error) {
       throw error;
     }
