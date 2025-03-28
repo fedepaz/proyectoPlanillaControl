@@ -53,10 +53,9 @@ export class UserRepository {
       throw error;
     }
   }
+
   static async resetPassword({ dni, password }) {
     try {
-      console.log(dni);
-      console.log(password);
       const editUser = await User.findOne({ dni }).populate("oficialId");
       if (!editUser) {
         const error = new Error();
@@ -66,6 +65,7 @@ export class UserRepository {
       }
       const saltRounds = parseInt(process.env.SALT_ROUNDS);
       const hashedPassword = await bcrypt.hash(password, saltRounds);
+
       editUser.password = hashedPassword;
       await editUser.save();
       const userWithoutPassword = {
@@ -104,6 +104,7 @@ export class UserRepository {
       if (equalDefaultPassword) {
         const userWithPassword = {
           dni: user.dni,
+          email: user.email,
           oficialId: user.oficialId,
           role: user.role,
           password,

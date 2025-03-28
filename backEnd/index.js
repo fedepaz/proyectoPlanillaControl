@@ -78,7 +78,6 @@ app.use("/resetPassword", resetPasswordRouter);
 
 app.use(authenticate);
 app.use(csrfProtection);
-
 app.use("/data", dataRouter);
 
 app.use("/planillas", planillasRouter);

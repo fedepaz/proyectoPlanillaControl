@@ -1,5 +1,7 @@
 import { defaultPassword } from "../../enums/enums.js";
 import { ResetPassword } from "./userModel.js";
+import { UserRepository } from "./userRepository.js";
+import bcrypt from "bcrypt";
 
 export class ResetPasswordRepository {
   static async create({ user }) {
@@ -15,12 +17,25 @@ export class ResetPasswordRepository {
         error.message = `El usuario ${resetAsked.user.email} ya ha solicitado una contraseña, debe ser medio imbécil`;
         throw error;
       }
-      const resetPassword = await ResetPassword.create({
-        dni: resetAsked.user.dni,
-        email: resetAsked.user.email,
+      const userPasswordChanged = await UserRepository.findByEmail(user.email);
+      const saltRounds = parseInt(process.env.SALT_ROUNDS);
+      const hashedPassword = await bcrypt.hash(defaultPassword, saltRounds);
+      userPasswordChanged.password = hashedPassword;
+      await userPasswordChanged.save();
+
+      const newResetPassword = await ResetPassword.create({
+        user,
+        okToChangePassword: false,
         timesAsked: 1,
         askedAtLast: new Date(),
       });
+      const resetPassword = {
+        requestId: newResetPassword.id,
+        dni: newResetPassword.user.dni,
+        email: newResetPassword.user.email,
+        timesAsked: 1,
+        askedAtLast: new Date(),
+      };
       return resetPassword;
     } catch (error) {
       throw error;
@@ -53,8 +68,10 @@ export class ResetPasswordRepository {
         error.message = "La solicitud de contraseña no existe";
         throw error;
       }
+      resetPassword.okToChangePassword = true;
+      await resetPassword.save();
       console.log(resetPassword);
-      return [resetPassword.user.dni, defaultPassword];
+      return [resetPassword.user.dni, resetPassword.okToChangePassword];
     } catch (error) {
       throw error;
     }

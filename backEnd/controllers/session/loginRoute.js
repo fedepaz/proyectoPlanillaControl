@@ -37,7 +37,9 @@ sessionRouter.post("/login", async (req, res, next) => {
       // aca se devuelve el mensaje que tiene que cambiar la contraseña
       return res.status(200).json({
         message: "Debe cambiar la contraseña",
-        user,
+        email: user.email,
+        dni: user.dni,
+        name: `${user.oficialId.firstname} ${user.oficialId.lastname}`,
       });
     }
     const userInfo = {

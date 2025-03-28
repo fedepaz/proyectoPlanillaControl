@@ -45,6 +45,7 @@ const resetPasswordSchema = new Schema({
     required: true,
     unique: true,
   },
+  okToChangePassword: { type: Boolean, required: true },
   timesAsked: { type: Number, required: true },
   askedAtLast: { type: Date, required: true },
 });

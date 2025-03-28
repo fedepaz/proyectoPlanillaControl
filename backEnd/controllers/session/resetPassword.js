@@ -16,7 +16,7 @@ resetRouter.post("/", async (req, res, next) => {
     }
     const resetPassword = await ResetPasswordRepository.create({ user });
     res.status(201).json({
-      resetPassword,
+      ...resetPassword,
       message: "Solicitud de contraseña enviada, pendiente de aprobación",
     });
   } catch (error) {
@@ -34,11 +34,20 @@ resetRouter.get("/", async (req, res, next) => {
 });
 
 resetRouter.patch("/", async (req, res, next) => {
-  const { requestId } = req.body;
+  const { requestId, password } = req.body;
   try {
-    const [dni, password] = await ResetPasswordRepository.resetPassword({
-      requestId,
-    });
+    const [dni, okToChangePassword] =
+      await ResetPasswordRepository.resetPassword({
+        requestId,
+      });
+
+    if (!okToChangePassword) {
+      const error = new Error();
+      error.name = "AuthorizationError";
+      error.message = "No se encuentra autorizado para cambiar la contraseña";
+      throw error;
+    }
+
     const user = await UserRepository.resetPassword({ dni, password });
     res.status(200).json({
       message: "Contraseña reseteada correctamente",
