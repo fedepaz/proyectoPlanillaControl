@@ -16,8 +16,6 @@ jobs:
   setup:
     name: Install Dependencies
     runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.cache.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,25 +29,31 @@ jobs:
         with:
           version: 9.12.3
 
-      - name: Configure pnpm
-        run: echo "node-linker=hoisted" >> .npmrc
-
-      - name: Cache Dependencies
-        id: cache
+      - name: Cache Backend Dependencies
+        id: cache-backend
         uses: actions/cache@v3
         with:
-          path: |
-            backEnd/node_modules
-            frontEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml', 'frontEnd/pnpm-lock.yaml') }}
+          path: backEnd/node_modules
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm
+            ${{ runner.os }}-pnpm-backend
 
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          cd backEnd && pnpm install
-          cd ../frontEnd && pnpm install
+      - name: Cache Frontend Dependencies
+        id: cache-frontend
+        uses: actions/cache@v3
+        with:
+          path: frontEnd/node_modules
+          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontEnd/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-frontend
+
+      - name: Install Backend Dependencies
+        working-directory: ./backEnd
+        run: pnpm install
+
+      - name: Install Frontend Dependencies
+        working-directory: ./frontEnd
+        run: pnpm install
 
   test-backEnd-index:
     runs-on: ubuntu-latest
@@ -72,9 +76,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: backEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run index tests
-        run: pnpm test:index
+        run: pnpm test:index --exit || exit 1
 
   test-backEnd-dataRoute:
     runs-on: ubuntu-latest
@@ -97,9 +103,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: backEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run dataRoute tests
-        run: pnpm test:dataRoute
+        run: pnpm test:dataRoute --exit || exit 1
 
   test-backEnd-planillaRoute:
     runs-on: ubuntu-latest
@@ -122,9 +130,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: backEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run planillaRoute tests
-        run: pnpm test:planillaRoute
+        run: pnpm test:planillaRoute --exit || exit 1
 
   test-backEnd-oficialRoute:
     runs-on: ubuntu-latest
@@ -147,9 +157,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: backEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run oficialRoute tests
-        run: pnpm test:oficialRoute
+        run: pnpm test:oficialRoute --exit || exit 1
 
   test-backEnd-personalEmpresaRoute:
     runs-on: ubuntu-latest
@@ -172,9 +184,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: backEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run personalEmpresaRoute tests
-        run: pnpm test:personalEmpresaRoute
+        run: pnpm test:personalEmpresaRoute --exit || exit 1
 
   test-backEnd-personalSeguridadRoute:
     runs-on: ubuntu-latest
@@ -198,8 +212,10 @@ jobs:
         with:
           path: backEnd/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('backEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run personalSeguridadRoute tests
-        run: pnpm test:personalSeguridadRoute
+        run: pnpm test:personalSeguridadRoute --exit || exit 1
 
   lint-frontend:
     runs-on: ubuntu-latest
@@ -222,6 +238,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: frontEnd/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('frontEnd/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontEnd/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
       - name: Run frontend lint
         run: pnpm lint
