@@ -121,6 +121,15 @@ const STATUS_CODES = {
 };
 
 export const handleErrors = (error, request, response, next) => {
+  error.request = request;
+  error.method = request.method;
+  error.body = JSON.stringify(request.body);
+  error.client = {
+    ip: request.ip,
+    hostname: request.hostname,
+    protocol: request.protocol,
+  };
+
   logError(error);
 
   logErrorDB(error, request);
