@@ -3209,4 +3209,587 @@
     at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-03-31T14:12:48.507Z]
+    URL: /oficial
+    Method: GET
+    Body: {"email":"noexistemail4@"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:15:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-03-31T14:14:17.550Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha solicitado una contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:01:53.136Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"12345678","password":"123456789"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:95:23)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:35:18
+    ---------------------
+
+    [2025-03-31T15:05:42.674Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, 
+              pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:19:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:06:31.333Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:18:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:07:32.192Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:18:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:08:30.538Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: No se encuentra autorizado para cambiar la contraseña
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:45:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-03-31T15:11:38.235Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: No se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:40:7
+    ---------------------
+
+    [2025-03-31T15:11:43.835Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: No se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:40:7
+    ---------------------
+
+    [2025-03-31T15:12:45.802Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario ber@riva.com no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:40:7
+    ---------------------
+
+    [2025-03-31T15:14:19.563Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario ber@riva.com no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:39:17
+    ---------------------
+
+    [2025-03-31T15:15:21.951Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario ber@riva.com no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:39:17
+    ---------------------
+
+    [2025-03-31T15:15:27.851Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario ber@riva.com no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:39:17
+    ---------------------
+
+    [2025-03-31T15:16:10.961Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaeec34cdfa8c78bcdc4f"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario noexistemail3 no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:39:17
+    ---------------------
+
+    [2025-03-31T15:16:29.032Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: Error: data and salt arguments required
+    at Object.hash (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/bcrypt@5.1.1/node_modules/bcrypt/bcrypt.js:137:17)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/bcrypt@5.1.1/node_modules/bcrypt/promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/bcrypt@5.1.1/node_modules/bcrypt/promises.js:20:12)
+    ---------------------
+
+    [2025-03-31T15:25:21.226Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: La contraseña es requerida
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:60:23)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-03-31T15:25:44.482Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"123456789123"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ requestId: { requestId: '67eaaedd34cdfa8c78bcdc47' } }" (type Object) at path "_id" for model "ResetPassword"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-03-31T15:28:21.471Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":""}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: La contraseña es requerida
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:60:23)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-03-31T15:28:39.720Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"123"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: La contraseña debe tener al menos 9 caracteres
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:68:23)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-03-31T15:31:03.447Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"12313256897987"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ requestId: '67eaaedd34cdfa8c78bcdc47' }" (type Object) at path "_id" for model "ResetPassword"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-03-31T15:31:37.198Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"12313256897987"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ requestId: '67eaaedd34cdfa8c78bcdc47' }" (type Object) at path "_id" for model "ResetPassword"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-03-31T15:32:47.874Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"12313256897987"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ requestId: '67eaaedd34cdfa8c78bcdc47' }" (type Object) at path "_id" for model "ResetPassword"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-03-31T15:34:30.814Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"locoloco"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: La contraseña debe tener al menos 9 caracteres
+    at UserRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:68:23)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:42:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-03-31T15:35:28.170Z]
+    URL: /resetPassword/
+    Method: PATCH
+    Body: {"requestId":"67eaaedd34cdfa8c78bcdc47","password":"locolocoloco123"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthorizationError: El usuario ber@riva.com no se encuentra autorizado para cambiar la contraseña
+    at ResetPasswordRepository.resetPassword (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:86:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:39:17
+    ---------------------
+
+    [2025-03-31T15:36:09.319Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:28:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:37:43.426Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:29:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:38:12.404Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:13:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T15:39:01.870Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:18:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:06:29.337Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:06:30.970Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:12:04.055Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:12:05.603Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"noexistemail3"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario noexistemail3 ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:14:58.506Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-03-31T16:15:06.236Z]
+    URL: /resetPassword/
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.2
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
     

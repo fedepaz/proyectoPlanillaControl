@@ -7,15 +7,39 @@ export class ResetPasswordRepository {
   static async create({ user }) {
     try {
       const resetAsked = await ResetPassword.findOne({ user }).populate("user");
-      if (resetAsked !== null) {
-        resetAsked.timesAsked += 1;
-        resetAsked.askedAtLast = new Date();
-        await resetAsked.save();
 
-        const error = new Error();
-        error.name = "DuplicateData";
-        error.message = `El usuario ${resetAsked.user.email} ya ha solicitado una contraseña, debe ser medio imbécil`;
-        throw error;
+      if (resetAsked !== null) {
+        if (resetAsked.okToChangePassword === false) {
+          if (resetAsked.changed === false) {
+            if (resetAsked.timesChanged > 1) {
+              const error = new Error();
+              error.name = "DuplicateData";
+              error.message = `El usuario ${resetAsked.user.email} ya ha cambiado la contraseña, debe ser medio imbécil`;
+              throw error;
+            } else {
+              const error = new Error();
+              error.name = "DuplicateData";
+              error.message = `El usuario ${resetAsked.user.email} ya ha solicitado una contraseña, pendiente de aprobación`;
+              throw error;
+            }
+          }
+          resetAsked.okToChangePassword = false;
+          resetAsked.timesChanged += 1;
+          resetAsked.askedAtLast = new Date();
+          resetAsked.changed = false;
+          resetAsked.save({ runValidators: true });
+          const error = new Error();
+          error.name = "DuplicateData";
+          error.message = `El usuario ${resetAsked.user.email} ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil`;
+          throw error;
+        } else {
+          const resetApproved = {
+            id: resetAsked.id,
+            okToChangePassword: resetAsked.okToChangePassword,
+            changed: resetAsked.changed,
+          };
+          return resetApproved;
+        }
       }
       const userPasswordChanged = await UserRepository.findByEmail(user.email);
       const saltRounds = parseInt(process.env.SALT_ROUNDS);
@@ -26,14 +50,15 @@ export class ResetPasswordRepository {
       const newResetPassword = await ResetPassword.create({
         user,
         okToChangePassword: false,
-        timesAsked: 1,
+        timesChanged: 1,
         askedAtLast: new Date(),
+        changed: false,
       });
       const resetPassword = {
         requestId: newResetPassword.id,
         dni: newResetPassword.user.dni,
         email: newResetPassword.user.email,
-        timesAsked: 1,
+        timesChanged: newResetPassword.timesChanged,
         askedAtLast: new Date(),
       };
       return resetPassword;
@@ -49,7 +74,7 @@ export class ResetPasswordRepository {
           requestId: resetPassword.id,
           dni: resetPassword.user.dni,
           email: resetPassword.user.email,
-          timesAsked: resetPassword.timesAsked,
+          timesChanged: resetPassword.timesChanged,
           askedAtLast: resetPassword.askedAtLast,
         };
       });
@@ -68,8 +93,14 @@ export class ResetPasswordRepository {
         error.message = "La solicitud de contraseña no existe";
         throw error;
       }
+      if (resetPassword.okToChangePassword === false) {
+        const error = new Error();
+        error.name = "AuthorizationError";
+        error.message = `El usuario ${resetPassword.user.email} no se encuentra autorizado para cambiar la contraseña`;
+        throw error;
+      }
       await resetPassword.save();
-      return [resetPassword.user.dni, resetPassword.okToChangePassword];
+      return [resetPassword.user.dni];
     } catch (error) {
       throw error;
     }
@@ -77,7 +108,7 @@ export class ResetPasswordRepository {
 
   static async passwordChanged(requestId) {
     try {
-      const resetPassword = await ResetPassword.findById({ requestId });
+      const resetPassword = await ResetPassword.findById(requestId);
       if (!resetPassword) {
         const error = new Error();
         error.name = "NotFound";
@@ -86,7 +117,9 @@ export class ResetPasswordRepository {
       }
 
       resetPassword.changed = true;
-      (resetPassword.changedAt = new Date()), resetPassword.save();
+      resetPassword.changedAt = new Date();
+      resetPassword.okToChangePassword = false;
+      resetPassword.save();
       return resetPassword.changedAt;
     } catch (error) {
       throw error;

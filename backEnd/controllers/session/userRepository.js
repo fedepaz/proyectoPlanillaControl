@@ -56,6 +56,20 @@ export class UserRepository {
 
   static async resetPassword({ dni, password }) {
     try {
+      if (!password || password === "") {
+        const error = new Error();
+        error.name = "ValidationError";
+        error.message = "La contraseña es requerida";
+        throw error;
+      }
+
+      // Then check password length
+      if (password.length < 9) {
+        const error = new Error();
+        error.name = "ValidationError";
+        error.message = "La contraseña debe tener al menos 9 caracteres";
+        throw error;
+      }
       const editUser = await User.findOne({ dni }).populate("oficialId");
       if (!editUser) {
         const error = new Error();
@@ -67,7 +81,7 @@ export class UserRepository {
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
       editUser.password = hashedPassword;
-      await editUser.save();
+      await editUser.save({ runValidators: true });
       const userWithoutPassword = {
         dni: editUser.dni,
         email: editUser.email,
