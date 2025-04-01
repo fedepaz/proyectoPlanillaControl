@@ -15,11 +15,11 @@ describe("GET HOME /", function () {
 });
 
 describe("GET DATA /data", function () {
-  it("should return status 200", function (done) {
+  it("should return error contact your administrator", function (done) {
     request(app)
       .get("/data")
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(401);
         done();
       });
   });

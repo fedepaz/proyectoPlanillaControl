@@ -71,7 +71,7 @@ app.get("/health", (req, res) => {
 });
 app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
-  return response.status(200).send("planillasBackend");
+  return response.status(234).send("planillasBackend");
 });
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
