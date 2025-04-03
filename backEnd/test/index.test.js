@@ -14,7 +14,7 @@ describe("GET HOME /", function () {
   });
 });
 
-describe("GET DATA /data", function () {
+describe("GET ERROR DATA /data", function () {
   it("should return error contact your administrator", function (done) {
     request(app)
       .get("/data")
