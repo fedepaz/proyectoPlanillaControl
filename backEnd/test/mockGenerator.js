@@ -48,7 +48,7 @@ const generateMockPlanilla = (suffix) => ({
 });
 
 const generateMockOficial = (apellido) => ({
-  _id: generateObjectId(),
+  id: generateObjectId(),
   dni: "35456789",
   firstname: "Roberto",
   lastname: `${apellido}`,
@@ -56,11 +56,11 @@ const generateMockOficial = (apellido) => ({
 });
 
 const generateMockPersonalEmpresa = (apellido) => ({
-  _id: generateObjectId(),
+  id: generateObjectId(),
   dni: "35456789",
   firstname: "Roberto",
   lastname: `${apellido}`,
-  empresa: generateObjectId(), // Assuming empresa is now a reference to Empresa model
+  empresa: { id: generateObjectId(), empresa: `${apellido}EMPRESA` }, // Assuming empresa is now a reference to Empresa model
   legajo: 123456,
 });
 

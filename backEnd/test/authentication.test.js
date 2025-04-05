@@ -2,7 +2,6 @@ import { expect } from "chai";
 import { authenticate } from "../middlewares/authenticate.js";
 import { createAuthenticatedRequest } from "./mockJWT.js";
 import sinon from "sinon";
-import { signedCookie } from "cookie-parser";
 
 describe("Authentication Middleware", function () {
   let req, res, next;
@@ -36,10 +35,9 @@ describe("Authentication Middleware", function () {
   it("should throw error when no token is provided", function () {
     req = {
       method: "GET",
-      path: "/",
+      path: "/data",
       signedCookies: {},
     };
-
     expect(() => authenticate(req, res, next)).to.throw("No token provided");
   });
 
@@ -47,6 +45,7 @@ describe("Authentication Middleware", function () {
     req = createAuthenticatedRequest({ role: "admin" });
 
     authenticate(req, res, next);
+    expect(res.status).to.equal(200);
     expect(req.user).to.exist;
     expect(next.calledOnce).to.be.true;
   });

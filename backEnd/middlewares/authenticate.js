@@ -2,6 +2,11 @@ import { verifyJWT } from "../utils/jwt.utils.js";
 import { PublicRoutes } from "../enums/enums.js";
 
 export const authenticate = (req, res, next) => {
+  console.log("authenticate");
+  console.log("req.headers.cookie:", req.headers.cookie);
+  console.log("req.cookies:", req.cookies);
+  console.log("req.signedCookies:", req.signedCookies);
+
   if (req.method === "OPTIONS") {
     return next();
   }

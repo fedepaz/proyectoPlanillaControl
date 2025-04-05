@@ -7,9 +7,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "NODE_ENV=test mocha --require @babel/register 'test/**/*.test.js'",
-    "test:authentication": "NODE_ENV=test mocha --require @babel/register 'test/authentication.test.js'",
-    "test:index": "NODE_ENV=test mocha --require @babel/register 'test/index.test.js'",
+    "test": "NODE_ENV=test mocha --require @babel/register --require ./test/test-setup.js 'test/**/*.test.js'",
+    "test:authentication": "NODE_ENV=test  mocha --require @babel/register --require ./test/test-setup.js 'test/authentication.test.js'",
+    "test:index": "NODE_ENV=test  mocha --require @babel/register --require ./test/test-setup.js 'test/index.test.js'",
     "test:dataRoute": "NODE_ENV=test mocha --require @babel/register 'test/dataRoute.test.js'",
     "test:planillaRoute": "NODE_ENV=test mocha --require @babel/register 'test/planillaRoute.test.js'",
     "test:oficialRoute": "NODE_ENV=test mocha --require @babel/register 'test/oficialRoute.test.js'",

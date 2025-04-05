@@ -1,17 +1,8 @@
 import { expect } from "chai";
 import request from "supertest";
 import sinon from "sinon";
-import mongoose from "mongoose";
 import app from "../index.js";
 import { Planilla } from "../models/planillaModel.js";
-import {
-  TipoControl,
-  MediosTec,
-  TipoPro,
-  Demora,
-  TipoVuelo,
-  Funcion,
-} from "../models/opcionesModel.js";
 import { generateMockPlanilla } from "./mockGenerator.js";
 
 describe("GET /planillas", function () {
@@ -22,7 +13,10 @@ describe("GET /planillas", function () {
       .fill()
       .map((_, index) => generateMockPlanilla(`Mock${index + 1}`));
 
+    const populateStub = sinon.stub();
+    populateStub.returnsThis();
     findStub = sinon.stub(Planilla, "find").returns({
+      populate: populateStub,
       sort: sinon.stub().returnsThis(),
       skip: sinon.stub().returnsThis(),
       limit: sinon.stub().returnsThis(),

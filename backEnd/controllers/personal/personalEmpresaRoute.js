@@ -5,7 +5,9 @@ const personalEmpresaRouter = express.Router();
 
 personalEmpresaRouter.get("/", async (req, res, next) => {
   try {
-    const personalEmpresa = await PersonalEmpresa.find().populate("empresa");
+    const personalEmpresa = await PersonalEmpresa.find()
+      .populate("empresa")
+      .exec();
     res.json(personalEmpresa);
   } catch (err) {
     next(err);

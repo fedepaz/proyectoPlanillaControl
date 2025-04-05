@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import request from "supertest";
 import sinon from "sinon";
-import mongoose from "mongoose";
 import app from "../index.js";
 import {
   TipoControl,

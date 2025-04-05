@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import app from "../index.js";
 import { PersonalSeguridadEmpresa } from "../models/personalModel.js";
 import { generateMockPersonalEmpresa } from "./mockGenerator.js";
+import { populate } from "dotenv";
 
 describe("GET /personalSeguridad", function () {
   let findStub;
@@ -14,7 +15,7 @@ describe("GET /personalSeguridad", function () {
     const mockMessi = generateMockPersonalEmpresa("Messi");
     const mockListPersonal = [
       {
-        _id: "1",
+        id: mockPaz.id,
         dni: mockPaz.dni,
         firstname: mockPaz.firstname,
         lastname: mockPaz.lastname,
@@ -22,7 +23,7 @@ describe("GET /personalSeguridad", function () {
         legajo: mockPaz.legajo,
       },
       {
-        _id: "2",
+        id: mockMessi.id,
         dni: mockMessi.dni,
         firstname: mockMessi.firstname,
         lastname: mockMessi.lastname,
@@ -30,9 +31,10 @@ describe("GET /personalSeguridad", function () {
         legajo: mockMessi.legajo,
       },
     ];
-
     findStub = sinon.stub(PersonalSeguridadEmpresa, "find").returns({
-      exec: sinon.stub().resolves(mockListPersonal),
+      populate: sinon.stub().returns({
+        exec: sinon.stub().resolves(mockListPersonal),
+      }),
     });
   });
 

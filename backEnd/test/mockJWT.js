@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import { signJWT } from "../utils/jwt.utils.js";
 
 export const generateMockAuthCookie = (userData = {}, options = {}) => {
@@ -11,7 +12,10 @@ export const generateMockAuthCookie = (userData = {}, options = {}) => {
 
   const token = signJWT(defaultUser);
 
-  const cookieValue = `${cookieName}=${token}; HttpOnly; Path=/; Signed`;
+  const cookieValue = cookieParser.signedCookie(
+    `${cookieName}=${token}`,
+    process.env.COOKIE_SECRET
+  );
 
   return {
     token,
@@ -22,14 +26,12 @@ export const generateMockAuthCookie = (userData = {}, options = {}) => {
 };
 
 export const createAuthenticatedRequest = (userData = {}) => {
-  const { token, user } = generateMockAuthCookie(userData);
+  const { cookieValue, user } = generateMockAuthCookie(userData);
   return {
-    signedCookies: {
-      access_token: token,
-    },
+    cookieValue,
     user,
     cookies: {},
     headers: {},
-    path: "/test-path",
+    path: "/data",
   };
 };

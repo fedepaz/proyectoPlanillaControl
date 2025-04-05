@@ -5,7 +5,7 @@ const oficialRouter = express.Router();
 
 oficialRouter.get("/", async (req, res, next) => {
   try {
-    const oficial = await Oficial.find();
+    const oficial = await Oficial.find().exec();
     res.json(oficial);
   } catch (err) {
     next(err);

@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 
 export function signJWT(payload, expiresIn = "12h") {
   if (!process.env.SECRET_JWT_KEY) {
+    console.log("JWT secret key not set");
+    console.log(process.env.SECRET_JWT_KEY);
     throw new Error("JWT secret key not set");
   }
 

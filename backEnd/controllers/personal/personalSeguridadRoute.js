@@ -8,8 +8,9 @@ const personalSeguridadRouter = express.Router();
 
 personalSeguridadRouter.get("/", async (req, res, next) => {
   try {
-    const personalSeguridadEmpresa =
-      await PersonalSeguridadEmpresa.find().populate("empresa");
+    const personalSeguridadEmpresa = await PersonalSeguridadEmpresa.find()
+      .populate("empresa")
+      .exec();
     res.json(personalSeguridadEmpresa);
   } catch (err) {
     next(err);
