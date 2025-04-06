@@ -1,26 +1,37 @@
-import cookieParser from "cookie-parser";
 import { signJWT } from "../utils/jwt.utils.js";
+import crypto from "crypto";
+
+const sign = (payload, secret) => {
+  if (!payload) return "";
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(payload);
+  return payload + "." + hmac.digest("base64").replace(/=+$/, "");
+};
 
 export const generateMockAuthCookie = (userData = {}, options = {}) => {
   const { cookieName = "access_token" } = options;
 
   const defaultUser = {
-    id: "507f1f77bcf86cd799439011",
+    dni: "12345678",
+    oficialId: {
+      dni: "12345678",
+      firstname: "test",
+      lastname: "user",
+      legajo: "123456",
+      id: "507f1f77bcf86cd799439011",
+    },
     role: "user",
     ...userData,
   };
 
   const token = signJWT(defaultUser);
 
-  const cookieValue = cookieParser.signedCookie(
-    `${cookieName}=${token}`,
-    process.env.COOKIE_SECRET
-  );
+  const signCookie = sign(token, process.env.COOKIE_SECRET);
 
   return {
     token,
-    cookieValue,
-    cookieHeader: ["Cookie", cookieValue],
+    cookieValue: `${cookieName}=${signCookie}`,
+    cookieHeader: ["Cookie", `${cookieName}=${signCookie}`],
     user: defaultUser,
   };
 };
@@ -28,10 +39,14 @@ export const generateMockAuthCookie = (userData = {}, options = {}) => {
 export const createAuthenticatedRequest = (userData = {}) => {
   const { cookieValue, user } = generateMockAuthCookie(userData);
   return {
-    cookieValue,
-    user,
+    method: "GET",
+    signedCookies: {
+      access_token: user,
+    },
     cookies: {},
-    headers: {},
+    headers: { cookie: cookieValue },
     path: "/data",
+    user: undefined,
+    cookieValue,
   };
 };
