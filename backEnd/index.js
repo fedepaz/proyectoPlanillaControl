@@ -6,7 +6,6 @@ import cors from "cors";
 import { csrfProtection } from "./middlewares/csrf.js";
 import { handleErrors } from "./middlewares/handleErrors.js";
 import { authenticate } from "./middlewares/authenticate.js";
-import { debugMiddleware } from "./middlewares/debug.js";
 import limiter from "./middlewares/limiter.js";
 import cookieParser from "cookie-parser";
 
@@ -28,11 +27,12 @@ const app = express();
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-//env varialbes for debug
 
-//app.use(debugMiddleware);
-
-app.use(cookieParser(process.env.COOKIE_SECRET));
+if (process.env.NODE_ENV === "test") {
+  app.use(cookieParser());
+} else {
+  app.use(cookieParser(process.env.COOKIE_SECRET));
+}
 if (process.env.NODE_ENV === "production") {
   app.use(limiter);
 }
@@ -76,8 +76,8 @@ app.get("/", (request, response) => {
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
-//app.use(authenticate);
-//app.use(csrfProtection);
+app.use(authenticate);
+app.use(csrfProtection);
 app.use("/data", dataRouter);
 
 app.use("/planillas", planillasRouter);

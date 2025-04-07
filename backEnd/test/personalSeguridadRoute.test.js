@@ -6,6 +6,7 @@ import app from "../index.js";
 import { PersonalSeguridadEmpresa } from "../models/personalModel.js";
 import { generateMockPersonalEmpresa } from "./mockGenerator.js";
 import { populate } from "dotenv";
+import { createAuthAgent } from "./test-helpers.js";
 
 describe("GET /personalSeguridad", function () {
   let findStub;
@@ -43,14 +44,13 @@ describe("GET /personalSeguridad", function () {
   });
 
   it("should return status 200 and an object, with an array", function (done) {
-    request(app)
-      .get("/personalSeguridad")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("array").that.is.not.empty;
-        expect(res.body[0]).to.have.property("lastname", "Paz");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/personalSeguridad").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body).to.be.an("array").that.is.not.empty;
+      expect(res.body[0]).to.have.property("lastname", "Paz");
+      done();
+    });
   });
 });
 

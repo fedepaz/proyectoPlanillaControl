@@ -1,10 +1,9 @@
 import { expect } from "chai";
-import request from "supertest";
 import sinon from "sinon";
-import mongoose from "mongoose";
 import app from "../index.js";
 import { Oficial } from "../models/personalModel.js";
 import { generateMockOficial } from "./mockGenerator.js";
+import { createAuthAgent } from "./test-helpers.js";
 
 describe("GET /oficial", function () {
   let findStub;
@@ -39,14 +38,13 @@ describe("GET /oficial", function () {
   });
 
   it("should return status 200 and an object, with an array", function (done) {
-    request(app)
-      .get("/oficial")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("array").that.is.not.empty;
-        expect(res.body[0]).to.have.property("lastname", "Paz");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/oficial").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body).to.be.an("array").that.is.not.empty;
+      expect(res.body[0]).to.have.property("lastname", "Paz");
+      done();
+    });
   });
 });
 

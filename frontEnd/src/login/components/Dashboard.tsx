@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Paper } from "@mui/material";
+import { Button, Container, Paper } from "@mui/material";
 interface DashboardProps {
   onGeneratePlanillas: (data: boolean) => void;
 }

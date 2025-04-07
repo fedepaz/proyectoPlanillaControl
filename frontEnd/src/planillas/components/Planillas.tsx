@@ -6,23 +6,18 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+//import { useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
-import { useCallback, useEffect, useState } from "react";
-import { DatosPsa } from "../components/planillaComponents/datosPsa";
+import { useEffect } from "react";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
-import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
-import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
-import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { RHFTextField } from "../../components/RHFTextField";
-import { OficialSchema } from "../types/apiSchema";
 
 interface PlanillaProps {
   onBack: (data: boolean) => void;
 }
 
 export function Planillas({ onBack }: PlanillaProps) {
-  const { setValue } = useFormContext<PlanillaSchema>();
+  //const { setValue } = useFormContext<PlanillaSchema>();
 
   useEffect(() => {
     //console.log("Mensaje de planillas lalala");

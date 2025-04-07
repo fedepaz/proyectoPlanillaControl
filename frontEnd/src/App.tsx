@@ -34,8 +34,6 @@ export function App() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showLogoutPage, setShowLogoutPage] = useState(false);
-  const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
 
   const { data, error, isError, isLoading, refetch } = useSession();
 

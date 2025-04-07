@@ -10,7 +10,6 @@ import {
   useTipoPro,
 } from "../../services/queries";
 import { RHFCheckBox } from "../../../components/RHFCheckBox";
-import { useFormContext } from "react-hook-form";
 import Loading from "../../../components/Loading";
 import { useEffect } from "react";
 

@@ -4,6 +4,7 @@ import sinon from "sinon";
 import app from "../index.js";
 import { Planilla } from "../models/planillaModel.js";
 import { generateMockPlanilla } from "./mockGenerator.js";
+import { createAuthAgent } from "./test-helpers.js";
 
 describe("GET /planillas", function () {
   let findStub, countDocumentsStub;
@@ -32,54 +33,51 @@ describe("GET /planillas", function () {
   });
 
   it("should return status 200 and paginated results", function (done) {
-    request(app)
-      .get("/planillas")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        //expect(res.body).to.be.an("array");
-        expect(res.body).to.have.all.keys(
-          "data",
-          "currentPage",
-          "totalPages",
-          "totalCount",
-          "pageSize"
-        );
-        expect(res.body.data).to.be.an("array");
-        //  expect(res.body.currentPage).to.equal(1);
-        //  expect(res.body.totalPages).to.equal(3);
-        //  expect(res.body.totalCount).to.equal(25);
-        //  expect(res.body.pageSize).to.equal(10);
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/planillas").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      //expect(res.body).to.be.an("array");
+      expect(res.body).to.have.all.keys(
+        "data",
+        "currentPage",
+        "totalPages",
+        "totalCount",
+        "pageSize"
+      );
+      expect(res.body.data).to.be.an("array");
+      //  expect(res.body.currentPage).to.equal(1);
+      //  expect(res.body.totalPages).to.equal(3);
+      //  expect(res.body.totalCount).to.equal(25);
+      //  expect(res.body.pageSize).to.equal(10);
+      done();
+    });
   });
 
   it("should respect page and pageSize query parameters", function (done) {
-    request(app)
-      .get("/planillas?page=2&pageSize=5")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.currentPage).to.equal(2);
-        expect(res.body.pageSize).to.equal(5);
-        expect(res.body.data).to.be.an("array");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/planillas?page=2&pageSize=5").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body.currentPage).to.equal(2);
+      expect(res.body.pageSize).to.equal(5);
+      expect(res.body.data).to.be.an("array");
+      done();
+    });
   });
 
   it("should return planillas with correct structure", function (done) {
-    request(app)
-      .get("/planillas")
-      .end((_err, res) => {
-        const planilla = res.body.data[0];
-        expect(planilla).to.have.property("datosPsa").that.is.an("object");
-        expect(planilla).to.have.property("datosVuelo").that.is.an("object");
-        expect(planilla).to.have.property("datosTerrestre").that.is.an("array");
-        expect(planilla).to.have.property("datosSeguridad").that.is.an("array");
-        expect(planilla).to.have.property("datosVehiculos").that.is.an("array");
-        expect(planilla).to.have.property("novEquipajes").that.is.a("string");
-        expect(planilla).to.have.property("novInspeccion").that.is.a("string");
-        expect(planilla).to.have.property("novOtras").that.is.a("string");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/planillas").end((_err, res) => {
+      const planilla = res.body.data[0];
+      expect(planilla).to.have.property("datosPsa").that.is.an("object");
+      expect(planilla).to.have.property("datosVuelo").that.is.an("object");
+      expect(planilla).to.have.property("datosTerrestre").that.is.an("array");
+      expect(planilla).to.have.property("datosSeguridad").that.is.an("array");
+      expect(planilla).to.have.property("datosVehiculos").that.is.an("array");
+      expect(planilla).to.have.property("novEquipajes").that.is.a("string");
+      expect(planilla).to.have.property("novInspeccion").that.is.a("string");
+      expect(planilla).to.have.property("novOtras").that.is.a("string");
+      done();
+    });
   });
 });
 

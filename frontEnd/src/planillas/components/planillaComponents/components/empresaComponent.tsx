@@ -21,7 +21,7 @@ export function EmpresaComponent({ onEmpresaSelected }: EmpresaComponentProps) {
     defaultValues: defaultValuesEmpresa,
     mode: "onChange",
   });
-  const { setValue, watch } = methods;
+  const { watch } = methods;
 
   const tipoEmpresaWatch = watch("tipoEmpresa");
   const empresaWatch = watch("empresa");

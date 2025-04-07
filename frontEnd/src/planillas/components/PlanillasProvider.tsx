@@ -7,25 +7,11 @@ import {
 } from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { useOficial } from "../services/queries";
-import { OficialSchema } from "../types/apiSchema";
-import { useUserContext } from "../../services/useUserContext";
 import { useSession } from "../../services/session";
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
 }
-//interface LoginResponse {
-//  user: {
-//    dni: string;
-//    oficialId: {
-//      dni: string;
-//      firstname: string;
-//      lastname: string;
-//      legajo: string;
-//    };
-//  };
-//}
 
 export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const methods = useForm<PlanillaSchema>({

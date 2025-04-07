@@ -1,15 +1,11 @@
 import { signJWT } from "../utils/jwt.utils.js";
-import crypto from "crypto";
-
-const sign = (payload, secret) => {
-  if (!payload) return "";
-  const hmac = crypto.createHmac("sha256", secret);
-  hmac.update(payload);
-  return payload + "." + hmac.digest("base64").replace(/=+$/, "");
-};
 
 export const generateMockAuthCookie = (userData = {}, options = {}) => {
   const { cookieName = "access_token" } = options;
+
+  if (!process.env.SECRET_JWT_KEY) {
+    throw new Error("SECRET_JWT_KEY not set");
+  }
 
   const defaultUser = {
     dni: "12345678",
@@ -26,12 +22,9 @@ export const generateMockAuthCookie = (userData = {}, options = {}) => {
 
   const token = signJWT(defaultUser);
 
-  const signCookie = sign(token, process.env.COOKIE_SECRET);
-
   return {
     token,
-    cookieValue: `${cookieName}=${signCookie}`,
-    cookieHeader: ["Cookie", `${cookieName}=${signCookie}`],
+    cookieHeader: `${cookieName}=${token}`,
     user: defaultUser,
   };
 };

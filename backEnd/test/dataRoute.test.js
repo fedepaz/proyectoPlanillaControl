@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import request from "supertest";
+import request, { agent } from "supertest";
 import sinon from "sinon";
 import app from "../index.js";
 import {
@@ -10,6 +10,7 @@ import {
   TipoVuelo,
   Funcion,
 } from "../models/opcionesModel.js";
+import { createAuthAgent } from "./test-helpers.js";
 
 describe("GET TIPO CONTROL /data/tipoControl", function () {
   let findStub;
@@ -27,13 +28,12 @@ describe("GET TIPO CONTROL /data/tipoControl", function () {
   });
 
   it("should return status 200 and fetch tipoControl options", function (done) {
-    request(app)
-      .get("/data/tipoControl")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "Option 1");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/tipoControl").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "Option 1");
+      done();
+    });
   });
 });
 
@@ -52,13 +52,12 @@ describe("GET MEDIOS TEC /data/mediosTec", function () {
   });
 
   it("should return status 200 and fetch mediosTec options", function (done) {
-    request(app)
-      .get("/data/mediosTec")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "Option 2");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/mediosTec").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "Option 2");
+      done();
+    });
   });
 });
 
@@ -78,13 +77,12 @@ describe("GET TIPO PROCEDIMIENTOS /data/tipoPro", function () {
   });
 
   it("should return status 200 and fetch tipoPro options", function (done) {
-    request(app)
-      .get("/data/tipoPro")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "Option1");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/tipoPro").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "Option1");
+      done();
+    });
   });
 });
 
@@ -104,13 +102,12 @@ describe("GET DEMORA /data/demora", function () {
   });
 
   it("should return status 200 and fetch tipoPro options", function (done) {
-    request(app)
-      .get("/data/demora")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "Si");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/demora").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "Si");
+      done();
+    });
   });
 });
 
@@ -130,13 +127,12 @@ describe("GET TIPO VUELO /data/tipoVuelo", function () {
   });
 
   it("should return status 200 and fetch tipoPro options", function (done) {
-    request(app)
-      .get("/data/tipoVuelo")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "arribo");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/tipoVuelo").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "arribo");
+      done();
+    });
   });
 });
 
@@ -156,12 +152,11 @@ describe("GET FUNCION /data/funcion", function () {
   });
 
   it("should return status 200 and fetch tipoPro options", function (done) {
-    request(app)
-      .get("/data/funcion")
-      .end((_err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body[0]).to.have.property("label", "supervisor");
-        done();
-      });
+    const agent = createAuthAgent(app);
+    agent.get("/data/funcion").end((_err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body[0]).to.have.property("label", "supervisor");
+      done();
+    });
   });
 });
