@@ -1,10 +1,17 @@
 import { expect } from "chai";
-import request from "supertest";
 import sinon from "sinon";
 import app from "../index.js";
 import { Planilla } from "../models/planillaModel.js";
 import { generateMockPlanilla } from "./mockGenerator.js";
 import { createAuthAgent } from "./test-helpers.js";
+
+before(function () {
+  process.env.SECRET_JWT_KEY = "palabraSecreta";
+});
+
+after(function () {
+  delete process.env.SECRET_JWT_KEY;
+});
 
 describe("GET /planillas", function () {
   let findStub, countDocumentsStub;

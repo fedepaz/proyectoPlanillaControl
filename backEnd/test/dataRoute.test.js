@@ -12,6 +12,14 @@ import {
 } from "../models/opcionesModel.js";
 import { createAuthAgent } from "./test-helpers.js";
 
+before(function () {
+  process.env.SECRET_JWT_KEY = "palabraSecreta";
+});
+
+after(function () {
+  delete process.env.SECRET_JWT_KEY;
+});
+
 describe("GET TIPO CONTROL /data/tipoControl", function () {
   let findStub;
 

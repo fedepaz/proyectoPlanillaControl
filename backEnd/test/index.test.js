@@ -1,17 +1,14 @@
 import { expect } from "chai";
 import request from "supertest";
 import app from "../index.js";
-import { generateMockAuthCookie } from "./mockJWT.js";
 import { authRequest } from "./test-helpers.js";
 
 before(function () {
   process.env.SECRET_JWT_KEY = "palabraSecreta";
-  process.env.COOKIE_SECRET = "galletitaSecreta";
 });
 
 after(function () {
   delete process.env.SECRET_JWT_KEY;
-  delete process.env.COOKIE_SECRET;
 });
 
 describe("GET HOME /", function () {

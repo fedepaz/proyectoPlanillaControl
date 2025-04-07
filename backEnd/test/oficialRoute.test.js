@@ -5,6 +5,14 @@ import { Oficial } from "../models/personalModel.js";
 import { generateMockOficial } from "./mockGenerator.js";
 import { createAuthAgent } from "./test-helpers.js";
 
+before(function () {
+  process.env.SECRET_JWT_KEY = "palabraSecreta";
+});
+
+after(function () {
+  delete process.env.SECRET_JWT_KEY;
+});
+
 describe("GET /oficial", function () {
   let findStub;
 

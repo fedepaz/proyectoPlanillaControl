@@ -1,12 +1,17 @@
 import { expect } from "chai";
-import request from "supertest";
 import sinon from "sinon";
-import mongoose from "mongoose";
 import app from "../index.js";
 import { PersonalSeguridadEmpresa } from "../models/personalModel.js";
 import { generateMockPersonalEmpresa } from "./mockGenerator.js";
-import { populate } from "dotenv";
 import { createAuthAgent } from "./test-helpers.js";
+
+before(function () {
+  process.env.SECRET_JWT_KEY = "palabraSecreta";
+});
+
+after(function () {
+  delete process.env.SECRET_JWT_KEY;
+});
 
 describe("GET /personalSeguridad", function () {
   let findStub;

@@ -5,6 +5,14 @@ import { PersonalEmpresa } from "../models/personalModel.js";
 import { generateMockPersonalEmpresa } from "./mockGenerator.js";
 import { createAuthAgent } from "./test-helpers.js";
 
+before(function () {
+  process.env.SECRET_JWT_KEY = "palabraSecreta";
+});
+
+after(function () {
+  delete process.env.SECRET_JWT_KEY;
+});
+
 describe("GET /personalEmpresa", function () {
   let findStub;
 
