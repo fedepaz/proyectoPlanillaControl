@@ -6810,4 +6810,22 @@
     at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-04-07T08:27:34.216Z]
+    URL: /data
+    Method: GET
+    Body: {}
+    Client IP: ::ffff:127.0.0.1
+    User Agent: Unknown User Agent
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     

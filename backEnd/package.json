@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "NODE_ENV=test mocha --require @babel/register 'test/**/*.test.js' --exit",
+    "test": "NODE_ENV=test SECRET_JWT_KEY=palabraUltraSecreta  mocha --require @babel/register 'test/**/*.test.js'",
     "test:authentication": "NODE_ENV=test SECRET_JWT_KEY=palabraUltraSecreta COOKIE_SECRET=galletitaSecreta mocha --require @babel/register 'test/authentication.test.js' --exit",
     "test:index": "NODE_ENV=test  mocha --require @babel/register 'test/index.test.js'--exit",
     "test:dataRoute": "NODE_ENV=test mocha --require @babel/register 'test/dataRoute.test.js'--exit",
