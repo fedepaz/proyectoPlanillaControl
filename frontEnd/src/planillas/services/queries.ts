@@ -23,6 +23,8 @@ import {
 import { PlanillaGet } from "../types/planillaType";
 import { PlanillaSchema } from "../types/planillaSchema";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface PaginatedResponse {
   data: PlanillaOption[];
   currentPage: number;
@@ -35,9 +37,7 @@ export function useTipoControl() {
   return useQuery({
     queryKey: ["tipoControl"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/tipoControl"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/tipoControl`);
       const tipoControl = response.data;
       return tipoControl;
     },
@@ -47,9 +47,7 @@ export function useTipoEmpresa() {
   return useQuery({
     queryKey: ["tipoEmpresa"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/tipoEmpresa"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/tipoEmpresa`);
       const tipoEmpresa = response.data;
       console.log(tipoEmpresa);
       return tipoEmpresa;
@@ -61,9 +59,7 @@ export function useMediosTec() {
   return useQuery({
     queryKey: ["mediosTec"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/mediosTec"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/mediosTec`);
       const mediosTec = response.data;
       return mediosTec;
     },
@@ -74,9 +70,7 @@ export function useTipoPro() {
   return useQuery({
     queryKey: ["tipoPro"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/tipoPro"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/tipoPro`);
       const tipoPro = response.data;
       return tipoPro;
     },
@@ -87,9 +81,7 @@ export function useDemora() {
   return useQuery({
     queryKey: ["demora"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/demora"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/demora`);
       const demora = response.data;
       return demora;
     },
@@ -100,9 +92,7 @@ export function useTipoVuelo() {
   return useQuery({
     queryKey: ["tipoVuelo"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/tipoVuelo"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/tipoVuelo`);
       const tipoVuelo = response.data;
       return tipoVuelo;
     },
@@ -113,9 +103,7 @@ export function useFuncion() {
   return useQuery({
     queryKey: ["funcion"],
     queryFn: async () => {
-      const response = await axios.get<Option[]>(
-        "http://localhost:5555/data/funcion"
-      );
+      const response = await axios.get<Option[]>(`${API_URL}/data/funcion`);
       const funcion = response.data;
       return funcion;
     },
@@ -136,7 +124,7 @@ export function useCreateOficial() {
   return useMutation<CreateOficialResponse, Error, OficialSchema>({
     mutationFn: async (newOficial: OficialSchema) => {
       const { data } = await axios.post<CreateOficialResponse>(
-        "http://localhost:5555/oficial",
+        `${API_URL}/oficial`,
         newOficial
       );
       return data;
@@ -160,7 +148,7 @@ export function useOficial(dni: string) {
 
       try {
         const { data } = await axios.get<ApiGetOficial>(
-          `http://localhost:5555/oficial/dni/${dni}`
+          `${API_URL}/oficial/dni/${dni}`
         );
         return {
           dni: data.dni,
@@ -183,7 +171,7 @@ export function usePlanillas(page: number = 1, pageSize: number = 10) {
     queryFn: async (): Promise<PaginatedResponse> => {
       try {
         const response = await axios.get<PaginatedResponse>(
-          `http://localhost:5555/planillas?page=${page}&pageSize=${pageSize}`
+          `${API_URL}/planillas?page=${page}&pageSize=${pageSize}`
         );
 
         return {
@@ -257,7 +245,7 @@ export function usePlanillaID(_id: string) {
 
       try {
         const { data } = await axios.get<PlanillaGet>(
-          `http://localhost:5555/planillas/${_id}`
+          `${API_URL}/planillas/${_id}`
         );
         return {
           id: data.id,
@@ -329,7 +317,7 @@ export function usePersonalEmpresa(dni: number) {
 
       try {
         const { data } = await axios.get<ApiGetPersonalEmpresa>(
-          `http://localhost:5555/personalEmpresa/dni/${dni}`
+          `${API_URL}/personalEmpresa/dni/${dni}`
         );
         return {
           dni: data.dni,
@@ -358,7 +346,7 @@ export function usePersonalEmpresaSeg(dni: number) {
 
       try {
         const { data } = await axios.get<ApiGetPersonalSeguridad>(
-          `http://localhost:5555/personalSeguridad/dni/${dni}`
+          `${API_URL}/personalSeguridad/dni/${dni}`
         );
         return {
           dni: data.dni,
@@ -383,7 +371,7 @@ export function useMatricula(empresa?: string) {
     queryFn: async () => {
       const response = await axios.get<{
         matriculaAeronave: MatriculaOption[];
-      }>("http://localhost:5555/aeronave");
+      }>(`${API_URL}/aeronave`);
       const matriculaAeronaveRes = response.data;
 
       return matriculaAeronaveRes;
@@ -401,7 +389,7 @@ export function useMatriculaId(matriculaAeronave: string) {
 
       try {
         const { data } = await axios.get<ApiGetMatriculaAeronave>(
-          `http://localhost:5555/aeronave/matricula/${matriculaAeronave}`
+          `${API_URL}/aeronave/matricula/${matriculaAeronave}`
         );
         return {
           matriculaAeronave: data.matriculaAeronave,
@@ -421,9 +409,7 @@ export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
     queryKey: ["empresa", tipoEmpresa],
     queryFn: async () => {
-      const response = await axios.get<EmpresaOption[]>(
-        "http://localhost:5555/empresa"
-      );
+      const response = await axios.get<EmpresaOption[]>(`${API_URL}/empresa`);
       const empresaRes = response.data;
       console.log(empresaRes);
       return empresaRes;
@@ -435,7 +421,7 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
     queryKey: ["empresa", tipoEmpresaId],
     queryFn: async () => {
       const response = await axios.get<EmpresaOption[]>(
-        `http://localhost:5555/empresa/tipoID/${tipoEmpresaId}`
+        `${API_URL}/empresa/tipoID/${tipoEmpresaId}`
       );
       const empresaRes = response.data;
       console.log(empresaRes);
@@ -455,7 +441,7 @@ export function useEmpresaId(empresa: string) {
 
       try {
         const { data } = await axios.get<ApiGetEmpresa>(
-          `http://localhost:5555/aeronave/empresa/${empresa}`
+          `${API_URL}/aeronave/empresa/${empresa}`
         );
         return {
           empresa: data.empresa,

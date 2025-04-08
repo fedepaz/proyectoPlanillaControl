@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-const sessionUrl = "http://localhost:5555/session/";
+const API_URL = import.meta.env.VITE_API_URL;
+const sessionUrl = `${API_URL}/session`;
 
 interface SessionResponse {
+  authenticated: boolean;
   user: {
     dni: string;
     oficialId: {
@@ -24,11 +26,8 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
         const res = await axios.get<SessionResponse>(sessionUrl, {
           withCredentials: true,
         });
-        if (res.data === null) {
-          return res.data;
-        } else {
-          return res.data;
-        }
+        const { authenticated } = res.data;
+        return authenticated;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (!error.response) {

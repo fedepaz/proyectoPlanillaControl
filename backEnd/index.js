@@ -21,6 +21,7 @@ import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
 import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 import sessionRouter from "./controllers/session/loginRoute.js";
 import resetPasswordRouter from "./controllers/session/resetPassword.js";
+import crsfTokenRouter from "./crsf-token.js";
 
 const app = express();
 
@@ -55,7 +56,7 @@ app.use(helmet.noSniff());
 app.use(helmet.xssFilter({}));
 
 app.use(express.json({ limit: "100kb" }));
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "development") {
   app.use(
     cors({
       origin: "http://localhost:5173",
@@ -76,8 +77,10 @@ app.get("/", (request, response) => {
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
-app.use(authenticate);
 app.use(csrfProtection);
+app.use("/csrf-token", crsfTokenRouter);
+
+app.use(authenticate);
 app.use("/data", dataRouter);
 
 app.use("/planillas", planillasRouter);

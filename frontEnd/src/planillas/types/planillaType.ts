@@ -11,7 +11,7 @@ export type PlanillaCommon = {
   id: string;
   datosPsa: {
     fecha: string;
-    responsable: number;
+    responsable: string;
     horaIni: string;
     horaFin: string;
     cant: string;

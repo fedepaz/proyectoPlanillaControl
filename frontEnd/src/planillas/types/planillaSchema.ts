@@ -3,6 +3,7 @@ import { z } from "zod";
 
 const planillaSchema = z
   .object({
+    id: z.string(),
     datosPsa: z
       .object({
         fecha: z.string().min(1),
@@ -37,8 +38,10 @@ const planillaSchema = z
         }
       ),
     datosVuelo: z.object({
-      empresa: z.string().min(1),
+      aerolinea: z.string().min(1),
       codVuelo: z.string().min(1),
+      origen: z.string().min(1),
+      destino: z.string().min(1),
       horaArribo: z.string().min(1),
       horaPartida: z.string().min(1),
       demora: z.string().min(1),
@@ -48,21 +51,29 @@ const planillaSchema = z
     }),
     datosTerrestre: z.array(
       z.object({
-        personalEmpresa: z.string().min(1), // Changed to array of strings to represent ObjectIds
+        dniTerrestre: z.number(),
+        apellidoTerrestre: z.string().min(1),
+        nombreTerrestre: z.string().min(1),
+        legajoTerrestre: z.number(),
         funcion: z.string().min(1), // Changed to string to represent ObjectId
-        grupo: z.string().min(1),
+        grupo: z.number(),
       })
     ),
     datosSeguridad: z.array(
       z.object({
-        personalSegEmpresa: z.string().min(1), // Changed to array of strings to represent ObjectIds
+        apellidoSeguridad: z.string().min(1),
+        nombreSeguridad: z.string().min(1),
+        dniSeguridad: z.string().min(1),
+        legajoSeguridad: z.string().min(1),
         empresaSeguridad: z.string().min(1), // Changed to string to represent ObjectId
       })
     ),
     datosVehiculos: z.array(
       z.object({
-        vehiculo: z.string().min(1), // Changed to string to represent ObjectId
-        operadorVehiculo: z.string().min(1), // Changed to string to represent ObjectId
+        tipoVehiculo: z.string().min(1),
+        empresaVehiculo: z.string().min(1),
+        numInterno: z.string().min(1),
+        operadorVehiculo: z.string().min(1),
         observacionesVehiculo: z.string().min(1),
       })
     ),

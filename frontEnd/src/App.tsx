@@ -11,6 +11,7 @@ import Loading from "./components/Loading";
 import Dashboard from "./login/components/Dashboard";
 import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
 import ErrorPage from "./components/Error";
+import apiClient, { setCsrfToken } from "./services/csrfToken";
 
 interface LoginResponse {
   user: {
@@ -34,6 +35,8 @@ export function App() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showLogoutPage, setShowLogoutPage] = useState(false);
+  const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
 
   const { data, error, isError, isLoading, refetch } = useSession();
 
@@ -44,6 +47,28 @@ export function App() {
       }
     }
   }, [data, error, isLoading]);
+
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await apiClient.get<{ csrfToken: string }>(
+          "/csrf-token"
+        );
+        if (response.data.csrfToken) {
+          setCsrfToken(response.data.csrfToken);
+        } else {
+          console.error("Error fetching CSRF Token");
+        }
+      } catch (error) {
+        console.error("Error fetching CSRF Token:", error);
+      }
+    };
+    if (isLoggedIn) {
+      fetchCsrfToken();
+    } else {
+      setCsrfToken("");
+    }
+  }, [isLoggedIn]);
 
   const handleLogin = (loginData: LoginResponse) => {
     console.log(loginData);
