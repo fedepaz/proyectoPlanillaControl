@@ -7143,4 +7143,256 @@
     at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-04-08T20:50:30.105Z]
+    URL: /data/tipoEmpresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T20:50:30.181Z]
+    URL: /aeronave
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T20:50:30.193Z]
+    URL: /data/demora
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T20:50:30.206Z]
+    URL: /data/tipoVuelo
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:07:40.500Z]
+    URL: /data/tipoEmpresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:07:40.526Z]
+    URL: /aeronave
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:07:40.536Z]
+    URL: /data/demora
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:07:40.547Z]
+    URL: /data/tipoVuelo
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:22:04.424Z]
+    URL: /data/tipoEmpresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:22:04.483Z]
+    URL: /aeronave
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:22:04.493Z]
+    URL: /data/demora
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T21:22:04.508Z]
+    URL: /data/tipoVuelo
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T22:40:06.046Z]
+    URL: /aeronave
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-04-08T22:40:20.125Z]
+    URL: /aeronave
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     

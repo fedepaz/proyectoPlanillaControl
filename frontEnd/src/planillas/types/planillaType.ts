@@ -20,10 +20,8 @@ export type PlanillaCommon = {
     tipoPro: string;
   };
   datosVuelo: {
-    aerolinea: string;
+    empresa: string;
     codVuelo: string;
-    origen: string;
-    destino: string;
     horaArribo: string;
     horaPartida: string;
     demora: string;
@@ -32,24 +30,16 @@ export type PlanillaCommon = {
     posicion: string;
   };
   datosTerrestre: {
-    apellidoTerrestre: string;
-    nombreTerrestre: string;
-    dniTerrestre: number;
-    legajoTerrestre: number;
+    personalEmpresa: string[];
     funcion: string;
-    grupo: number;
+    grupo: string;
   }[];
   datosSeguridad: {
-    apellidoSeguridad: string;
-    nombreSeguridad: string;
-    dniSeguridad: string;
-    legajoSeguridad: string;
+    personalSegEmpresa: string[];
     empresaSeguridad: string;
   }[];
   datosVehiculos: {
-    tipoVehiculo: string;
-    empresaVehiculo: string;
-    numInterno: string;
+    vehiculo: string;
     operadorVehiculo: string;
     observacionesVehiculo: string;
   }[];

@@ -8,6 +8,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useSession } from "../../services/session";
+import { CssBaseline, Box } from "@mui/material";
+import ErrorPage from "../../components/Error";
+import Loading from "../../components/Loading";
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
@@ -21,7 +24,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   });
   const { setValue, handleSubmit } = methods;
 
-  const { data, error } = useSession();
+  const { data, error, isError, isLoading, refetch } = useSession();
 
   useEffect(() => {
     if (data && !error) {
@@ -43,6 +46,50 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const sendBack = (data: boolean) => {
     onBack(data);
   };
+  if (isLoading) {
+    return (
+      <>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            minHeight: "100vh",
+            width: "100%",
+            overflow: "hidden",
+          }}
+        >
+          <Loading />;
+        </Box>
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            minHeight: "100vh",
+            width: "100%",
+            overflow: "hidden",
+          }}
+        >
+          <ErrorPage
+            error={error}
+            onRetry={() => {
+              refetch();
+            }}
+          />
+        </Box>
+      </>
+    );
+  }
 
   return (
     <FormProvider {...methods}>

@@ -42,7 +42,7 @@ export function App() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (data && !error) {
+      if (data?.authenticated && !error) {
         setIsLoggedIn(true);
       }
     }

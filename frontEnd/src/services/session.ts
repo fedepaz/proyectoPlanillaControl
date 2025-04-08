@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import apiClient from "./csrfToken";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const sessionUrl = `${API_URL}/session`;
@@ -23,11 +24,11 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
     queryKey: ["session"],
     queryFn: async () => {
       try {
-        const res = await axios.get<SessionResponse>(sessionUrl, {
+        const res = await apiClient.get<SessionResponse>(sessionUrl, {
           withCredentials: true,
         });
-        const { authenticated } = res.data;
-        return authenticated;
+
+        return res.data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (!error.response) {

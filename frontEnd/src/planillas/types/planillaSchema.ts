@@ -36,6 +36,7 @@ const isTimeBeforeOrEqual = (time1: string, time2: string): boolean => {
 
 const planillaSchema = z
   .object({
+    id: z.string().optional(),
     datosPsa: z
       .object({
         fecha: z.string().min(1, "Date is required"),

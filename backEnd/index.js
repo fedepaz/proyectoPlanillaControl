@@ -77,10 +77,10 @@ app.get("/", (request, response) => {
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
+app.use(authenticate);
 app.use(csrfProtection);
 app.use("/csrf-token", crsfTokenRouter);
 
-app.use(authenticate);
 app.use("/data", dataRouter);
 
 app.use("/planillas", planillasRouter);

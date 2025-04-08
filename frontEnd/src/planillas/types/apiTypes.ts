@@ -12,7 +12,7 @@ export type OficialCommon = {
   dni: string;
   firstname: string;
   lastname: string;
-  legajo: string;
+  legajo: number;
 };
 
 export type ApiCreateEditOficial = OficialCommon & (Create | Edit);
@@ -20,7 +20,7 @@ export type ApiGetOficial = Edit & OficialCommon;
 
 export type PersonalEmpresaCommon = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
   empresa: string;
@@ -33,7 +33,7 @@ export type ApiGetPersonalEmpresa = Edit & PersonalEmpresaCommon;
 
 export type PersonalSeguridadCommon = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
   empresa: string;
