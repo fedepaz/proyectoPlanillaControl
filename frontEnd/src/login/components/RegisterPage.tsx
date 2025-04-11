@@ -15,37 +15,44 @@ import {
   registerSchema,
   defaultValuesRegister,
   RegisterSchema,
+  credentialsSchema,
+  CredentialsSchema,
+  defaultValuesCredentials,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 import { OficialSubmitPage } from "./OficialSubmitPage";
 
-interface SuccessData {
+interface OficialData {
   dni: string;
-  oficialId: string;
+  firstname: string;
+  lastname: string;
+  legajo: number;
 }
 
 interface RegisterPageProps {
   onRegisterBack: (data: boolean) => void;
 }
 export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
-  const [isNewOficial, setIsNewOficial] = useState(true);
-  const [oficialData, setOficialData] = useState<SuccessData | null>(null);
+  const [isFirstStep, setIsFirstStep] = useState(true);
+  const [oficialData, setOficialData] = useState<OficialData | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const methods = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: defaultValuesRegister,
+  const methods = useForm<CredentialsSchema>({
+    resolver: zodResolver(credentialsSchema),
+    defaultValues: defaultValuesCredentials,
     mode: "onChange",
   });
 
-  const { handleSubmit, setValue } = methods;
+  const { handleSubmit, formState } = methods;
+
+  console.log(formState.errors);
 
   const {
     mutate: register,
-    isPending,
     isSuccess,
     isError,
     error,
+    isPending,
   } = useRegister();
 
   useEffect(() => {
@@ -54,28 +61,28 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
     }
   }, [isSuccess]);
 
-  const handleOficialSubmit = (data: SuccessData) => {
+  const handleOficialSubmit = (data: OficialData) => {
     setOficialData(data);
-    setIsNewOficial(false);
-
-    setValue("dni", data.dni);
-    setValue("oficialId", data.oficialId);
+    setIsFirstStep(false);
   };
 
-  const onSubmit = (data: RegisterSchema) => {
+  const onSubmit = (data: CredentialsSchema) => {
+    if (!oficialData) return;
     const completeData = {
-      ...data,
-      dni: oficialData?.dni || "",
-      oficialId: oficialData?.oficialId || "",
+      dni: oficialData.dni,
+      password: data.password,
+      email: data.email,
+      firstname: oficialData.firstname,
+      lastname: oficialData.lastname,
+      legajo: oficialData.legajo,
     };
     register(completeData);
-    onRegisterBack(true);
   };
   const onRegreso = () => {
     onRegisterBack(true);
   };
 
-  return isNewOficial ? (
+  return isFirstStep ? (
     <OficialSubmitPage
       onSuccess={handleOficialSubmit}
       onRegisterBack={onRegreso}
@@ -115,7 +122,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
             noValidate
             sx={{ mt: 1, width: "100%" }}
           >
-            <RHFTextField<RegisterSchema>
+            <RHFTextField<CredentialsSchema>
               margin="normal"
               required
               fullWidth
@@ -125,7 +132,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
               autoComplete="email"
               autoFocus
             />
-            <RHFTextField<RegisterSchema>
+            <RHFTextField<CredentialsSchema>
               margin="normal"
               required
               fullWidth
@@ -140,7 +147,6 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={isPending}
             >
               {isPending ? (
                 <CircularProgress size={24} color="inherit" />

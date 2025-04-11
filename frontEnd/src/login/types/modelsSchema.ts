@@ -17,11 +17,23 @@ export const defaultValuesLogin: Partial<LoginSchema> = {
 
 const registerSchema = z.object({
   dni: z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números"),
-  email: z.string().email("El email no es válido"),
   password: z
     .string()
     .min(10, "La contraseña debe tener al menos 10 caracteres"),
-  oficialId: z.string(),
+  email: z.string().email("El email no es válido"),
+  firstname: z
+    .string()
+    .min(1, "El Nombre es requerido")
+    .max(50, "El Nombre es muy largo"),
+  lastname: z
+    .string()
+    .min(1, "El Apellido es requerido")
+    .max(50, "El Apellido es muy largo"),
+  legajo: z
+    .number()
+    .int()
+    .min(500000, "Legajo no corresponde")
+    .max(600000, "Legajo no corresponde"),
 });
 
 export { registerSchema };
@@ -32,7 +44,24 @@ export const defaultValuesRegister: Partial<RegisterSchema> = {
   dni: "",
   email: "",
   password: "",
-  oficialId: "",
+  firstname: "",
+  lastname: "",
+};
+
+const credentialsSchema = z.object({
+  password: z
+    .string()
+    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+  email: z.string().email("El email no es válido"),
+});
+
+export { credentialsSchema };
+
+export type CredentialsSchema = z.infer<typeof credentialsSchema>;
+
+export const defaultValuesCredentials: Partial<CredentialsSchema> = {
+  password: "",
+  email: "",
 };
 
 const oficialSchema = z.object({
@@ -45,7 +74,13 @@ const oficialSchema = z.object({
     .string()
     .min(1, "El Apellido es requerido")
     .max(20, "El Apellido es muy largo"),
-  legajo: z.string().regex(/^\d{6}$/, "Legajo debe tener 6 números"),
+  legajo: z
+    .string()
+    .regex(/^\d{6}$/, "Legajo debe tener 6 números")
+    .refine((val) => {
+      const num = parseInt(val, 10);
+      return num >= 500000 && num <= 600000;
+    }, "Legajo no corresponde"),
 });
 
 export { oficialSchema };

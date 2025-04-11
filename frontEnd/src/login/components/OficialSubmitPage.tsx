@@ -1,27 +1,18 @@
-import { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  Paper,
-  Alert,
-  CircularProgress,
-} from "@mui/material";
-import { useOficialSubmit } from "../services/oficialSubmit";
+import { Box, Button, Container, Typography, Paper } from "@mui/material";
 import {
   oficialSchema,
   OficialSchema,
   defaultValuesOficial,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
-import { AxiosError } from "axios";
 
 interface SuccessData {
   dni: string;
-  oficialId: string;
+  firstname: string;
+  lastname: string;
+  legajo: number;
 }
 
 interface OficialSubmitPageProps {
@@ -41,26 +32,13 @@ export function OficialSubmitPage({
 
   const { handleSubmit } = methods;
 
-  const {
-    mutate: oficialSubmit,
-    isPending,
-    isSuccess,
-    isError,
-    error,
-    data: mutationData,
-  } = useOficialSubmit();
-
-  useEffect(() => {
-    if (isSuccess && mutationData) {
-      onSuccess({
-        dni: mutationData.dni,
-        oficialId: mutationData.id,
-      });
-    }
-  }, [isSuccess, mutationData, onSuccess]);
-
   const onSubmit = (formData: OficialSchema) => {
-    oficialSubmit(formData);
+    onSuccess({
+      dni: formData.dni,
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      legajo: parseInt(formData.legajo, 10),
+    });
   };
   const onRegreso = () => {
     onRegisterBack(true);
@@ -82,13 +60,7 @@ export function OficialSubmitPage({
           <Typography component="h1" variant="h5">
             Registro de Oficial
           </Typography>
-          {isError && (
-            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
-              {error instanceof AxiosError
-                ? error.response?.data?.error
-                : "Ocurrió un error inesperado"}
-            </Alert>
-          )}
+
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -140,28 +112,17 @@ export function OficialSubmitPage({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={isPending}
             >
-              {isPending ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Registrar Usuario"
-              )}
+              Registrar Usuario
             </Button>
             <Button
               type="button"
               fullWidth
               color="secondary"
               variant="outlined"
-              disabled={isPending}
               onClick={onRegreso}
             >
-              {" "}
-              {isPending ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Regresar"
-              )}
+              Regresar
             </Button>
           </Box>
         </Paper>

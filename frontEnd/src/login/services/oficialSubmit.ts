@@ -6,11 +6,15 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-const loginUrl = "http://localhost:5555/oficial";
+const API_URL = import.meta.env.VITE_API_URL;
+
+const loginUrl = "/oficial";
 
 interface OficialResponse {
   dni: string;
-  id: string;
+  firstname: string;
+  lastname: string;
+  legajo: number;
 }
 
 export function useOficialSubmit(): UseMutationResult<
@@ -22,9 +26,13 @@ export function useOficialSubmit(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: OficialSchema) => {
-      const res = await axios.post<OficialResponse>(loginUrl, data, {
-        withCredentials: true,
-      });
+      const res = await axios.post<OficialResponse>(
+        `${API_URL}${loginUrl}`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
       return res.data;
     },
     onSuccess: async () => {

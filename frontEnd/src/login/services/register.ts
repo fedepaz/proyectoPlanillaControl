@@ -6,10 +6,15 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-const registerUrl = "http://localhost:5555/session/register";
+import apiClient from "../../services/csrfToken";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+const registerUrl = "/session/register";
 interface RegisterResponse {
   success: boolean;
   message: string;
+  userID: string;
 }
 
 export function useRegister(): UseMutationResult<
@@ -21,11 +26,11 @@ export function useRegister(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: RegisterSchema) => {
-      console.log("Sending registration data:", data);
       try {
-        const res = await axios.post<RegisterResponse>(registerUrl, data, {
-          withCredentials: true,
-        });
+        const res = await apiClient.post<RegisterResponse>(
+          `${API_URL}${registerUrl}`,
+          data
+        );
         return res.data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -45,7 +50,6 @@ export function useRegister(): UseMutationResult<
         error instanceof AxiosError
           ? error.response?.data?.message
           : "Ocurrió un error inesperado";
-      console.log(errorMessage);
       return errorMessage;
     },
   });
