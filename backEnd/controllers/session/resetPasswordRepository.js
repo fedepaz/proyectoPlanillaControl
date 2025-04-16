@@ -66,6 +66,24 @@ export class ResetPasswordRepository {
       throw error;
     }
   }
+
+  static async findByUserId(userID) {
+    try {
+      const resetPassword = await ResetPassword.findOne({
+        user: userID,
+      }).populate("user");
+      if (!resetPassword) {
+        const error = new Error();
+        error.name = "NotFound";
+        error.message = "Debe solicitar un cambio de contraseña";
+        throw error;
+      }
+      return resetPassword;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async findAll() {
     try {
       const resetPasswords = await ResetPassword.find().populate("user");
@@ -82,6 +100,7 @@ export class ResetPasswordRepository {
       throw error;
     }
   }
+
   static async resetPassword({ requestId }) {
     try {
       const resetPassword = await ResetPassword.findById(requestId).populate(

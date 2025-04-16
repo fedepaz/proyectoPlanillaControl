@@ -54,7 +54,6 @@ export function useTipoEmpresa() {
         `${API_URL}/data/tipoEmpresa`
       );
       const tipoEmpresa = response.data;
-      console.log(tipoEmpresa);
       return tipoEmpresa;
     },
   });

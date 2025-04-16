@@ -18,6 +18,7 @@ import {
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 import { AxiosError } from "axios";
+import { is } from "date-fns/locale";
 
 interface LoginResponse {
   user: {
@@ -34,9 +35,14 @@ interface LoginResponse {
 interface LoginPageProps {
   onLogin: (data: LoginResponse) => void;
   onRegister: (data: boolean) => void;
+  onResetPassword: (data: boolean) => void;
 }
 
-export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
+export function LoginPage({
+  onLogin,
+  onRegister,
+  onResetPassword,
+}: LoginPageProps) {
   const methods = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: defaultValuesLogin,
@@ -52,7 +58,18 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
     error: mutationError,
     data: mutationData,
   } = useLogin();
+
   const [successMessage, setSuccessMessage] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  useEffect(() => {
+    if (isError && mutationError instanceof AxiosError) {
+      if (mutationError.response?.data?.name === "PasswordError") {
+        setPasswordError(true);
+      } else {
+        setPasswordError(false);
+      }
+    }
+  }, [isError, mutationError]);
 
   useEffect(() => {
     if (isSuccess && mutationData) {
@@ -72,6 +89,10 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
     onRegister(true);
   };
 
+  const onResetPasswordButton = () => {
+    onResetPassword(true);
+  };
+
   return (
     <FormProvider {...methods}>
       <Container component="main" maxWidth="xs">
@@ -88,13 +109,19 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
           <Typography component="h1" variant="h5">
             Iniciar sesión
           </Typography>
-          {isError && (
+          {isError && passwordError ? (
+            <Alert severity="warning" sx={{ width: "100%", mt: 2 }}>
+              {mutationError instanceof AxiosError
+                ? mutationError.response?.data?.message
+                : "Ocurrió un error inesperado"}
+            </Alert>
+          ) : isError ? (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
               {mutationError instanceof AxiosError
                 ? mutationError.response?.data?.message
                 : "Ocurrió un error inesperado"}
             </Alert>
-          )}
+          ) : null}
           {isSuccess && (
             <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
               {successMessage}
@@ -152,6 +179,21 @@ export function LoginPage({ onLogin, onRegister }: LoginPageProps) {
                 <CircularProgress size={24} color="inherit" />
               ) : (
                 "Registrar Usuario"
+              )}
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              color="secondary"
+              variant="outlined"
+              disabled={isPending}
+              onClick={onResetPasswordButton}
+            >
+              {" "}
+              {isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Recuperar contraseña"
               )}
             </Button>
           </Box>

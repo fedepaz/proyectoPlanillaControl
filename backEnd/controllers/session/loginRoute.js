@@ -1,6 +1,7 @@
 import express from "express";
 import { UserRepository } from "./userRepository.js";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils.js";
+import { ResetPasswordRepository } from "./resetPasswordRepository.js";
 
 const sessionRouter = express.Router();
 
@@ -34,13 +35,17 @@ sessionRouter.post("/login", async (req, res, next) => {
   try {
     const user = await UserRepository.login({ dni, password });
     if (user.password || user.defaultPassword) {
-      // aca se devuelve el mensaje que tiene que cambiar la contraseña
-      return res.status(200).json({
-        message: "Debe cambiar la contraseña",
-        email: user.email,
-        dni: user.dni,
-        name: `${user.oficialId.firstname} ${user.oficialId.lastname}`,
-      });
+      const resestInfo = await ResetPasswordRepository.findByUserId(user.id);
+      if (resestInfo.okToChangePassword === false) {
+        const error = new Error();
+        error.name = "PasswordError";
+        error.message = `El usuario ${user.email} ya ha solicitado cambio de contraseña, y se encuentra pendiente de aprobación`;
+        throw error;
+      }
+      const error = new Error();
+      error.name = "PasswordError";
+      error.message = `El usuario ${user.email}, ya ha solicitado cambio de contraseña, y se encuentra APROBADO`;
+      throw error;
     }
     const userInfo = {
       dni: user.dni,

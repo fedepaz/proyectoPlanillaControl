@@ -12,6 +12,7 @@ import Dashboard from "./login/components/Dashboard";
 import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
+import { ResetPasswordPage } from "./login/components/ResetPassword";
 
 interface LoginResponse {
   user: {
@@ -28,6 +29,7 @@ enum View {
   DASHBOARD = "dashboard",
   LOGOUT = "logout",
   GENERATE_PLANILLAS = "generate_planillas",
+  RESET_PASSWORD = "reset_password",
 }
 
 export function App() {
@@ -35,6 +37,7 @@ export function App() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
   const [showLogoutPage, setShowLogoutPage] = useState(false);
   const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
 
@@ -82,6 +85,10 @@ export function App() {
   };
   const handleRegister = (info: boolean) => {
     setShowRegister(info);
+  };
+
+  const handleResetPassword = (info: boolean) => {
+    setShowResetPassword(info);
   };
 
   const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
@@ -196,8 +203,14 @@ export function App() {
               renderLoggedInContent()
             ) : showRegister ? (
               <RegisterPage onRegisterBack={() => setShowRegister(false)} />
+            ) : showResetPassword ? (
+              <ResetPasswordPage onResetPassword={handleResetPassword} />
             ) : (
-              <LoginPage onLogin={handleLogin} onRegister={handleRegister} />
+              <LoginPage
+                onLogin={handleLogin}
+                onRegister={handleRegister}
+                onResetPassword={handleResetPassword}
+              />
             )}
           </Box>
         </Box>

@@ -46,10 +46,10 @@ export function EmpresaComponent({ onEmpresaSelected }: EmpresaComponentProps) {
     })) || [];
 
   useEffect(() => {
-    console.log(tipoEmpresa);
-    console.log(empresa);
-    console.log(tipoEmpresaWatch);
-    console.log(empresaWatch);
+    console.log("Tipo Empresa: ", tipoEmpresa);
+    console.log("Empresa: ", empresa);
+    console.log("Timpo Empresa Watch: ", tipoEmpresaWatch);
+    console.log("Empresa Watch: ", empresaWatch);
   }, [tipoEmpresa, empresa, empresaWatch, tipoEmpresaWatch]);
 
   useEffect(() => {

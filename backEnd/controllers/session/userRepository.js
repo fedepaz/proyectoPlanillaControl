@@ -117,9 +117,9 @@ export class UserRepository {
       );
       if (equalDefaultPassword) {
         const userWithPassword = {
+          id: user.id,
           dni: user.dni,
           email: user.email,
-          oficialId: user.oficialId,
           role: user.role,
           password,
           defaultPassword,

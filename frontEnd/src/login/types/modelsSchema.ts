@@ -2,9 +2,7 @@ import { z } from "zod";
 
 const loginSchema = z.object({
   dni: z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números"),
-  password: z
-    .string()
-    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+  password: z.string().min(9, "La contraseña debe tener al menos 9 caracteres"),
 });
 export { loginSchema };
 
@@ -17,9 +15,7 @@ export const defaultValuesLogin: Partial<LoginSchema> = {
 
 const registerSchema = z.object({
   dni: z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números"),
-  password: z
-    .string()
-    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+  password: z.string().min(9, "La contraseña debe tener al menos 9 caracteres"),
   email: z.string().email("El email no es válido"),
   firstname: z
     .string()
@@ -102,4 +98,31 @@ export type LogoutSchema = z.infer<typeof logoutSchema>;
 
 export const defaultValuesLogout: Partial<LogoutSchema> = {
   email: "",
+};
+
+export const resetPasswordRequestSchema = z.object({
+  email: z.string().email("El email no es válido"),
+});
+
+export type ResetPasswordRequestSchema = z.infer<
+  typeof resetPasswordRequestSchema
+>;
+
+export const defaultValuesResetPasswordRequest: Partial<ResetPasswordRequestSchema> =
+  {
+    email: "",
+  };
+
+export const resetPasswordSchema = z.object({
+  requestId: z.string().min(1, "La solicitud de contraseña no existe"),
+  password: z
+    .string()
+    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+});
+
+export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
+
+export const defaultValuesResetPassword: Partial<ResetPasswordSchema> = {
+  requestId: "",
+  password: "",
 };

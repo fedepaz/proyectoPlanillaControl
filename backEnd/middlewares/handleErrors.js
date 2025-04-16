@@ -23,6 +23,10 @@ const ERROR_HANDLERS = {
     body: { error: message },
   }),
 
+  PasswordError: ({ message }) => ({
+    status: 403,
+    body: { error: message },
+  }),
   AuthorizationError: ({ message }) => ({
     status: 403,
     body: { error: message },

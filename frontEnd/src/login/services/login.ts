@@ -6,7 +6,8 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-const loginUrl = "http://localhost:5555/session/login";
+const API_URL = import.meta.env.VITE_API_URL;
+const loginUrl = `${API_URL}/session/login`;
 interface LoginResponse {
   user: {
     dni: string;
