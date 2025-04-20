@@ -10,58 +10,58 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useRequestResetPasswordService } from "../services/resetPassword";
+import { useResetPasswordService } from "../services/resetPassword";
 import {
-  ResetPasswordRequestSchema,
-  resetPasswordRequestSchema,
-  defaultValuesResetPasswordRequest,
+  ResetPasswordSchema,
+  resetPasswordSchema,
+  defaultValuesResetPassword,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 import { AxiosError } from "axios";
-import { ResetPasswordApprovedPage } from "./ResetPasswordApprovedPage";
 
-interface ResetPasswordProps {
-  onResetPassword: (data: boolean) => void;
+interface ResetPasswordApprovedPageProps {
+  requestId: string;
 }
 
-export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
-  const methods = useForm<ResetPasswordRequestSchema>({
-    resolver: zodResolver(resetPasswordRequestSchema),
-    defaultValues: defaultValuesResetPasswordRequest,
+export function ResetPasswordApprovedPage({
+  requestId,
+}: ResetPasswordApprovedPageProps) {
+  const methods = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: { ...defaultValuesResetPassword, requestId },
     mode: "onChange",
   });
 
   const { handleSubmit } = methods;
   const {
-    mutate: requestResetPassword,
+    mutate: resetPassword,
     isPending,
     isSuccess,
     isError,
     error: mutationError,
     data: mutationData,
-  } = useRequestResetPasswordService();
+  } = useResetPasswordService();
+
   const [successMessage, setSuccessMessage] = useState("");
-  const [isApproved, setIsApproved] = useState(false);
-  const [requestId, setRequestId] = useState("");
 
   useEffect(() => {
+    methods.setValue("requestId", requestId);
+    methods.trigger("requestId");
     if (isSuccess && mutationData) {
-      setSuccessMessage(mutationData.message);
-      setRequestId(mutationData.id);
       const timeout = setTimeout(() => {
-        setIsApproved(mutationData.okToChangePassword);
+        setSuccessMessage(mutationData.message);
       }, 1000);
       return () => clearTimeout(timeout);
     }
-  }, [isSuccess, mutationData, onResetPassword]);
+  }, [isSuccess, mutationData, requestId, methods]);
 
-  const onSubmit = (data: ResetPasswordRequestSchema) => {
-    requestResetPassword(data);
+  const onSubmit = (data: ResetPasswordSchema) => {
+    resetPassword({
+      requestId: requestId,
+      password: data.password,
+    });
   };
-
-  return isApproved ? (
-    <ResetPasswordApprovedPage requestId={requestId} />
-  ) : (
+  return (
     <FormProvider {...methods}>
       <Container component="main" maxWidth="xs">
         <Paper
@@ -75,7 +75,7 @@ export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
           }}
         >
           <Typography component="h1" variant="h5">
-            Solicitud de cambio de contraseña
+            Coloque contraseña nueva
           </Typography>
           {isError && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
@@ -95,14 +95,15 @@ export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
             noValidate
             sx={{ mt: 1, width: "100%" }}
           >
-            <RHFTextField<ResetPasswordRequestSchema>
+            <RHFTextField<ResetPasswordSchema>
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+              autoComplete="new-password"
               autoFocus
             />
             <Button
@@ -115,7 +116,7 @@ export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
               {isPending ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "Enviar solicitud"
+                "Cambiar contraseña"
               )}
             </Button>
           </Box>

@@ -12,9 +12,6 @@ import {
 } from "@mui/material";
 import { useRegister } from "../services/register";
 import {
-  registerSchema,
-  defaultValuesRegister,
-  RegisterSchema,
   credentialsSchema,
   CredentialsSchema,
   defaultValuesCredentials,
@@ -43,9 +40,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
     mode: "onChange",
   });
 
-  const { handleSubmit, formState } = methods;
-
-  console.log(formState.errors);
+  const { handleSubmit } = methods;
 
   const {
     mutate: register,

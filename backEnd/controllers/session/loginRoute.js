@@ -69,6 +69,7 @@ sessionRouter.post("/login", async (req, res, next) => {
       });
     }
     res.status(200).json({
+      authenticated: true,
       message: "Login correcto",
       user: userInfo,
     });

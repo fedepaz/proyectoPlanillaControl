@@ -56,16 +56,14 @@ app.use(helmet.noSniff());
 app.use(helmet.xssFilter({}));
 
 app.use(express.json({ limit: "100kb" }));
-if (process.env.NODE_ENV === "development") {
-  app.use(
-    cors({
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      allowedHeaders: ["Content-Type"],
-      credentials: true,
-    })
-  );
-}
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+  })
+);
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");

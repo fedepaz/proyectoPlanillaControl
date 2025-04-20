@@ -9,6 +9,8 @@ import {
 const API_URL = import.meta.env.VITE_API_URL;
 const loginUrl = `${API_URL}/session/login`;
 interface LoginResponse {
+  authenticated: boolean;
+  message: string;
   user: {
     dni: string;
     oficialId: {
@@ -17,6 +19,7 @@ interface LoginResponse {
       lastname: string;
       legajo: string;
     };
+    role: string;
   };
 }
 
@@ -35,7 +38,9 @@ export function useLogin(): UseMutationResult<
       return res.data;
     },
     onSuccess: async () => {
+      queryClient.removeQueries();
       await queryClient.invalidateQueries({ queryKey: ["session"] });
+      window.location.href = "/";
     },
     onError: (error) => {
       const errorMessage =

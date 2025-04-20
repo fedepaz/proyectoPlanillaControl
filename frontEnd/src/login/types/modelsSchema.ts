@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const defaultPassword = "123456789";
+
 const loginSchema = z.object({
   dni: z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números"),
   password: z.string().min(9, "La contraseña debe tener al menos 9 caracteres"),
@@ -117,7 +119,11 @@ export const resetPasswordSchema = z.object({
   requestId: z.string().min(1, "La solicitud de contraseña no existe"),
   password: z
     .string()
-    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+    .min(9, "La contraseña debe tener al menos 9 caracteres")
+    .regex(
+      new RegExp(`^(?!${defaultPassword}).*$`),
+      "La contraseña no puede ser igual a '123456789'"
+    ),
 });
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;

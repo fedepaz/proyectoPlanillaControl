@@ -18,9 +18,9 @@ import {
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 import { AxiosError } from "axios";
-import { is } from "date-fns/locale";
 
 interface LoginResponse {
+  authenticated: boolean;
   user: {
     dni: string;
     oficialId: {
@@ -73,11 +73,11 @@ export function LoginPage({
 
   useEffect(() => {
     if (isSuccess && mutationData) {
-      setSuccessMessage("Inicio de sesión exitoso");
+      console.log(mutationData);
       const timeout = setTimeout(() => {
-        console.log(mutationData.user);
+        setSuccessMessage(mutationData.message);
         onLogin(mutationData);
-      }, 1000);
+      }, 2000);
       return () => clearTimeout(timeout);
     }
   }, [isSuccess, mutationData, onLogin]);

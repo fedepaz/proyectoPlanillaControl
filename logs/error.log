@@ -8717,4 +8717,437 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-04-19T01:09:39.284Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-19T01:12:12.368Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PasswordError: El usuario fedepaz89@gmail.com, ya ha solicitado cambio de contraseña, y se encuentra APROBADO
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:45:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-04-20T17:07:23.381Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PasswordError: El usuario fedepaz89@gmail.com, ya ha solicitado cambio de contraseña, y se encuentra APROBADO
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:45:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-04-20T18:37:35.792Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:31:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:37:54.335Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:44:24.221Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:44:41.765Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:44:43.889Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:45:07.120Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:45:20.082Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:45:40.401Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:48:12.681Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:32:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:49:56.077Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"ber@riva.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario ber@riva.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:50:10.892Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"36666666","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:50:12.834Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"36666666","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-20T18:50:32.056Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:32:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:51:36.832Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:52:11.766Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T18:54:12.539Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:32:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:04:05.498Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:05:21.777Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:32:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:05:59.777Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:10:19.182Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:34:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:13:19.256Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:34:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-04-20T19:13:37.835Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PasswordError: El usuario fedepaz89@gmail.com ya ha solicitado cambio de contraseña, y se encuentra pendiente de aprobación
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:40:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-04-20T19:28:38.925Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"fedepaz89@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario fedepaz89@gmail.com ya ha cambiado la contraseña, debe ser medio imbécil
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
     

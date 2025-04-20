@@ -14,6 +14,18 @@ const API_URL = import.meta.env.VITE_API_URL;
 const resetPasswordUrl = `${API_URL}/resetPassword`;
 
 interface ResetPasswordResponse {
+  id: string;
+  okToChangePassword: boolean;
+  changed: boolean;
+  message: string;
+}
+interface ResetPasswordApprovedResponse {
+  dni: string;
+  email: string;
+  role: string;
+  name: string;
+  legajo: number;
+  dateUpdated: string;
   message: string;
 }
 
@@ -48,7 +60,7 @@ export function useRequestResetPasswordService(): UseMutationResult<
   });
 }
 export function useResetPasswordService(): UseMutationResult<
-  ResetPasswordResponse,
+  ResetPasswordApprovedResponse,
   Error,
   ResetPasswordSchema,
   unknown
@@ -56,7 +68,7 @@ export function useResetPasswordService(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: ResetPasswordSchema) => {
-      const res = await axios.patch<ResetPasswordResponse>(
+      const res = await axios.patch<ResetPasswordApprovedResponse>(
         resetPasswordUrl,
         data,
         {
@@ -66,6 +78,8 @@ export function useResetPasswordService(): UseMutationResult<
       return res.data;
     },
     onSuccess: async () => {
+      queryClient.removeQueries();
+      window.location.href = "/";
       await queryClient.invalidateQueries({ queryKey: ["session"] });
     },
     onError: (error) => {

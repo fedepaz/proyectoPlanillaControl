@@ -59,7 +59,7 @@ const rotateLogs = () => {
     if (!err && stats.size > MAX_SIZE) {
       const archiveName = `error-${Date.now()}.log`;
       fs.rename(LOG_FILE, archiveName, (err) => {
-        if (!err) console.log(`Rotate log archived: ${archisveName}`);
+        if (!err) console.log(`Rotate log archived: ${archiveName}`);
       });
     }
   });

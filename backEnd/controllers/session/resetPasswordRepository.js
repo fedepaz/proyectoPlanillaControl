@@ -28,6 +28,7 @@ export class ResetPasswordRepository {
           resetAsked.askedAtLast = new Date();
           resetAsked.changed = false;
           resetAsked.save({ runValidators: true });
+          this.changePassword(user);
           const error = new Error();
           error.name = "DuplicateData";
           error.message = `El usuario ${resetAsked.user.email} ya ha cambiado la contraseña, ahora va a tener que esperar por imbécil`;
@@ -41,11 +42,7 @@ export class ResetPasswordRepository {
           return resetApproved;
         }
       }
-      const userPasswordChanged = await UserRepository.findByEmail(user.email);
-      const saltRounds = parseInt(process.env.SALT_ROUNDS);
-      const hashedPassword = await bcrypt.hash(defaultPassword, saltRounds);
-      userPasswordChanged.password = hashedPassword;
-      await userPasswordChanged.save();
+      this.changePassword(user);
 
       const newResetPassword = await ResetPassword.create({
         user,
@@ -143,5 +140,12 @@ export class ResetPasswordRepository {
     } catch (error) {
       throw error;
     }
+  }
+  static async changePassword(user) {
+    const userPasswordChanged = await UserRepository.findByEmail(user.email);
+    const saltRounds = parseInt(process.env.SALT_ROUNDS);
+    const hashedPassword = await bcrypt.hash(defaultPassword, saltRounds);
+    userPasswordChanged.password = hashedPassword;
+    await userPasswordChanged.save();
   }
 }

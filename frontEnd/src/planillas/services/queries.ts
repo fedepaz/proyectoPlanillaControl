@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import {
   EmpresaOption,
   MatriculaOption,
@@ -411,7 +410,6 @@ export function useEmpresa(tipoEmpresa?: string) {
         `${API_URL}/empresa`
       );
       const empresaRes = response.data;
-      console.log(empresaRes);
       return empresaRes;
     },
   });
@@ -424,7 +422,6 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
         `${API_URL}/empresa/tipoID/${tipoEmpresaId}`
       );
       const empresaRes = response.data;
-      console.log(empresaRes);
       return empresaRes;
     },
     enabled: !!tipoEmpresaId, // Only run query when we have a tipoEmpresaId

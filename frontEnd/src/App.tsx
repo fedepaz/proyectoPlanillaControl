@@ -15,6 +15,7 @@ import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { ResetPasswordPage } from "./login/components/ResetPassword";
 
 interface LoginResponse {
+  authenticated: boolean;
   user: {
     dni: string;
     oficialId: {
@@ -46,7 +47,10 @@ export function App() {
   useEffect(() => {
     if (!isLoading) {
       if (data?.authenticated && !error) {
-        setIsLoggedIn(true);
+        const timeout = setTimeout(() => {
+          setIsLoggedIn(true);
+        }, 1000);
+        return () => clearTimeout(timeout);
       }
     }
   }, [data, error, isLoading]);
@@ -74,8 +78,7 @@ export function App() {
   }, [isLoggedIn]);
 
   const handleLogin = (loginData: LoginResponse) => {
-    console.log(loginData);
-    setIsLoggedIn(true);
+    setIsLoggedIn(loginData.authenticated);
   };
 
   const theme = isDarkMode ? darkTheme : lightTheme;
@@ -95,6 +98,7 @@ export function App() {
 
   const handleLogout = () => {
     setShowLogoutPage(true);
+    console.log("Logout: ", showLogoutPage);
     setShowGeneratePlanillas(false);
     setCurrentView(View.LOGOUT);
   };
@@ -105,6 +109,7 @@ export function App() {
   };
 
   const handleBackToDashboard = () => {
+    console.log("Back to dashboard: ", showGeneratePlanillas);
     setShowGeneratePlanillas(false);
     setCurrentView(View.DASHBOARD);
   };
