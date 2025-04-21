@@ -47,9 +47,7 @@ export const defaultValuesRegister: Partial<RegisterSchema> = {
 };
 
 const credentialsSchema = z.object({
-  password: z
-    .string()
-    .min(10, "La contraseña debe tener al menos 10 caracteres"),
+  password: z.string().min(9, "La contraseña debe tener al menos 9 caracteres"),
   email: z.string().email("El email no es válido"),
 });
 

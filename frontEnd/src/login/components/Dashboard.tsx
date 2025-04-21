@@ -3,7 +3,7 @@ interface DashboardProps {
   onGeneratePlanillas: (data: boolean) => void;
 }
 
-export default function Dashboard({ onGeneratePlanillas }: DashboardProps) {
+export function Dashboard({ onGeneratePlanillas }: DashboardProps) {
   const handleGenerarPlanillas = () => {
     onGeneratePlanillas(true);
   };

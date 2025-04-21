@@ -1,18 +1,12 @@
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { PlanillasNavbar } from "./components/PlanillasNavBar";
 import { darkTheme, lightTheme } from "./types/theme";
-import { useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
-import { LoginPage } from "./login/components/LoginPage";
-import { RegisterPage } from "./login/components/RegisterPage";
-import { LogoutPage } from "./login/components/LogoutPage";
 import { useSession } from "./services/session";
 import Loading from "./components/Loading";
-import Dashboard from "./login/components/Dashboard";
-import { PlanillasProvider } from "./planillas/components/PlanillasProvider";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
-import { ResetPasswordPage } from "./login/components/ResetPassword";
+import { View, viewComponents } from "./views";
 
 interface LoginResponse {
   authenticated: boolean;
@@ -26,32 +20,24 @@ interface LoginResponse {
     };
   };
 }
-enum View {
-  DASHBOARD = "dashboard",
-  LOGOUT = "logout",
-  GENERATE_PLANILLAS = "generate_planillas",
-  RESET_PASSWORD = "reset_password",
-}
 
 export function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
-  const [showResetPassword, setShowResetPassword] = useState(false);
-  const [showLogoutPage, setShowLogoutPage] = useState(false);
-  const [showGeneratePlanillas, setShowGeneratePlanillas] = useState(false);
+  const [currentView, setCurrentView] = useState<View>(View.LOGIN);
+
+  const theme = isDarkMode ? darkTheme : lightTheme;
+  const toggleColorMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
   const { data, error, isError, isLoading, refetch } = useSession();
 
   useEffect(() => {
-    if (!isLoading) {
-      if (data?.authenticated && !error) {
-        const timeout = setTimeout(() => {
-          setIsLoggedIn(true);
-        }, 1000);
-        return () => clearTimeout(timeout);
-      }
+    if (!isLoading && data?.authenticated && !error) {
+      setIsLoggedIn(true);
+      setCurrentView(View.DASHBOARD);
     }
   }, [data, error, isLoading]);
 
@@ -79,71 +65,52 @@ export function App() {
 
   const handleLogin = (loginData: LoginResponse) => {
     setIsLoggedIn(loginData.authenticated);
+    setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
   };
-
-  const theme = isDarkMode ? darkTheme : lightTheme;
-
-  const toggleColorMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
+  const handleRegister = () => {
+    setCurrentView(View.REGISTER);
   };
-  const handleRegister = (info: boolean) => {
-    setShowRegister(info);
+  const handleReset = () => {
+    setCurrentView(View.RESET_PASSWORD);
   };
-
-  const handleResetPassword = (info: boolean) => {
-    setShowResetPassword(info);
-  };
-
-  const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
-
   const handleLogout = () => {
-    setShowLogoutPage(true);
-    console.log("Logout: ", showLogoutPage);
-    setShowGeneratePlanillas(false);
     setCurrentView(View.LOGOUT);
   };
-
   const handleGeneratePlanillas = () => {
-    setShowGeneratePlanillas(true);
     setCurrentView(View.GENERATE_PLANILLAS);
   };
 
-  const handleBackToDashboard = () => {
-    console.log("Back to dashboard: ", showGeneratePlanillas);
-    setShowGeneratePlanillas(false);
-    setCurrentView(View.DASHBOARD);
+  const handleBack = () => {
+    setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
   };
 
-  const renderLoggedInContent = () => {
-    switch (currentView) {
-      case View.LOGOUT:
-        return <LogoutPage darkMode={isDarkMode} />;
-      case View.GENERATE_PLANILLAS:
-        return <PlanillasProvider onBack={handleBackToDashboard} />;
-      default:
-        return <Dashboard onGeneratePlanillas={handleGeneratePlanillas} />;
-    }
+  const viewProps = {
+    onLogin: handleLogin,
+    onRegister: () => handleRegister(),
+    onResetPassword: () => handleReset(),
+    onGeneratePlanillas: () => handleGeneratePlanillas(),
+    onBackHome: () => handleBack(),
   };
+
+  const CurrentViewComponent = viewComponents[currentView];
 
   if (isLoading) {
     return (
-      <>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              minHeight: "100vh",
-              width: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <Loading />;
-          </Box>
-        </ThemeProvider>
-      </>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            minHeight: "100vh",
+            width: "100%",
+            overflow: "hidden",
+          }}
+        >
+          <Loading />;
+        </Box>
+      </ThemeProvider>
     );
   }
 
@@ -190,7 +157,7 @@ export function App() {
             toggleColorMode={toggleColorMode}
             onLogout={handleLogout}
             isLoggedIn={isLoggedIn}
-            onBackHome={handleBackToDashboard}
+            onBackHome={handleBack}
           />
           <Box
             component="main"
@@ -204,19 +171,7 @@ export function App() {
               p: { xs: 1, sm: 2, md: 3 },
             }}
           >
-            {isLoggedIn ? (
-              renderLoggedInContent()
-            ) : showRegister ? (
-              <RegisterPage onRegisterBack={() => setShowRegister(false)} />
-            ) : showResetPassword ? (
-              <ResetPasswordPage onResetPassword={handleResetPassword} />
-            ) : (
-              <LoginPage
-                onLogin={handleLogin}
-                onRegister={handleRegister}
-                onResetPassword={handleResetPassword}
-              />
-            )}
+            <CurrentViewComponent {...viewProps} />
           </Box>
         </Box>
       </ThemeProvider>

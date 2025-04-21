@@ -9150,4 +9150,20 @@
     at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
     ---------------------
 
+    [2025-04-21T01:01:38.831Z]
+    URL: /session/register
+    Method: POST
+    Body: {"dni":"66666666","password":"987654321","email":"otro@otro.com","firstname":"Rodolfo","lastname":"Gomez Bolaños","legajo":500555}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El oficial ya existe, comunicarse con el administrador
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:97:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
     

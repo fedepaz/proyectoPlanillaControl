@@ -1,6 +1,5 @@
 import { IconButton, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import { useState } from "react";
 
 interface BackHomeButtonProps {
   onComeBackHome: (data: boolean) => void;
@@ -9,11 +8,9 @@ interface BackHomeButtonProps {
 export default function BackHomeButton({
   onComeBackHome,
 }: BackHomeButtonProps) {
-  const [showHomePage, setShowHomePage] = useState(false);
-
   const onComeBackHomeButton = () => {
-    setShowHomePage(true);
-    onComeBackHome(showHomePage);
+    console.log("BackHomeButton");
+    onComeBackHome(true);
   };
 
   return (

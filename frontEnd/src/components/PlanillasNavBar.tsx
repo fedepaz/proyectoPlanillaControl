@@ -11,7 +11,7 @@ import WbSunnyTwoToneIcon from "@mui/icons-material/WbSunnyTwoTone";
 import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import CloseSessionButton from "./CLoseSessionButton";
+import CloseSessionButton from "./CloseSessionButton";
 
 import BackHomeButton from "./BackHomeButton";
 
@@ -35,6 +35,7 @@ export function PlanillasNavbar({
     onLogout(true);
   };
   const onBackButton = () => {
+    console.log("PlanillasNavbar");
     onBackHome(true);
   };
   return (

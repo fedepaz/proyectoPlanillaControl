@@ -8,13 +8,14 @@ export const PlanillasList: React.FC = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
+  if (!data) return <div>No data</div>;
 
   return (
     <div>
       <h1>Planillas</h1>
       <ul>
         {data.data.map((planilla) => (
-          <li key={planilla._id}>{/* Render planilla details here */}</li>
+          <li key={planilla.id}>{/* Render planilla details here */}</li>
         ))}
       </ul>
       <div>
