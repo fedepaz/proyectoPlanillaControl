@@ -1,4 +1,5 @@
-import { IconButton, Typography } from "@mui/material";
+"use client";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
 interface BackHomeButtonProps {
@@ -9,20 +10,41 @@ export default function BackHomeButton({
   onComeBackHome,
 }: BackHomeButtonProps) {
   const onComeBackHomeButton = () => {
-    console.log("BackHomeButton");
     onComeBackHome(true);
   };
 
   return (
-    <IconButton
-      color="inherit"
-      onClick={onComeBackHomeButton}
-      sx={{ display: "grid", placeItems: "center" }}
-    >
-      <HomeIcon />
-      <Typography variant="caption" component="span" sx={{ ml: 1 }}>
-        Regresar{" "}
-      </Typography>{" "}
-    </IconButton>
+    <Tooltip title="Regresar a la página de inicio" arrow placement="bottom">
+      <IconButton
+        color="inherit"
+        onClick={onComeBackHomeButton}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "4px 8px",
+          borderRadius: 1,
+          minWidth: "auto",
+        }}
+      >
+        <HomeIcon
+          sx={{
+            fontSize: "1.1rem",
+          }}
+        />
+        <Typography
+          variant="caption"
+          component="span"
+          sx={{
+            fontSize: "0.65rem",
+            lineHeight: 1,
+            mt: 0.5,
+          }}
+        >
+          Regresar{" "}
+        </Typography>{" "}
+      </IconButton>
+    </Tooltip>
   );
 }

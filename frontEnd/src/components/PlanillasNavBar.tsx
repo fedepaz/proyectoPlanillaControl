@@ -2,18 +2,16 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  IconButton,
   useTheme,
   Box,
   useMediaQuery,
 } from "@mui/material";
-import WbSunnyTwoToneIcon from "@mui/icons-material/WbSunnyTwoTone";
-import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import CloseSessionButton from "./CloseSessionButton";
 
 import BackHomeButton from "./BackHomeButton";
+import ThemeModeButton from "./ThemeModeButton";
 
 interface PlanillasNavbarProps {
   toggleColorMode: () => void;
@@ -35,23 +33,31 @@ export function PlanillasNavbar({
     onLogout(true);
   };
   const onBackButton = () => {
-    console.log("PlanillasNavbar");
     onBackHome(true);
   };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h6"
-              component="div"
+        <AppBar
+          position="static"
+          sx={{
+            minHeight: "48px",
+          }}
+        >
+          <Toolbar
+            sx={{
+              minHeight: "48px !important",
+              py: 0,
+              px: 1,
+            }}
+          >
+            <Box
               sx={{
                 flexGrow: 1,
                 minWidth: isMobile ? "auto" : 150,
-                mr: 2,
-                placeItems: "flex-start",
+                display: "flex",
+                alignItems: "center",
               }}
             >
               {isMobile ? (
@@ -59,22 +65,18 @@ export function PlanillasNavbar({
               ) : (
                 <BackHomeButton onComeBackHome={onBackButton} />
               )}
-            </Typography>
-            {isLoggedIn && <CloseSessionButton onLogout={onLogoutButton} />}
-            <IconButton
-              sx={{ display: "grid", placeItems: "center" }}
-              onClick={toggleColorMode}
-              color="inherit"
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                minWidth: isMobile ? "auto" : 150,
+              }}
             >
-              {theme.palette.mode === "dark" ? (
-                <WbSunnyTwoToneIcon />
-              ) : (
-                <Brightness2TwoToneIcon />
-              )}
-              <Typography variant="caption" component="span">
-                {theme.palette.mode === "dark" ? "Modo Claro" : "Modo Oscuro"}
-              </Typography>
-            </IconButton>
+              {isLoggedIn && <CloseSessionButton onLogout={onLogoutButton} />}
+              <ThemeModeButton toggleColorMode={toggleColorMode} />
+            </Box>
           </Toolbar>
         </AppBar>
       </Box>

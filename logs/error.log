@@ -9166,4 +9166,36 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-04-21T23:39:28.325Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"987654321"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:109:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:36:18
+    ---------------------
+
+    [2025-04-21T23:39:36.443Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"34617838","password":"123456789"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PasswordError: El usuario fedepaz89@gmail.com ya ha solicitado cambio de contraseña, y se encuentra pendiente de aprobación
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:40:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
     
