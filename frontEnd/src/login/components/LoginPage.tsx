@@ -74,8 +74,8 @@ export function LoginPage({
   useEffect(() => {
     if (isSuccess && mutationData) {
       console.log(mutationData);
+      setSuccessMessage(mutationData.message);
       const timeout = setTimeout(() => {
-        setSuccessMessage(mutationData.message);
         onLogin(mutationData);
       }, 2000);
       return () => clearTimeout(timeout);

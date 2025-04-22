@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+"use client";
+import { useEffect, useState, useCallback } from "react";
 import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { PlanillasNavbar } from "./components/PlanillasNavBar";
 import { darkTheme, lightTheme } from "./types/theme";
@@ -8,6 +9,7 @@ import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
 
+const csrfTokenRoute = "/csrf-token";
 interface LoginResponse {
   authenticated: boolean;
   user: {
@@ -28,9 +30,9 @@ export function App() {
   const [currentView, setCurrentView] = useState<View>(View.LOGIN);
 
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const toggleColorMode = () => {
+  const toggleColorMode = useCallback(() => {
     setIsDarkMode((prevMode) => !prevMode);
-  };
+  }, []);
 
   const { data, error, isError, isLoading, refetch } = useSession();
 
@@ -45,7 +47,7 @@ export function App() {
     const fetchCsrfToken = async () => {
       try {
         const response = await apiClient.get<{ csrfToken: string }>(
-          "/csrf-token"
+          csrfTokenRoute
         );
         if (response.data.csrfToken) {
           setCsrfToken(response.data.csrfToken);
@@ -63,26 +65,26 @@ export function App() {
     }
   }, [isLoggedIn]);
 
-  const handleLogin = (loginData: LoginResponse) => {
+  const handleLogin = useCallback((loginData: LoginResponse) => {
     setIsLoggedIn(loginData.authenticated);
-    setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
-  };
-  const handleRegister = () => {
+    setCurrentView(loginData.authenticated ? View.DASHBOARD : View.LOGIN);
+  }, []);
+  const handleRegister = useCallback(() => {
     setCurrentView(View.REGISTER);
-  };
-  const handleReset = () => {
+  }, []);
+  const handleReset = useCallback(() => {
     setCurrentView(View.RESET_PASSWORD);
-  };
-  const handleLogout = () => {
+  }, []);
+  const handleLogout = useCallback(() => {
     setCurrentView(View.LOGOUT);
-  };
-  const handleGeneratePlanillas = () => {
+  }, []);
+  const handleGeneratePlanillas = useCallback(() => {
     setCurrentView(View.GENERATE_PLANILLAS);
-  };
+  }, []);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
-  };
+  }, [isLoggedIn]);
 
   const viewProps = {
     onLogin: handleLogin,
@@ -140,41 +142,39 @@ export function App() {
   }
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+          minHeight: "100vh",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
+        <PlanillasNavbar
+          toggleColorMode={toggleColorMode}
+          onLogout={handleLogout}
+          isLoggedIn={isLoggedIn}
+          onBackHome={handleBack}
+        />
         <Box
+          component="main"
           sx={{
+            flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 3,
-            minHeight: "100vh",
             width: "100%",
-            overflow: "hidden",
+            overflowY: "hidden",
+            WebkitOverflowScrolling: "touch",
+            p: { xs: 1, sm: 2, md: 3 },
           }}
         >
-          <PlanillasNavbar
-            toggleColorMode={toggleColorMode}
-            onLogout={handleLogout}
-            isLoggedIn={isLoggedIn}
-            onBackHome={handleBack}
-          />
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              overflowY: "hidden",
-              WebkitOverflowScrolling: "touch",
-              p: { xs: 1, sm: 2, md: 3 },
-            }}
-          >
-            <CurrentViewComponent {...viewProps} />
-          </Box>
+          <CurrentViewComponent {...viewProps} />
         </Box>
-      </ThemeProvider>
-    </>
+      </Box>
+    </ThemeProvider>
   );
 }

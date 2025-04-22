@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  useTheme,
-  Box,
-  useMediaQuery,
-} from "@mui/material";
+import { AppBar, Toolbar, useTheme, Box, useMediaQuery } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import CloseSessionButton from "./CloseSessionButton";
