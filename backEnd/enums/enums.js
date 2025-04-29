@@ -1,6 +1,11 @@
 export const Roles = {
+  admin: "admin",
   auxiliar: "auxiliar",
-  oficial: "oficial",
+  responsable: "responsable",
+  supervisor: "supervisor",
+  operUnidad: "operUnidad",
+  operRegional: "operRegional",
+  operCeac: "operCeac",
 };
 
 export const PublicRoutes = ["/health", "/", "/session"];

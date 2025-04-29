@@ -8,6 +8,7 @@ import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
+import { UserRole } from "./actions/types";
 
 const csrfTokenRoute = "/csrf-token";
 interface LoginResponse {
@@ -20,7 +21,16 @@ interface LoginResponse {
       lastname: string;
       legajo: string;
     };
+    role: string;
   };
+}
+
+function ensureUserRole(role: string): UserRole {
+  if (Object.values(UserRole).includes(role as UserRole)) {
+    return role as UserRole;
+  }
+
+  return UserRole.AUXILIAR;
 }
 
 export function App() {
@@ -28,6 +38,7 @@ export function App() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentView, setCurrentView] = useState<View>(View.LOGIN);
+  const [userRole, setUserRole] = useState<UserRole>(UserRole.AUXILIAR);
 
   const theme = isDarkMode ? darkTheme : lightTheme;
   const toggleColorMode = useCallback(() => {
@@ -40,6 +51,9 @@ export function App() {
     if (!isLoading && data?.authenticated && !error) {
       setIsLoggedIn(true);
       setCurrentView(View.DASHBOARD);
+      if (data.user.role) {
+        setUserRole(ensureUserRole(data.user.role));
+      }
     }
   }, [data, error, isLoading]);
 
@@ -67,7 +81,14 @@ export function App() {
 
   const handleLogin = useCallback((loginData: LoginResponse) => {
     setIsLoggedIn(loginData.authenticated);
-    setCurrentView(loginData.authenticated ? View.DASHBOARD : View.LOGIN);
+    if (loginData.authenticated) {
+      if (loginData.role) {
+        setUserRole(ensureUserRole(loginData.role));
+      }
+      setCurrentView(View.DASHBOARD);
+    } else {
+      setCurrentView(View.LOGIN);
+    }
   }, []);
   const handleRegister = useCallback(() => {
     setCurrentView(View.REGISTER);
@@ -86,12 +107,18 @@ export function App() {
     setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
   }, [isLoggedIn]);
 
+  const handleNavigate = useCallback((view: View) => {
+    setCurrentView(view);
+  }, []);
+
   const viewProps = {
     onLogin: handleLogin,
     onRegister: () => handleRegister(),
     onResetPassword: () => handleReset(),
     onGeneratePlanillas: () => handleGeneratePlanillas(),
     onBackHome: () => handleBack(),
+    onNavigate: handleNavigate,
+    userRole,
   };
 
   const CurrentViewComponent = viewComponents[currentView];

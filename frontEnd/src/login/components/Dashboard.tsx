@@ -11,13 +11,15 @@ import {
 import { UserRole } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { memo } from "react";
+import { View } from "../../views";
 interface DashboardProps {
   onGeneratePlanillas: () => void;
   onViewHistory: () => void;
   onViewProfile: () => void;
   onOpenSettings: () => void;
   onManageUsers: () => void;
-  userRole?: UserRole;
+  onNavigate?: (view: View) => void;
+  userRole: UserRole;
 }
 
 export const Dashboard = memo(function Dashboard({
@@ -26,7 +28,8 @@ export const Dashboard = memo(function Dashboard({
   onViewProfile,
   onOpenSettings,
   onManageUsers,
-  userRole = UserRole.AUXILIAR,
+  onNavigate,
+  userRole,
 }: DashboardProps) {
   const { mainActions, accountActions, adminActions } = useDashboardActions(
     {
@@ -35,9 +38,15 @@ export const Dashboard = memo(function Dashboard({
       onViewProfile,
       onOpenSettings,
       onManageUsers,
+      onNavigate,
     },
     userRole
   );
+
+  function formatRoleName(role: UserRole): string {
+    const roleString = role.toString();
+    return roleString.charAt(0).toUpperCase() + roleString.slice(1);
+  }
 
   return (
     <Container component="main" maxWidth="sm">
@@ -64,6 +73,18 @@ export const Dashboard = memo(function Dashboard({
         >
           Panel de Control
         </Typography>
+        {/* Role indicator */}
+        <Typography
+          variant="subtitle1"
+          sx={{
+            mb: 2,
+            color: "text.secondary",
+            textAlign: "center",
+          }}
+        >
+          Rol: {formatRoleName(userRole)}
+        </Typography>
+
         {/* Main Actions Section */}
         {mainActions.length > 0 && (
           <Box

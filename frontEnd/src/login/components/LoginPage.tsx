@@ -29,6 +29,7 @@ interface LoginResponse {
       lastname: string;
       legajo: string;
     };
+    role: string;
   };
 }
 
@@ -59,7 +60,6 @@ export function LoginPage({
     data: mutationData,
   } = useLogin();
 
-  const [successMessage, setSuccessMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   useEffect(() => {
     if (isError && mutationError instanceof AxiosError) {
@@ -72,9 +72,8 @@ export function LoginPage({
   }, [isError, mutationError]);
 
   useEffect(() => {
+    console.log(mutationData);
     if (isSuccess && mutationData) {
-      console.log(mutationData);
-      setSuccessMessage(mutationData.message);
       const timeout = setTimeout(() => {
         onLogin(mutationData);
       }, 2000);
@@ -124,7 +123,7 @@ export function LoginPage({
           ) : null}
           {isSuccess && (
             <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
-              {successMessage}
+              {mutationData.message}
             </Alert>
           )}
           <Box

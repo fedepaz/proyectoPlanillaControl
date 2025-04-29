@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { type ActionButton, ActionCategory, UserRole } from "./types";
+import { View } from "../views";
 
 export const createDashboardActions = (callbacks: {
   onGeneratePlanillas?: () => void;
@@ -13,15 +14,27 @@ export const createDashboardActions = (callbacks: {
   onViewProfile?: () => void;
   onOpenSettings?: () => void;
   onManageUsers?: () => void;
+  onNavigate?: (view: View) => void;
 }): ActionButton[] => {
+  const createNavigationHandler = (view: View, fallbackFn?: () => void) => {
+    return () => {
+      if (callbacks.onNavigate) {
+        callbacks.onNavigate(view);
+      } else if (fallbackFn) {
+        fallbackFn();
+      }
+    };
+  };
+
   return [
     {
       id: "generate_planillas",
       label: "Generar planillas",
       icon: <NoteAddIcon />,
-      onClick:
-        callbacks.onGeneratePlanillas ||
-        (() => console.log("Generate Planillas")),
+      onClick: createNavigationHandler(
+        View.GENERATE_PLANILLAS,
+        callbacks.onGeneratePlanillas
+      ),
       primary: true,
       category: ActionCategory.MAIN,
       allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
@@ -30,7 +43,10 @@ export const createDashboardActions = (callbacks: {
       id: "view_history",
       label: "Historial de Planillas",
       icon: <HistoryIcon />,
-      onClick: callbacks.onViewHistory || (() => console.log("View History")),
+      onClick: createNavigationHandler(
+        View.VIEW_HISTORY,
+        callbacks.onViewHistory
+      ),
       category: ActionCategory.MAIN,
       allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
     },
@@ -38,7 +54,10 @@ export const createDashboardActions = (callbacks: {
       id: "view_profile",
       label: "Perfil",
       icon: <PersonIcon />,
-      onClick: callbacks.onViewProfile || (() => console.log("View Profile")),
+      onClick: createNavigationHandler(
+        View.VIEW_PROFILE,
+        callbacks.onViewProfile
+      ),
       category: ActionCategory.ACCOUNT,
       allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
     },
@@ -46,7 +65,7 @@ export const createDashboardActions = (callbacks: {
       id: "open_settings",
       label: "Configuración",
       icon: <SettingsIcon />,
-      onClick: callbacks.onOpenSettings || (() => console.log("Open Settings")),
+      onClick: createNavigationHandler(View.SETTINGS, callbacks.onOpenSettings),
       category: ActionCategory.ACCOUNT,
       allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
     },
@@ -54,7 +73,10 @@ export const createDashboardActions = (callbacks: {
       id: "manage_users",
       label: "Administrar Usuarios",
       icon: <SupervisorAccountIcon />,
-      onClick: callbacks.onManageUsers || (() => console.log("Manage Users")),
+      onClick: createNavigationHandler(
+        View.MANAGE_USERS,
+        callbacks.onManageUsers
+      ),
       category: ActionCategory.ADMIN,
       allowedRoles: [UserRole.ADMIN],
     },
@@ -79,6 +101,7 @@ export function useDashboardActions(
     onViewProfile?: () => void;
     onOpenSettings?: () => void;
     onManageUsers?: () => void;
+    onNavigate?: (view: View) => void;
   },
   userRole: UserRole
 ) {

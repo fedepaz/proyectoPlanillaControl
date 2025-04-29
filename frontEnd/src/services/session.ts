@@ -16,6 +16,7 @@ interface SessionResponse {
       legajo: string;
       id: string;
     };
+    role: string;
   };
 }
 
