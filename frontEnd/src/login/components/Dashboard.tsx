@@ -12,6 +12,7 @@ import { UserRole } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { memo } from "react";
 import { View } from "../../views";
+import { RoleBadge } from "../../components/RoleBadge";
 interface DashboardProps {
   onGeneratePlanillas: () => void;
   onViewHistory: () => void;
@@ -43,11 +44,6 @@ export const Dashboard = memo(function Dashboard({
     userRole
   );
 
-  function formatRoleName(role: UserRole): string {
-    const roleString = role.toString();
-    return roleString.charAt(0).toUpperCase() + roleString.slice(1);
-  }
-
   return (
     <Container component="main" maxWidth="sm">
       <Paper
@@ -74,16 +70,25 @@ export const Dashboard = memo(function Dashboard({
           Panel de Control
         </Typography>
         {/* Role indicator */}
-        <Typography
-          variant="subtitle1"
+        <Box
           sx={{
-            mb: 2,
-            color: "text.secondary",
-            textAlign: "center",
+            mb: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Rol: {formatRoleName(userRole)}
-        </Typography>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              mr: 1,
+              color: "text.secondary",
+            }}
+          >
+            Rol :
+          </Typography>
+          <RoleBadge role={userRole} />
+        </Box>
 
         {/* Main Actions Section */}
         {mainActions.length > 0 && (
