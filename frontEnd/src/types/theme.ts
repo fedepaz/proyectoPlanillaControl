@@ -1,5 +1,10 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import type { TypographyProps } from "@mui/material/styles/createTypography";
+import type { Theme } from "@mui/material/styles";
+
+// Define the type for typography text transform
+type TypographyTextTransform = NonNullable<
+  Theme["typography"]["button"]
+>["textTransform"];
 
 // Common theme settings for both light and dark modes
 const commonThemeSettings = {
@@ -45,7 +50,7 @@ const commonThemeSettings = {
     button: {
       fontWeight: 500,
       letterSpacing: "0.02857em",
-      textTransform: "none" as TypographyProps["textTransform"],
+      textTransform: "none" as TypographyTextTransform,
     },
     caption: {
       letterSpacing: "0.03333em",
