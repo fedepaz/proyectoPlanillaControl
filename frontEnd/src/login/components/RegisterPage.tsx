@@ -9,11 +9,18 @@ import {
   Paper,
   Alert,
   CircularProgress,
+  Stack,
+  useTheme,
+  useMediaQuery,
+  Divider,
 } from "@mui/material";
+import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useRegister } from "../services/register";
 import {
   credentialsSchema,
-  CredentialsSchema,
+  type CredentialsSchema,
   defaultValuesCredentials,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
@@ -30,6 +37,9 @@ interface RegisterPageProps {
   onRegisterBack: (data: boolean) => void;
 }
 export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [oficialData, setOficialData] = useState<OficialData | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -40,7 +50,10 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
     mode: "onChange",
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods;
 
   const {
     mutate: register,
@@ -53,8 +66,12 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
   useEffect(() => {
     if (isSuccess) {
       setShowSuccessMessage(true);
+      const timeout = setTimeout(() => {
+        onRegisterBack(true);
+      }, 2000);
+      return () => clearTimeout(timeout);
     }
-  }, [isSuccess]);
+  }, [isSuccess, onRegisterBack]);
 
   const handleOficialSubmit = (data: OficialData) => {
     setOficialData(data);
@@ -88,26 +105,75 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
         <Paper
           elevation={3}
           sx={{
-            mt: 8,
-            p: 4,
+            mt: { xs: 4, sm: 8 },
+            p: { xs: 3, sm: 4 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            borderRadius: 2,
           }}
         >
-          <Typography component="h1" variant="h5">
-            Complete su registro
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mb: 3,
+            }}
+          >
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                bgcolor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mb: 1,
+              }}
+            >
+              <PersonAddOutlinedIcon sx={{ color: "white" }} />
+            </Box>
+            <Typography component="h1" variant="h5" fontWeight={500}>
+              Complete su registro
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mt: 1, textAlign: "center" }}
+            >
+              Paso 2 de 2: Cree sus credenciales de acceso
+            </Typography>
+          </Box>
+
           {isError && (
-            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+            <Alert
+              severity="error"
+              sx={{
+                width: "100%",
+                mt: 2,
+                "& .MuiAlert-message": { width: "100%" },
+              }}
+            >
               {error instanceof Error
                 ? error.message
                 : "Ocurrió un error inesperado"}
             </Alert>
           )}
           {showSuccessMessage && (
-            <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
-              Registro exitoso
+            <Alert
+              severity="success"
+              sx={{
+                width: "100%",
+                mt: 2,
+                "& .MuiAlert-message": { width: "100%" },
+              }}
+            >
+              <Typography variant="subtitle2"> !Registro exitoso! </Typography>
+              <Typography variant="body2">
+                Ahora puedes ingresar a su cuenta
+              </Typography>
             </Alert>
           )}
 
@@ -115,7 +181,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            sx={{ mt: 1, width: "100%" }}
+            sx={{ width: "100%" }}
           >
             <RHFTextField<CredentialsSchema>
               margin="normal"
@@ -126,6 +192,7 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
               name="email"
               autoComplete="email"
               autoFocus
+              disabled={showSuccessMessage}
             />
             <RHFTextField<CredentialsSchema>
               margin="normal"
@@ -136,19 +203,61 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
               type="password"
               id="password"
               autoComplete="new-password"
+              disabled={showSuccessMessage}
+              helperText="La contraseña debe tener al menos 8 caracteres"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {isPending ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Completar Registro"
-              )}
-            </Button>
+            <Divider sx={{ my: 3 }} />
+
+            {showSuccessMessage ? (
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={onRegreso}
+                startIcon={<ArrowBackIcon />}
+                sx={{ py: 1.5 }}
+              >
+                Volver
+              </Button>
+            ) : (
+              <Stack spacing={2} direction={isMobile ? "column" : "row"}>
+                <Button
+                  type="button"
+                  fullWidth
+                  color="secondary"
+                  variant="outlined"
+                  onClick={onRegreso}
+                  startIcon={<ArrowBackIcon />}
+                  disabled={isPending}
+                  sx={{ py: 1.5 }}
+                >
+                  Regresar
+                </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={isPending || !isValid}
+                  sx={{ py: 1.5, position: "relative" }}
+                >
+                  {isPending ? (
+                    <CircularProgress
+                      size={24}
+                      color="inherit"
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-12px",
+                        marginLeft: "-12px",
+                      }}
+                    />
+                  ) : (
+                    "Completar Registro"
+                  )}
+                </Button>
+              </Stack>
+            )}
           </Box>
         </Paper>
       </Container>

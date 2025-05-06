@@ -9,10 +9,17 @@ import {
   Paper,
   Alert,
   CircularProgress,
+  Divider,
+  useTheme,
+  useMediaQuery,
+  Stack,
 } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { useLogin } from "../services/login";
 import {
-  LoginSchema,
+  type LoginSchema,
   loginSchema,
   defaultValuesLogin,
 } from "../types/modelsSchema";
@@ -44,13 +51,19 @@ export function LoginPage({
   onRegister,
   onResetPassword,
 }: LoginPageProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const methods = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: defaultValuesLogin,
     mode: "onChange",
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods;
   const {
     mutate: login,
     isPending,
@@ -61,6 +74,7 @@ export function LoginPage({
   } = useLogin();
 
   const [passwordError, setPasswordError] = useState(false);
+
   useEffect(() => {
     if (isError && mutationError instanceof AxiosError) {
       if (mutationError.response?.data?.name === "PasswordError") {
@@ -72,7 +86,6 @@ export function LoginPage({
   }, [isError, mutationError]);
 
   useEffect(() => {
-    console.log(mutationData);
     if (isSuccess && mutationData) {
       const timeout = setTimeout(() => {
         onLogin(mutationData);
@@ -98,31 +111,81 @@ export function LoginPage({
         <Paper
           elevation={3}
           sx={{
-            mt: 8,
-            p: 4,
+            mt: { xs: 4, sm: 8 },
+            p: { xs: 3, sm: 4 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            borderRadius: 2,
           }}
         >
-          <Typography component="h1" variant="h5">
-            Iniciar sesión
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mb: 3,
+            }}
+          >
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                bgcolor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mb: 1,
+              }}
+            >
+              <LockOutlinedIcon
+                sx={{
+                  color: "white",
+                }}
+              />
+            </Box>
+            <Typography component="h1" variant="h5">
+              Iniciar sesión
+            </Typography>
+          </Box>
+
           {isError && passwordError ? (
-            <Alert severity="warning" sx={{ width: "100%", mt: 2 }}>
+            <Alert
+              severity="warning"
+              sx={{
+                width: "100%",
+                mt: 2,
+                "& .MuiAlert-message": { width: "100%" },
+              }}
+            >
               {mutationError instanceof AxiosError
                 ? mutationError.response?.data?.message
                 : "Ocurrió un error inesperado"}
             </Alert>
           ) : isError ? (
-            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+            <Alert
+              severity="error"
+              sx={{
+                width: "100%",
+                mt: 2,
+                "& .MuiAlert-message": { width: "100%" },
+              }}
+            >
               {mutationError instanceof AxiosError
                 ? mutationError.response?.data?.message
                 : "Ocurrió un error inesperado"}
             </Alert>
           ) : null}
           {isSuccess && (
-            <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
+            <Alert
+              severity="success"
+              sx={{
+                width: "100%",
+                mt: 2,
+                "& .MuiAlert-message": { width: "100%" },
+              }}
+            >
               {mutationData.message}
             </Alert>
           )}
@@ -130,7 +193,7 @@ export function LoginPage({
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            sx={{ mt: 1, width: "100%" }}
+            sx={{ width: "100%" }}
           >
             <RHFTextField<LoginSchema>
               margin="normal"
@@ -156,45 +219,68 @@ export function LoginPage({
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              disabled={isPending}
+              sx={{ mt: 3, mb: 2, py: 1.5, position: "relative" }}
+              disabled={isPending || !isValid}
             >
               {isPending ? (
-                <CircularProgress size={24} color="inherit" />
+                <CircularProgress
+                  size={24}
+                  color="inherit"
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
               ) : (
                 "Iniciar sesión"
               )}
             </Button>
-            <Button
-              type="button"
-              fullWidth
-              color="secondary"
-              variant="outlined"
-              disabled={isPending}
-              onClick={onRegisterButton}
-            >
-              {" "}
-              {isPending ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Registrar Usuario"
-              )}
-            </Button>
-            <Button
-              type="button"
-              fullWidth
-              color="secondary"
-              variant="outlined"
-              disabled={isPending}
-              onClick={onResetPasswordButton}
-            >
-              {" "}
-              {isPending ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Recuperar contraseña"
-              )}
-            </Button>
+            <Divider sx={{ my: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                o
+              </Typography>
+            </Divider>
+
+            <Stack spacing={2} direction={isMobile ? "column" : "row"}>
+              <Button
+                type="button"
+                fullWidth
+                color="secondary"
+                variant="outlined"
+                disabled={isPending}
+                onClick={onRegisterButton}
+                startIcon={<PersonAddOutlinedIcon />}
+                sx={{ py: 1 }}
+              >
+                {" "}
+                {isPending ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  "Registrar Usuario"
+                )}
+              </Button>
+
+              <Button
+                type="button"
+                fullWidth
+                color="secondary"
+                variant="text"
+                disabled={isPending}
+                onClick={onResetPasswordButton}
+                startIcon={<KeyOutlinedIcon />}
+                sx={{ py: 1 }}
+              >
+                {" "}
+                {isPending ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  "Recuperar contraseña"
+                )}
+              </Button>
+            </Stack>
           </Box>
         </Paper>
       </Container>

@@ -1,9 +1,22 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Container, Typography, Paper } from "@mui/material";
 import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  Paper,
+  Stack,
+  useTheme,
+  useMediaQuery,
+  Divider,
+} from "@mui/material";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {
+  type OficialSchema,
   oficialSchema,
-  OficialSchema,
   defaultValuesOficial,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
@@ -24,13 +37,19 @@ export function OficialSubmitPage({
   onSuccess,
   onRegisterBack,
 }: OficialSubmitPageProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const methods = useForm<OficialSchema>({
     resolver: zodResolver(oficialSchema),
     defaultValues: defaultValuesOficial,
     mode: "onChange",
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods;
 
   const onSubmit = (formData: OficialSchema) => {
     onSuccess({
@@ -50,17 +69,48 @@ export function OficialSubmitPage({
         <Paper
           elevation={3}
           sx={{
-            mt: 8,
-            p: 4,
+            mt: { xs: 4, sm: 8 },
+            p: { xs: 3, sm: 4 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            borderRadius: 2,
           }}
         >
-          <Typography component="h1" variant="h5">
-            Registro de Oficial
-          </Typography>
-
+          {" "}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mb: 3,
+            }}
+          >
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                bgcolor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mb: 1,
+              }}
+            >
+              <BadgeOutlinedIcon sx={{ color: "white" }} />
+            </Box>
+            <Typography component="h1" variant="h5" fontWeight={500}>
+              Registro de Oficial
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mt: 1, textAlign: "center" }}
+            >
+              Paso 1 de 2: Ingrese sus datos personales
+            </Typography>
+          </Box>
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -84,7 +134,7 @@ export function OficialSubmitPage({
               id="firstname"
               label="Nombre"
               name="firstname"
-              autoComplete="firstname"
+              autoComplete="given-name"
               autoFocus
             />
             <RHFTextField<OficialSchema>
@@ -94,7 +144,7 @@ export function OficialSubmitPage({
               id="lastname"
               label="Apellido"
               name="lastname"
-              autoComplete="lastname"
+              autoComplete="family-name"
               autoFocus
             />
             <RHFTextField<OficialSchema>
@@ -107,23 +157,31 @@ export function OficialSubmitPage({
               autoComplete="legajo"
               autoFocus
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Registrar Usuario
-            </Button>
-            <Button
-              type="button"
-              fullWidth
-              color="secondary"
-              variant="outlined"
-              onClick={onRegreso}
-            >
-              Regresar
-            </Button>
+            <Divider sx={{ my: 3 }} />
+
+            <Stack spacing={2} direction={isMobile ? "column" : "row"}>
+              <Button
+                type="button"
+                fullWidth
+                color="secondary"
+                variant="outlined"
+                onClick={onRegreso}
+                startIcon={<ArrowBackIcon />}
+                sx={{ py: 1.5 }}
+              >
+                Regresar
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={!isValid}
+                startIcon={<ArrowForwardIcon />}
+                sx={{ py: 1.5 }}
+              >
+                Continuar
+              </Button>
+            </Stack>
           </Box>
         </Paper>
       </Container>
