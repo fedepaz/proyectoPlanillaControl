@@ -82,8 +82,8 @@ export function App() {
   const handleLogin = useCallback((loginData: LoginResponse) => {
     setIsLoggedIn(loginData.authenticated);
     if (loginData.authenticated) {
-      if (loginData.role) {
-        setUserRole(ensureUserRole(loginData.role));
+      if (loginData.user.role) {
+        setUserRole(ensureUserRole(loginData.user.role));
       }
       setCurrentView(View.DASHBOARD);
     } else {

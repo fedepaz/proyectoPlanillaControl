@@ -6,23 +6,40 @@ import {
   planillaSchema,
 } from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "../../services/session";
-import { CssBaseline, Box } from "@mui/material";
+import { CssBaseline, Box, Snackbar, Alert } from "@mui/material";
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
+
+const stepFields = {
+  0: ["datosVuelo"],
+  1: ["datosVuelo"],
+  2: ["datosVuelo"],
+  3: ["datosVuelo"],
+  4: ["novEquipajes", "novInspeccion", "novOtras", "datosPsa"],
+};
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
 }
 
 export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
+  const [activeStep, setActiveStep] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const methods = useForm<PlanillaSchema>({
-    mode: "all",
+    mode: "onChange",
     resolver: zodResolver(planillaSchema),
     defaultValues: defaultValuesPlanilla,
   });
-  const { setValue, handleSubmit } = methods;
+  const {
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+    getValues,
+  } = methods;
 
   const { data, error, isError, isLoading, refetch } = useSession();
 
@@ -46,6 +63,48 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const sendBack = (data: boolean) => {
     onBack(data);
   };
+
+  const hasStepErrors = (step: number): boolean => {
+    const fieldsToCheck = stepFields[step as keyof typeof stepFields] || [];
+    return fieldsToCheck.some((fieldName) => {
+      if (fieldName.includes(".")) {
+        const [parent, child] = fieldName.split(".");
+        return errors[parent] && errors[parent][child];
+      }
+
+      if (fieldName in errors) {
+        return true;
+      }
+      const values = getValues();
+      const section = values[fieldName as keyof typeof values];
+
+      if (section && typeof section === "object") {
+        return Object.values(section).some((value) => !value);
+      }
+      return false;
+    });
+  };
+
+  const handleNext = async () => {
+    const fieldsToValidate = stepFields[activeStep as keyof typeof stepFields];
+    const isStepValid = await trigger(fieldsToValidate);
+    if (isStepValid) {
+      setActiveStep((prevStep) => Math.min(prevStep + 1, 4));
+      console.log("Active step changed to " + activeStep);
+    } else {
+      setErrorMessage("Por favor, rellena todos los campos antes de continuar");
+    }
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+    console.log("Active step changed to " + activeStep);
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage(null);
+  };
+
   if (isLoading) {
     return (
       <>
@@ -94,7 +153,26 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Planillas onBack={sendBack} />
+        <Planillas
+          onBack={sendBack}
+          activeStep={activeStep}
+          onNext={handleNext}
+          onPrevious={handleBack}
+        />
+        <Snackbar
+          open={!!errorMessage}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={handleCloseError}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
       </form>
     </FormProvider>
   );

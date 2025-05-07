@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useRegister } from "../services/register";
 import {
   credentialsSchema,
