@@ -64,30 +64,19 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
     onBack(data);
   };
 
-  const hasStepErrors = (step: number): boolean => {
-    const fieldsToCheck = stepFields[step as keyof typeof stepFields] || [];
-    return fieldsToCheck.some((fieldName) => {
-      if (fieldName.includes(".")) {
-        const [parent, child] = fieldName.split(".");
-        return errors[parent] && errors[parent][child];
-      }
-
-      if (fieldName in errors) {
-        return true;
-      }
-      const values = getValues();
-      const section = values[fieldName as keyof typeof values];
-
-      if (section && typeof section === "object") {
-        return Object.values(section).some((value) => !value);
-      }
-      return false;
-    });
-  };
-
   const handleNext = async () => {
-    const fieldsToValidate = stepFields[activeStep as keyof typeof stepFields];
-    const isStepValid = await trigger(fieldsToValidate);
+    const fieldsToValidate =
+      stepFields[activeStep as keyof typeof stepFields] || [];
+    let isStepValid = true;
+
+    for (const field of fieldsToValidate) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fieldValid = await trigger(field as any);
+      if (!fieldValid) {
+        isStepValid = false;
+      }
+    }
+
     if (isStepValid) {
       setActiveStep((prevStep) => Math.min(prevStep + 1, 4));
       console.log("Active step changed to " + activeStep);

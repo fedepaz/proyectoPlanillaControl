@@ -1,4 +1,4 @@
-import { Stack, Divider, Typography } from "@mui/material";
+import { Stack, Divider } from "@mui/material";
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
 import { RHFTextField } from "../../../components/RHFTextField";
 import { PlanillaSchema } from "../../types/planillaSchema";
@@ -18,7 +18,7 @@ export function DatosVuelo() {
   const handleMatSelected = (matriculaAeronave: string) => {
     setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
   };
-  const sendEmoresa = (empresa: string) => {
+  const sendEmpresa = (empresa: string) => {
     console.log("recibida de aerolinea ");
     const tipoEmpresa = empresa;
     console.log(tipoEmpresa);
@@ -30,17 +30,21 @@ export function DatosVuelo() {
       sx={{ gap: 2, py: 3 }}
       divider={<Divider orientation="horizontal" flexItem />}
     >
-      <Typography variant="h6" align="center" gutterBottom>
-        Datos Vuelo
-      </Typography>
+      {/*aeropuertoControl*/}
+      <AeropuertoComponent label="Control" />
+      {/*tipoVuelo*/}
+
+      <RHFRadioGroup<PlanillaSchema>
+        name="datosVuelo.tipoVuelo"
+        options={tipoVueloQuery.data}
+        label="Tipo de Vuelo"
+      ></RHFRadioGroup>
+      {/*destino | origen*/}
+      <AeropuertoComponent label="Destino" />
       {/*aerolinea*/}
-      <EmpresaComponent onEmpresaSelected={sendEmoresa} />
+      <EmpresaComponent onEmpresaSelected={sendEmpresa} />
       {/*codVuelo*/}
       <CodVueloComponent />
-      {/*origen*/}
-      <AeropuertoComponent label="Origen" />
-      {/*destino*/}
-      <AeropuertoComponent label="Destino" />
       {/*horaArribo*/}
       <RHFDateTimePicker<PlanillaSchema>
         name="datosVuelo.horaArribo"
@@ -56,12 +60,6 @@ export function DatosVuelo() {
         name="datosVuelo.demora"
         options={demoraQuery.data}
         label="Demora"
-      ></RHFRadioGroup>
-      {/*tipoVuelo*/}
-      <RHFRadioGroup<PlanillaSchema>
-        name="datosVuelo.tipoVuelo"
-        options={tipoVueloQuery.data}
-        label="Tipo de Vuelo"
       ></RHFRadioGroup>
       {/*matriculaAeronave*/}
       <MatriculaComponent onMatriculaSelected={handleMatSelected} />
