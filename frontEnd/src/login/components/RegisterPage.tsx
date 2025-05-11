@@ -30,6 +30,8 @@ interface OficialData {
   firstname: string;
   lastname: string;
   legajo: number;
+  unidadId: string;
+  jerarquiaId: string;
 }
 
 interface RegisterPageProps {
@@ -86,6 +88,8 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
       firstname: oficialData.firstname,
       lastname: oficialData.lastname,
       legajo: oficialData.legajo,
+      currentAirportId: oficialData.unidadId,
+      jerarquiaId: oficialData.jerarquiaId,
     };
     register(completeData);
   };

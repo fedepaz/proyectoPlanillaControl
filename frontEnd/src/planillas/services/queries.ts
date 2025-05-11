@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   EmpresaOption,
+  JerarquiaOption,
   MatriculaOption,
   Option,
   PlanillaOption,
+  UnidadOption,
 } from "../../types/option";
 import {
   ApiGetEmpresa,
@@ -449,5 +451,31 @@ export function useEmpresaId(empresa: string) {
       }
     },
     enabled: !!empresa,
+  });
+}
+
+export function useJerarquia() {
+  return useQuery({
+    queryKey: ["jerarquias"],
+    queryFn: async () => {
+      const response = await apiClient.get<JerarquiaOption[]>(
+        `${API_URL}/session/jerarquias`
+      );
+      const jerarquias = response.data;
+      return jerarquias;
+    },
+  });
+}
+
+export function useUnidad() {
+  return useQuery({
+    queryKey: ["unidad"],
+    queryFn: async () => {
+      const response = await apiClient.get<UnidadOption[]>(
+        `${API_URL}/session/unidad`
+      );
+      const unidades = response.data;
+      return unidades;
+    },
   });
 }

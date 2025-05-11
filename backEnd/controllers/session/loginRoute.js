@@ -2,6 +2,8 @@ import express from "express";
 import { UserRepository } from "./userRepository.js";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils.js";
 import { ResetPasswordRepository } from "./resetPasswordRepository.js";
+import { Jerarquia } from "../../models/opcionesModel.js";
+import { Aeropuerto } from "../../models/personalModel.js";
 
 const sessionRouter = express.Router();
 
@@ -86,7 +88,16 @@ sessionRouter.delete("/", (req, res) => {
 });
 
 sessionRouter.post("/register", async (req, res, next) => {
-  const { dni, password, email, firstname, lastname, legajo } = req.body;
+  const {
+    dni,
+    password,
+    email,
+    firstname,
+    lastname,
+    legajo,
+    currentAirportId,
+    jerarquiaId,
+  } = req.body;
   try {
     const { oficial, user } = await UserRepository.findAllParameters(
       email,
@@ -110,6 +121,8 @@ sessionRouter.post("/register", async (req, res, next) => {
       firstname,
       lastname,
       legajo,
+      currentAirportId,
+      jerarquiaId,
     });
     try {
       const userID = await UserRepository.create({
@@ -127,4 +140,23 @@ sessionRouter.post("/register", async (req, res, next) => {
   }
 });
 
+const fetchOptions = async (model) => {
+  try {
+    const options = await model.find().exec();
+    return options;
+  } catch (error) {
+    console.error(`Error fetching options: ${error.message}`);
+    throw error;
+  }
+};
+
+sessionRouter.get("/jerarquias", async (req, res, next) => {
+  const listaJerarquias = await fetchOptions(Jerarquia);
+  res.json(listaJerarquias);
+});
+
+sessionRouter.get("/unidad", async (req, res, next) => {
+  const listaUnidades = await fetchOptions(Aeropuerto);
+  res.json(listaUnidades);
+});
 export default sessionRouter;

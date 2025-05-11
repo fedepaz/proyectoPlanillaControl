@@ -32,6 +32,8 @@ const registerSchema = z.object({
     .int()
     .min(500000, "Legajo no corresponde")
     .max(600000, "Legajo no corresponde"),
+  currentAirportId: z.string(),
+  jerarquiaId: z.string(),
 });
 
 export { registerSchema };
@@ -77,6 +79,8 @@ const oficialSchema = z.object({
       const num = parseInt(val, 10);
       return num >= 500000 && num <= 600000;
     }, "Legajo no corresponde"),
+  unidadId: z.string(),
+  jerarquiaId: z.string(),
 });
 
 export { oficialSchema };

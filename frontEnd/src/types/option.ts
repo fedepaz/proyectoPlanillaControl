@@ -1,7 +1,10 @@
+import { UserHierarchy } from "../actions/types";
+
 export type Option = {
   label: string;
   id: string;
 };
+
 export type OficialOption = {
   id: string;
   dni: string;
@@ -18,6 +21,18 @@ export type MatriculaOption = {
 export type EmpresaOption = {
   id: string;
   empresa: string;
+};
+
+export type UnidadOption = {
+  id: string;
+  aeropuerto: string;
+  codIATA: string;
+  codOAĆI: string;
+};
+
+export type JerarquiaOption = {
+  id: string;
+  label: string;
 };
 
 export type PlanillaOption = {

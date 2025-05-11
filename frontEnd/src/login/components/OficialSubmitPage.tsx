@@ -20,12 +20,18 @@ import {
   defaultValuesOficial,
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
+import { RHFDropDownJerarquia } from "../../components/RHFDropDownJerarquia";
+import { useJerarquia, useUnidad } from "../../planillas/services/queries";
+import { JerarquiaOption, UnidadOption } from "../../types/option";
+import { RHFDropDownCurrentAirport } from "../../components/RHFDropDownCurrentAirport";
 
 interface SuccessData {
   dni: string;
   firstname: string;
   lastname: string;
   legajo: number;
+  unidadId: string;
+  jerarquiaId: string;
 }
 
 interface OficialSubmitPageProps {
@@ -51,12 +57,31 @@ export function OficialSubmitPage({
     formState: { isValid },
   } = methods;
 
+  const jerarquiasQuery = useJerarquia();
+  console.log(jerarquiasQuery);
+  const jerarquiasOptions: JerarquiaOption[] =
+    jerarquiasQuery.data?.map((item) => ({
+      id: item.id,
+      label: item.label,
+    })) || [];
+
+  const unidadesQuery = useUnidad();
+  const unidadesOptions: UnidadOption[] =
+    unidadesQuery.data?.map((item) => ({
+      id: item.id,
+      aeropuerto: item.aeropuerto,
+      codIATA: item.codIATA,
+      codOAĆI: item.codOAĆI,
+    })) || [];
+
   const onSubmit = (formData: OficialSchema) => {
     onSuccess({
       dni: formData.dni,
       firstname: formData.firstname,
       lastname: formData.lastname,
       legajo: parseInt(formData.legajo, 10),
+      unidadId: formData.unidadId,
+      jerarquiaId: formData.jerarquiaId,
     });
   };
   const onRegreso = () => {
@@ -156,6 +181,21 @@ export function OficialSubmitPage({
               name="legajo"
               autoComplete="legajo"
               autoFocus
+            />
+            <RHFDropDownJerarquia<OficialSchema>
+              margin="normal"
+              fullWidth
+              name="jerarquiaId"
+              options={jerarquiasOptions}
+              label="Jerarquia"
+            />
+
+            <RHFDropDownCurrentAirport<OficialSchema>
+              margin="normal"
+              fullWidth
+              name="unidadId"
+              options={unidadesOptions}
+              label="Unidad"
             />
             <Divider sx={{ my: 3 }} />
 

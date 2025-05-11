@@ -10,6 +10,16 @@ export enum UserRole {
   OPER_CEAC = "operCeac",
 }
 
+export enum UserHierarchy {
+  AYUDANTE = "ayudante",
+  PRINCIPAL = "principal",
+  MAYOR = "mayor",
+  JEFE = "jefe",
+  SUBINSPECTOR = "subinspector",
+  INSPECTOR = "inspector",
+  COMISIONADO = "comisionado",
+}
+
 export enum ActionCategory {
   MAIN = "main",
   ACCOUNT = "account",

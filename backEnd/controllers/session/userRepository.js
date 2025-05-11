@@ -2,6 +2,7 @@ import { User } from "./userModel.js";
 import { Aeropuerto, Oficial } from "../../models/personalModel.js";
 import bcrypt from "bcrypt";
 import { defaultPassword } from "../../enums/enums.js";
+import { Jerarquia } from "../../models/opcionesModel.js";
 
 export class UserRepository {
   static async create({ dni, password, email, oficialId }) {
@@ -35,19 +36,20 @@ export class UserRepository {
     firstname,
     lastname,
     legajo,
-    currentAirport,
-    jerarquia,
+    currentAirportId,
+    jerarquiaId,
   }) {
     try {
       const existingAirport = await Aeropuerto.findOne({
-        aeropuerto: currentAirport,
+        id: currentAirportId,
       });
       if (!existingAirport) {
         const error = new Error();
         error.name = "AirportNotFound";
         throw error;
       }
-      const existingJerarquia = await Jerarquia.findOne({ label: jerarquia });
+
+      const existingJerarquia = await Jerarquia.findOne({ id: jerarquiaId });
       if (!existingJerarquia) {
         const error = new Error();
         error.name = "JerarquiaNotFound";
