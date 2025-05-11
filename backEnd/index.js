@@ -75,6 +75,7 @@ app.get("/", (request, response) => {
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
+app.use("/aeropuerto", aeropuertoRouter);
 app.use(authenticate);
 app.use(csrfProtection);
 app.use("/csrf-token", crsfTokenRouter);
@@ -89,7 +90,6 @@ app.use("/personalSeguridad", personalSeguridadRouter);
 app.use("/aeronave", aeronaveRouter);
 app.use("/empresa", empresaRouter);
 app.use("/codVuelo", codVueloRouter);
-app.use("/aeropuerto", aeropuertoRouter);
 app.use("/vehiculos", vehiculosRouter);
 
 app.use(handleErrors);

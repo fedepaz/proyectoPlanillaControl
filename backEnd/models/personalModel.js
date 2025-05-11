@@ -21,6 +21,12 @@ const oficialSchema = new Schema({
     min: [500000, "Legajo no corresponde"],
     max: [600000, "Legajo no corresponde"],
   },
+  currentAirport: {
+    type: Schema.Types.ObjectId,
+    ref: "Aeropuerto",
+    required: true,
+  },
+  jerarquia: { type: Schema.Types.ObjectId, ref: "Jerarquia", required: true },
 });
 
 oficialSchema.set("toJSON", {

@@ -9262,4 +9262,204 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     ---------------------
 
+    [2025-05-10T23:06:04.320Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-05-10T23:07:01.061Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-05-10T23:09:48.010Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MissingData: Missing required fields: AEROPUERTO, CODIATA, CODOACI
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:64:21
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-05-11T01:04:26.950Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto Internacional de Corrientes Doctor Fernando Piragine Niveyro","codIATA":"CNQ","codOACI":"SARC"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. AEROPUERTO already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:09:13.490Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto Internacional General Enrique Mosconi","codIATA":"CRD","codOACI":"SAVC"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:11:36.366Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto El Tehuelche","codIATA":"PMY","codOACI":"SAVY"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:12:16.777Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto Internacional de El Calafate Comandante Armando Tola","codIATA":"FTE","codOACI":"SAWC"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:13:34.835Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto Internacional Piloto Civil Norberto Fernández","codIATA":"RGL","codOACI":"SAWG"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:15:25.463Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto de Santa Rosa","codIATA":"RSA","codOACI":"SAZR"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. AEROPUERTO already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:15:52.503Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto Internacional San Carlos de Bariloche Teniente Luis Candelaria","codIATA":"BRC","codOACI":"SAZS"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:19:53.956Z]
+    URL: /aeropuerto/
+    Method: POST
+    Body: {"aeropuerto":"Aeropuerto de San Martín de Los Andes Aviador Carlos Campos","codIATA":"CPC","codOACI":"SAZY"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.43.4
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODIATA already exists-ROUTER
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-05-11T01:20:07.732Z]
+    URL: /favicon.ico
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     

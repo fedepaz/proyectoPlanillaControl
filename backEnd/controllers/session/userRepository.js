@@ -1,5 +1,5 @@
 import { User } from "./userModel.js";
-import { Oficial } from "../../models/personalModel.js";
+import { Aeropuerto, Oficial } from "../../models/personalModel.js";
 import bcrypt from "bcrypt";
 import { defaultPassword } from "../../enums/enums.js";
 
@@ -30,22 +30,37 @@ export class UserRepository {
     }
   }
 
-  static async createOficial({ dni, firstname, lastname, legajo }) {
-    const existingOficial = await Oficial.findOne({
-      $or: [{ dni }, { legajo }],
-    });
-    if (existingOficial !== null) {
-      const error = new Error();
-      error.name = "DuplicateData";
-      error.message = "El oficial ya existe, comunicarse con el administrador";
-      throw error;
-    }
+  static async createOficial({
+    dni,
+    firstname,
+    lastname,
+    legajo,
+    currentAirport,
+    jerarquia,
+  }) {
     try {
+      const existingAirport = await Aeropuerto.findOne({
+        aeropuerto: currentAirport,
+      });
+      if (!existingAirport) {
+        const error = new Error();
+        error.name = "AirportNotFound";
+        throw error;
+      }
+      const existingJerarquia = await Jerarquia.findOne({ label: jerarquia });
+      if (!existingJerarquia) {
+        const error = new Error();
+        error.name = "JerarquiaNotFound";
+        throw error;
+      }
+
       const newOficial = new Oficial({
         dni,
         firstname,
         lastname,
         legajo,
+        currentAirport,
+        jerarquia,
       });
       const savedOficial = await newOficial.save();
       return savedOficial.id;

@@ -79,6 +79,12 @@ const ERROR_HANDLERS = {
     status: 404,
     body: { error: "Planilla Not Found" },
   }),
+
+  JearquiaNotFound: () => ({
+    status: 404,
+    body: { error: "Jearquia Not Found" },
+  }),
+
   NotFound: ({ message }) => ({ status: 404, body: { error: message } }),
 
   MissingData: ({ message }) => ({ status: 400, body: { error: message } }),
