@@ -76,10 +76,13 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
 
   const handleOficialSubmit = (data: OficialData) => {
     setOficialData(data);
+    console.log(data);
     setIsFirstStep(false);
+    console.log(oficialData);
   };
 
   const onSubmit = (data: CredentialsSchema) => {
+    console.log(oficialData);
     if (!oficialData) return;
     const completeData = {
       dni: oficialData.dni,

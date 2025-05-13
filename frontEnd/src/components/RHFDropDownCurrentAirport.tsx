@@ -22,6 +22,7 @@ export function RHFDropDownCurrentAirport<T extends FieldValues>({
   name,
   options,
   label,
+  margin = "normal",
 }: Props<T>) {
   const { control } = useFormContext<T>();
   const theme = useTheme();
@@ -32,63 +33,71 @@ export function RHFDropDownCurrentAirport<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { onChange, value, ...restField } }) => (
-        <FormControl fullWidth>
-          <InputLabel id={`${name}-label`}>{label}</InputLabel>
-          <Select
-            labelId={`${name}-label`}
-            id={name}
-            value={value || ""}
-            label={label}
-            onChange={(event) => {
-              onChange(event.target.value);
-            }}
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 300,
-                  width: "auto",
-                  minWidth: "100%",
+        <Box
+          sx={{
+            width: "100%",
+            mt: margin === "normal" ? 2 : 1,
+            mb: margin === "normal" ? 1 : 0,
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id={`${name}-label`}>{label}</InputLabel>
+            <Select
+              labelId={`${name}-label`}
+              id={name}
+              value={value || ""}
+              label={label}
+              onChange={(event) => {
+                onChange(event.target.value);
+              }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: "auto",
+                    minWidth: "100%",
+                  },
                 },
-              },
-            }}
-            {...restField}
-          >
-            {options?.map((option) => (
-              <MenuItem
-                value={option.id}
-                key={option.id}
-                sx={{
-                  display: "flex",
-                  flexDirection: isMobile ? "column" : "row",
-                  alignItems: isMobile ? "flex-start" : "center",
-                  padding: isMobile ? "8px 16px" : "6px 16px",
-                }}
-              >
-                <Typography
+              }}
+              {...restField}
+            >
+              {options?.map((option) => (
+                <MenuItem
+                  value={option.id}
+                  key={option.id}
                   sx={{
-                    fontWeight: "normal",
-                    marginRight: isMobile ? 0 : 1,
-                    fontSize: isMobile ? "0.875rem" : "inherit",
-                    width: isMobile ? "100%" : "auto",
-                    whiteSpace: "normal",
-                    wordBreak: "break-word",
+                    display: "flex",
+                    flexDirection: isMobile ? "column" : "row",
+                    alignItems: isMobile ? "flex-start" : "center",
+                    padding: isMobile ? "8px 16px" : "6px 16px",
                   }}
                 >
-                  {option.aeropuerto}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: isMobile ? "0.875rem" : "inherit",
-                    marginTop: isMobile ? 0.5 : 0,
-                  }}
-                >
-                  ({option.codIATA})
-                </Typography>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+                  <Typography
+                    sx={{
+                      fontWeight: "normal",
+                      marginRight: isMobile ? 0 : 1,
+                      fontSize: isMobile ? "0.875rem" : "inherit",
+                      width: isMobile ? "100%" : "auto",
+                      whiteSpace: "normal",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {option.aeropuerto}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: isMobile ? "0.875rem" : "inherit",
+                      marginTop: isMobile ? 0.5 : 0,
+                    }}
+                  >
+                    ({option.codIATA})
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
       )}
     />
   );

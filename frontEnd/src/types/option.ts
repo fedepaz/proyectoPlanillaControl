@@ -32,7 +32,7 @@ export type UnidadOption = {
 
 export type JerarquiaOption = {
   id: string;
-  label: string;
+  label: UserHierarchy;
 };
 
 export type PlanillaOption = {

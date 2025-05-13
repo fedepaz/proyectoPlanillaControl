@@ -58,7 +58,6 @@ export function OficialSubmitPage({
   } = methods;
 
   const jerarquiasQuery = useJerarquia();
-  console.log(jerarquiasQuery);
   const jerarquiasOptions: JerarquiaOption[] =
     jerarquiasQuery.data?.map((item) => ({
       id: item.id,

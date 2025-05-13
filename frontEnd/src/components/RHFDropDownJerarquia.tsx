@@ -20,6 +20,7 @@ export function RHFDropDownJerarquia<T extends FieldValues>({
   name,
   options,
   label,
+  margin = "normal",
 }: Props<T>) {
   const { control } = useFormContext<T>();
 
@@ -28,25 +29,33 @@ export function RHFDropDownJerarquia<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { onChange, value, ...restField } }) => (
-        <FormControl fullWidth>
-          <InputLabel id={`${name}-label`}>{label}</InputLabel>
-          <Select
-            labelId={`${name}-label`}
-            id={name}
-            value={value || ""}
-            label={label}
-            onChange={(event) => {
-              onChange(event.target.value);
-            }}
-            {...restField}
-          >
-            {options?.map((option) => (
-              <MenuItem value={option.id} key={option.id}>
-                Oficial {option.jerarquia}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Box
+          sx={{
+            width: "100%",
+            mt: margin === "normal" ? 2 : 1,
+            mb: margin === "normal" ? 1 : 0,
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id={`${name}-label`}>{label}</InputLabel>
+            <Select
+              labelId={`${name}-label`}
+              id={name}
+              value={value || ""}
+              label={label}
+              onChange={(event) => {
+                onChange(event.target.value);
+              }}
+              {...restField}
+            >
+              {options?.map((option) => (
+                <MenuItem value={option.id} key={option.id}>
+                  Oficial {formatHierarchyName(option.label)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
       )}
     />
   );

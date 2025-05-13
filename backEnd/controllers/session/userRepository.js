@@ -40,16 +40,14 @@ export class UserRepository {
     jerarquiaId,
   }) {
     try {
-      const existingAirport = await Aeropuerto.findOne({
-        id: currentAirportId,
-      });
+      const existingAirport = await Aeropuerto.findById(currentAirportId);
       if (!existingAirport) {
         const error = new Error();
         error.name = "AirportNotFound";
         throw error;
       }
 
-      const existingJerarquia = await Jerarquia.findOne({ id: jerarquiaId });
+      const existingJerarquia = await Jerarquia.findById(jerarquiaId);
       if (!existingJerarquia) {
         const error = new Error();
         error.name = "JerarquiaNotFound";
@@ -61,8 +59,8 @@ export class UserRepository {
         firstname,
         lastname,
         legajo,
-        currentAirport,
-        jerarquia,
+        currentAirportId,
+        jerarquiaId,
       });
       const savedOficial = await newOficial.save();
       return savedOficial.id;
