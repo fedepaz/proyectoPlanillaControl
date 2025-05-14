@@ -39,6 +39,19 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentView, setCurrentView] = useState<View>(View.LOGIN);
   const [userRole, setUserRole] = useState<UserRole>(UserRole.AUXILIAR);
+  const [userInfo, setUserInfo] = useState<LoginResponse>({
+    authenticated: false,
+    user: {
+      dni: "",
+      oficialId: {
+        dni: "",
+        firstname: "",
+        lastname: "",
+        legajo: "",
+      },
+      role: "",
+    },
+  });
 
   const theme = isDarkMode ? darkTheme : lightTheme;
   const toggleColorMode = useCallback(() => {
@@ -50,6 +63,7 @@ export function App() {
   useEffect(() => {
     if (!isLoading && data?.authenticated && !error) {
       setIsLoggedIn(true);
+      setUserInfo(data);
       setCurrentView(View.DASHBOARD);
       if (data.user.role) {
         setUserRole(ensureUserRole(data.user.role));
@@ -186,6 +200,7 @@ export function App() {
           onLogout={handleLogout}
           isLoggedIn={isLoggedIn}
           onBackHome={handleBack}
+          userInfo={userInfo}
         />
         <Box
           component="main"

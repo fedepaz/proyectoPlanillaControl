@@ -37,7 +37,7 @@ export const createDashboardActions = (callbacks: {
       ),
       primary: true,
       category: ActionCategory.MAIN,
-      allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
+      allowedRoles: [UserRole.AUXILIAR, UserRole.ADMIN],
     },
     {
       id: "view_history",
@@ -48,7 +48,7 @@ export const createDashboardActions = (callbacks: {
         callbacks.onViewHistory
       ),
       category: ActionCategory.MAIN,
-      allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
+      allowedRoles: [UserRole.AUXILIAR, UserRole.ADMIN],
     },
     {
       id: "view_profile",
@@ -59,7 +59,7 @@ export const createDashboardActions = (callbacks: {
         callbacks.onViewProfile
       ),
       category: ActionCategory.ACCOUNT,
-      allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
+      allowedRoles: [UserRole.AUXILIAR, UserRole.ADMIN],
     },
     {
       id: "open_settings",
@@ -67,7 +67,7 @@ export const createDashboardActions = (callbacks: {
       icon: <SettingsIcon />,
       onClick: createNavigationHandler(View.SETTINGS, callbacks.onOpenSettings),
       category: ActionCategory.ACCOUNT,
-      allowedRoles: [UserRole.AUXILIAR, UserRole.OFICIAL, UserRole.ADMIN],
+      allowedRoles: [UserRole.AUXILIAR, UserRole.ADMIN],
     },
     {
       id: "manage_users",
