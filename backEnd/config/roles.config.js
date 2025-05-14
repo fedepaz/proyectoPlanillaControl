@@ -10,54 +10,95 @@ export const RolesHierarchy = {
   [Roles.AUXILIAR]: 10,
 };
 
+const baseRolePermissions = {
+  profile: {
+    read: true,
+    update: true,
+  },
+  planillas: {
+    read: true,
+    create: true,
+  },
+  dashboard: {
+    view: true,
+  },
+};
+
+const permissionTiers = {
+  ADMIN: {
+    users: {
+      read: true,
+      create: true,
+      update: true,
+      delete: true,
+    },
+    roles: {
+      read: true,
+      create: true,
+      update: true,
+      delete: true,
+    },
+    all: {
+      read: true,
+      create: true,
+      update: true,
+      delete: true,
+    },
+  },
+  HIGH: {
+    oficials: {
+      read: true,
+      create: true,
+      update: true,
+    },
+    planillas: {
+      read: true,
+      create: true,
+      update: true,
+    },
+  },
+  MEDIUM: {
+    historial: {
+      read: true,
+    },
+    planillas: {
+      read: true,
+      update: true,
+    },
+  },
+  LOW: {},
+};
+
 export const RoleAccessMatrix = {
   [Roles.ADMIN]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
+    ...baseRolePermissions,
+    ...permissionTiers.ADMIN,
   },
   [Roles.AUXILIAR]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
+    ...baseRolePermissions,
+    ...permissionTiers.LOW,
   },
   [Roles.RESPONSABLE]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: false, create: false, update: false, delete: false },
-    planillas: { read: false, create: false, update: false, delete: false },
-    historial: { read: false, create: false, update: false, delete: false },
+    ...baseRolePermissions,
+    ...permissionTiers.MEDIUM,
   },
   [Roles.SUPERVISOR]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
+    ...baseRolePermissions,
+    ...permissionTiers.HIGH,
   },
   [Roles.OPER_UNIDAD]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
+    ...baseRolePermissions,
+    ...permissionTiers.MEDIUM,
   },
   [Roles.OPER_REGIONAL]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
-  },
-  [Roles.OPER_CEAC]: {
-    users: { read: true, create: true, update: true, delete: true },
-    roles: { read: true, create: true, update: true, delete: true },
-    oficials: { read: true, create: true, update: true, delete: true },
-    planillas: { read: true, create: true, update: true, delete: true },
-    historial: { read: true, create: true, update: true, delete: true },
+    ...baseRolePermissions,
+    ...permissionTiers.MEDIUM,
+
+    oficials: {
+      read: true,
+      create: true,
+      update: true,
+      delete: true,
+    },
   },
 };
