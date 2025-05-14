@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { Roles } from "../../enums/enums.js";
 
 const userSchema = new Schema({
   dni: {
@@ -19,7 +20,12 @@ const userSchema = new Schema({
     required: true,
     minlength: [9, "Password must be at least 10 characters long"],
   },
-  role: { type: String, required: true },
+  role: {
+    type: String,
+    required: true,
+    enum: Object.values(Roles),
+    default: Roles.AUXILIAR,
+  },
   oficialId: {
     type: Schema.Types.ObjectId,
     ref: "Oficial",
