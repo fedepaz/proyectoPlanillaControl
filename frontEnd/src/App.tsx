@@ -20,6 +20,14 @@ interface LoginResponse {
       firstname: string;
       lastname: string;
       legajo: string;
+      currentAirportId: {
+        aeropuerto: string;
+        codIATA: string;
+        codOACI: string;
+      };
+      jerarquiaId: {
+        jerarquia: string;
+      };
     };
     role: string;
   };
@@ -48,6 +56,14 @@ export function App() {
         firstname: "",
         lastname: "",
         legajo: "",
+        currentAirportId: {
+          aeropuerto: "",
+          codIATA: "",
+          codOACI: "",
+        },
+        jerarquiaId: {
+          jerarquia: "",
+        },
       },
       role: "",
     },

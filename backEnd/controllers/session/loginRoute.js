@@ -21,6 +21,16 @@ sessionRouter.get("/", (req, res) => {
           lastname: user.oficialId.lastname,
           legajo: user.oficialId.legajo,
           id: user.oficialId.id,
+          currentAirportId: {
+            aeropuerto: user.oficialId.currentAirportId.aeropuerto,
+            codIATA: user.oficialId.currentAirportId.codIATA,
+            codOACI: user.oficialId.currentAirportId.codOACI,
+            id: user.oficialId.currentAirportId.id,
+          },
+          jerarquiaId: {
+            jerarquia: user.oficialId.jerarquiaId.label,
+            id: user.oficialId.jerarquiaId.id,
+          },
         },
         role: user.role,
       },

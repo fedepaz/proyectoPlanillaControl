@@ -18,6 +18,17 @@ interface LoginResponse {
       firstname: string;
       lastname: string;
       legajo: string;
+      id: string;
+      currentAirportId: {
+        aeropuerto: string;
+        codIATA: string;
+        codOACI: string;
+        id: string;
+      };
+      jerarquiaId: {
+        jerarquia: string;
+        id: string;
+      };
     };
     role: string;
   };

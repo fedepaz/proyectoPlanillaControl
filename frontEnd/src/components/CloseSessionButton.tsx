@@ -1,5 +1,12 @@
 "use client";
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 interface CloseSessionButtonProps {
@@ -9,9 +16,28 @@ interface CloseSessionButtonProps {
 export default function CloseSessionButton({
   onLogout,
 }: CloseSessionButtonProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const onLogoutButton = () => {
     onLogout(true);
   };
+
+  if (!isMobile) {
+    return (
+      <Button
+        color="inherit"
+        onClick={onLogoutButton}
+        startIcon={<LogoutIcon fontSize="small" />}
+        size="small"
+        sx={{
+          borderRadius: 1,
+        }}
+      >
+        Cerrar Sesion
+      </Button>
+    );
+  }
 
   return (
     <Tooltip title="Cerrar sesión" arrow placement="bottom">
@@ -25,7 +51,7 @@ export default function CloseSessionButton({
           justifyContent: "center",
           padding: "4px 8px",
           borderRadius: 1,
-          minWidth: "auto",
+          minWidth: "48px",
         }}
       >
         <LogoutIcon

@@ -112,7 +112,11 @@ export class UserRepository {
 
   static async login({ dni, password }) {
     try {
-      const user = await User.findOne({ dni }).populate("oficialId");
+      const user = await User.findOne({ dni }).populate({
+        path: "oficialId",
+        populate: [{ path: "currentAirportId" }, { path: "jerarquiaId" }],
+      });
+
       if (!user) {
         const error = new Error();
         error.name = "UserNotFound";
@@ -146,6 +150,7 @@ export class UserRepository {
           oficialId: user.oficialId,
           role: user.role,
         };
+
         return userWithoutPassword;
       }
     } catch (error) {
