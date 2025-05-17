@@ -38,6 +38,7 @@ export function RHFDropDownCurrentAirport<T extends FieldValues>({
             width: "100%",
             mt: margin === "normal" ? 2 : 1,
             mb: margin === "normal" ? 1 : 0,
+            position: "relative",
           }}
         >
           <FormControl fullWidth>
@@ -51,12 +52,32 @@ export function RHFDropDownCurrentAirport<T extends FieldValues>({
                 onChange(event.target.value);
               }}
               MenuProps={{
+                container: document.body,
                 PaperProps: {
                   style: {
                     maxHeight: 300,
+                  },
+                  sx: {
                     width: "auto",
                     minWidth: "100%",
+                    maxWidth: {
+                      xs: "calc(100vw - 32px)",
+                      sm: 400,
+                    },
+                    zIndex: 9999,
+                    mt: 0.5,
+                    boxShadow: (theme) => theme.shadows[4],
+                    overflow: "hidden",
                   },
+                },
+                disablePortal: false,
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left",
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left",
                 },
               }}
               {...restField}

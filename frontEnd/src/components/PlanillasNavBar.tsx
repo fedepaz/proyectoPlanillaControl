@@ -186,7 +186,13 @@ export function PlanillasNavbar({
                     title={userInfo.user.oficialId.currentAirportId.aeropuerto}
                   >
                     <Chip
-                      icon={<FlightTakeoffIcon />}
+                      icon={
+                        <FlightTakeoffIcon
+                          sx={{
+                            color: "3a73b2",
+                          }}
+                        />
+                      }
                       label={getAirportCode()}
                       size="small"
                       color="primary"
