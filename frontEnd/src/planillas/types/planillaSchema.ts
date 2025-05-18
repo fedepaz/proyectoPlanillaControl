@@ -2,13 +2,13 @@ import { z } from "zod";
 
 const tipoControlSchema = z
   .array(z.string())
-  .min(1, "At least one control type is required");
+  .min(1, "Al menos un tipo de control es requerido");
 const mediosTecSchema = z
   .array(z.string())
-  .min(1, "At least one technical method is required");
+  .min(1, "Al menos un medio tecnico es requerido");
 const tipoProSchema = z
   .array(z.string())
-  .min(1, "At least one procedure type is required");
+  .min(1, "Al menos un tipo de procedimiento es requerido");
 
 // Custom validator for 24-hour time format (HHMM)
 const timeFormatValidator = (value: string) => {
@@ -39,21 +39,21 @@ const planillaSchema = z
     id: z.string().optional(),
     datosPsa: z
       .object({
-        fecha: z.string().min(1, "Date is required"),
-        responsable: z.string().min(1, "Responsible officer is required"),
+        fecha: z.string().min(1, "Fecha es requerida"),
+        responsable: z.string().min(1, "Responsable es requerido"),
         horaIni: z
           .string()
-          .min(1, "Start time is required")
+          .min(1, "Hora inicio es requerida")
           .refine(timeFormatValidator, {
-            message: "Start time must be in 24-hour format (HHMM)",
+            message: "Hora inicio debe estar en formato 24-horas (HHMM)",
           }),
         horaFin: z
           .string()
-          .min(1, "End time is required")
+          .min(1, "Hora fin es requerida")
           .refine(timeFormatValidator, {
-            message: "End time must be in 24-hour format (HHMM)",
+            message: "Hora fin debe estar en formato 24-horas (HHMM)",
           }),
-        cant: z.string().min(1, "Count is required"),
+        cant: z.string().min(1, "Cantidad es requerida"),
         tipoControl: tipoControlSchema,
         medioTec: mediosTecSchema,
         tipoPro: tipoProSchema,
@@ -65,31 +65,34 @@ const planillaSchema = z
 
     datosVuelo: z
       .object({
-        empresa: z.string().min(1, "Company is required"),
-        codVuelo: z.string().min(1, "Flight code is required"),
+        tipoVuelo: z.enum(["arribo", "partida"], {
+          required_error: "Tipo de vuelo es requerido",
+        }),
+        empresa: z.string().min(1, "Empresa es requerida"),
+        codVuelo: z.string().min(1, "Codigo de vuelo es requerido"),
         horaArribo: z
           .string()
-          .min(1, "Arrival time is required")
+          .min(1, "Hora de arribo es requerida")
           .refine(timeFormatValidator, {
-            message: "Arrival time must be in 24-hour format (HHMM)",
+            message: "Hora de arribo debe estar en formato 24-horas (HHMM)",
           }),
         horaPartida: z
           .string()
-          .min(1, "Departure time is required")
+          .min(1, "Hora de partida es requerida")
           .refine(timeFormatValidator, {
-            message: "Departure time must be in 24-hour format (HHMM)",
+            message: "Hora de partida debe estar en formato 24-horas (HHMM)",
           }),
-        demora: z.string().min(1, "Delay type is required"),
-        tipoVuelo: z.string().min(1, "Flight type is required"),
+        demora: z.string().min(1, "Tipo de demora es requerido"),
         matriculaAeronave: z
           .string()
-          .min(1, "Aircraft registration is required"),
-        posicion: z.string().min(1, "Position is required"),
+          .min(1, "Matricula de aeronave es requerida"),
+        posicion: z.string().min(1, "Posicion es requerida"),
       })
       .refine(
         (data) => isTimeBeforeOrEqual(data.horaArribo, data.horaPartida),
         {
-          message: "Departure time must be after or equal to arrival time",
+          message:
+            "La hora de partida no puede ser anterior a la hora de arribo",
           path: ["horaPartida"],
         }
       ),
@@ -99,9 +102,9 @@ const planillaSchema = z
         z.object({
           personalEmpresa: z
             .array(z.string())
-            .min(1, "At least one company personnel is required"),
-          funcion: z.string().min(1, "Function is required"),
-          grupo: z.string().min(1, "Group is required"),
+            .min(1, "Se requiere al menos una persona"),
+          funcion: z.string().min(1, "Se requiere una función"),
+          grupo: z.string().min(1, "Se requiere un grupo"),
         })
       )
       .optional()
@@ -112,8 +115,8 @@ const planillaSchema = z
         z.object({
           personalSegEmpresa: z
             .array(z.string())
-            .min(1, "At least one security personnel is required"),
-          empresaSeguridad: z.string().min(1, "Security company is required"),
+            .min(1, "Se requiere al menos una persona"),
+          empresaSeguridad: z.string().min(1, "Se requiere una empresa"),
         })
       )
       .optional()
@@ -122,11 +125,9 @@ const planillaSchema = z
     datosVehiculos: z
       .array(
         z.object({
-          vehiculo: z.string().min(1, "Vehicle is required"),
-          operadorVehiculo: z.string().min(1, "Vehicle operator is required"),
-          observacionesVehiculo: z
-            .string()
-            .min(1, "Vehicle observations are required"),
+          vehiculo: z.string().min(1, "Se requiere un vehículo"),
+          operadorVehiculo: z.string().min(1, "Se requiere un operador"),
+          observacionesVehiculo: z.string().min(1, "Se requiere observaciones"),
         })
       )
       .optional()
@@ -149,7 +150,7 @@ const planillaSchema = z
       );
     },
     {
-      message: "Arrival time cannot be before PSA start time",
+      message: "La hora de arribo no puede ser anterior a la hora de inicio",
       path: ["datosVuelo", "horaArribo"],
     }
   )
@@ -166,7 +167,7 @@ const planillaSchema = z
       );
     },
     {
-      message: "Departure time cannot be after PSA end time",
+      message: "La hora de partida no puede ser posterior a la hora de fin",
       path: ["datosVuelo", "horaPartida"],
     }
   );
@@ -187,12 +188,12 @@ export const defaultValuesPlanilla: PlanillaSchema = {
     tipoPro: [],
   },
   datosVuelo: {
+    tipoVuelo: "arribo",
     empresa: "",
     codVuelo: "",
     horaArribo: "",
     horaPartida: "",
     demora: "",
-    tipoVuelo: "",
     matriculaAeronave: "",
     posicion: "",
   },

@@ -12,14 +12,6 @@ import { CssBaseline, Box, Snackbar, Alert } from "@mui/material";
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
 
-const stepFields = {
-  0: ["datosVuelo"],
-  1: ["datosVuelo"],
-  2: ["datosVuelo"],
-  3: ["datosVuelo"],
-  4: ["novEquipajes", "novInspeccion", "novOtras", "datosPsa"],
-};
-
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
 }
@@ -33,13 +25,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
     resolver: zodResolver(planillaSchema),
     defaultValues: defaultValuesPlanilla,
   });
-  const {
-    setValue,
-    handleSubmit,
-    formState: { errors },
-    trigger,
-    getValues,
-  } = methods;
+  const { setValue, handleSubmit } = methods;
 
   const { data, error, isError, isLoading, refetch } = useSession();
 
@@ -63,34 +49,10 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const sendBack = (data: boolean) => {
     onBack(data);
   };
+  const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 4));
+  const handleBack = () => setActiveStep((prev) => Math.max(prev - 1, 0));
 
-  const handleNext = async () => {
-    const fieldsToValidate =
-      stepFields[activeStep as keyof typeof stepFields] || [];
-    let isStepValid = true;
-
-    for (const field of fieldsToValidate) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const fieldValid = await trigger(field as any);
-      if (!fieldValid) {
-        isStepValid = false;
-      }
-    }
-
-    if (isStepValid) {
-      setActiveStep((prevStep) => Math.min(prevStep + 1, 4));
-      console.log("Active step changed to " + activeStep);
-    } else {
-      setErrorMessage("Por favor, rellena todos los campos antes de continuar");
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
-    console.log("Active step changed to " + activeStep);
-  };
-
-  const handleCloseError = () => {
+  const clearErrorMessage = () => {
     setErrorMessage(null);
   };
 
@@ -108,7 +70,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
             overflow: "hidden",
           }}
         >
-          <Loading />;
+          <Loading />
         </Box>
       </>
     );
@@ -143,19 +105,21 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Planillas
-          onBack={sendBack}
           activeStep={activeStep}
+          setErrorMessage={setErrorMessage}
+          clearErrorMessage={clearErrorMessage}
+          onBack={sendBack}
           onNext={handleNext}
           onPrevious={handleBack}
         />
         <Snackbar
           open={!!errorMessage}
           autoHideDuration={6000}
-          onClose={handleCloseError}
+          onClose={clearErrorMessage}
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
           <Alert
-            onClose={handleCloseError}
+            onClose={clearErrorMessage}
             severity="error"
             sx={{ width: "100%" }}
           >

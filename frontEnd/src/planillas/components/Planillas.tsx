@@ -19,22 +19,28 @@ import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { DatosPsa } from "./planillaComponents/datosPsa";
+import { useStepValidation } from "../hooks/useStepValidation";
 
 interface PlanillaProps {
-  onBack: (data: boolean) => void;
   activeStep: number;
+  setErrorMessage: (message: string | null) => void;
+  clearErrorMessage: () => void;
+  onBack: (data: boolean) => void;
   onNext: () => void;
   onPrevious: () => void;
 }
 
 export function Planillas({
-  onBack,
   activeStep,
+  setErrorMessage,
+  clearErrorMessage,
+  onBack,
   onNext,
   onPrevious,
 }: PlanillaProps) {
   //const { setValue } = useFormContext<PlanillaSchema>();
 
+  const { validateCurrentStep, errorMessage } = useStepValidation(activeStep);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -42,83 +48,71 @@ export function Planillas({
     onBack(false);
   };
 
+  const handleNext = async () => {
+    clearErrorMessage();
+    const isValid = await validateCurrentStep();
+    if (isValid) {
+      onNext();
+    } else if (errorMessage) {
+      setErrorMessage(errorMessage);
+    }
+  };
+
   const renderStepContent = () => {
     switch (activeStep) {
       case 0:
-        return <DatosVuelo />;
-      case 1: //Terrestres
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <Box
-              sx={{
-                height: "200px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <DatosTerrestre />
-            </Box>
+            <DatosPsa />
+          </Paper>
+        );
+      case 1:
+        return (
+          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
+            <DatosVuelo />
           </Paper>
         );
       case 2:
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <Box
-              sx={{
-                height: "200px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <DatosSeguridad />
-            </Box>
+            <DatosTerrestre />
           </Paper>
         );
-      case 3: // vehiculos
+      case 3:
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <Box
-              sx={{
-                height: "200px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <DatosVehiculos />
-            </Box>
+            <DatosSeguridad />
           </Paper>
         );
-      case 4:
+      case 4: // vehiculos
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <Box
-              sx={{
-                height: "200px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <DatosVehiculos />
+          </Paper>
+        );
+      case 5:
+        return (
+          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
+            <Stack spacing={2}>
               <RHFTextField<PlanillaSchema>
                 name="novEquipajes"
                 label="Novedades Equipajes"
+                multiline
+                rows={2}
               />
-              {/*novInspeccion: string;*/}
               <RHFTextField<PlanillaSchema>
                 name="novInspeccion"
                 label="Novedades Inspección"
+                multiline
+                rows={2}
               />
-              {/*novOtras: string;*/}
               <RHFTextField<PlanillaSchema>
                 name="novOtras"
                 label="Otras Novedades"
+                multiline
+                rows={2}
               />
-
-              <DatosPsa />
-            </Box>
+            </Stack>
           </Paper>
         );
       default:
@@ -126,7 +120,7 @@ export function Planillas({
     }
   };
 
-  const isLastStep = activeStep === 4;
+  const isLastStep = activeStep === 5;
 
   return (
     <Container
@@ -199,7 +193,7 @@ export function Planillas({
                 variant="contained"
                 color="primary"
                 startIcon={<ArrowForwardIcon />}
-                onClick={onNext}
+                onClick={handleNext}
                 sx={{ minWidth: "120px" }}
               >
                 Siguiente

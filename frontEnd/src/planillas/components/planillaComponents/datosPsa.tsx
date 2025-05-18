@@ -1,46 +1,42 @@
 import { Divider, Stack, Typography } from "@mui/material";
+import { useFormContext, useWatch } from "react-hook-form";
+
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
-import { PlanillaSchema } from "../../types/planillaSchema";
-import { OficialComponent } from "./components/oficialComponent";
 import { RHFTextField } from "../../../components/RHFTextField";
 import { RHFToggleButtonGroup } from "../../../components/RHFToggleButtonGroup";
+import { RHFCheckBox } from "../../../components/RHFCheckBox";
+import Loading from "../../../components/Loading";
+
+import { PlanillaSchema } from "../../types/planillaSchema";
+import { OficialComponent } from "./components/oficialComponent";
 import {
   useMediosTec,
   useTipoControl,
   useTipoPro,
 } from "../../services/queries";
-import { RHFCheckBox } from "../../../components/RHFCheckBox";
-import Loading from "../../../components/Loading";
 import { useEffect } from "react";
+import { format } from "date-fns";
 
 export function DatosPsa() {
-  const {
-    data: tipoControlQuery,
-    isLoading: tipoControlQueryIsLoading,
-    error: tipoControlQueryError,
-  } = useTipoControl();
-  const {
-    data: medioTecQuery,
-    isLoading: medioTecQueryIsLoading,
-    error: medioTecQueryError,
-  } = useMediosTec();
-  const {
-    data: tipoProQuery,
-    isLoading: tipoProQueryIsLoading,
-    error: tipoProQueryError,
-  } = useTipoPro();
+  const { setValue, control } = useFormContext<PlanillaSchema>();
+  const { data: tipoControlQuery, isLoading: tipoControlQueryIsLoading } =
+    useTipoControl();
+  const { data: medioTecQuery, isLoading: medioTecQueryIsLoading } =
+    useMediosTec();
+  const { data: tipoProQuery, isLoading: tipoProQueryIsLoading } = useTipoPro();
+
+  const startTime = useWatch({
+    control,
+    name: "datosPsa.horaIni",
+  });
 
   useEffect(() => {
-    if (tipoControlQueryError) {
-      console.log(tipoControlQueryError);
-    }
-    if (medioTecQueryError) {
-      console.log(medioTecQueryError);
-    }
-    if (tipoProQueryError) {
-      console.log(tipoProQueryError);
-    }
-  }, [tipoControlQueryError, medioTecQueryError, tipoProQueryError]);
+    const fechaControl = startTime
+      ? format(new Date(startTime), "dd/MM/yyyy")
+      : format(new Date(), "dd/MM/yyyy");
+
+    setValue("datosPsa.fecha", fechaControl);
+  }, [setValue, startTime]);
 
   if (
     tipoControlQueryIsLoading ||
@@ -49,7 +45,6 @@ export function DatosPsa() {
   ) {
     return <Loading />;
   }
-  //const { setValue } = useFormContext<PlanillaSchema>();
 
   return (
     <Stack
@@ -57,15 +52,12 @@ export function DatosPsa() {
       divider={<Divider orientation="horizontal" flexItem />}
     >
       <Typography variant="h6" align="center" gutterBottom>
-        Datos Psa
+        DATOS DEL CONTROL PSA
       </Typography>
+
       <RHFDateTimePicker<PlanillaSchema>
         name="datosPsa.horaIni"
-        label="Comienzo"
-      />
-      <RHFDateTimePicker<PlanillaSchema>
-        name="datosPsa.horaFin"
-        label="Finalizacion"
+        label="Hora de Inicio"
       />
       <RHFTextField<PlanillaSchema> name="datosPsa.cant" label="Cantidad" />
       <RHFToggleButtonGroup<PlanillaSchema>
@@ -83,7 +75,6 @@ export function DatosPsa() {
         options={tipoProQuery}
         label="Tipo de Procedimientos"
       />
-      <OficialComponent />
     </Stack>
   );
 }
