@@ -38,6 +38,34 @@ const detailedStepFields = {
     "novOtras",
   ],
 };
+const fieldNames: Record<string, string> = {
+  "datosPsa.fecha": "Fecha",
+  "datosPsa.responsable": "Responsable",
+  "datosPsa.horaIni": "Hora de inicio",
+  "datosPsa.cant": "Cantidad",
+  "datosPsa.tipoControl": "Tipo de control",
+  "datosPsa.medioTec": "Medio técnico",
+  "datosPsa.tipoPro": "Tipo de procedimiento",
+  "datosVuelo.tipoVuelo": "Tipo de vuelo",
+  "datosVuelo.empresa": "Empresa",
+  "datosVuelo.codVuelo": "Código de vuelo",
+  "datosVuelo.horaArribo": "Hora de arribo",
+  "datosVuelo.horaPartida": "Hora de partida",
+  "datosVuelo.demora": "Demora",
+  "datosVuelo.matriculaAeronave": "Matrícula de aeronave",
+  "datosVuelo.posicion": "Posición",
+  "datosTerrestre.personalEmpresa": "Personal de empresa",
+  "datosTerrestre.funcion": "Función",
+  "datosTerrestre.grupo": "Grupo",
+  "datosSeguridad.personalSegEmpresa": "Personal de seguridad",
+  "datosSeguridad.empresaSeguridad": "Empresa de seguridad",
+  "datosVehiculos.vehiculo": "Vehículo",
+  "datosVehiculos.operadorVehiculo": "Operador del vehículo",
+  "datosVehiculos.observacionesVehiculo": "Observaciones del vehículo",
+  novEquipajes: "Novedades de equipajes",
+  novInspeccion: "Novedades de inspección",
+  novOtras: "Otras novedades",
+};
 
 interface ValidationHookResult {
   validateCurrentStep: () => Promise<boolean>;
@@ -75,6 +103,10 @@ export function useStepValidation(activeStep: number): ValidationHookResult {
     return undefined;
   };
 
+  const getFieldName = (field: string): string => {
+    return fieldNames[field] || field.split(".").pop() || field;
+  };
+
   const validateCurrentStep = async (): Promise<boolean> => {
     const fieldsToValidate =
       detailedStepFields[activeStep as keyof typeof detailedStepFields] || [];
@@ -98,7 +130,7 @@ export function useStepValidation(activeStep: number): ValidationHookResult {
 
       invalidFields.forEach(({ field }) => {
         const pathParts = field.split(".");
-
+        const friendlyName = getFieldName(field);
         // Get the error message from formState.errors
         let errorMsg: string | undefined;
 
@@ -119,7 +151,7 @@ export function useStepValidation(activeStep: number): ValidationHookResult {
         }
 
         if (errorMsg) {
-          errorMessages.push(errorMsg);
+          errorMessages.push(`${friendlyName} - ${errorMsg}`);
         }
       });
 
@@ -131,11 +163,17 @@ export function useStepValidation(activeStep: number): ValidationHookResult {
       // Set the error message
       if (errorMessages.length === 1) {
         // For a single error, just show that error
-        setErrorMessage(errorMessages[0]);
+        setErrorMessage(`Campo requerido: ${errorMessages[0]}`);
+        console.log(`Campo requerido: ${errorMessages[0]}`);
       } else if (errorMessages.length <= 3) {
         // For 2-3 errors, list them with bullet points
         setErrorMessage(
-          `Por favor complete la siguiente información:\n• ${errorMessages.join(
+          `Por favor complete los siguientes campos:\n• ${errorMessages.join(
+            "\n• "
+          )}`
+        );
+        console.log(
+          `Por favor complete los siguientes campos:\n• ${errorMessages.join(
             "\n• "
           )}`
         );
@@ -144,11 +182,14 @@ export function useStepValidation(activeStep: number): ValidationHookResult {
         setErrorMessage(
           `Se requiere completar ${
             errorMessages.length
-          } campos. Por ejemplo:\n• ${errorMessages
-            .slice(0, 2)
-            .join("\n• ")}\n• ...`
+          } campos:\n• ${errorMessages.slice(0, 3).join("\n• ")}\n• ...`
         );
       }
+      console.log(
+        `Se requiere completar ${
+          errorMessages.length
+        } campos:\n• ${errorMessages.slice(0, 3).join("\n• ")}\n• ...`
+      );
 
       return false;
     }

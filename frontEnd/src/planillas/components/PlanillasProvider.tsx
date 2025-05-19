@@ -121,7 +121,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
           <Alert
             onClose={clearErrorMessage}
             severity="error"
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", whiteSpace: "pre-line" }}
           >
             {errorMessage}
           </Alert>
