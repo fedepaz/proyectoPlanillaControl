@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { es } from "date-fns/locale";
-import { addMinutes, format, isBefore, parse, subHours } from "date-fns";
+import { addMinutes, format, isBefore, subHours } from "date-fns";
 import { TextFieldProps } from "@mui/material";
 
 type Props<T extends FieldValues> = {

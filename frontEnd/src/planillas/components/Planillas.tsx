@@ -4,7 +4,6 @@ import {
   Stack,
   useMediaQuery,
   useTheme,
-  Box,
   Paper,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -40,7 +39,10 @@ export function Planillas({
 }: PlanillaProps) {
   //const { setValue } = useFormContext<PlanillaSchema>();
 
-  const { validateCurrentStep, errorMessage } = useStepValidation(activeStep);
+  const { validateCurrentStep } = useStepValidation(
+    activeStep,
+    setErrorMessage
+  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -53,8 +55,6 @@ export function Planillas({
     const isValid = await validateCurrentStep();
     if (isValid) {
       onNext();
-    } else if (errorMessage) {
-      setErrorMessage(errorMessage);
     }
   };
 
