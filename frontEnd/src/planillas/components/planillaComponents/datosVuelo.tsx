@@ -30,19 +30,18 @@ export function DatosVuelo() {
       sx={{ gap: 2, py: 3 }}
       divider={<Divider orientation="horizontal" flexItem />}
     >
-      {/*aeropuertoControl*/}
-      <AeropuertoComponent label="Control" />
+      {/*aerolinea*/}
+      <EmpresaComponent onEmpresaSelected={sendEmpresa} />
+
       {/*tipoVuelo*/}
 
       <RHFRadioGroup<PlanillaSchema>
         name="datosVuelo.tipoVuelo"
         options={tipoVueloQuery.data}
         label="Tipo de Vuelo"
-      ></RHFRadioGroup>
+      />
       {/*destino | origen*/}
       <AeropuertoComponent label="Destino" />
-      {/*aerolinea*/}
-      <EmpresaComponent onEmpresaSelected={sendEmpresa} />
       {/*codVuelo*/}
       <CodVueloComponent />
       {/*horaArribo*/}
@@ -50,11 +49,7 @@ export function DatosVuelo() {
         name="datosVuelo.horaArribo"
         label="Arribo"
       />
-      {/*horaPartida*/}
-      <RHFDateTimePicker<PlanillaSchema>
-        name="datosVuelo.horaPartida"
-        label="Partida"
-      />
+
       {/*demora*/}
       <RHFRadioGroup<PlanillaSchema>
         name="datosVuelo.demora"

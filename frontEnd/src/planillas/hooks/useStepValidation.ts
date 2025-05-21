@@ -4,6 +4,7 @@ import { PlanillaSchema } from "../types/planillaSchema";
 
 // Map step numbers to detailed fields paths
 const detailedStepFields = {
+  //"Datos de Psa",
   0: [
     "datosPsa.fecha",
     "datosPsa.responsable",
@@ -14,25 +15,32 @@ const detailedStepFields = {
     "datosPsa.tipoPro",
   ],
   1: [
-    "datosVuelo.tipoVuelo",
+    //   "Datos de vuelo",
     "datosVuelo.empresa",
+    "datosVuelo.tipoVuelo",
     "datosVuelo.codVuelo",
     "datosVuelo.horaArribo",
-    "datosVuelo.horaPartida",
     "datosVuelo.demora",
     "datosVuelo.matriculaAeronave",
     "datosVuelo.posicion",
   ],
   2: [
+    //   "Datos de terrestre",
     "datosTerrestre.personalEmpresa",
     "datosTerrestre.funcion",
     "datosTerrestre.grupo",
   ],
-  3: ["datosSeguridad.personalSegEmpresa", "datosSeguridad.empresaSeguridad"],
+  3:
+    //   "Datos de seguridad",
+    ["datosSeguridad.personalSegEmpresa", "datosSeguridad.empresaSeguridad"],
   4: [
+    //   "Datos de vehiculos",
     "datosVehiculos.vehiculo",
     "datosVehiculos.operadorVehiculo",
     "datosVehiculos.observacionesVehiculo",
+  ],
+  5: [
+    //   "Datos de novedades",
     "novEquipajes",
     "novInspeccion",
     "novOtras",

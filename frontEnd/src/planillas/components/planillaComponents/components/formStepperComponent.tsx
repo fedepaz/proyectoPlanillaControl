@@ -66,7 +66,7 @@ export function FormStepper({ activeStep, steps, icons }: FormStepperProps) {
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const defaultSteps = [
-    "Datos de control",
+    "Datos de Psa",
     "Datos de vuelo",
     "Datos de terrestre",
     "Datos de seguridad",
