@@ -84,7 +84,7 @@ export function Planillas({
             <DatosSeguridad />
           </Paper>
         );
-      case 4:
+      case 4: // vehiculos
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
             <DatosVehiculos />

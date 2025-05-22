@@ -35,12 +35,33 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
             size="small"
             orientation="vertical"
             onChange={(_, newValue) => {
-              if (newValue.length) {
+              if (newValue !== null) {
                 onChange(newValue);
               }
             }}
-            value={value.length ? value : [options?.[0].id]}
+            value={value || null}
             {...restField}
+            sx={{
+              "& .MuiToggleButtonGroup-root": {
+                textTransform: "none",
+                "&.Mui-selected": {
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? theme.palette.primary.dark
+                      : theme.palette.primary.light,
+                  color: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? theme.palette.primary.contrastText
+                      : theme.palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === "dark"
+                        ? theme.palette.primary.dark
+                        : theme.palette.primary.light,
+                  },
+                },
+              },
+            }}
           >
             {options?.map((option) => (
               <ToggleButton value={option.id} key={option.id}>

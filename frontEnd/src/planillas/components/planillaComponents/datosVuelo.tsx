@@ -9,6 +9,7 @@ import { EmpresaComponent } from "./components/empresaComponent";
 import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
+const airlineId = import.meta.env.VITE_AEROLINE_ID;
 
 export function DatosVuelo() {
   const demoraQuery = useDemora();
@@ -31,7 +32,11 @@ export function DatosVuelo() {
       divider={<Divider orientation="horizontal" flexItem />}
     >
       {/*aerolinea*/}
-      <EmpresaComponent onEmpresaSelected={sendEmpresa} />
+      <EmpresaComponent
+        onEmpresaSelected={sendEmpresa}
+        tipoFijoID={airlineId}
+        label="aerolinea"
+      />
 
       {/*tipoVuelo*/}
 

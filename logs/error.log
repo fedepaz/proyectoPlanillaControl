@@ -9549,4 +9549,76 @@
     at async FindCursor._initialize (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/cursor/find_cursor.js:51:26)
     ---------------------
 
+    [2025-05-21T21:00:47.157Z]
+    URL: /empresa/tipoID/aerolinea
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "aerolinea" (type string) at path "tipoEmpresa" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
+    [2025-05-21T21:00:48.281Z]
+    URL: /empresa/tipoID/aerolinea
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "aerolinea" (type string) at path "tipoEmpresa" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
+    [2025-05-21T21:00:50.308Z]
+    URL: /empresa/tipoID/aerolinea
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "aerolinea" (type string) at path "tipoEmpresa" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
+    [2025-05-21T21:00:54.322Z]
+    URL: /empresa/tipoID/aerolinea
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "aerolinea" (type string) at path "tipoEmpresa" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
     

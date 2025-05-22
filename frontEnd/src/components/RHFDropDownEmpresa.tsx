@@ -7,20 +7,27 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Divider,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
   options?: EmpresaOption[];
   label: string;
+  onAddNew?: () => void;
 } & TextFieldProps;
 
 export function RHFDropDownEmpresa<T extends FieldValues>({
   name,
   options,
   label,
+  onAddNew,
 }: Props<T>) {
   const { control } = useFormContext<T>();
+  const ADD_NEW_EMPRESA = "ADD_NEW_EMPRESA";
 
   return (
     <Controller
@@ -36,7 +43,14 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
               value={value || ""}
               label={label}
               onChange={(event) => {
-                onChange(event.target.value);
+                const selectedValue = event.target.value;
+                if (selectedValue === ADD_NEW_EMPRESA) {
+                  if (onAddNew) {
+                    onAddNew();
+                  }
+                } else {
+                  onChange(selectedValue);
+                }
               }}
               {...restField}
             >
@@ -45,6 +59,15 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
                   {option.empresa}
                 </MenuItem>
               ))}
+              {options && options.length > 0 && <Divider />}
+              <MenuItem value={ADD_NEW_EMPRESA}>
+                <ListItemIcon>
+                  <AddIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>
+                  No está en la lista? Agregar nueva...
+                </ListItemText>
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>

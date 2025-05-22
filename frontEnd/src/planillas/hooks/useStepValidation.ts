@@ -100,32 +100,35 @@ export function useStepValidation(
     }
   }, [internalErrorMessage, externalSetErrorMessage]);
 
-  const getNestedErrorMessage = (
-    obj: any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    path: string[]
-  ): string | undefined => {
-    if (!obj || path.length === 0) return undefined;
+  const getNestedErrorMessage = useCallback(
+    (
+      obj: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+      path: string[]
+    ): string | undefined => {
+      if (!obj || path.length === 0) return undefined;
 
-    const [first, ...rest] = path;
-    if (rest.length === 0) {
-      if (
-        obj[first] &&
-        typeof obj[first] === "object" &&
-        "message" in obj[first]
-      ) {
-        return obj[first].message;
+      const [first, ...rest] = path;
+      if (rest.length === 0) {
+        if (
+          obj[first] &&
+          typeof obj[first] === "object" &&
+          "message" in obj[first]
+        ) {
+          return obj[first].message;
+        }
+        return undefined;
+      }
+      if (obj[first] && typeof obj[first] === "object") {
+        return getNestedErrorMessage(obj[first], rest);
       }
       return undefined;
-    }
-    if (obj[first] && typeof obj[first] === "object") {
-      return getNestedErrorMessage(obj[first], rest);
-    }
-    return undefined;
-  };
+    },
+    []
+  );
 
-  const getFieldName = (field: string): string => {
+  const getFieldName = useCallback((field: string): string => {
     return fieldNames[field] || field.split(".").pop() || field;
-  };
+  }, []);
 
   const validateCurrentStep = useCallback(async (): Promise<boolean> => {
     const fieldsToValidate =
@@ -221,8 +224,9 @@ export function useStepValidation(
     activeStep,
     externalSetErrorMessage,
     trigger,
-    getNestedErrorMessage,
     formState,
+    getNestedErrorMessage,
+    getFieldName,
   ]);
 
   const clearErrorMessage = useCallback(() => {
