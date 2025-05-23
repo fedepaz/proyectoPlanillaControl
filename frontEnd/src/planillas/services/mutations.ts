@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PlanillaSchema } from "../types/planillaSchema";
 import apiClient from "../../services/csrfToken";
+import { PlanillaSchema } from "../types/planillaSchema";
 import { EmpresaSchema } from "../types/apiSchema";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -22,11 +22,15 @@ export function useCreateEmpresa() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: EmpresaSchema) => {
-      const response = await apiClient.post(`${API_URL}/empresa`, data);
+      const response = await apiClient.post(`/empresa`, data);
       return response.data;
     },
+    retry: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["empresa"] });
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 }

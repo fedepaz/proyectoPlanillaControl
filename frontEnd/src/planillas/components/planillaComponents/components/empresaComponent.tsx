@@ -11,7 +11,6 @@ import {
   TextField,
   Box,
   IconButton,
-  Tooltip,
   useTheme,
   Typography,
   useMediaQuery,
@@ -103,6 +102,7 @@ export function EmpresaComponent({
   const empresaWatch = watch("empresa");
 
   const empresaQuery = useEmpresaTipoId(tipoFijoID);
+  const createEmpresaMutation = useCreateEmpresa();
 
   // Transform empresa data to match EmpresaOption format
   const empresaOptions: EmpresaOption[] =
@@ -117,12 +117,17 @@ export function EmpresaComponent({
       empresa: newEmpresaName,
       tipoEmpresa: tipoFijoID,
     };
-    const newEmpresaCreated = useCreateEmpresa();
-    newEmpresaCreated.mutate(newEmpresa);
-    setValue("empresa", newEmpresaName.id);
-    setOpenDialog(false);
-    setNewEmpresaName("");
-    onEmpresaSelected(newEmpresaName.id);
+
+    console.log("data");
+    console.log(newEmpresa);
+    createEmpresaMutation.mutate(newEmpresa, {
+      onSuccess: (data) => {
+        setValue("empresa", data.id);
+        setOpenDialog(false);
+        setNewEmpresaName("");
+        onEmpresaSelected(data.id);
+      },
+    });
   };
 
   const handleClose = () => {

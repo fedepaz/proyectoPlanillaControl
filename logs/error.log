@@ -9621,4 +9621,22 @@
     at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
     ---------------------
 
+    [2025-05-23T00:55:21.593Z]
+    URL: /empresa
+    Method: GET
+    Body: {}
+    Client IP: ::ffff:127.0.0.1
+    User Agent: curl/7.68.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     
