@@ -15,6 +15,8 @@ import {
   Typography,
   useMediaQuery,
   InputAdornment,
+  ThemeProvider,
+  CssBaseline,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +34,7 @@ import { useEmpresaTipoId } from "../../../services/queries";
 import { RHFDropDownEmpresa } from "../../../../components/RHFDropDownEmpresa";
 import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
+import ErrorPage from "../../../../components/Error";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -118,14 +121,29 @@ export function EmpresaComponent({
       tipoEmpresa: tipoFijoID,
     };
 
-    console.log("data");
-    console.log(newEmpresa);
     createEmpresaMutation.mutate(newEmpresa, {
       onSuccess: (data) => {
         setValue("empresa", data.id);
         setOpenDialog(false);
         setNewEmpresaName("");
         onEmpresaSelected(data.id);
+      },
+      onError: (error) => {
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+              minHeight: "100vh",
+              width: "100%",
+              overflow: "hidden",
+            }}
+          >
+            <ErrorPage error={error} />
+          </Box>
+        </ThemeProvider>;
       },
     });
   };

@@ -60,7 +60,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "X-CSRF-TOKEN"],
     credentials: true,
   })
 );

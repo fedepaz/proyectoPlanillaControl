@@ -30,7 +30,7 @@ export function useCreateEmpresa() {
       await queryClient.invalidateQueries({ queryKey: ["empresa"] });
     },
     onError: (error) => {
-      console.log(error);
+      return error;
     },
   });
 }
