@@ -19,9 +19,8 @@ export function DatosVuelo() {
   const handleMatSelected = (matriculaAeronave: string) => {
     setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
   };
-  const sendEmpresa = (empresa: string) => {
-    console.log("recibida de aerolinea ");
-    console.log(empresa);
+  const sendEmpresa = (empresaId: string) => {
+    setValue("datosVuelo.empresa", empresaId);
   };
 
   return (

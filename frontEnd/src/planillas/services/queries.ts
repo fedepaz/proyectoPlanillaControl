@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  AeropuertoOption,
   EmpresaOption,
   JerarquiaOption,
   MatriculaOption,
@@ -33,90 +34,6 @@ interface PaginatedResponse {
   totalPages: number;
   totalCount: number;
   pageSize: number;
-}
-
-export function useTipoControl() {
-  return useQuery({
-    queryKey: ["tipoControl"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoControl`
-      );
-      const tipoControl = response.data;
-      return tipoControl;
-    },
-  });
-}
-export function useTipoEmpresa() {
-  return useQuery({
-    queryKey: ["tipoEmpresa"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoEmpresa`
-      );
-      const tipoEmpresa = response.data;
-      return tipoEmpresa;
-    },
-  });
-}
-
-export function useMediosTec() {
-  return useQuery({
-    queryKey: ["mediosTec"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/mediosTec`
-      );
-      const mediosTec = response.data;
-      return mediosTec;
-    },
-  });
-}
-
-export function useTipoPro() {
-  return useQuery({
-    queryKey: ["tipoPro"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/tipoPro`);
-      const tipoPro = response.data;
-      return tipoPro;
-    },
-  });
-}
-
-export function useDemora() {
-  return useQuery({
-    queryKey: ["demora"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/demora`);
-      const demora = response.data;
-      return demora;
-    },
-  });
-}
-
-export function useTipoVuelo() {
-  return useQuery({
-    queryKey: ["tipoVuelo"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoVuelo`
-      );
-      const tipoVuelo = response.data;
-      return tipoVuelo;
-    },
-  });
-}
-
-export function useFuncion() {
-  return useQuery({
-    queryKey: ["funcion"],
-    queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/funcion`);
-      const funcion = response.data;
-      return funcion;
-    },
-  });
 }
 interface CreateOficialResponse {
   _id: string;
@@ -304,8 +221,89 @@ export function usePlanillaID(_id: string) {
   });
 }
 
-export function createPersonalEmpresa() {}
+export function useTipoControl() {
+  return useQuery({
+    queryKey: ["tipoControl"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(
+        `${API_URL}/data/tipoControl`
+      );
+      const tipoControl = response.data;
+      return tipoControl;
+    },
+  });
+}
+export function useTipoEmpresa() {
+  return useQuery({
+    queryKey: ["tipoEmpresa"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(
+        `${API_URL}/data/tipoEmpresa`
+      );
+      const tipoEmpresa = response.data;
+      return tipoEmpresa;
+    },
+  });
+}
 
+export function useMediosTec() {
+  return useQuery({
+    queryKey: ["mediosTec"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(
+        `${API_URL}/data/mediosTec`
+      );
+      const mediosTec = response.data;
+      return mediosTec;
+    },
+  });
+}
+
+export function useTipoPro() {
+  return useQuery({
+    queryKey: ["tipoPro"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(`${API_URL}/data/tipoPro`);
+      const tipoPro = response.data;
+      return tipoPro;
+    },
+  });
+}
+
+export function useDemora() {
+  return useQuery({
+    queryKey: ["demora"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(`${API_URL}/data/demora`);
+      const demora = response.data;
+      return demora;
+    },
+  });
+}
+
+export function useTipoVuelo() {
+  return useQuery({
+    queryKey: ["tipoVuelo"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(
+        `${API_URL}/data/tipoVuelo`
+      );
+      const tipoVuelo = response.data;
+      return tipoVuelo;
+    },
+  });
+}
+
+export function useFuncion() {
+  return useQuery({
+    queryKey: ["funcion"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(`${API_URL}/data/funcion`);
+      const funcion = response.data;
+      return funcion;
+    },
+  });
+}
 export function usePersonalEmpresa(dni: number) {
   return useQuery({
     queryKey: ["personalEmpresa", { dni }],
@@ -333,8 +331,6 @@ export function usePersonalEmpresa(dni: number) {
   });
 }
 
-export function createPersonalEmpresaSeg() {}
-
 export function usePersonalEmpresaSeg(dni: number) {
   return useQuery({
     queryKey: ["personalSeguridad", { dni }],
@@ -361,8 +357,6 @@ export function usePersonalEmpresaSeg(dni: number) {
     enabled: !!dni,
   });
 }
-
-export function createMatricula() {}
 
 export function useMatricula(empresa?: string) {
   return useQuery({
@@ -401,8 +395,6 @@ export function useMatriculaId(matriculaAeronave: string) {
     enabled: !!matriculaAeronave,
   });
 }
-
-export function createEmpresa() {}
 
 export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
@@ -476,6 +468,19 @@ export function useUnidad() {
       );
       const unidades = response.data;
       return unidades;
+    },
+  });
+}
+
+export function useAeropuertos() {
+  return useQuery({
+    queryKey: ["aeropuertos"],
+    queryFn: async () => {
+      const response = await apiClient.get<AeropuertoOption[]>(
+        `${API_URL}/aeropuerto`
+      );
+      const aeropuertos = response.data;
+      return aeropuertos;
     },
   });
 }

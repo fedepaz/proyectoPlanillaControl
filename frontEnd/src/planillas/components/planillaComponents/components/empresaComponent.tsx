@@ -15,8 +15,6 @@ import {
   Typography,
   useMediaQuery,
   InputAdornment,
-  ThemeProvider,
-  CssBaseline,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -34,7 +32,6 @@ import { useEmpresaTipoId } from "../../../services/queries";
 import { RHFDropDownEmpresa } from "../../../../components/RHFDropDownEmpresa";
 import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
-import ErrorPage from "../../../../components/Error";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -117,7 +114,7 @@ export function EmpresaComponent({
   const handleCreateNewEmpresa = () => {
     if (!newEmpresaName.trim()) return;
     const newEmpresa: EmpresaSchema = {
-      empresa: newEmpresaName,
+      empresa: newEmpresaName.toUpperCase(),
       tipoEmpresa: tipoFijoID,
     };
 
@@ -127,23 +124,6 @@ export function EmpresaComponent({
         setOpenDialog(false);
         setNewEmpresaName("");
         onEmpresaSelected(data.id);
-      },
-      onError: (error) => {
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              minHeight: "100vh",
-              width: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <ErrorPage error={error} />
-          </Box>
-        </ThemeProvider>;
       },
     });
   };
@@ -237,6 +217,7 @@ export function EmpresaComponent({
             value={newEmpresaName}
             onChange={(e) => setNewEmpresaName(e.target.value)}
             variant="outlined"
+            helperText="Ingresar nombre de la empresa que no se encuentra en la lista"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">{displayIcon}</InputAdornment>

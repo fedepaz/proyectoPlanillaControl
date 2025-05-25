@@ -27,7 +27,13 @@ export type UnidadOption = {
   id: string;
   aeropuerto: string;
   codIATA: string;
-  codOAĆI: string;
+  codOACI: string;
+};
+export type AeropuertoOption = {
+  id: string;
+  aeropuerto: string;
+  codIATA: string;
+  codOACI: string;
 };
 
 export type JerarquiaOption = {

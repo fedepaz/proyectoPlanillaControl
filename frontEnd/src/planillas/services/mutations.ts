@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../../services/csrfToken";
 import { PlanillaSchema } from "../types/planillaSchema";
-import { EmpresaSchema } from "../types/apiSchema";
+import { AeropuertosSchema, EmpresaSchema } from "../types/apiSchema";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -28,6 +28,23 @@ export function useCreateEmpresa() {
     retry: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["empresa"] });
+    },
+    onError: (error) => {
+      return error;
+    },
+  });
+}
+
+export function useCreateAeropuerto() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: AeropuertosSchema) => {
+      const response = await apiClient.post(`/aeropuerto`, data);
+      return response.data;
+    },
+    retry: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["aeropuertos"] });
     },
     onError: (error) => {
       return error;
