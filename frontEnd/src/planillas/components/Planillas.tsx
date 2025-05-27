@@ -60,12 +60,12 @@ export function Planillas({
 
   const renderStepContent = () => {
     switch (activeStep) {
-      case 0:
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <DatosPsa />
-          </Paper>
-        );
+      // case 0:
+      //   return (
+      //     <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
+      //       <DatosPsa />
+      //     </Paper>
+      //   );
       case 1:
         return (
           <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>

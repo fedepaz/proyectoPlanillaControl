@@ -45,7 +45,6 @@ empresaRouter.get("/tipoID/:tipo", async (req, res, next) => {
 
 empresaRouter.post("/", async (req, res, next) => {
   const { body } = req;
-  s;
   try {
     const { empresa, tipoEmpresa } = body;
     const requiredFields = ["empresa", "tipoEmpresa"];

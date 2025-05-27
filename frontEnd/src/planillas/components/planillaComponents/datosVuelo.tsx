@@ -23,6 +23,14 @@ export function DatosVuelo() {
     setValue("datosVuelo.empresa", empresaId);
   };
 
+  const sendTipoVuelo = (tipoVueloId: string) => {
+    console.log("Tipo de vuelo selected:", tipoVueloId);
+  };
+
+  const sendAeropuerto = (aeropuertoId: string) => {
+    console.log("Aeropuerto selected:", aeropuertoId);
+  };
+
   return (
     <Stack
       justifyContent="center"
@@ -44,7 +52,10 @@ export function DatosVuelo() {
         label="Tipo de Vuelo"
       />
       {/*destino | origen*/}
-      <AeropuertoComponent label="Destino" />
+      <AeropuertoComponent
+        label="Destino"
+        onAeropuertoSelected={sendAeropuerto}
+      />
       {/*codVuelo*/}
       <CodVueloComponent />
       {/*horaArribo*/}

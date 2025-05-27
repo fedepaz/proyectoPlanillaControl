@@ -1,6 +1,7 @@
 import {
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -25,20 +26,27 @@ export function RHFRadioGroup<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field, fieldState: { error } }) => (
-        <FormControl {...field} error={!!error}>
+        <FormControl error={!!error}>
           <FormLabel>{label}</FormLabel>
-          <RadioGroup>
+          <RadioGroup
+            {...field}
+            row
+            value={field.value || ""}
+            onChange={(event) => {
+              field.onChange(event.target.value);
+            }}
+          >
             {options?.map((option) => (
               <FormControlLabel
                 key={option.id}
                 value={option.id}
-                control={<Radio checked={field.value === option.id} />}
+                control={<Radio />}
                 label={option.label}
               />
             ))}
           </RadioGroup>
         </FormControl>
       )}
-    ></Controller>
+    />
   );
 }

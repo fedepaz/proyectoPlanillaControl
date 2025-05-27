@@ -43,9 +43,6 @@ export function AeropuertoComponent({
   const [newAeropuertoName, setNewAeropuertoName] = useState("");
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { watch, setValue, control } = methods;
-  const aeropuertoWatch = watch("aeropuerto");
-  const codIATAWatch = watch("codIATA");
 
   const methods = useForm<AeropuertosSchema>({
     resolver: zodResolver(aeropuertosSchema),
@@ -54,6 +51,10 @@ export function AeropuertoComponent({
   });
   const aeropuertosQuery = useAeropuertos();
   const createAeropuertoMutation = useCreateAeropuerto();
+
+  const { watch, setValue, control } = methods;
+  const aeropuertoWatch = watch("aeropuerto");
+  const codIATAWatch = watch("codIATA");
 
   const [inputValue, setInputValue] = useState("");
 

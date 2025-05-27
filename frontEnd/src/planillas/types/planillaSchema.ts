@@ -65,9 +65,7 @@ const planillaSchema = z
 
     datosVuelo: z
       .object({
-        tipoVuelo: z.enum(["arribo", "partida"], {
-          required_error: "Tipo de vuelo es requerido",
-        }),
+        tipoVuelo: z.string().min(1, "Tipo de vuelo es requerido"),
         empresa: z.string().min(1, "Empresa es requerida"),
         codVuelo: z.string().min(1, "Codigo de vuelo es requerido"),
         horaArribo: z
@@ -188,7 +186,7 @@ export const defaultValuesPlanilla: PlanillaSchema = {
     tipoPro: [],
   },
   datosVuelo: {
-    tipoVuelo: "arribo",
+    tipoVuelo: "",
     empresa: "",
     codVuelo: "",
     horaArribo: "",

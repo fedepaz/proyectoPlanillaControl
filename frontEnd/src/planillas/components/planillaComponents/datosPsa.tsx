@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
@@ -8,7 +8,6 @@ import { RHFCheckBox } from "../../../components/RHFCheckBox";
 import Loading from "../../../components/Loading";
 
 import { PlanillaSchema } from "../../types/planillaSchema";
-import { OficialComponent } from "./components/oficialComponent";
 import {
   useMediosTec,
   useTipoControl,
@@ -51,10 +50,6 @@ export function DatosPsa() {
       sx={{ gap: 2, py: 3 }}
       divider={<Divider orientation="horizontal" flexItem />}
     >
-      <Typography variant="h6" align="center" gutterBottom>
-        DATOS DEL CONTROL PSA
-      </Typography>
-
       <RHFDateTimePicker<PlanillaSchema>
         name="datosPsa.horaIni"
         label="Hora de Inicio"

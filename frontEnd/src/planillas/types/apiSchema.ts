@@ -177,8 +177,8 @@ export const defaultValuesVehiculos: Partial<VehiculosSchema> = {
 const codVueloSchema = z.object({
   codVuelo: z
     .number({ message: "Sólo número de vuelo" })
-    .min(1000, "Tiene que tener cuatro dígitos")
-    .max(9999, "Tiene que tener cuatro dígitos"),
+    .min(1, "Tiene que ser un codigo de vuelo válido")
+    .max(99999),
   origen: objectIdSchema.describe("Aeropuerto ID"),
   destino: objectIdSchema.describe("Aeropuerto ID"),
   empresa: objectIdSchema.describe("Empresa ID"),
