@@ -89,7 +89,7 @@ aeropuertoRouter.post("/", async (req, res, next) => {
           ? "codIATA"
           : "codOACI";
       const error = new Error(
-        `Duplicate value. ${field.toUpperCase()} already exists-ROUTER`
+        `Duplicate value. ${field.toUpperCase()} already exists`
       );
       error.status = 409;
       error.name = "AeropuertoDuplicate";

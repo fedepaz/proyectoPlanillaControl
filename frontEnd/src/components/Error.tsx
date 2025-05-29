@@ -1,11 +1,11 @@
 import { Box, Button, Typography, Paper } from "@mui/material";
-//import { WifiOff, ServerCrash, Lock, RefreshCw } from "lucide-react";
 import {
   Wifi,
   Error as ErrorIcon,
   LockOutlined,
   Refresh,
 } from "@mui/icons-material";
+import { AxiosError } from "axios";
 
 interface ErrorPageProps {
   error: Error;
@@ -13,8 +13,19 @@ interface ErrorPageProps {
 }
 
 const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
+  const getErrorMessage = () => {
+    const axiosError = error as AxiosError;
+    if (axiosError.response) {
+      return axiosError.response.data.message;
+    }
+    // Fallback to generic error message
+    return error.message;
+  };
+
+  const errorMessage = getErrorMessage();
+
   const getErrorDetails = () => {
-    const message = error.message.toLowerCase();
+    const message = errorMessage.toLowerCase();
 
     if (message.includes("unable to connect") || message.includes("network")) {
       return {
@@ -94,7 +105,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
         {errorDetails.canRetry && onRetry && (
           <Button
             variant="contained"
-            //startIcon={<RefreshCw />}
             startIcon={<Refresh />}
             onClick={onRetry}
             sx={{ mt: 2 }}
