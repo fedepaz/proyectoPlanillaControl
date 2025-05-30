@@ -29,9 +29,6 @@ export function useCreateEmpresa() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["empresa"] });
     },
-    onError: (error) => {
-      return error;
-    },
   });
 }
 
@@ -45,9 +42,6 @@ export function useCreateAeropuerto() {
     retry: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["aeropuertos"] });
-    },
-    onError: (error) => {
-      return error;
     },
   });
 }

@@ -58,9 +58,6 @@ export function useCreateOficial() {
     onSuccess: (data) => {
       queryClient.setQueryData(["oficial", { _id: data._id }], data);
     },
-    onError: (error) => {
-      console.error("Failed to create oficial:", error);
-    },
   });
 }
 
@@ -72,20 +69,16 @@ export function useOficial(dni: string) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<ApiGetOficial>(
-          `${API_URL}/oficial/dni/${dni}`
-        );
-        return {
-          dni: data.dni,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          legajo: data.legajo,
-          id: data.id,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch oficial data: ${error}`);
-      }
+      const { data } = await apiClient.get<ApiGetOficial>(
+        `${API_URL}/oficial/dni/${dni}`
+      );
+      return {
+        dni: data.dni,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        legajo: data.legajo,
+        id: data.id,
+      };
     },
     enabled: !!dni,
   });
@@ -95,68 +88,63 @@ export function usePlanillas(page: number = 1, pageSize: number = 10) {
   return useQuery<PaginatedResponse, Error>({
     queryKey: ["planillas", page, pageSize],
     queryFn: async (): Promise<PaginatedResponse> => {
-      try {
-        const response = await apiClient.get<PaginatedResponse>(
-          `${API_URL}/planillas?page=${page}&pageSize=${pageSize}`
-        );
+      const response = await apiClient.get<PaginatedResponse>(
+        `${API_URL}/planillas?page=${page}&pageSize=${pageSize}`
+      );
 
-        return {
-          ...response.data,
-          data: response.data.data.map((planilla) => ({
-            id: planilla.id,
-            datosPsa: {
-              fecha: planilla.datosPsa.fecha,
-              responsable: planilla.datosPsa.responsable,
-              horaIni: planilla.datosPsa.horaIni,
-              horaFin: planilla.datosPsa.horaFin,
-              cant: planilla.datosPsa.cant,
-              tipoControl: planilla.datosPsa.tipoControl,
-              medioTec: planilla.datosPsa.medioTec,
-              tipoPro: planilla.datosPsa.tipoPro,
-            },
-            datosVuelo: {
-              aerolinea: planilla.datosVuelo.aerolinea,
-              codVuelo: planilla.datosVuelo.codVuelo,
-              origen: planilla.datosVuelo.origen,
-              destino: planilla.datosVuelo.destino,
-              horaArribo: planilla.datosVuelo.horaArribo,
-              horaPartida: planilla.datosVuelo.horaPartida,
-              demora: planilla.datosVuelo.demora,
-              tipoVuelo: planilla.datosVuelo.tipoVuelo,
-              matriculaAeronave: planilla.datosVuelo.matriculaAeronave,
-              posicion: planilla.datosVuelo.posicion,
-            },
-            datosTerrestre: planilla.datosTerrestre.map((terrestre) => ({
-              dniTerrestre: terrestre.dniTerrestre,
-              apellidoTerrestre: terrestre.apellidoTerrestre,
-              nombreTerrestre: terrestre.nombreTerrestre,
-              legajoTerrestre: terrestre.legajoTerrestre,
-              funcion: terrestre.funcion,
-              grupo: terrestre.grupo,
-            })),
-            datosSeguridad: planilla.datosSeguridad.map((seguridad) => ({
-              apellidoSeguridad: seguridad.apellidoSeguridad,
-              nombreSeguridad: seguridad.nombreSeguridad,
-              dniSeguridad: seguridad.dniSeguridad,
-              legajoSeguridad: seguridad.legajoSeguridad,
-              empresaSeguridad: seguridad.empresaSeguridad,
-            })),
-            datosVehiculos: planilla.datosVehiculos.map((vehiculo) => ({
-              tipoVehiculo: vehiculo.tipoVehiculo,
-              empresaVehiculo: vehiculo.empresaVehiculo,
-              numInterno: vehiculo.numInterno,
-              operadorVehiculo: vehiculo.operadorVehiculo,
-              observacionesVehiculo: vehiculo.observacionesVehiculo,
-            })),
-            novEquipajes: planilla.novEquipajes,
-            novInspeccion: planilla.novInspeccion,
-            novOtras: planilla.novOtras,
+      return {
+        ...response.data,
+        data: response.data.data.map((planilla) => ({
+          id: planilla.id,
+          datosPsa: {
+            fecha: planilla.datosPsa.fecha,
+            responsable: planilla.datosPsa.responsable,
+            horaIni: planilla.datosPsa.horaIni,
+            horaFin: planilla.datosPsa.horaFin,
+            cant: planilla.datosPsa.cant,
+            tipoControl: planilla.datosPsa.tipoControl,
+            medioTec: planilla.datosPsa.medioTec,
+            tipoPro: planilla.datosPsa.tipoPro,
+          },
+          datosVuelo: {
+            aerolinea: planilla.datosVuelo.aerolinea,
+            codVuelo: planilla.datosVuelo.codVuelo,
+            origen: planilla.datosVuelo.origen,
+            destino: planilla.datosVuelo.destino,
+            horaArribo: planilla.datosVuelo.horaArribo,
+            horaPartida: planilla.datosVuelo.horaPartida,
+            demora: planilla.datosVuelo.demora,
+            tipoVuelo: planilla.datosVuelo.tipoVuelo,
+            matriculaAeronave: planilla.datosVuelo.matriculaAeronave,
+            posicion: planilla.datosVuelo.posicion,
+          },
+          datosTerrestre: planilla.datosTerrestre.map((terrestre) => ({
+            dniTerrestre: terrestre.dniTerrestre,
+            apellidoTerrestre: terrestre.apellidoTerrestre,
+            nombreTerrestre: terrestre.nombreTerrestre,
+            legajoTerrestre: terrestre.legajoTerrestre,
+            funcion: terrestre.funcion,
+            grupo: terrestre.grupo,
           })),
-        };
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        throw new Error("Failed to fetch data");
-      }
+          datosSeguridad: planilla.datosSeguridad.map((seguridad) => ({
+            apellidoSeguridad: seguridad.apellidoSeguridad,
+            nombreSeguridad: seguridad.nombreSeguridad,
+            dniSeguridad: seguridad.dniSeguridad,
+            legajoSeguridad: seguridad.legajoSeguridad,
+            empresaSeguridad: seguridad.empresaSeguridad,
+          })),
+          datosVehiculos: planilla.datosVehiculos.map((vehiculo) => ({
+            tipoVehiculo: vehiculo.tipoVehiculo,
+            empresaVehiculo: vehiculo.empresaVehiculo,
+            numInterno: vehiculo.numInterno,
+            operadorVehiculo: vehiculo.operadorVehiculo,
+            observacionesVehiculo: vehiculo.observacionesVehiculo,
+          })),
+          novEquipajes: planilla.novEquipajes,
+          novInspeccion: planilla.novInspeccion,
+          novOtras: planilla.novOtras,
+        })),
+      };
     },
   });
 }
@@ -169,53 +157,49 @@ export function usePlanillaID(_id: string) {
         throw new Error("Invalid ID: _id is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<PlanillaGet>(
-          `${API_URL}/planillas/${_id}`
-        );
-        return {
-          id: data.id,
-          datosPsa: {
-            fecha: data.datosPsa.fecha,
-            responsable: data.datosPsa.responsable,
-            horaIni: data.datosPsa.horaIni,
-            horaFin: data.datosPsa.horaFin,
-            cant: data.datosPsa.cant,
-            tipoControl: [data.datosPsa.tipoControl],
-            medioTec: [data.datosPsa.medioTec],
-            tipoPro: [data.datosPsa.tipoPro],
-          },
-          datosVuelo: {
-            empresa: data.datosVuelo.empresa,
-            codVuelo: data.datosVuelo.codVuelo,
-            horaArribo: data.datosVuelo.horaArribo,
-            horaPartida: data.datosVuelo.horaPartida,
-            demora: data.datosVuelo.demora,
-            tipoVuelo: data.datosVuelo.tipoVuelo,
-            matriculaAeronave: data.datosVuelo.matriculaAeronave,
-            posicion: data.datosVuelo.posicion,
-          },
-          datosTerrestre: data.datosTerrestre.map((terrestre) => ({
-            personalEmpresa: terrestre.personalEmpresa,
-            funcion: terrestre.funcion,
-            grupo: terrestre.grupo,
-          })),
-          datosSeguridad: data.datosSeguridad.map((seguridad) => ({
-            personalSegEmpresa: seguridad.personalSegEmpresa,
-            empresaSeguridad: seguridad.empresaSeguridad,
-          })),
-          datosVehiculos: data.datosVehiculos.map((vehiculo) => ({
-            vehiculo: vehiculo.vehiculo,
-            operadorVehiculo: vehiculo.operadorVehiculo,
-            observacionesVehiculo: vehiculo.observacionesVehiculo,
-          })),
-          novEquipajes: data.novEquipajes,
-          novInspeccion: data.novInspeccion,
-          novOtras: data.novOtras,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch oficial data: ${error}`);
-      }
+      const { data } = await apiClient.get<PlanillaGet>(
+        `${API_URL}/planillas/${_id}`
+      );
+      return {
+        id: data.id,
+        datosPsa: {
+          fecha: data.datosPsa.fecha,
+          responsable: data.datosPsa.responsable,
+          horaIni: data.datosPsa.horaIni,
+          horaFin: data.datosPsa.horaFin,
+          cant: data.datosPsa.cant,
+          tipoControl: [data.datosPsa.tipoControl],
+          medioTec: [data.datosPsa.medioTec],
+          tipoPro: [data.datosPsa.tipoPro],
+        },
+        datosVuelo: {
+          empresa: data.datosVuelo.empresa,
+          codVuelo: data.datosVuelo.codVuelo,
+          horaArribo: data.datosVuelo.horaArribo,
+          horaPartida: data.datosVuelo.horaPartida,
+          demora: data.datosVuelo.demora,
+          tipoVuelo: data.datosVuelo.tipoVuelo,
+          matriculaAeronave: data.datosVuelo.matriculaAeronave,
+          posicion: data.datosVuelo.posicion,
+        },
+        datosTerrestre: data.datosTerrestre.map((terrestre) => ({
+          personalEmpresa: terrestre.personalEmpresa,
+          funcion: terrestre.funcion,
+          grupo: terrestre.grupo,
+        })),
+        datosSeguridad: data.datosSeguridad.map((seguridad) => ({
+          personalSegEmpresa: seguridad.personalSegEmpresa,
+          empresaSeguridad: seguridad.empresaSeguridad,
+        })),
+        datosVehiculos: data.datosVehiculos.map((vehiculo) => ({
+          vehiculo: vehiculo.vehiculo,
+          operadorVehiculo: vehiculo.operadorVehiculo,
+          observacionesVehiculo: vehiculo.observacionesVehiculo,
+        })),
+        novEquipajes: data.novEquipajes,
+        novInspeccion: data.novInspeccion,
+        novOtras: data.novOtras,
+      };
     },
     enabled: !!_id,
   });
@@ -312,20 +296,16 @@ export function usePersonalEmpresa(dni: number) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<ApiGetPersonalEmpresa>(
-          `${API_URL}/personalEmpresa/dni/${dni}`
-        );
-        return {
-          dni: data.dni,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          empresa: data.empresa,
-          legajo: data.legajo,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch personal empresa data: ${error}`);
-      }
+      const { data } = await apiClient.get<ApiGetPersonalEmpresa>(
+        `${API_URL}/personalEmpresa/dni/${dni}`
+      );
+      return {
+        dni: data.dni,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        empresa: data.empresa,
+        legajo: data.legajo,
+      };
     },
     enabled: !!dni,
   });
@@ -339,20 +319,16 @@ export function usePersonalEmpresaSeg(dni: number) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<ApiGetPersonalSeguridad>(
-          `${API_URL}/personalSeguridad/dni/${dni}`
-        );
-        return {
-          dni: data.dni,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          empresa: data.empresa,
-          legajo: data.legajo,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch personal seguridad data: ${error}`);
-      }
+      const { data } = await apiClient.get<ApiGetPersonalSeguridad>(
+        `${API_URL}/personalSeguridad/dni/${dni}`
+      );
+      return {
+        dni: data.dni,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        empresa: data.empresa,
+        legajo: data.legajo,
+      };
     },
     enabled: !!dni,
   });
@@ -380,17 +356,13 @@ export function useMatriculaId(matriculaAeronave: string) {
         throw new Error("Invalid Matricula: Matricula is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<ApiGetMatriculaAeronave>(
-          `${API_URL}/aeronave/matricula/${matriculaAeronave}`
-        );
-        return {
-          matriculaAeronave: data.matriculaAeronave,
-          empresa: data.empresa,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch matricula data: ${error}`);
-      }
+      const { data } = await apiClient.get<ApiGetMatriculaAeronave>(
+        `${API_URL}/aeronave/matricula/${matriculaAeronave}`
+      );
+      return {
+        matriculaAeronave: data.matriculaAeronave,
+        empresa: data.empresa,
+      };
     },
     enabled: !!matriculaAeronave,
   });
@@ -430,17 +402,13 @@ export function useEmpresaId(empresa: string) {
         throw new Error("Invalid Empresa: Empresa is undefined");
       }
 
-      try {
-        const { data } = await apiClient.get<ApiGetEmpresa>(
-          `${API_URL}/aeronave/empresa/${empresa}`
-        );
-        return {
-          empresa: data.empresa,
-          tipoEmpresa: data.tipoEmpresa,
-        };
-      } catch (error) {
-        throw new Error(`Failed to fetch matricula data: ${error}`);
-      }
+      const { data } = await apiClient.get<ApiGetEmpresa>(
+        `${API_URL}/aeronave/empresa/${empresa}`
+      );
+      return {
+        empresa: data.empresa,
+        tipoEmpresa: data.tipoEmpresa,
+      };
     },
     enabled: !!empresa,
   });

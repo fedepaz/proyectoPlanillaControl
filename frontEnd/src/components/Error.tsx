@@ -8,38 +8,92 @@ import {
 import { AxiosError } from "axios";
 
 interface ErrorPageProps {
-  error: Error;
+  error: Error | AxiosError;
   onRetry?: () => void;
 }
 
 const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
-  const getErrorMessage = () => {
-    const axiosError = error as AxiosError;
-    if (axiosError.response) {
-      return axiosError.response.data.message;
+  const siAxiosError = (error: Error | AxiosError): error is AxiosError => {
+    return "response" in error && "config" in error && "isAxiosError" in error;
+  };
+
+  const getErrorMessage = (): string => {
+    if (siAxiosError(error)) {
+      if (error.response?.data?.message) {
+        return error.response.data.message;
+      }
+      if (error.response?.data?.error) {
+        return error.response.data.error;
+      }
+      if (error.response?.statusText) {
+        return error.response.statusText;
+      }
+      return error.message;
     }
-    // Fallback to generic error message
     return error.message;
   };
 
+  const getStatusCode = (): number | null => {
+    if (siAxiosError(error) && error.response) {
+      return error.response.status;
+    }
+    return null;
+  };
+
   const errorMessage = getErrorMessage();
+  const statusCode = getStatusCode();
 
   const getErrorDetails = () => {
     const message = errorMessage.toLowerCase();
 
-    if (message.includes("unable to connect") || message.includes("network")) {
+    if (statusCode) {
+      if (statusCode === 401 || statusCode === 403) {
+        return {
+          icon: <LockOutlined sx={{ fontSize: 48 }} />,
+          title: "Authentication Error",
+          description:
+            "Your session has expired or you don't have permission. Please try logging in again.",
+          canRetry: false,
+        };
+      }
+
+      if (statusCode >= 500) {
+        return {
+          icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+          title: "Server Error",
+          description:
+            "We're experiencing technical difficulties. Our team has been notified.",
+          canRetry: true,
+        };
+      }
+
+      if (statusCode >= 400) {
+        return {
+          icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+          title: "Request Error",
+          description: errorMessage,
+          canRetry: false,
+        };
+      }
+    }
+
+    // Fallback to message-based detection
+    if (
+      message.includes("unable to connect") ||
+      message.includes("network") ||
+      message.includes("connection") ||
+      message.includes("timeout")
+    ) {
       return {
-        //icon: <WifiOff size={48} />,
         icon: <Wifi sx={{ fontSize: 48 }} />,
         title: "Connection Error",
-        description: error.message,
+        description: errorMessage,
         canRetry: true,
       };
     }
 
     if (message.includes("unauthorized") || message.includes("forbidden")) {
       return {
-        //icon: <Lock size={48} />,
         icon: <LockOutlined sx={{ fontSize: 48 }} />,
         title: "Authentication Error",
         description:
@@ -50,7 +104,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
     if (message.includes("server error") || message.includes("internal")) {
       return {
-        //icon: <ServerCrash size={48} />,
         icon: <ErrorIcon sx={{ fontSize: 48 }} />,
         title: "Server Error",
         description:
@@ -60,16 +113,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
     }
 
     return {
-      //icon: <ServerCrash size={48} />,
       icon: <ErrorIcon sx={{ fontSize: 48 }} />,
       title: "Unexpected Error",
-      description: error.message,
+      description: errorMessage,
       canRetry: true,
     };
   };
 
   const errorDetails = getErrorDetails();
-
   return (
     <Box
       sx={{

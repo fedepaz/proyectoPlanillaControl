@@ -164,11 +164,6 @@ export function AeropuertoComponent({
 
         setSnackbarOpen(true);
       },
-      onError: (error) => {
-        console.error("Error creating aeropuerto:", error);
-        setCreateError(error as Error);
-        console.log(createError);
-      },
     });
   };
 
@@ -387,11 +382,6 @@ export function AeropuertoComponent({
             inputProps={{ maxLength: 3 }}
             sx={{ mt: 2 }}
           />
-          {createError && (
-            <Box sx={{ mt: 2 }}>
-              <ErrorPage error={createError} onRetry={handleRetryCreate} />
-            </Box>
-          )}
         </DialogContent>
 
         <DialogActions

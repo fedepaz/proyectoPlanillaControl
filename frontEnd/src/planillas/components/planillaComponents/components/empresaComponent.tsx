@@ -32,6 +32,7 @@ import { useEmpresaTipoId } from "../../../services/queries";
 import { RHFDropDownEmpresa } from "../../../../components/RHFDropDownEmpresa";
 import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
+import ErrorPage from "../../../../components/Error";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -101,12 +102,16 @@ export function EmpresaComponent({
   const { watch, setValue } = methods;
   const empresaWatch = watch("empresa");
 
-  const empresaQuery = useEmpresaTipoId(tipoFijoID);
+  const {
+    data: empresaQueryData,
+    refetch,
+    error,
+  } = useEmpresaTipoId(tipoFijoID);
   const createEmpresaMutation = useCreateEmpresa();
 
   // Transform empresa data to match EmpresaOption format
   const empresaOptions: EmpresaOption[] =
-    empresaQuery.data?.map((item) => ({
+    empresaQueryData?.map((item) => ({
       id: item.id,
       empresa: item.empresa,
     })) || [];
@@ -138,6 +143,19 @@ export function EmpresaComponent({
       onEmpresaSelected(empresaWatch);
     }
   }, [empresaWatch, onEmpresaSelected]);
+
+  if (error) {
+    return <ErrorPage error={error} onRetry={() => refetch()} />;
+  }
+
+  if (createEmpresaMutation.error) {
+    return (
+      <ErrorPage
+        error={createEmpresaMutation.error}
+        onRetry={() => createEmpresaMutation.reset()}
+      />
+    );
+  }
 
   return (
     <FormProvider {...methods}>
