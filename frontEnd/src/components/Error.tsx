@@ -19,16 +19,30 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
   const getErrorMessage = (): string => {
     if (siAxiosError(error)) {
-      if (error.response?.data?.message) {
-        return error.response.data.message;
-      }
-      if (error.response?.data?.error) {
-        return error.response.data.error;
+      const responseData = error.response?.data;
+      if (responseData && typeof responseData === "object") {
+        if (
+          "message" in responseData &&
+          typeof responseData.message === "string"
+        ) {
+          return responseData.message;
+        }
+        if ("error" in responseData && typeof responseData.error === "string") {
+          return responseData.error;
+        }
+        if (
+          "detail" in responseData &&
+          typeof responseData.detail === "string"
+        ) {
+          return responseData.detail;
+        }
+        if (typeof responseData === "string") {
+          return responseData;
+        }
       }
       if (error.response?.statusText) {
         return error.response.statusText;
       }
-      return error.message;
     }
     return error.message;
   };

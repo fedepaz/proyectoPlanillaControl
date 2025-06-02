@@ -52,7 +52,6 @@ export function AeropuertoComponent({
   const [newAeropuertoName, setNewAeropuertoName] = useState("");
   const [selectedAeropuerto, setSelectedAeropuerto] =
     useState<AeropuertoOption | null>(null);
-  const [createError, setCreateError] = useState<Error | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -66,11 +65,35 @@ export function AeropuertoComponent({
   const aeropuertosQuery = useAeropuertos();
   const createAeropuertoMutation = useCreateAeropuerto();
 
-  const { watch, setValue, control } = methods;
+  const { watch, setValue } = methods;
   const aeropuertoWatch = watch("aeropuerto");
   const codIATAWatch = watch("codIATA");
 
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (aeropuertoWatch) {
+      onAeropuertoSelected(aeropuertoWatch);
+    }
+  }, [aeropuertoWatch, onAeropuertoSelected]);
+
+  if (aeropuertosQuery.error) {
+    return (
+      <ErrorPage
+        error={aeropuertosQuery.error}
+        onRetry={() => aeropuertosQuery.refetch()}
+      />
+    );
+  }
+
+  if (createAeropuertoMutation.error) {
+    return (
+      <ErrorPage
+        error={createAeropuertoMutation.error}
+        onRetry={() => createAeropuertoMutation.reset()}
+      />
+    );
+  }
 
   const filterOptions = (
     options: AeropuertoOption[],
@@ -104,7 +127,10 @@ export function AeropuertoComponent({
     return `${option.aeropuerto} (${option.codIATA})`;
   };
 
-  const renderOption = (props: any, option: AeropuertoOption) => (
+  const renderOption = (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: AeropuertoOption
+  ) => (
     <Box component="li" {...props} key={option.id}>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -137,13 +163,10 @@ export function AeropuertoComponent({
   const handleCreateNewAeropuerto = () => {
     if (!newAeropuertoName.trim()) return;
 
-    // Clear previous errors
-    setCreateError(null);
-
     const newAeropuerto: AeropuertosSchema = {
       aeropuerto: newAeropuertoName.toUpperCase(),
       codIATA: codIATAWatch || "",
-      codOACI: "AAAA", // You might want to make this configurable
+      codOACI: "AAAA",
     };
 
     createAeropuertoMutation.mutate(newAeropuerto, {
@@ -171,12 +194,6 @@ export function AeropuertoComponent({
     setOpenDialog(false);
     setNewAeropuertoName("");
     setValue("codIATA", "");
-    setCreateError(null);
-  };
-
-  const handleRetryCreate = () => {
-    setCreateError(null);
-    handleCreateNewAeropuerto();
   };
 
   const handleOpenDialog = () => {
@@ -186,12 +203,6 @@ export function AeropuertoComponent({
     setNewAeropuertoName(inputValue);
     setOpenDialog(true);
   };
-
-  useEffect(() => {
-    if (aeropuertoWatch) {
-      onAeropuertoSelected(aeropuertoWatch);
-    }
-  }, [aeropuertoWatch, onAeropuertoSelected]);
 
   const aeropuertoOptions: AeropuertoOption[] =
     aeropuertosQuery.data?.map((item) => ({
