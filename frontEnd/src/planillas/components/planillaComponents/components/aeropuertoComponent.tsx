@@ -33,7 +33,7 @@ import {
 import { useAeropuertos } from "../../../services/queries";
 import { useCreateAeropuerto } from "../../../services/mutations";
 import { AeropuertoOption } from "../../../../types/option";
-import ErrorPage from "../../../../components/Error";
+import { useAppError } from "../../../../hooks/useAppError";
 
 interface AeropuertoComponentProps {
   onAeropuertoSelected: (aeropuerto: string) => void;
@@ -55,6 +55,7 @@ export function AeropuertoComponent({
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { setError } = useAppError();
 
   const methods = useForm<AeropuertosSchema>({
     resolver: zodResolver(aeropuertosSchema),
@@ -77,23 +78,17 @@ export function AeropuertoComponent({
     }
   }, [aeropuertoWatch, onAeropuertoSelected]);
 
-  if (aeropuertosQuery.error) {
-    return (
-      <ErrorPage
-        error={aeropuertosQuery.error}
-        onRetry={() => aeropuertosQuery.refetch()}
-      />
-    );
-  }
+  useEffect(() => {
+    if (aeropuertosQuery.error) {
+      setError(aeropuertosQuery.error);
+    }
+  }, [aeropuertosQuery.error, setError]);
 
-  if (createAeropuertoMutation.error) {
-    return (
-      <ErrorPage
-        error={createAeropuertoMutation.error}
-        onRetry={() => createAeropuertoMutation.reset()}
-      />
-    );
-  }
+  useEffect(() => {
+    if (createAeropuertoMutation.error) {
+      setError(createAeropuertoMutation.error);
+    }
+  }, [createAeropuertoMutation.error, setError]);
 
   const filterOptions = (
     options: AeropuertoOption[],

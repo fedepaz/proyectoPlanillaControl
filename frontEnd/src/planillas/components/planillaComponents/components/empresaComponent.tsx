@@ -32,7 +32,7 @@ import { useEmpresaTipoId } from "../../../services/queries";
 import { RHFDropDownEmpresa } from "../../../../components/RHFDropDownEmpresa";
 import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
-import ErrorPage from "../../../../components/Error";
+import { useAppError } from "../../../../hooks/useAppError";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -49,6 +49,7 @@ export function EmpresaComponent({
   const [newEmpresaName, setNewEmpresaName] = useState("");
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { setError } = useAppError();
 
   const getDisplayInfo = () => {
     switch (label) {
@@ -102,16 +103,12 @@ export function EmpresaComponent({
   const { watch, setValue } = methods;
   const empresaWatch = watch("empresa");
 
-  const {
-    data: empresaQueryData,
-    refetch,
-    error,
-  } = useEmpresaTipoId(tipoFijoID);
+  const empresaQuery = useEmpresaTipoId(tipoFijoID);
   const createEmpresaMutation = useCreateEmpresa();
 
   // Transform empresa data to match EmpresaOption format
   const empresaOptions: EmpresaOption[] =
-    empresaQueryData?.map((item) => ({
+    empresaQuery.data?.map((item) => ({
       id: item.id,
       empresa: item.empresa,
     })) || [];
@@ -144,18 +141,17 @@ export function EmpresaComponent({
     }
   }, [empresaWatch, onEmpresaSelected]);
 
-  if (error) {
-    return <ErrorPage error={error} onRetry={() => refetch()} />;
-  }
+  useEffect(() => {
+    if (createEmpresaMutation.error) {
+      setError(createEmpresaMutation.error);
+    }
+  }, [createEmpresaMutation.error, setError]);
 
-  if (createEmpresaMutation.error) {
-    return (
-      <ErrorPage
-        error={createEmpresaMutation.error}
-        onRetry={() => createEmpresaMutation.reset()}
-      />
-    );
-  }
+  useEffect(() => {
+    if (empresaQuery.error) {
+      setError(empresaQuery.error);
+    }
+  }, [empresaQuery.error, setError]);
 
   return (
     <FormProvider {...methods}>

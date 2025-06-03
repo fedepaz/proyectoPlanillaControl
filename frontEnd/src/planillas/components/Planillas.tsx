@@ -19,6 +19,8 @@ import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
 import { DatosVehiculos } from "./planillaComponents/datosVehiculos";
 import { DatosPsa } from "./planillaComponents/datosPsa";
 import { useStepValidation } from "../hooks/useStepValidation";
+import { ErrorProvider } from "../../provider/ErrorProvider";
+import { StepErrorWrapper } from "./planillaComponents/components/stepErrorWrapperComponent";
 
 interface PlanillaProps {
   activeStep: number;
@@ -59,40 +61,20 @@ export function Planillas({
   };
 
   const renderStepContent = () => {
-    switch (activeStep) {
-      // case 0:
-      //   return (
-      //     <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-      //       <DatosPsa />
-      //     </Paper>
-      //   );
-      case 1:
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <DatosVuelo />
-          </Paper>
-        );
-      case 2:
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <DatosTerrestre />
-          </Paper>
-        );
-      case 3:
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <DatosSeguridad />
-          </Paper>
-        );
-      case 4: // vehiculos
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
-            <DatosVehiculos />
-          </Paper>
-        );
-      case 5:
-        return (
-          <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
+    const stepContent = (() => {
+      switch (activeStep) {
+        case 0:
+          return <DatosPsa />;
+        case 1:
+          return <DatosVuelo />;
+        case 2:
+          return <DatosTerrestre />;
+        case 3:
+          return <DatosSeguridad />;
+        case 4: // vehiculos
+          return <DatosVehiculos />;
+        case 5:
+          return (
             <Stack spacing={2}>
               <RHFTextField<PlanillaSchema>
                 name="novEquipajes"
@@ -113,11 +95,19 @@ export function Planillas({
                 rows={2}
               />
             </Stack>
-          </Paper>
-        );
-      default:
-        return null;
-    }
+          );
+        default:
+          return null;
+      }
+    })();
+
+    return (
+      <Paper elevation={1} sx={{ p: 3, borderRadius: 1 }}>
+        <ErrorProvider>
+          <StepErrorWrapper>{stepContent}</StepErrorWrapper>
+        </ErrorProvider>
+      </Paper>
+    );
   };
 
   const isLastStep = activeStep === 5;

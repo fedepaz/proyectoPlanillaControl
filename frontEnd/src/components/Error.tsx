@@ -167,14 +167,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
           {errorDetails.description}
         </Typography>
 
-        {errorDetails.canRetry && onRetry && (
+        {onRetry && (
           <Button
             variant="contained"
             startIcon={<Refresh />}
             onClick={onRetry}
             sx={{ mt: 2 }}
           >
-            Try Again
+            {errorDetails.canRetry ? "Intente de Nuevo" : "Continuar"}
           </Button>
         )}
       </Paper>

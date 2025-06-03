@@ -41,7 +41,7 @@ function ensureUserRole(role: string): UserRole {
   return UserRole.AUXILIAR;
 }
 
-export function App() {
+function AppContent() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -235,4 +235,8 @@ export function App() {
       </Box>
     </ThemeProvider>
   );
+}
+
+export function App() {
+  return <AppContent />;
 }
