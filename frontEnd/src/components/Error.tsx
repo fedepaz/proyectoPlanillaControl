@@ -6,6 +6,7 @@ import {
   Refresh,
 } from "@mui/icons-material";
 import { AxiosError } from "axios";
+import { getErrorTranslation } from "../hooks/errorTranslation";
 
 interface ErrorPageProps {
   error: Error | AxiosError;
@@ -13,12 +14,12 @@ interface ErrorPageProps {
 }
 
 const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
-  const siAxiosError = (error: Error | AxiosError): error is AxiosError => {
+  const isAxiosError = (error: Error | AxiosError): error is AxiosError => {
     return "response" in error && "config" in error && "isAxiosError" in error;
   };
 
   const getErrorMessage = (): string => {
-    if (siAxiosError(error)) {
+    if (isAxiosError(error)) {
       const responseData = error.response?.data;
       if (responseData && typeof responseData === "object") {
         if (
@@ -48,7 +49,7 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
   };
 
   const getStatusCode = (): number | null => {
-    if (siAxiosError(error) && error.response) {
+    if (isAxiosError(error) && error.response) {
       return error.response.status;
     }
     return null;
@@ -57,6 +58,8 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
   const errorMessage = getErrorMessage();
   const statusCode = getStatusCode();
 
+  const translatedError = getErrorTranslation(statusCode || 500, errorMessage);
+
   const getErrorDetails = () => {
     const message = errorMessage.toLowerCase();
 
@@ -64,29 +67,27 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
       if (statusCode === 401 || statusCode === 403) {
         return {
           icon: <LockOutlined sx={{ fontSize: 48 }} />,
-          title: "Authentication Error",
-          description:
-            "Your session has expired or you don't have permission. Please try logging in again.",
-          canRetry: false,
+          title: translatedError.title,
+          description: translatedError.message,
+          canRetry: translatedError.canRetry,
         };
       }
 
       if (statusCode >= 500) {
         return {
           icon: <ErrorIcon sx={{ fontSize: 48 }} />,
-          title: "Server Error",
-          description:
-            "We're experiencing technical difficulties. Our team has been notified.",
-          canRetry: true,
+          title: translatedError.title,
+          description: translatedError.message,
+          canRetry: translatedError.canRetry,
         };
       }
 
       if (statusCode >= 400) {
         return {
           icon: <ErrorIcon sx={{ fontSize: 48 }} />,
-          title: "Request Error",
-          description: errorMessage,
-          canRetry: false,
+          title: translatedError.title,
+          description: translatedError.message,
+          canRetry: translatedError.canRetry,
         };
       }
     }
@@ -100,37 +101,35 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
     ) {
       return {
         icon: <Wifi sx={{ fontSize: 48 }} />,
-        title: "Connection Error",
-        description: errorMessage,
-        canRetry: true,
+        title: translatedError.title,
+        description: translatedError.message,
+        canRetry: translatedError.canRetry,
       };
     }
 
     if (message.includes("unauthorized") || message.includes("forbidden")) {
       return {
         icon: <LockOutlined sx={{ fontSize: 48 }} />,
-        title: "Authentication Error",
-        description:
-          "Your session has expired or you don't have permission. Please try logging in again.",
-        canRetry: false,
+        title: translatedError.title,
+        description: translatedError.message,
+        canRetry: translatedError.canRetry,
       };
     }
 
     if (message.includes("server error") || message.includes("internal")) {
       return {
         icon: <ErrorIcon sx={{ fontSize: 48 }} />,
-        title: "Server Error",
-        description:
-          "We're experiencing technical difficulties. Our team has been notified.",
-        canRetry: true,
+        title: translatedError.title,
+        description: translatedError.message,
+        canRetry: translatedError.canRetry,
       };
     }
 
     return {
       icon: <ErrorIcon sx={{ fontSize: 48 }} />,
-      title: "Unexpected Error",
-      description: errorMessage,
-      canRetry: true,
+      title: translatedError.title,
+      description: translatedError.message,
+      canRetry: translatedError.canRetry,
     };
   };
 
