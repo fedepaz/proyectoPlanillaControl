@@ -20,11 +20,13 @@ import {
   Chip,
   Alert,
   Snackbar,
+  Divider,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import FlightIcon from "@mui/icons-material/Flight";
 import SearchIcon from "@mui/icons-material/Search";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
 import {
   defaultValuesAeropuertos,
   AeropuertosSchema,
@@ -53,6 +55,7 @@ export function AeropuertoComponent({
   const [selectedAeropuerto, setSelectedAeropuerto] =
     useState<AeropuertoOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { setError } = useAppError();
@@ -94,8 +97,12 @@ export function AeropuertoComponent({
     options: AeropuertoOption[],
     { inputValue }: { inputValue: string }
   ) => {
-    if (!inputValue) return options;
+    if (!inputValue) {
+      setHasSearched(false);
+      return options;
+    }
 
+    setHasSearched(true);
     const searchTerm = inputValue.toLowerCase().trim();
 
     return options.filter((option) => {
@@ -144,7 +151,7 @@ export function AeropuertoComponent({
 
           {option.codOACI && (
             <Chip
-              label={`ICAO: ${option.codOACI}`}
+              label={`OACI: ${option.codOACI}`}
               size="small"
               variant="outlined"
               sx={{ fontSize: "0.75rem", height: 20 }}
@@ -179,8 +186,9 @@ export function AeropuertoComponent({
           codOACI: data.codOACI,
         };
         setSelectedAeropuerto(newOption);
-
         setSnackbarOpen(true);
+        setHasSearched(false);
+        setInputValue("");
       },
     });
   };
@@ -260,34 +268,64 @@ export function AeropuertoComponent({
                     <SearchIcon sx={{ color: "text.secondary" }} />
                   </InputAdornment>
                 ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {params.InputProps.endAdornment}
-                    <IconButton
-                      onClick={handleOpenDialog}
-                      title="Agregar nuevo aeropuerto"
-                      size="small"
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
+                endAdornment: params.InputProps.endAdornment,
               }}
             />
           )}
           noOptionsText={
             <Box sx={{ textAlign: "center", py: 2 }}>
-              <Typography variant="body2" color="text.secondary">
-                No se encontraron aeropuertos
-              </Typography>
-              <Button
-                size="small"
-                startIcon={<AddIcon />}
-                onClick={handleOpenDialog}
-                sx={{ mt: 1 }}
-              >
-                Agregar "{inputValue}"
-              </Button>
+              {!hasSearched ? (
+                // Initial state - no search performed
+                <Box>
+                  <SearchIcon
+                    sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
+                  />
+                  <Typography variant="body2" color="text.secondary">
+                    Comience a escribir para buscar aeropuertos
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Busque por nombre, código IATA o ICAO
+                  </Typography>
+                </Box>
+              ) : (
+                // After search with no results
+                <Box>
+                  <InfoIcon
+                    sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
+                  />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 1 }}
+                  >
+                    No se encontraron aeropuertos para "{inputValue}"
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                    sx={{ mb: 2 }}
+                  >
+                    Intente con diferentes términos de búsqueda o agregue un
+                    nuevo aeropuerto
+                  </Typography>
+
+                  <Divider sx={{ my: 2 }} />
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<AddIcon />}
+                    onClick={handleOpenDialog}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Agregar "{inputValue}" como nuevo aeropuerto
+                  </Button>
+                </Box>
+              )}
             </Box>
           }
           filterSelectedOptions
@@ -295,6 +333,7 @@ export function AeropuertoComponent({
           clearOnBlur={false}
           selectOnFocus
           handleHomeEndKeys
+          loading={false}
         />
       </Stack>
 
