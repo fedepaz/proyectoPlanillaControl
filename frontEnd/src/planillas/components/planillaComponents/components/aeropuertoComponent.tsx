@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -21,6 +21,8 @@ import {
   Alert,
   Snackbar,
   Divider,
+  Paper,
+  Fade,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -55,7 +57,8 @@ export function AeropuertoComponent({
   const [selectedAeropuerto, setSelectedAeropuerto] =
     useState<AeropuertoOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [showAddButton, setShowAddButton] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { setError } = useAppError();
@@ -72,8 +75,6 @@ export function AeropuertoComponent({
   const { watch, setValue } = methods;
   const aeropuertoWatch = watch("aeropuerto");
   const codIATAWatch = watch("codIATA");
-
-  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (aeropuertoWatch) {
@@ -93,23 +94,32 @@ export function AeropuertoComponent({
     }
   }, [createAeropuertoMutation.error, setError]);
 
-  const filterOptions = (
-    options: AeropuertoOption[],
-    { inputValue }: { inputValue: string }
-  ) => {
-    if (!inputValue) {
-      setHasSearched(false);
-      return options;
+  const aeropuertoOptions: AeropuertoOption[] = useMemo(
+    () =>
+      aeropuertosQuery.data?.map((item) => ({
+        id: item.id,
+        aeropuerto: item.aeropuerto,
+        codIATA: item.codIATA,
+        codOACI: item.codOACI,
+      })) || [],
+    [aeropuertosQuery.data]
+  );
+
+  const { filteredOptions, hasSearched, shouldShowAddButton } = useMemo(() => {
+    const searchTerm = inputValue.toLowerCase().trim();
+    const hasSearched = searchTerm.length > 0;
+
+    if (!hasSearched) {
+      return {
+        filteredOptions: aeropuertoOptions,
+        hasSearched: false,
+        shouldShowAddButton: false,
+      };
     }
 
-    setHasSearched(true);
-    const searchTerm = inputValue.toLowerCase().trim();
-
-    return options.filter((option) => {
+    const filtered = aeropuertoOptions.filter((option) => {
       const nameMatch = option.aeropuerto.toLowerCase().includes(searchTerm);
-
       const iataMatch = option.codIATA.toLowerCase().includes(searchTerm);
-
       const icaoMatch = option.codOACI?.toLowerCase().includes(searchTerm);
 
       const words = searchTerm.split(" ").filter((word) => word.length > 0);
@@ -122,6 +132,24 @@ export function AeropuertoComponent({
 
       return nameMatch || iataMatch || icaoMatch || allWordsMatch;
     });
+
+    // Show add button if search term is at least 2 characters and no results found
+    const shouldShowAddButton = searchTerm.length >= 2 && filtered.length === 0;
+
+    return {
+      filteredOptions: filtered,
+      hasSearched: true,
+      shouldShowAddButton,
+    };
+  }, [inputValue, aeropuertoOptions]);
+
+  // Update showAddButton state
+  useEffect(() => {
+    setShowAddButton(shouldShowAddButton);
+  }, [shouldShowAddButton]);
+
+  const filterOptions = () => {
+    return filteredOptions;
   };
 
   const getOptionLabel = (option: AeropuertoOption | string) => {
@@ -187,8 +215,8 @@ export function AeropuertoComponent({
         };
         setSelectedAeropuerto(newOption);
         setSnackbarOpen(true);
-        setHasSearched(false);
         setInputValue("");
+        setShowAddButton(false);
       },
     });
   };
@@ -207,13 +235,17 @@ export function AeropuertoComponent({
     setOpenDialog(true);
   };
 
-  const aeropuertoOptions: AeropuertoOption[] =
-    aeropuertosQuery.data?.map((item) => ({
-      id: item.id,
-      aeropuerto: item.aeropuerto,
-      codIATA: item.codIATA,
-      codOACI: item.codOACI,
-    })) || [];
+  const handleInputChange = (
+    _event: React.SyntheticEvent,
+    value: string,
+    reason: string
+  ) => {
+    setInputValue(value);
+
+    if (reason === "input") {
+      setTimeout(() => {}, 0);
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -226,7 +258,7 @@ export function AeropuertoComponent({
           renderOption={renderOption}
           value={selectedAeropuerto}
           inputValue={inputValue}
-          onInputChange={(_, value) => setInputValue(value)}
+          onInputChange={handleInputChange}
           onChange={(_, newValue) => {
             if (typeof newValue === "string") {
               const searchTerm = newValue.trim().toUpperCase();
@@ -241,6 +273,7 @@ export function AeropuertoComponent({
                 setValue("aeropuerto", existing.id);
                 setSelectedAeropuerto(existing);
                 onAeropuertoSelected(existing.id);
+                setShowAddButton(false);
               } else {
                 handleOpenDialog();
               }
@@ -248,6 +281,7 @@ export function AeropuertoComponent({
               setValue("aeropuerto", newValue.id);
               setSelectedAeropuerto(newValue);
               onAeropuertoSelected(newValue.id);
+              setShowAddButton(false);
             } else {
               setValue("aeropuerto", "");
               setSelectedAeropuerto(null);
@@ -288,7 +322,7 @@ export function AeropuertoComponent({
                   </Typography>
                 </Box>
               ) : (
-                // After search with no results
+                // After search with no results - this won't show the button anymore
                 <Box>
                   <InfoIcon
                     sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
@@ -304,26 +338,9 @@ export function AeropuertoComponent({
                     variant="caption"
                     color="text.secondary"
                     display="block"
-                    sx={{ mb: 2 }}
                   >
-                    Intente con diferentes términos de búsqueda o agregue un
-                    nuevo aeropuerto
+                    Intente con diferentes términos de búsqueda
                   </Typography>
-
-                  <Divider sx={{ my: 2 }} />
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<AddIcon />}
-                    onClick={handleOpenDialog}
-                    sx={{
-                      textTransform: "none",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Agregar "{inputValue}" como nuevo aeropuerto
-                  </Button>
                 </Box>
               )}
             </Box>
@@ -334,7 +351,54 @@ export function AeropuertoComponent({
           selectOnFocus
           handleHomeEndKeys
           loading={false}
+          openOnFocus
+          blurOnSelect={false}
         />
+
+        {/* Mobile-friendly Add Button - appears below the autocomplete */}
+        <Fade in={showAddButton} timeout={300}>
+          <Paper
+            elevation={2}
+            sx={{
+              mt: 1,
+              p: 2,
+              borderRadius: 2,
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(0, 0, 0, 0.02)",
+              border: `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            <Box sx={{ textAlign: "center" }}>
+              <InfoIcon sx={{ fontSize: 24, color: "text.secondary", mb: 1 }} />
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                No se encontró "{inputValue}"
+              </Typography>
+
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                onClick={handleOpenDialog}
+                fullWidth
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 500,
+                  minHeight: 48,
+                  fontSize: "1rem",
+                  borderRadius: 2,
+                  boxShadow: theme.shadows[2],
+                  "&:hover": {
+                    boxShadow: theme.shadows[4],
+                  },
+                }}
+              >
+                Agregar "{inputValue}" como nuevo aeropuerto
+              </Button>
+            </Box>
+          </Paper>
+        </Fade>
       </Stack>
 
       <Dialog
@@ -387,6 +451,7 @@ export function AeropuertoComponent({
             color="inherit"
             onClick={handleClose}
             aria-label="close"
+            sx={{ minHeight: 44, minWidth: 44 }}
           >
             <CloseIcon />
           </IconButton>
@@ -443,7 +508,7 @@ export function AeropuertoComponent({
           <Button
             onClick={handleClose}
             variant="outlined"
-            sx={{ minWidth: 100 }}
+            sx={{ minWidth: 100, minHeight: 44 }}
           >
             Cancelar
           </Button>
@@ -456,7 +521,7 @@ export function AeropuertoComponent({
             startIcon={<AddIcon />}
             sx={{
               minWidth: 100,
-              ml: 1,
+              minHeight: 44,
             }}
           >
             {createAeropuertoMutation.isPending ? "Agregando..." : "Agregar"}
