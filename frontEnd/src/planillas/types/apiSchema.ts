@@ -143,7 +143,6 @@ const aeropuertosSchema = z.object({
     .string()
     .toUpperCase()
     .length(3, "Consiste en 3 letras del alfabeto latino"),
-  codOACI: z.string().toUpperCase().length(4, "Consiste en 4 letras Ej:SAME"),
 });
 
 export { aeropuertosSchema };
@@ -153,7 +152,6 @@ export type AeropuertosSchema = z.infer<typeof aeropuertosSchema>;
 export const defaultValuesAeropuertos: AeropuertosSchema = {
   aeropuerto: "",
   codIATA: "",
-  codOACI: "",
 };
 
 const vehiculoSchema = z.object({

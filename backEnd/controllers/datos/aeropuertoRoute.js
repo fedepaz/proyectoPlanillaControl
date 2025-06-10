@@ -1,5 +1,6 @@
 import express from "express";
 import { Aeropuerto } from "../../models/personalModel.js";
+import { generateUserOACICode } from "../../utils/oaciCodeGenerator.utils.js";
 
 const aeropuertoRouter = express.Router();
 
@@ -56,8 +57,8 @@ aeropuertoRouter.get("/codIATA/:aero", async (req, res, next) => {
 aeropuertoRouter.post("/", async (req, res, next) => {
   const { body } = req;
   try {
-    const { aeropuerto, codIATA, codOACI } = body;
-    const requiredFields = ["aeropuerto", "codIATA", "codOACI"];
+    const { aeropuerto, codIATA } = body;
+    const requiredFields = ["aeropuerto", "codIATA"];
     const missingFields = requiredFields.filter((field) => !body[field]);
 
     if (missingFields.length > 0) {
@@ -72,22 +73,18 @@ aeropuertoRouter.post("/", async (req, res, next) => {
     }
 
     const codIATAUpper = codIATA.toUpperCase();
-    const codOACIUpper = codOACI.toUpperCase();
     const existingAero = await Aeropuerto.findOne({
       $or: [
-        { aeropuerto: aeropuerto },
+        { aeropuerto: { $regex: new RegExp(`^${aeropuerto}$`, "i") } },
         { codIATA: codIATAUpper },
-        { codOACI: codOACIUpper },
       ],
     });
 
     if (existingAero) {
       const field =
-        existingAero.aeropuerto === aeropuerto
+        existingAero.aeropuerto.toLowerCase() === aeropuerto.toLowerCase()
           ? "aeropuerto"
-          : existingAero.codIATA === codIATAUpper
-          ? "codIATA"
-          : "codOACI";
+          : "codIATA";
       const error = new Error(
         `Duplicate value. ${field.toUpperCase()} already exists`
       );
@@ -96,14 +93,67 @@ aeropuertoRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    // Generate OACI code for the new airport
+    const generatedOACI = await generateUserOACICode();
+
     const newAero = new Aeropuerto({
-      aeropuerto,
+      aeropuerto: aeropuerto.toUpperCase(),
       codIATA: codIATAUpper,
-      codOACI: codOACIUpper,
+      codOACI: generatedOACI,
+      isUserCreated: true,
+      needsValidation: true,
     });
 
     const savedAero = await newAero.save();
+
     return res.status(201).json(savedAero);
+  } catch (error) {
+    next(error);
+  }
+});
+
+aeropuertoRouter.get("/userCreatedAirports", async (req, res, next) => {
+  try {
+    const userCreatedAirports = await Aeropuerto.find({
+      isUserCreated: true,
+      needsValidation: false,
+    }).sort({ createdAt: -1 });
+
+    return res.json(userCreatedAirports);
+  } catch (error) {
+    next(error);
+  }
+});
+
+aeropuertoRouter.patch("/:id/needsValidation", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { isValid, realOACI } = req.body;
+
+    const aeropuerto = await Aeropuerto.findById(id);
+    if (!aeropuerto) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "AeropuertoNotFound";
+      throw error;
+    }
+
+    if (aeropuerto.isUserCreated) {
+      const error = new Error("This airport is not a system-generated airport");
+      error.status = 400;
+      error.name = "InvalidOperation";
+      throw error;
+    }
+
+    airport.needsValidation = false;
+
+    if (isValid && realOACI) {
+      airport.codOACI = realOACI.toUpperCase();
+      airport.isUserCreated = false;
+    }
+
+    const updatedAirport = await airport.save();
+    return res.json(updatedAirport);
   } catch (error) {
     next(error);
   }

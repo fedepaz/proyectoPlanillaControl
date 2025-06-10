@@ -20,7 +20,6 @@ import {
   Chip,
   Alert,
   Snackbar,
-  Divider,
   Paper,
   Fade,
 } from "@mui/material";
@@ -133,15 +132,16 @@ export function AeropuertoComponent({
       return nameMatch || iataMatch || icaoMatch || allWordsMatch;
     });
 
-    // Show add button if search term is at least 2 characters and no results found
-    const shouldShowAddButton = searchTerm.length >= 2 && filtered.length === 0;
+    // Show add button if search term is at least 2 characters, no results found, and no airport is currently selected
+    const shouldShowAddButton =
+      searchTerm.length >= 2 && filtered.length === 0 && !selectedAeropuerto;
 
     return {
       filteredOptions: filtered,
       hasSearched: true,
       shouldShowAddButton,
     };
-  }, [inputValue, aeropuertoOptions]);
+  }, [inputValue, aeropuertoOptions, selectedAeropuerto]);
 
   // Update showAddButton state
   useEffect(() => {
@@ -196,7 +196,7 @@ export function AeropuertoComponent({
     const newAeropuerto: AeropuertosSchema = {
       aeropuerto: newAeropuertoName.toUpperCase(),
       codIATA: codIATAWatch || "",
-      codOACI: "AAAA",
+      // codOACI will be generated automatically by the backend
     };
 
     createAeropuertoMutation.mutate(newAeropuerto, {
@@ -274,6 +274,7 @@ export function AeropuertoComponent({
                 setSelectedAeropuerto(existing);
                 onAeropuertoSelected(existing.id);
                 setShowAddButton(false);
+                setInputValue(""); // Clear input value when airport is selected
               } else {
                 handleOpenDialog();
               }
@@ -282,10 +283,12 @@ export function AeropuertoComponent({
               setSelectedAeropuerto(newValue);
               onAeropuertoSelected(newValue.id);
               setShowAddButton(false);
+              setInputValue(""); // Clear input value when airport is selected
             } else {
               setValue("aeropuerto", "");
               setSelectedAeropuerto(null);
               onAeropuertoSelected("");
+              setShowAddButton(false); // Hide add button when clearing selection
             }
           }}
           renderInput={(params) => (

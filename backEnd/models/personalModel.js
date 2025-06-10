@@ -118,11 +118,14 @@ export const MatriculaAeronave = model(
   "MatriculaAeronave",
   matriculaAeronaveSchema
 );
-
 const aeropuertoSchema = new Schema({
   aeropuerto: { type: String, required: true, unique: true },
   codIATA: { type: String, required: true, unique: true },
-  codOACI: { type: String, required: true, unique: true },
+  codOACI: { type: String, required: false, unique: false },
+  // New fields to track user-created airports
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 aeropuertoSchema.set("toJSON", {

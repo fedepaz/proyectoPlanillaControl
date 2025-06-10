@@ -10262,4 +10262,241 @@
     at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
     ---------------------
 
+    [2025-06-10T04:05:28.209Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"AEROPUERTO INTERNACIONAL DE BUENOS AIRES JORGE NEWBERY (AEP)","codIATA":"","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MissingData: Missing required fields: CODIATA
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:64:21
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-06-10T04:15:09.835Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"CHARLES DE GAULLE","codIATA":"CDG","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:15:39.609Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:16:23.077Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"INDIA","codIATA":"IND","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:91:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:34:23.113Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.aeropuertos index: codOACI_1 dup key: { codOACI: "AAAA" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-10T04:35:03.028Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:87:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:35:34.353Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:87:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:35:51.025Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"INDIA","codIATA":"IND","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AeropuertoDuplicate: Duplicate value. CODOACI already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:87:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T04:36:48.356Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.aeropuertos index: codOACI_1 dup key: { codOACI: "AAAA" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-10T04:37:39.122Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.aeropuertos index: codOACI_1 dup key: { codOACI: "AAAA" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-10T04:38:19.843Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.aeropuertos index: codOACI_1 dup key: { codOACI: "AAAA" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-10T04:39:12.333Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD","codOACI":"AAAA"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.aeropuertos index: codOACI_1 dup key: { codOACI: "AAAA" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-10T04:58:46.938Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ReferenceError: Aeropuerto is not defined
+    at generateUserOACICode (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/utils/oaciCodeGenerator.utils.js:14:22)
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:97:33
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-10T05:07:19.998Z]
+    URL: /aeropuerto
+    Method: POST
+    Body: {"aeropuerto":"MADRID","codIATA":"MAD"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ReferenceError: codOACIUpper is not defined
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/aeropuertoRoute.js:102:16
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
     
