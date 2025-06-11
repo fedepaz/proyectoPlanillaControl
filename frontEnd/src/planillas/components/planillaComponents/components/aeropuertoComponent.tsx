@@ -22,6 +22,8 @@ import {
   Snackbar,
   Paper,
   Fade,
+  Card,
+  CardContent,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -100,6 +102,9 @@ export function AeropuertoComponent({
         aeropuerto: item.aeropuerto,
         codIATA: item.codIATA,
         codOACI: item.codOACI,
+        isUserCreated: item.isUserCreated,
+        createdAt: item.createdAt,
+        needsValidation: item.needsValidation,
       })) || [],
     [aeropuertosQuery.data]
   );
@@ -247,163 +252,177 @@ export function AeropuertoComponent({
     }
   };
 
+  const handleClearSelection = () => {
+    setValue("aeropuerto", "");
+    setSelectedAeropuerto(null);
+    onAeropuertoSelected("");
+    setShowAddButton(false);
+  };
+
   return (
     <FormProvider {...methods}>
-      <Stack sx={{ gap: 1 }}>
-        <Autocomplete
-          freeSolo
-          options={aeropuertoOptions}
-          getOptionLabel={getOptionLabel}
-          filterOptions={filterOptions}
-          renderOption={renderOption}
-          value={selectedAeropuerto}
-          inputValue={inputValue}
-          onInputChange={handleInputChange}
-          onChange={(_, newValue) => {
-            if (typeof newValue === "string") {
-              const searchTerm = newValue.trim().toUpperCase();
-              const existing = aeropuertoOptions.find(
-                (opt) =>
-                  opt.aeropuerto.toUpperCase().includes(searchTerm) ||
-                  opt.codIATA === searchTerm ||
-                  opt.codOACI === searchTerm
-              );
+      {!selectedAeropuerto && (
+        <Stack sx={{ gap: 1 }}>
+          <Autocomplete
+            freeSolo
+            options={aeropuertoOptions}
+            getOptionLabel={getOptionLabel}
+            filterOptions={filterOptions}
+            renderOption={renderOption}
+            value={selectedAeropuerto}
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onChange={(_, newValue) => {
+              if (typeof newValue === "string") {
+                const searchTerm = newValue.trim().toUpperCase();
+                const existing = aeropuertoOptions.find(
+                  (opt) =>
+                    opt.aeropuerto.toUpperCase().includes(searchTerm) ||
+                    opt.codIATA === searchTerm ||
+                    opt.codOACI === searchTerm
+                );
 
-              if (existing) {
-                setValue("aeropuerto", existing.id);
-                setSelectedAeropuerto(existing);
-                onAeropuertoSelected(existing.id);
+                if (existing) {
+                  setValue("aeropuerto", existing.id);
+                  setSelectedAeropuerto(existing);
+                  onAeropuertoSelected(existing.id);
+                  setShowAddButton(false);
+                  setInputValue(""); // Clear input value when airport is selected
+                } else {
+                  handleOpenDialog();
+                }
+              } else if (newValue) {
+                setValue("aeropuerto", newValue.id);
+                setSelectedAeropuerto(newValue);
+                onAeropuertoSelected(newValue.id);
                 setShowAddButton(false);
                 setInputValue(""); // Clear input value when airport is selected
               } else {
-                handleOpenDialog();
+                setValue("aeropuerto", "");
+                setSelectedAeropuerto(null);
+                onAeropuertoSelected("");
+                setShowAddButton(false); // Hide add button when clearing selection
               }
-            } else if (newValue) {
-              setValue("aeropuerto", newValue.id);
-              setSelectedAeropuerto(newValue);
-              onAeropuertoSelected(newValue.id);
-              setShowAddButton(false);
-              setInputValue(""); // Clear input value when airport is selected
-            } else {
-              setValue("aeropuerto", "");
-              setSelectedAeropuerto(null);
-              onAeropuertoSelected("");
-              setShowAddButton(false); // Hide add button when clearing selection
-            }
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={label}
-              placeholder={placeholder}
-              required={required}
-              helperText="Escriba el nombre del aeropuerto o código IATA/ICAO para buscar"
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: "text.secondary" }} />
-                  </InputAdornment>
-                ),
-                endAdornment: params.InputProps.endAdornment,
-              }}
-            />
-          )}
-          noOptionsText={
-            <Box sx={{ textAlign: "center", py: 2 }}>
-              {!hasSearched ? (
-                // Initial state - no search performed
-                <Box>
-                  <SearchIcon
-                    sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
-                  />
-                  <Typography variant="body2" color="text.secondary">
-                    Comience a escribir para buscar aeropuertos
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Busque por nombre, código IATA o ICAO
-                  </Typography>
-                </Box>
-              ) : (
-                // After search with no results - this won't show the button anymore
-                <Box>
-                  <InfoIcon
-                    sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
-                  />
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 1 }}
-                  >
-                    No se encontraron aeropuertos para "{inputValue}"
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    display="block"
-                  >
-                    Intente con diferentes términos de búsqueda
-                  </Typography>
-                </Box>
-              )}
-            </Box>
-          }
-          filterSelectedOptions
-          autoHighlight
-          clearOnBlur={false}
-          selectOnFocus
-          handleHomeEndKeys
-          loading={false}
-          openOnFocus
-          blurOnSelect={false}
-        />
-
-        {/* Mobile-friendly Add Button - appears below the autocomplete */}
-        <Fade in={showAddButton} timeout={300}>
-          <Paper
-            elevation={2}
-            sx={{
-              mt: 1,
-              p: 2,
-              borderRadius: 2,
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? "rgba(255, 255, 255, 0.05)"
-                  : "rgba(0, 0, 0, 0.02)",
-              border: `1px solid ${theme.palette.divider}`,
             }}
-          >
-            <Box sx={{ textAlign: "center" }}>
-              <InfoIcon sx={{ fontSize: 24, color: "text.secondary", mb: 1 }} />
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                No se encontró "{inputValue}"
-              </Typography>
-
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={handleOpenDialog}
-                fullWidth
-                sx={{
-                  textTransform: "none",
-                  fontWeight: 500,
-                  minHeight: 48,
-                  fontSize: "1rem",
-                  borderRadius: 2,
-                  boxShadow: theme.shadows[2],
-                  "&:hover": {
-                    boxShadow: theme.shadows[4],
-                  },
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                required={required}
+                helperText="Escriba el nombre del aeropuerto o código IATA/ICAO para buscar"
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: "text.secondary" }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: params.InputProps.endAdornment,
                 }}
-              >
-                Agregar "{inputValue}" como nuevo aeropuerto
-              </Button>
-            </Box>
-          </Paper>
-        </Fade>
-      </Stack>
+              />
+            )}
+            noOptionsText={
+              <Box sx={{ textAlign: "center", py: 2 }}>
+                {!hasSearched ? (
+                  // Initial state - no search performed
+                  <Box>
+                    <SearchIcon
+                      sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
+                    />
+                    <Typography variant="body2" color="text.secondary">
+                      Comience a escribir para buscar aeropuertos
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Busque por nombre, código IATA o ICAO
+                    </Typography>
+                  </Box>
+                ) : (
+                  // After search with no results - this won't show the button anymore
+                  <Box>
+                    <InfoIcon
+                      sx={{ fontSize: 48, color: "text.secondary", mb: 1 }}
+                    />
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ mb: 1 }}
+                    >
+                      No se encontraron aeropuertos para "{inputValue}"
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      display="block"
+                    >
+                      Intente con diferentes términos de búsqueda
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            }
+            filterSelectedOptions
+            autoHighlight
+            clearOnBlur={false}
+            selectOnFocus
+            handleHomeEndKeys
+            loading={false}
+            openOnFocus
+            blurOnSelect={false}
+          />
 
+          {/* Mobile-friendly Add Button - appears below the autocomplete */}
+          <Fade in={showAddButton} timeout={300}>
+            <Paper
+              elevation={2}
+              sx={{
+                mt: 1,
+                p: 2,
+                borderRadius: 2,
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(255, 255, 255, 0.05)"
+                    : "rgba(0, 0, 0, 0.02)",
+                border: `1px solid ${theme.palette.divider}`,
+              }}
+            >
+              <Box sx={{ textAlign: "center" }}>
+                <InfoIcon
+                  sx={{ fontSize: 24, color: "text.secondary", mb: 1 }}
+                />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 2 }}
+                >
+                  No se encontró "{inputValue}"
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                  onClick={handleOpenDialog}
+                  fullWidth
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 500,
+                    minHeight: 48,
+                    fontSize: "1rem",
+                    borderRadius: 2,
+                    boxShadow: theme.shadows[2],
+                    "&:hover": {
+                      boxShadow: theme.shadows[4],
+                    },
+                  }}
+                >
+                  Agregar "{inputValue}" como nuevo aeropuerto
+                </Button>
+              </Box>
+            </Paper>
+          </Fade>
+        </Stack>
+      )}
       <Dialog
         open={openDialog}
         onClose={handleClose}
@@ -531,7 +550,60 @@ export function AeropuertoComponent({
           </Button>
         </DialogActions>
       </Dialog>
+      {selectedAeropuerto && (
+        <Card elevation={2} sx={{ borderRadius: 2 }}>
+          <CardContent sx={{ p: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                mb: 1,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <FlightIcon sx={{ color: "primary.main" }} />
+                <Typography variant="subtitle2" color="text.secondary">
+                  Aeropuerto Seleccionado
+                </Typography>
+              </Box>
+              <IconButton size="small" onClick={handleClearSelection}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </Box>
 
+            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+              {selectedAeropuerto.aeropuerto}
+            </Typography>
+
+            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+              <Chip
+                label={`IATA: ${selectedAeropuerto.codIATA}`}
+                size="small"
+                color="primary"
+              />
+              {selectedAeropuerto.codOACI && (
+                <Chip
+                  label={`ICAO: ${selectedAeropuerto.codOACI}`}
+                  size="small"
+                  variant="outlined"
+                />
+              )}
+            </Box>
+
+            {selectedAeropuerto.isUserCreated && (
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+              >
+                <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
+                <Typography variant="caption" color="text.secondary">
+                  Aeropuerto creado por usuario - Pendiente de validación
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+        </Card>
+      )}
       {/* Success Snackbar */}
       <Snackbar
         open={snackbarOpen}

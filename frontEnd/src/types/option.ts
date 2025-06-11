@@ -33,7 +33,10 @@ export type AeropuertoOption = {
   id: string;
   aeropuerto: string;
   codIATA: string;
-  codOACI: string;
+  codOACI?: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
 };
 
 export type JerarquiaOption = {
