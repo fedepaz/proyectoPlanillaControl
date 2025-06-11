@@ -582,13 +582,14 @@ export function AeropuertoComponent({
                 size="small"
                 color="primary"
               />
-              {selectedAeropuerto.codOACI && (
-                <Chip
-                  label={`ICAO: ${selectedAeropuerto.codOACI}`}
-                  size="small"
-                  variant="outlined"
-                />
-              )}
+              {selectedAeropuerto.codOACI &&
+                !selectedAeropuerto.isUserCreated && (
+                  <Chip
+                    label={`ICAO: ${selectedAeropuerto.codOACI}`}
+                    size="small"
+                    variant="outlined"
+                  />
+                )}
             </Box>
 
             {selectedAeropuerto.isUserCreated && (
@@ -597,7 +598,11 @@ export function AeropuertoComponent({
               >
                 <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
                 <Typography variant="caption" color="text.secondary">
-                  Aeropuerto creado por usuario - Pendiente de validación
+                  Aeropuerto agregado por usuario
+                  <br />
+                  Pendiente de validación por la administración
+                  <br />
+                  Los datos pueden ser erróneos
                 </Typography>
               </Box>
             )}
