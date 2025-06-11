@@ -39,6 +39,14 @@ export type AeropuertoOption = {
   needsValidation?: boolean;
 };
 
+export type CodVueloOption = {
+  id: string;
+  codVuelo: string;
+  origenId: string;
+  destinoId: string;
+  empresaId: string;
+};
+
 export type JerarquiaOption = {
   id: string;
   label: UserHierarchy;

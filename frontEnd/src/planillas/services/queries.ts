@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AeropuertoOption,
+  CodVueloOption,
   EmpresaOption,
   JerarquiaOption,
   MatriculaOption,
@@ -449,6 +450,19 @@ export function useAeropuertos() {
       );
       const aeropuertos = response.data;
       return aeropuertos;
+    },
+  });
+}
+
+export function useCodVuelo() {
+  return useQuery({
+    queryKey: ["codVuelo"],
+    queryFn: async () => {
+      const response = await apiClient.get<CodVueloOption[]>(
+        `${API_URL}/codVuelo`
+      );
+      const codVuelo = response.data;
+      return codVuelo;
     },
   });
 }

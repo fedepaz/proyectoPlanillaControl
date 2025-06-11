@@ -2,14 +2,20 @@ import logError from "../utils/logError.utils.js";
 import logErrorDB from "../utils/logErrorDB.utils.js";
 
 const ERROR_HANDLERS = {
-  CastError: (error) => ({
-    status: 400,
-    body: {
-      error: `ID of ${error.model.modelName} is malformed`,
-      value: error.value,
-      field: error.field,
-    },
-  }),
+  CastError: (error) => {
+    const modelName = error?.model?.modelName || "UknownModel";
+    const fieldName = error?.path || "UknownField";
+    const value = error?.value || "UknownValue";
+
+    return {
+      status: 400,
+      body: {
+        error: `Valor inválido para el campo ${fieldName} del modelo ${modelName}`,
+        value,
+        fieldName,
+      },
+    };
+  },
 
   ValidationError: ({ message }) => ({
     status: message.includes("Legajo") ? 409 : 400,

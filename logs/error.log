@@ -10515,4 +10515,166 @@
     at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
     ---------------------
 
+    [2025-06-11T20:48:14.433Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"codVuelo":"1911","origen":null,"destino":null,"empresa":{"empresa":"Aerolineas Argentinas","id":"66b62a1d220f355e6c7f3e68"}}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MissingData: Missing required fields: ORIGEN, DESTINO
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/datos/codVueloRoute.js:70:21
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-06-11T20:48:47.140Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"codVuelo":"1911","origen":"mdz","destino":"aep","empresa":{"empresa":"Aerolineas Argentinas","id":"66b62a1d220f355e6c7f3e68"}}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "mdz" (type string) at path "_id" for model "Aeropuerto"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
+    [2025-06-11T20:49:54.236Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"codVuelo":"1911","origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":{"empresa":"Aerolineas Argentinas","id":"66b62a1d220f355e6c7f3e68"}}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ empresa: 'Aerolineas Argentinas', id: '66b62a1d220f355e6c7f3e68' }" (type Object) at path "_id" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-06-11T20:50:11.067Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"codVuelo":"1911","origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":{"empresa":"Aerolineas Argentinas","id":"66b62a1d220f355e6c7f3e68"}}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "{ empresa: 'Aerolineas Argentinas', id: '66b62a1d220f355e6c7f3e68' }" (type Object) at path "_id" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:319:34)
+    ---------------------
+
+    [2025-06-11T21:28:13.378Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"codVuelo":"1931","origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":"cualquiera"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: CastError: Cast to ObjectId failed for value "cualquiera" (type string) at path "_id" for model "Empresa"
+    at SchemaObjectId.cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schema/objectId.js:250:11)
+    at SchemaType.applySetters (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1236:12)
+    at SchemaType.castForQuery (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1653:17)
+    at cast (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/cast.js:390:32)
+    ---------------------
+
+    [2025-06-11T21:51:12.359Z]
+    URL: /codVuelo/busqueda
+    Method: POST
+    Body: {"origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":"66b62a1d220f355e6c7f3e68"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-06-11T21:51:37.162Z]
+    URL: /codVuelo/busqueda
+    Method: POST
+    Body: {"origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":"66b62a1d220f355e6c7f3e68"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-06-11T21:52:15.550Z]
+    URL: /codVuelo/busqueda
+    Method: POST
+    Body: {"origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":"66b62a1d220f355e6c7f3e68"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-06-11T21:52:57.224Z]
+    URL: /codVuelo/busqueda
+    Method: POST
+    Body: {"origen":"681fe5f25063a0b66be1117e","destino":"681fe6a25063a0b66be11184","empresa":"66b62a1d220f355e6c7f3e68"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     

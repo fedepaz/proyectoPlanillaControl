@@ -76,6 +76,7 @@ codVueloRouter.post("/", async (req, res, next) => {
       error.name = "MissingData";
       throw error;
     }
+
     const aeropuertoOrigenExist = await Aeropuerto.findById(origen);
     const aeropuertoDestinoExist = await Aeropuerto.findById(destino);
     const empresaExist = await Empresa.findById(empresa);
@@ -101,6 +102,62 @@ codVueloRouter.post("/", async (req, res, next) => {
 
     const savedCodVuelo = await newCodVuelo.save();
     return res.status(201).json(savedCodVuelo);
+  } catch (error) {
+    next(error);
+  }
+});
+
+codVueloRouter.post("/busqueda", async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    const { origen, destino, empresa } = body;
+
+    const requiredFields = ["origen", "destino", "empresa"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const [aeropuertoOrigenExist, aeropuertoDestinoExist, empresaExist] =
+      await Promise.all([
+        Aeropuerto.findById(origen),
+        Aeropuerto.findById(destino),
+        Empresa.findById(empresa),
+      ]);
+
+    if (!aeropuertoOrigenExist || !aeropuertoDestinoExist) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "AeropuertoNotFound";
+      throw error;
+    }
+    if (!empresaExist) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const codVuelos = await CodVuelo.find({
+      $or: [
+        { origen, destino, empresa },
+        { origen: destino, destino: origen, empresa },
+      ],
+    })
+      .populate("origen", { codIATA: 1 })
+      .populate("destino", { codIATA: 1 })
+      .populate("empresa");
+
+    return res.json(codVuelos);
   } catch (error) {
     next(error);
   }
