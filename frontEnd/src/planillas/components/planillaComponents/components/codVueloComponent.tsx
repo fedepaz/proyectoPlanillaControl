@@ -1,104 +1,416 @@
-import { Autocomplete, TextField, Typography, Box } from "@mui/material";
-import { useFormContext } from "react-hook-form";
-import type { PlanillaSchema } from "../../../types/planillaSchema";
-import { useEffect, useState } from "react";
+import {
+  TextField,
+  Typography,
+  Box,
+  useMediaQuery,
+  useTheme,
+  Alert,
+  Button,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
+  Snackbar,
+  Stack,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { FormProvider, useForm } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
+import { CodVueloOption, EmpresaOption } from "../../../../types/option";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import FlightIcon from "@mui/icons-material/Flight";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
+import BusinessIcon from "@mui/icons-material/Business";
+import {
+  codVueloSchema,
+  CodVueloSchema,
+  defaultValuesCodVuelos,
+} from "../../../types/apiSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppError } from "../../../../hooks/useAppError";
+import { useCodVueloBusqueda, useEmpresaId } from "../../../services/queries";
+import { useCreateCodVuelo } from "../../../services/mutations";
+import { RHFDropDownCodVuelo } from "../../../../components/RHFDropDownCodVuelo";
 
-// Interface for flight code suggestion
-interface VueloSugerido {
-  codigo: string;
-  aerolinea: string;
-  origen: string;
-  destino: string;
+interface CodVueloComponentProps {
+  onCodVueloSelected: (codVuelo: string) => void;
+  origenId: string;
+  destinoId: string;
+  empresaId: string;
 }
 
-export function CodVueloComponent() {
-  const { setValue, watch } = useFormContext<PlanillaSchema>();
+export function CodVueloComponent({
+  onCodVueloSelected,
+  origenId,
+  destinoId,
+  empresaId,
+}: CodVueloComponentProps) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newCodVueloNumber, setNewCodVueloNumber] = useState("");
+  const [selectedCodVuelo, setSelectedCodVuelo] =
+    useState<CodVueloOption | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { setError } = useAppError();
 
-  // Watch for changes to key fields
-  const tipoVuelo = watch("datosVuelo.tipoVuelo");
-  const aerolinea = watch("datosVuelo.empresa");
-  const origen = watch("datosVuelo.codVuelo");
-  const destino = watch("datosVuelo.destino");
+  const empresaQuery = useEmpresaId(empresaId);
 
-  // State for flight code suggestions
-  const [vuelosSugeridos, setVuelosSugeridos] = useState<VueloSugerido[]>([]);
-  const [inputValue, setInputValue] = useState("");
+  const methods = useForm<CodVueloSchema>({
+    resolver: zodResolver(codVueloSchema),
+    defaultValues: {
+      ...defaultValuesCodVuelos,
+      origen: origenId,
+      destino: destinoId,
+      empresa: empresaId,
+    },
+    mode: "onChange",
+  });
+  const { watch, setValue } = methods;
+  const codVueloWatch = watch("codVuelo");
 
-  // Generate flight code suggestions when relevant fields change
+  const params =
+    origenId && destinoId && empresaId
+      ? { origen: origenId, destino: destinoId, empresa: empresaId }
+      : null;
+
+  const codVueloQuery = useCodVueloBusqueda(params);
+  const createCodVueloMutation = useCreateCodVuelo();
+
+  // Transform codVuelo data to match CodVueloOption format
+  const codVueloOptions: CodVueloOption[] = useMemo(
+    () =>
+      codVueloQuery.data?.map((item) => ({
+        id: item.id,
+        codVuelo: item.codVuelo,
+        origenId: item.origenId,
+        destinoId: item.destinoId,
+        empresaId: item.empresaId,
+        isUserCreated: item.isUserCreated,
+        createdAt: item.createdAt,
+        needsValidation: item.needsValidation,
+      })) || [],
+    [codVueloQuery.data]
+  );
+
   useEffect(() => {
-    if (
-      aerolinea &&
-      ((tipoVuelo === "ARRIBO" && origen) ||
-        (tipoVuelo === "PARTIDA" && destino))
-    ) {
-      // This would typically come from an API, but we're simulating it here
-      // In a real app, you'd fetch this data based on the selected values
-      const codigoBase = aerolinea.substring(0, 2).toUpperCase();
-
-      const sugerencias: VueloSugerido[] = [
-        {
-          codigo: `${codigoBase}123`,
-          aerolinea: aerolinea,
-          origen: origen || "---",
-          destino: destino || "---",
-        },
-        {
-          codigo: `${codigoBase}456`,
-          aerolinea: aerolinea,
-          origen: origen || "---",
-          destino: destino || "---",
-        },
-        {
-          codigo: `${codigoBase}789`,
-          aerolinea: aerolinea,
-          origen: origen || "---",
-          destino: destino || "---",
-        },
-      ];
-      setVuelosSugeridos(sugerencias);
-    } else {
-      setVuelosSugeridos([]);
+    if (codVueloWatch) {
+      const selected = codVueloOptions.find(
+        (option) => option.id === codVueloWatch
+      );
+      setSelectedCodVuelo(selected || null);
+      onCodVueloSelected(codVueloWatch);
     }
-  }, [aerolinea, tipoVuelo, origen, destino]);
+  }, [codVueloWatch, onCodVueloSelected, codVueloOptions]);
+
+  useEffect(() => {
+    if (codVueloQuery.error) {
+      setError(codVueloQuery.error);
+    }
+  }, [codVueloQuery.error, setError]);
+
+  useEffect(() => {
+    if (createCodVueloMutation.error) {
+      setError(createCodVueloMutation.error);
+    }
+  }, [createCodVueloMutation.error, setError]);
+  if (!empresaQuery.data) return null;
+  const empresaOption: EmpresaOption = empresaQuery.data;
+
+  const getDisplayInfo = () => {
+    // display first two letters of empresa name in capital letters
+    // if the empresa has two words, display the first letter of the first word and the first letter of the second word
+    const empresaName = empresaOption.empresa.split(" ");
+    const firstLetter = empresaName[0].charAt(0).toUpperCase();
+    const secondLetter = empresaName[1]
+      ? empresaName[1].charAt(0).toUpperCase()
+      : "";
+    return {
+      label: firstLetter + secondLetter,
+      icon: <BusinessIcon />,
+      color: theme.palette.secondary.main,
+    };
+  };
+
+  const {
+    label: displayLabel,
+    icon: displayIcon,
+    color: displayColor,
+  } = getDisplayInfo();
+
+  const handleCreateNewCodVuelo = () => {
+    if (!newCodVueloNumber.trim()) return;
+    const newCodVuelo: CodVueloSchema = {
+      codVuelo: newCodVueloNumber.toUpperCase(),
+      origen: origenId,
+      destino: destinoId,
+      empresa: empresaOption.id,
+    };
+
+    createCodVueloMutation.mutate(newCodVuelo, {
+      onSuccess: (data) => {
+        setValue("codVuelo", data.id);
+        setOpenDialog(false);
+        setNewCodVueloNumber("");
+        onCodVueloSelected(data.id);
+
+        const newOption: CodVueloOption = {
+          id: data.id,
+          codVuelo: data.codVuelo,
+          origenId: data.origen,
+          destinoId: data.destino,
+          empresaId: data.empresa,
+        };
+        setSelectedCodVuelo(newOption);
+        setSnackbarOpen(true);
+      },
+    });
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+    setNewCodVueloNumber("");
+  };
+
+  const handleClearSelection = () => {
+    setValue("codVuelo", "");
+    setSelectedCodVuelo(null);
+    onCodVueloSelected("");
+  };
 
   return (
-    <Autocomplete
-      freeSolo
-      options={vuelosSugeridos}
-      getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.codigo
-      }
-      inputValue={inputValue}
-      onInputChange={(_, newValue) => {
-        setInputValue(newValue);
-      }}
-      onChange={(_, newValue) => {
-        if (typeof newValue === "string") {
-          setValue("datosVuelo.codVuelo", newValue);
-        } else if (newValue) {
-          setValue("datosVuelo.codVuelo", newValue.codigo);
-        } else {
-          setValue("datosVuelo.codVuelo", "");
-        }
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Código de vuelo"
-          variant="outlined"
-          fullWidth
-        />
-      )}
-      renderOption={(props, option) => (
-        <li {...props}>
-          <Box>
-            <Typography variant="body1">{option.codigo}</Typography>
-            <Typography variant="caption" color="text.secondary">
-              {option.origen} → {option.destino}
+    <FormProvider {...methods}>
+      <Stack sx={{ gap: 1 }}>
+        {!selectedCodVuelo && (
+          <RHFDropDownCodVuelo<CodVueloSchema>
+            name="codVuelo"
+            options={codVueloQuery.data}
+            label={displayLabel}
+            onAddNew={() => setOpenDialog(true)}
+          />
+        )}
+        {selectedCodVuelo && (
+          <Card elevation={2} sx={{ borderRadius: 2 }}>
+            <CardContent sx={{ p: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  mb: 1,
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%",
+                      bgcolor: `${displayColor}20`,
+                      color: displayColor,
+                    }}
+                  >
+                    {displayIcon}
+                  </Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    {displayLabel.toLowerCase()} Seleccionada
+                  </Typography>
+                </Box>
+                <IconButton size="small" onClick={handleClearSelection}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </Box>
+
+              <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                {selectedCodVuelo.codVuelo}
+              </Typography>
+
+              <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+                <Chip
+                  label={displayLabel}
+                  size="small"
+                  variant="outlined"
+                  sx={{ bgcolor: `${displayColor}20`, color: displayColor }}
+                />
+                {selectedCodVuelo.isUserCreated && (
+                  <Chip
+                    label="Agregado por el usuario"
+                    size="small"
+                    color="warning"
+                    variant="outlined"
+                  />
+                )}
+              </Box>
+              {selectedCodVuelo.isUserCreated && (
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+                >
+                  <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
+                  <Typography variant="caption" color="text.secondary">
+                    {displayLabel.toLowerCase()} agregada por usuario
+                    <br />
+                    Pendiente de validación por la administración
+                    <br />
+                    Los datos pueden ser erróneos
+                  </Typography>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        )}
+      </Stack>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        fullScreen={fullScreen}
+        PaperProps={{
+          sx: {
+            borderRadius: fullScreen ? 0 : 2,
+            width: fullScreen ? "100%" : "auto",
+            maxWidth: fullScreen ? "100%" : 500,
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            pb: 1,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.05)"
+                : "rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                mr: 1.5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                bgcolor: `${theme.palette.primary.main}20`,
+                color: theme.palette.primary.main,
+              }}
+            >
+              <AddIcon />
+            </Box>
+            <Typography variant="h6" component="div">
+              Agregar nuevo vuelo
             </Typography>
           </Box>
-        </li>
-      )}
-    />
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+            sx={{ minHeight: 44, minWidth: 44 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent sx={{ pt: 3, pb: 2, px: { xs: 2, sm: 3 } }}>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            Complete la información del nuevo vuelo
+          </Typography>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Nombre del vuelo"
+            fullWidth
+            value={newCodVueloNumber}
+            onChange={(e) => setNewCodVueloNumber(e.target.value)}
+            variant="outlined"
+            helperText="Nombre completo del vuelo"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <FlightIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ mt: 2 }}
+          />
+
+          <TextField
+            margin="dense"
+            label="Código del vuelo"
+            fullWidth
+            value={codVueloWatch || ""}
+            onChange={(e) => setValue("codVuelo", e.target.value.toUpperCase())}
+            variant="outlined"
+            helperText="Código del vuelo de 3 letras (ej: EZE, COR)"
+            inputProps={{ maxLength: 3 }}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+
+        <DialogActions
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: 2,
+            borderTop: `1px solid ${theme.palette.divider}`,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.05)"
+                : "rgba(0, 0, 0, 0.02)",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            sx={{ minWidth: 100, minHeight: 44 }}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleCreateNewCodVuelo}
+            disabled={
+              !newCodVueloNumber.trim() || createCodVueloMutation.isPending
+            }
+            variant="contained"
+            startIcon={<AddIcon />}
+            sx={{
+              minWidth: 100,
+              minHeight: 44,
+            }}
+          >
+            {createCodVueloMutation.isPending ? "Agregando..." : "Agregar"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          ¡{displayLabel.toLowerCase()} agregada exitosamente!
+        </Alert>
+      </Snackbar>
+    </FormProvider>
   );
 }

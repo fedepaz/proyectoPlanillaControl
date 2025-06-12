@@ -173,10 +173,7 @@ export const defaultValuesVehiculos: Partial<VehiculosSchema> = {
 };
 
 const codVueloSchema = z.object({
-  codVuelo: z
-    .number({ message: "Sólo número de vuelo" })
-    .min(1, "Tiene que ser un codigo de vuelo válido")
-    .max(99999),
+  codVuelo: z.string(),
   origen: objectIdSchema.describe("Aeropuerto ID"),
   destino: objectIdSchema.describe("Aeropuerto ID"),
   empresa: objectIdSchema.describe("Empresa ID"),

@@ -10677,4 +10677,37 @@
     at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-06-12T15:55:48.823Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"88888888","password":"qwertyuiop"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: UserNotFound: El usuario no existe
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:121:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
+    ---------------------
+
+    [2025-06-12T15:55:53.747Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"99999999","password":"qwertyuiop"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:128:23)
+    at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
+    ---------------------
+
     

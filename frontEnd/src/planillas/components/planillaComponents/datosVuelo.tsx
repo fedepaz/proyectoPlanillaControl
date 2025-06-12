@@ -9,11 +9,15 @@ import { EmpresaComponent } from "./components/empresaComponent";
 import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
+import { useState } from "react";
 const airlineId = import.meta.env.VITE_AEROLINE_ID;
 
 export function DatosVuelo() {
   const demoraQuery = useDemora();
   const tipoVueloQuery = useTipoVuelo();
+  const [origenIdRef, setOrigenIdRef] = useState("");
+  const [destinoIdRef, setDestinoIdRef] = useState("");
+  const [empresaIdRef, setEmpresaIdRef] = useState("");
   const { setValue } = useFormContext<PlanillaSchema>();
 
   const handleMatSelected = (matriculaAeronave: string) => {
@@ -21,14 +25,16 @@ export function DatosVuelo() {
   };
   const sendEmpresa = (empresaId: string) => {
     setValue("datosVuelo.empresa", empresaId);
-  };
-
-  const sendTipoVuelo = (tipoVueloId: string) => {
-    console.log("Tipo de vuelo selected:", tipoVueloId);
+    setEmpresaIdRef(empresaId);
   };
 
   const sendAeropuerto = (aeropuertoId: string) => {
     console.log("Aeropuerto selected:", aeropuertoId);
+    setOrigenIdRef(aeropuertoId);
+  };
+
+  const sendCodVuelo = (codVueloId: string) => {
+    console.log("Vuelo selected:", codVueloId);
   };
 
   return (
@@ -57,7 +63,12 @@ export function DatosVuelo() {
         onAeropuertoSelected={sendAeropuerto}
       />
       {/*codVuelo*/}
-      <CodVueloComponent />
+      <CodVueloComponent
+        onCodVueloSelected={sendCodVuelo}
+        origenId={origenIdRef}
+        destinoId={destinoIdRef}
+        empresaId={empresaIdRef}
+      />
       {/*horaArribo*/}
       <RHFDateTimePicker<PlanillaSchema>
         name="datosVuelo.horaArribo"

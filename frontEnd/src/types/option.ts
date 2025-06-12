@@ -21,6 +21,9 @@ export type MatriculaOption = {
 export type EmpresaOption = {
   id: string;
   empresa: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
 };
 
 export type UnidadOption = {
@@ -45,6 +48,9 @@ export type CodVueloOption = {
   origenId: string;
   destinoId: string;
   empresaId: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
 };
 
 export type JerarquiaOption = {

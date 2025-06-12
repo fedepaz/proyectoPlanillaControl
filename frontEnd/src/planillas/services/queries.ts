@@ -395,23 +395,17 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
   });
 };
 
-export function useEmpresaId(empresa: string) {
+export function useEmpresaId(empresaId: string) {
   return useQuery({
-    queryKey: ["empresa", { empresa }],
-    queryFn: async (): Promise<EmpresaSchema> => {
-      if (!empresa) {
-        throw new Error("Invalid Empresa: Empresa is undefined");
-      }
-
-      const { data } = await apiClient.get<ApiGetEmpresa>(
-        `${API_URL}/aeronave/empresa/${empresa}`
+    queryKey: ["empresa", empresaId],
+    queryFn: async () => {
+      const response = await apiClient.get<EmpresaOption>(
+        `${API_URL}/empresa/${empresaId}`
       );
-      return {
-        empresa: data.empresa,
-        tipoEmpresa: data.tipoEmpresa,
-      };
+      const empresa = response.data;
+      return empresa;
     },
-    enabled: !!empresa,
+    enabled: !!empresaId,
   });
 }
 
@@ -464,5 +458,27 @@ export function useCodVuelo() {
       const codVuelo = response.data;
       return codVuelo;
     },
+  });
+}
+
+type BuscarCodVueloParams = {
+  origen: string;
+  destino: string;
+  empresa: string;
+};
+
+export function useCodVueloBusqueda(params: BuscarCodVueloParams | null) {
+  return useQuery({
+    queryKey: ["codVuelo", params],
+    queryFn: async () => {
+      if (!params) return [];
+      const response = await apiClient.post<CodVueloOption[]>(
+        `${API_URL}/codVuelo/busqueda`,
+        params
+      );
+      const codVuelo = response.data;
+      return codVuelo;
+    },
+    enabled: !!params,
   });
 }

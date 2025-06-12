@@ -98,6 +98,8 @@ codVueloRouter.post("/", async (req, res, next) => {
       origen,
       destino,
       empresa,
+      isUserCreated: true,
+      needsValidation: true,
     });
 
     const savedCodVuelo = await newCodVuelo.save();
@@ -158,6 +160,53 @@ codVueloRouter.post("/busqueda", async (req, res, next) => {
       .populate("empresa");
 
     return res.json(codVuelos);
+  } catch (error) {
+    next(error);
+  }
+});
+
+codVueloRouter.get("/userCreatedCodVuelos", async (req, res, next) => {
+  try {
+    const userCreatedCodVuelos = await CodVuelo.find({
+      isUserCreated: true,
+      needsValidation: false,
+    }).sort({ createdAt: -1 });
+
+    return res.json(userCreatedCodVuelos);
+  } catch (error) {
+    next(error);
+  }
+});
+
+codVueloRouter.patch("/:id/needsValidation", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { isValid, realCodVuelo } = req.body;
+
+    const codVuelo = await CodVuelo.findById(id);
+    if (!codVuelo) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "CodVueloNotFound";
+      throw error;
+    }
+
+    if (codVuelo.isUserCreated) {
+      const error = new Error("This airport is not a system-generated airport");
+      error.status = 400;
+      error.name = "InvalidOperation";
+      throw error;
+    }
+
+    codVuelo.needsValidation = false;
+
+    if (isValid && realCodVuelo) {
+      codVuelo.codVuelo = realCodVuelo.toUpperCase();
+      codVuelo.isUserCreated = false;
+    }
+
+    const updatedCodVuelo = await codVuelo.save();
+    return res.json(updatedCodVuelo);
   } catch (error) {
     next(error);
   }

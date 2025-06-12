@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -15,6 +15,11 @@ import {
   Typography,
   useMediaQuery,
   InputAdornment,
+  Card,
+  CardContent,
+  Chip,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -23,6 +28,7 @@ import FlightIcon from "@mui/icons-material/Flight";
 import SecurityIcon from "@mui/icons-material/Security";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
 import {
   defaultValuesEmpresa,
   EmpresaSchema,
@@ -47,6 +53,10 @@ export function EmpresaComponent({
 }: EmpresaComponentProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [newEmpresaName, setNewEmpresaName] = useState("");
+  const [selectedEmpresa, setSelectedEmpresa] = useState<EmpresaOption | null>(
+    null
+  );
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { setError } = useAppError();
@@ -107,11 +117,39 @@ export function EmpresaComponent({
   const createEmpresaMutation = useCreateEmpresa();
 
   // Transform empresa data to match EmpresaOption format
-  const empresaOptions: EmpresaOption[] =
-    empresaQuery.data?.map((item) => ({
-      id: item.id,
-      empresa: item.empresa,
-    })) || [];
+  const empresaOptions: EmpresaOption[] = useMemo(
+    () =>
+      empresaQuery.data?.map((item) => ({
+        id: item.id,
+        empresa: item.empresa,
+        isUserCreated: item.isUserCreated,
+        createdAt: item.createdAt,
+        needsValidation: item.needsValidation,
+      })) || [],
+    [empresaQuery.data]
+  );
+
+  useEffect(() => {
+    if (empresaWatch) {
+      const selected = empresaOptions.find(
+        (option) => option.id === empresaWatch
+      );
+      setSelectedEmpresa(selected || null);
+      onEmpresaSelected(empresaWatch);
+    }
+  }, [empresaWatch, onEmpresaSelected, empresaOptions]);
+
+  useEffect(() => {
+    if (createEmpresaMutation.error) {
+      setError(createEmpresaMutation.error);
+    }
+  }, [createEmpresaMutation.error, setError]);
+
+  useEffect(() => {
+    if (empresaQuery.error) {
+      setError(empresaQuery.error);
+    }
+  }, [empresaQuery.error, setError]);
 
   const handleCreateNewEmpresa = () => {
     if (!newEmpresaName.trim()) return;
@@ -126,6 +164,16 @@ export function EmpresaComponent({
         setOpenDialog(false);
         setNewEmpresaName("");
         onEmpresaSelected(data.id);
+
+        const newOption: EmpresaOption = {
+          id: data.id,
+          empresa: data.empresa,
+          isUserCreated: data.isUserCreated,
+          createdAt: data.createdAt,
+          needsValidation: data.needsValidation,
+        };
+        setSelectedEmpresa(newOption);
+        setSnackbarOpen(true);
       },
     });
   };
@@ -135,33 +183,94 @@ export function EmpresaComponent({
     setNewEmpresaName("");
   };
 
-  useEffect(() => {
-    if (empresaWatch) {
-      onEmpresaSelected(empresaWatch);
-    }
-  }, [empresaWatch, onEmpresaSelected]);
-
-  useEffect(() => {
-    if (createEmpresaMutation.error) {
-      setError(createEmpresaMutation.error);
-    }
-  }, [createEmpresaMutation.error, setError]);
-
-  useEffect(() => {
-    if (empresaQuery.error) {
-      setError(empresaQuery.error);
-    }
-  }, [empresaQuery.error, setError]);
-
+  const handleClearSelection = () => {
+    setValue("empresa", "");
+    setSelectedEmpresa(null);
+    onEmpresaSelected("");
+  };
   return (
     <FormProvider {...methods}>
       <Stack sx={{ gap: 1 }}>
-        <RHFDropDownEmpresa<EmpresaSchema>
-          name="empresa"
-          options={empresaOptions}
-          label={displayLabel}
-          onAddNew={() => setOpenDialog(true)}
-        />
+        {!selectedEmpresa && (
+          <RHFDropDownEmpresa<EmpresaSchema>
+            name="empresa"
+            options={empresaOptions}
+            label={displayLabel}
+            onAddNew={() => setOpenDialog(true)}
+          />
+        )}
+        {selectedEmpresa && (
+          <Card elevation={2} sx={{ borderRadius: 2 }}>
+            <CardContent sx={{ p: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  mb: 1,
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%",
+                      bgcolor: `${displayColor}20`,
+                      color: displayColor,
+                    }}
+                  >
+                    {displayIcon}
+                  </Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    {displayLabel.toLowerCase()} Seleccionada
+                  </Typography>
+                </Box>
+                <IconButton size="small" onClick={handleClearSelection}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </Box>
+
+              <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                {selectedEmpresa.empresa}
+              </Typography>
+
+              <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+                <Chip
+                  label={displayLabel}
+                  size="small"
+                  variant="outlined"
+                  sx={{ bgcolor: `${displayColor}20`, color: displayColor }}
+                />
+                {selectedEmpresa.isUserCreated && (
+                  <Chip
+                    label="Agregado por el usuario"
+                    size="small"
+                    color="warning"
+                    variant="outlined"
+                  />
+                )}
+              </Box>
+              {selectedEmpresa.isUserCreated && (
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+                >
+                  <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
+                  <Typography variant="caption" color="text.secondary">
+                    Empresa agregada por usuario
+                    <br />
+                    Pendiente de validación por la administración
+                    <br />
+                    Los datos pueden ser erróneos
+                  </Typography>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </Stack>
 
       <Dialog
@@ -203,7 +312,7 @@ export function EmpresaComponent({
                 color: displayColor,
               }}
             >
-              {displayIcon}
+              <AddIcon />
             </Box>
             <Typography variant="h6" component="div">
               {`Agregar nueva ${displayLabel.toLowerCase()}`}
@@ -218,6 +327,7 @@ export function EmpresaComponent({
             <CloseIcon />
           </IconButton>
         </DialogTitle>
+
         <DialogContent sx={{ pt: 3, pb: 2, px: { xs: 2, sm: 3 } }}>
           <Typography variant="body2" color="text.secondary" paragraph>
             {`Ingrese el nombre de la ${displayLabel.toLowerCase()} que desea agregar al sistema.`}
@@ -226,7 +336,7 @@ export function EmpresaComponent({
           <TextField
             autoFocus
             margin="dense"
-            label="Nombre"
+            label={`Nombre de la ${displayLabel.toLowerCase()}`}
             fullWidth
             value={newEmpresaName}
             onChange={(e) => setNewEmpresaName(e.target.value)}
@@ -273,6 +383,22 @@ export function EmpresaComponent({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          ¡{displayLabel.toLowerCase()} agregada exitosamente!
+        </Alert>
+      </Snackbar>
     </FormProvider>
   );
 }

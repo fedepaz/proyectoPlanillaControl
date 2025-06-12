@@ -49,6 +49,9 @@ const personalEmpresaSchema = new Schema({
   lastname: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   legajo: { type: Number, required: true, unique: true },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 personalEmpresaSchema.set("toJSON", {
@@ -67,6 +70,9 @@ const personalSeguridadSchema = new Schema({
   lastname: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   legajo: { type: Number, required: true, unique: true },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 personalSeguridadSchema.set("toJSON", {
@@ -89,6 +95,9 @@ const empresaSchema = new Schema({
     ref: "TipoEmpresa",
     required: true,
   },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 empresaSchema.set("toJSON", {
@@ -104,6 +113,9 @@ export const Empresa = model("Empresa", empresaSchema);
 const matriculaAeronaveSchema = new Schema({
   matriculaAeronave: { type: String, required: true, unique: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 matriculaAeronaveSchema.set("toJSON", {
@@ -142,6 +154,9 @@ const vehiculoSchema = new Schema({
   numInterno: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
   tipoVehiculo: { type: String, required: true },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 vehiculoSchema.set("toJSON", {
@@ -159,6 +174,9 @@ const codVueloSchema = new Schema({
   origen: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
   destino: { type: Schema.Types.ObjectId, ref: "Aeropuerto", required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
+  isUserCreated: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
 
 codVueloSchema.set("toJSON", {

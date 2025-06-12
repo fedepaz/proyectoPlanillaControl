@@ -75,8 +75,8 @@ app.get("/", (request, response) => {
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
-//app.use(authenticate);
-//app.use(csrfProtection);
+app.use(authenticate);
+app.use(csrfProtection);
 app.use("/csrf-token", crsfTokenRouter);
 
 app.use("/data", dataRouter);
