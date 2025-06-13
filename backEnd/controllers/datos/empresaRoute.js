@@ -69,11 +69,65 @@ empresaRouter.post("/", async (req, res, next) => {
     }
 
     const newEmpresa = new Empresa({
-      empresa,
+      empresa: empresa.toUpperCase(),
       tipoEmpresa,
+      isUserCreated: true,
+      needsValidation: true,
     });
+
     const savedEmpresa = await newEmpresa.save();
+
     return res.status(201).json(savedEmpresa);
+  } catch (error) {
+    next(error);
+  }
+});
+
+empresaRouter.get("/userCreatedEmpresas", async (req, res, next) => {
+  try {
+    const userCreatedEmpresas = await Empresa.find({
+      isUserCreated: true,
+      needsValidation: false,
+    }).sort({ createdAt: -1 });
+
+    return res.json(userCreatedEmpresas);
+  } catch (error) {
+    next(error);
+  }
+});
+
+empresaRouter.patch("/:id/needsValidation", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { isValid, realEmpresa } = req.body;
+
+    const empresa = await Empresa.findById(id);
+    if (!empresa) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    if (!empresa.isUserCreated) {
+      const error = new Error("This airport is not a system-generated airport");
+      error.status = 400;
+      error.name = "InvalidOperation";
+      throw error;
+    }
+
+    if (isValid && realEmpresa) {
+      empresa.empresa = realEmpresa.toUpperCase();
+      empresa.isUserCreated = false;
+      empresa.needsValidation = false;
+      const updatedEmpresa = await empresa.save();
+      return res.json(updatedEmpresa);
+    } else {
+      await Empresa.findByIdAndDelete(id);
+      return res.json({
+        message: "Empresa Eliminada: inválida o rechazada",
+      });
+    }
   } catch (error) {
     next(error);
   }

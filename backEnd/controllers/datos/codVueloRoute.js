@@ -191,22 +191,25 @@ codVueloRouter.patch("/:id/needsValidation", async (req, res, next) => {
       throw error;
     }
 
-    if (codVuelo.isUserCreated) {
+    if (!codVuelo.isUserCreated) {
       const error = new Error("This airport is not a system-generated airport");
       error.status = 400;
       error.name = "InvalidOperation";
       throw error;
     }
 
-    codVuelo.needsValidation = false;
-
     if (isValid && realCodVuelo) {
       codVuelo.codVuelo = realCodVuelo.toUpperCase();
       codVuelo.isUserCreated = false;
+      codVuelo.needsValidation = false;
+      const updatedCodVuelo = await codVuelo.save();
+      return res.json(updatedCodVuelo);
+    } else {
+      await CodVuelo.findByIdAndDelete(id);
+      return res.json({
+        message: "Vuelo Eliminado: inválido o rechazado",
+      });
     }
-
-    const updatedCodVuelo = await codVuelo.save();
-    return res.json(updatedCodVuelo);
   } catch (error) {
     next(error);
   }

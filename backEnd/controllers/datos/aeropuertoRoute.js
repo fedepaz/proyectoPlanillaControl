@@ -112,14 +112,14 @@ aeropuertoRouter.post("/", async (req, res, next) => {
   }
 });
 
-aeropuertoRouter.get("/userCreatedAirports", async (req, res, next) => {
+aeropuertoRouter.get("/userCreatedAeropuertos", async (req, res, next) => {
   try {
-    const userCreatedAirports = await Aeropuerto.find({
+    const userCreatedAeropuertos = await Aeropuerto.find({
       isUserCreated: true,
       needsValidation: false,
     }).sort({ createdAt: -1 });
 
-    return res.json(userCreatedAirports);
+    return res.json(userCreatedAeropuertos);
   } catch (error) {
     next(error);
   }
@@ -138,22 +138,25 @@ aeropuertoRouter.patch("/:id/needsValidation", async (req, res, next) => {
       throw error;
     }
 
-    if (aeropuerto.isUserCreated) {
+    if (!aeropuerto.isUserCreated) {
       const error = new Error("This airport is not a system-generated airport");
       error.status = 400;
       error.name = "InvalidOperation";
       throw error;
     }
 
-    airport.needsValidation = false;
-
     if (isValid && realOACI) {
-      airport.codOACI = realOACI.toUpperCase();
-      airport.isUserCreated = false;
+      aeropuerto.codOACI = realOACI.toUpperCase();
+      aeropuerto.isUserCreated = false;
+      aeropuerto.needsValidation = false;
+      const updatedAeropuerto = await aeropuerto.save();
+      return res.json(updatedAeropuerto);
+    } else {
+      await Aeropuerto.findByIdAndDelete(id);
+      return res.json({
+        message: "Aeropuerto Eliminado: inválido o rechazado",
+      });
     }
-
-    const updatedAirport = await airport.save();
-    return res.json(updatedAirport);
   } catch (error) {
     next(error);
   }

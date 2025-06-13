@@ -126,10 +126,18 @@ export function CodVueloComponent({
     // display first two letters of empresa name in capital letters
     // if the empresa has two words, display the first letter of the first word and the first letter of the second word
     const empresaName = empresaOption.empresa.split(" ");
-    const firstLetter = empresaName[0].charAt(0).toUpperCase();
-    const secondLetter = empresaName[1]
-      ? empresaName[1].charAt(0).toUpperCase()
-      : "";
+
+    let firstLetter = "";
+    let secondLetter = "";
+    if (empresaName.length === 1) {
+      firstLetter = empresaName[0].charAt(0).toUpperCase();
+      secondLetter = empresaName[0].charAt(1).toUpperCase();
+    } else {
+      firstLetter = empresaName[0].charAt(0).toUpperCase();
+      secondLetter = empresaName[1]
+        ? empresaName[1].charAt(0).toUpperCase()
+        : "";
+    }
     return {
       label: firstLetter + secondLetter,
       icon: <BusinessIcon />,
