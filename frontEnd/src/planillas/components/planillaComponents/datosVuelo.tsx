@@ -9,16 +9,19 @@ import { EmpresaComponent } from "./components/empresaComponent";
 import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "../../../services/session";
+
 const airlineId = import.meta.env.VITE_AEROLINE_ID;
 
 export function DatosVuelo() {
   const demoraQuery = useDemora();
   const tipoVueloQuery = useTipoVuelo();
+  const { data } = useSession();
   const [origenIdRef, setOrigenIdRef] = useState("");
   const [destinoIdRef, setDestinoIdRef] = useState("");
   const [empresaIdRef, setEmpresaIdRef] = useState("");
-  const { setValue } = useFormContext<PlanillaSchema>();
+  const { setValue, watch } = useFormContext<PlanillaSchema>();
 
   const handleMatSelected = (matriculaAeronave: string) => {
     setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
@@ -27,15 +30,38 @@ export function DatosVuelo() {
     setValue("datosVuelo.empresa", empresaId);
     setEmpresaIdRef(empresaId);
   };
-
+  let tipoVuelo = "";
+  if (tipoVueloQuery.data) {
+    tipoVuelo =
+      watch("datosVuelo.tipoVuelo") === tipoVueloQuery.data[0].id
+        ? "arribo"
+        : "partida";
+  }
   const sendAeropuerto = (aeropuertoId: string) => {
-    console.log("Aeropuerto selected:", aeropuertoId);
-    setOrigenIdRef(aeropuertoId);
+    if (tipoVuelo === "partida") {
+      setDestinoIdRef(aeropuertoId);
+    } else {
+      setOrigenIdRef(aeropuertoId);
+    }
   };
+
+  useEffect(() => {
+    if (data?.user?.oficialId?.currentAirportId?.aeropuerto && tipoVuelo) {
+      const currentAirportId = data.user.oficialId.currentAirportId.id;
+
+      if (tipoVuelo === "partida") {
+        setOrigenIdRef(currentAirportId);
+      } else {
+        setDestinoIdRef(currentAirportId);
+      }
+    }
+  }, [data, tipoVuelo]);
 
   const sendCodVuelo = (codVueloId: string) => {
-    console.log("Vuelo selected:", codVueloId);
+    setValue("datosVuelo.codVuelo", codVueloId);
   };
+
+  const canRenderCodVuelo = origenIdRef && destinoIdRef && empresaIdRef;
 
   return (
     <Stack
@@ -63,12 +89,14 @@ export function DatosVuelo() {
         onAeropuertoSelected={sendAeropuerto}
       />
       {/*codVuelo*/}
-      <CodVueloComponent
-        onCodVueloSelected={sendCodVuelo}
-        origenId={origenIdRef}
-        destinoId={destinoIdRef}
-        empresaId={empresaIdRef}
-      />
+      {canRenderCodVuelo && (
+        <CodVueloComponent
+          onCodVueloSelected={sendCodVuelo}
+          origenId={origenIdRef}
+          destinoId={destinoIdRef}
+          empresaId={empresaIdRef}
+        />
+      )}
       {/*horaArribo*/}
       <RHFDateTimePicker<PlanillaSchema>
         name="datosVuelo.horaArribo"

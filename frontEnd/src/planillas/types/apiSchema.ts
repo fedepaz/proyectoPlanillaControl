@@ -173,7 +173,10 @@ export const defaultValuesVehiculos: Partial<VehiculosSchema> = {
 };
 
 const codVueloSchema = z.object({
-  codVuelo: z.string(),
+  codVuelo: z
+    .string()
+    .regex(/^\d+$/, "El código de vuelo debe contener solo números")
+    .min(1, "El código de vuelo es requerido"),
   origen: objectIdSchema.describe("Aeropuerto ID"),
   destino: objectIdSchema.describe("Aeropuerto ID"),
   empresa: objectIdSchema.describe("Empresa ID"),

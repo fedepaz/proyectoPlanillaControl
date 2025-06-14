@@ -39,6 +39,7 @@ import { RHFDropDownEmpresa } from "../../../../components/RHFDropDownEmpresa";
 import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
 import { useAppError } from "../../../../hooks/useAppError";
+import { HelperTextWarning } from "../../../../components/WarningChip";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -245,27 +246,15 @@ export function EmpresaComponent({
                   variant="outlined"
                   sx={{ bgcolor: `${displayColor}20`, color: displayColor }}
                 />
-                {selectedEmpresa.isUserCreated && (
-                  <Chip
-                    label="Agregado por el usuario"
-                    size="small"
-                    color="warning"
-                    variant="outlined"
-                  />
-                )}
               </Box>
               {selectedEmpresa.isUserCreated && (
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
                 >
-                  <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
-                  <Typography variant="caption" color="text.secondary">
-                    Empresa agregada por usuario
-                    <br />
-                    Pendiente de validación por la administración
-                    <br />
-                    Los datos pueden ser erróneos
-                  </Typography>
+                  <HelperTextWarning
+                    isUserCreated={selectedEmpresa.isUserCreated}
+                    itemType="Empresa"
+                  />
                 </Box>
               )}
             </CardContent>

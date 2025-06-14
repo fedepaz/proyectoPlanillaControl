@@ -1,7 +1,6 @@
 import {
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,

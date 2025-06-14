@@ -39,6 +39,7 @@ import { useAeropuertos } from "../../../services/queries";
 import { useCreateAeropuerto } from "../../../services/mutations";
 import { AeropuertoOption } from "../../../../types/option";
 import { useAppError } from "../../../../hooks/useAppError";
+import { HelperTextWarning } from "../../../../components/WarningChip";
 
 interface AeropuertoComponentProps {
   onAeropuertoSelected: (aeropuerto: string) => void;
@@ -182,7 +183,7 @@ export function AeropuertoComponent({
             sx={{ fontSize: "0.75rem", height: 20 }}
           />
 
-          {option.codOACI && (
+          {option.codOACI && !option.isUserCreated && (
             <Chip
               label={`OACI: ${option.codOACI}`}
               size="small"
@@ -596,14 +597,10 @@ export function AeropuertoComponent({
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
-                <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
-                <Typography variant="caption" color="text.secondary">
-                  Aeropuerto agregado por usuario
-                  <br />
-                  Pendiente de validación por la administración
-                  <br />
-                  Los datos pueden ser erróneos
-                </Typography>
+                <HelperTextWarning
+                  isUserCreated={selectedAeropuerto.isUserCreated}
+                  itemType="Aeropuerto"
+                />
               </Box>
             )}
           </CardContent>

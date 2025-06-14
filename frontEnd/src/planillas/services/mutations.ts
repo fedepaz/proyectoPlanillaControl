@@ -7,13 +7,11 @@ import {
   EmpresaSchema,
 } from "../types/apiSchema";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export function useCreatePlanilla() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: PlanillaSchema) => {
-      const response = await apiClient.post(`${API_URL}/planillas`, data);
+      const response = await apiClient.post(`/planillas`, data);
       return response.data;
     },
     onSuccess: async () => {

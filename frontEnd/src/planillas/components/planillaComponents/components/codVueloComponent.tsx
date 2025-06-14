@@ -25,7 +25,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import FlightIcon from "@mui/icons-material/Flight";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
-import BusinessIcon from "@mui/icons-material/Business";
+import TagIcon from "@mui/icons-material/Tag";
 import {
   codVueloSchema,
   CodVueloSchema,
@@ -36,6 +36,7 @@ import { useAppError } from "../../../../hooks/useAppError";
 import { useCodVueloBusqueda, useEmpresaId } from "../../../services/queries";
 import { useCreateCodVuelo } from "../../../services/mutations";
 import { RHFDropDownCodVuelo } from "../../../../components/RHFDropDownCodVuelo";
+import { HelperTextWarning } from "../../../../components/WarningChip";
 
 interface CodVueloComponentProps {
   onCodVueloSelected: (codVuelo: string) => void;
@@ -73,6 +74,12 @@ export function CodVueloComponent({
   });
   const { watch, setValue } = methods;
   const codVueloWatch = watch("codVuelo");
+
+  useEffect(() => {
+    setValue("codVuelo", "");
+    setSelectedCodVuelo(null);
+    onCodVueloSelected("");
+  }, [origenId, destinoId, empresaId, onCodVueloSelected, setValue]);
 
   const params =
     origenId && destinoId && empresaId
@@ -119,12 +126,11 @@ export function CodVueloComponent({
       setError(createCodVueloMutation.error);
     }
   }, [createCodVueloMutation.error, setError]);
+
   if (!empresaQuery.data) return null;
   const empresaOption: EmpresaOption = empresaQuery.data;
 
   const getDisplayInfo = () => {
-    // display first two letters of empresa name in capital letters
-    // if the empresa has two words, display the first letter of the first word and the first letter of the second word
     const empresaName = empresaOption.empresa.split(" ");
 
     let firstLetter = "";
@@ -134,19 +140,19 @@ export function CodVueloComponent({
       secondLetter = empresaName[0].charAt(1).toUpperCase();
     } else {
       firstLetter = empresaName[0].charAt(0).toUpperCase();
-      secondLetter = empresaName[1]
-        ? empresaName[1].charAt(0).toUpperCase()
-        : "";
+      secondLetter = empresaName[1].charAt(0).toUpperCase();
     }
     return {
       label: firstLetter + secondLetter,
-      icon: <BusinessIcon />,
+      fullName: empresaOption.empresa,
+      icon: <TagIcon />,
       color: theme.palette.secondary.main,
     };
   };
 
   const {
     label: displayLabel,
+    fullName: displayFullName,
     icon: displayIcon,
     color: displayColor,
   } = getDisplayInfo();
@@ -157,7 +163,7 @@ export function CodVueloComponent({
       codVuelo: newCodVueloNumber.toUpperCase(),
       origen: origenId,
       destino: destinoId,
-      empresa: empresaOption.id,
+      empresa: empresaId,
     };
 
     createCodVueloMutation.mutate(newCodVuelo, {
@@ -229,7 +235,7 @@ export function CodVueloComponent({
                     {displayIcon}
                   </Box>
                   <Typography variant="subtitle2" color="text.secondary">
-                    {displayLabel.toLowerCase()} Seleccionada
+                    Vuelo Seleccionado
                   </Typography>
                 </Box>
                 <IconButton size="small" onClick={handleClearSelection}>
@@ -243,32 +249,20 @@ export function CodVueloComponent({
 
               <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
                 <Chip
-                  label={displayLabel}
+                  label={displayFullName}
                   size="small"
                   variant="outlined"
                   sx={{ bgcolor: `${displayColor}20`, color: displayColor }}
                 />
-                {selectedCodVuelo.isUserCreated && (
-                  <Chip
-                    label="Agregado por el usuario"
-                    size="small"
-                    color="warning"
-                    variant="outlined"
-                  />
-                )}
               </Box>
               {selectedCodVuelo.isUserCreated && (
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
                 >
-                  <InfoIcon sx={{ fontSize: 16, color: "warning.main" }} />
-                  <Typography variant="caption" color="text.secondary">
-                    {displayLabel.toLowerCase()} agregada por usuario
-                    <br />
-                    Pendiente de validación por la administración
-                    <br />
-                    Los datos pueden ser erróneos
-                  </Typography>
+                  <HelperTextWarning
+                    isUserCreated={selectedCodVuelo.isUserCreated}
+                    itemType="Vuelo"
+                  />
                 </Box>
               )}
             </CardContent>
@@ -318,7 +312,7 @@ export function CodVueloComponent({
               <AddIcon />
             </Box>
             <Typography variant="h6" component="div">
-              Agregar nuevo vuelo
+              Agregar nuevo código de vuelo
             </Typography>
           </Box>
           <IconButton
@@ -334,7 +328,7 @@ export function CodVueloComponent({
 
         <DialogContent sx={{ pt: 3, pb: 2, px: { xs: 2, sm: 3 } }}>
           <Typography variant="body2" color="text.secondary" paragraph>
-            Complete la información del nuevo vuelo
+            Ingrese el código de vuelo
           </Typography>
 
           <TextField
@@ -345,7 +339,7 @@ export function CodVueloComponent({
             value={newCodVueloNumber}
             onChange={(e) => setNewCodVueloNumber(e.target.value)}
             variant="outlined"
-            helperText="Nombre completo del vuelo"
+            helperText="Número de vuelo"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -353,18 +347,6 @@ export function CodVueloComponent({
                 </InputAdornment>
               ),
             }}
-            sx={{ mt: 2 }}
-          />
-
-          <TextField
-            margin="dense"
-            label="Código del vuelo"
-            fullWidth
-            value={codVueloWatch || ""}
-            onChange={(e) => setValue("codVuelo", e.target.value.toUpperCase())}
-            variant="outlined"
-            helperText="Código del vuelo de 3 letras (ej: EZE, COR)"
-            inputProps={{ maxLength: 3 }}
             sx={{ mt: 2 }}
           />
         </DialogContent>
@@ -416,7 +398,7 @@ export function CodVueloComponent({
           severity="success"
           sx={{ width: "100%" }}
         >
-          ¡{displayLabel.toLowerCase()} agregada exitosamente!
+          ¡Código de vuelo agregado exitosamente!
         </Alert>
       </Snackbar>
     </FormProvider>
