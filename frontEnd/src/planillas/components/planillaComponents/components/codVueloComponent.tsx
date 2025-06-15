@@ -24,7 +24,6 @@ import { CodVueloOption, EmpresaOption } from "../../../../types/option";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import FlightIcon from "@mui/icons-material/Flight";
-import InfoIcon from "@mui/icons-material/InfoOutlined";
 import TagIcon from "@mui/icons-material/Tag";
 import {
   codVueloSchema,
@@ -334,12 +333,12 @@ export function CodVueloComponent({
           <TextField
             autoFocus
             margin="dense"
-            label="Nombre del vuelo"
+            label="Código del vuelo"
             fullWidth
             value={newCodVueloNumber}
             onChange={(e) => setNewCodVueloNumber(e.target.value)}
             variant="outlined"
-            helperText="Número de vuelo"
+            helperText="Código del vuelo"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

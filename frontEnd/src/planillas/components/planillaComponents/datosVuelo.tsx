@@ -1,5 +1,4 @@
 import { Stack, Divider } from "@mui/material";
-import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
 import { RHFTextField } from "../../../components/RHFTextField";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { RHFRadioGroup } from "../../../components/RHFRadioGroup";
@@ -11,6 +10,7 @@ import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
 import { useEffect, useState } from "react";
 import { useSession } from "../../../services/session";
+import { RHFFlightTimePicker } from "../../../components/RHFFlightTimePicker";
 
 const airlineId = import.meta.env.VITE_AEROLINE_ID;
 
@@ -30,12 +30,11 @@ export function DatosVuelo() {
     setValue("datosVuelo.empresa", empresaId);
     setEmpresaIdRef(empresaId);
   };
-  let tipoVuelo = "";
+  let tipoVuelo: "arribo" | "partida" | "" = "";
   if (tipoVueloQuery.data) {
+    const selectedVuelo = watch("datosVuelo.tipoVuelo");
     tipoVuelo =
-      watch("datosVuelo.tipoVuelo") === tipoVueloQuery.data[0].id
-        ? "arribo"
-        : "partida";
+      selectedVuelo === tipoVueloQuery.data[0].id ? "arribo" : "partida";
   }
   const sendAeropuerto = (aeropuertoId: string) => {
     if (tipoVuelo === "partida") {
@@ -62,6 +61,8 @@ export function DatosVuelo() {
   };
 
   const canRenderCodVuelo = origenIdRef && destinoIdRef && empresaIdRef;
+  const canRenderMatricula = empresaIdRef;
+  const canRenderDateTimePicker = tipoVuelo === "partida";
 
   return (
     <Stack
@@ -97,11 +98,21 @@ export function DatosVuelo() {
           empresaId={empresaIdRef}
         />
       )}
-      {/*horaArribo*/}
-      <RHFDateTimePicker<PlanillaSchema>
-        name="datosVuelo.horaArribo"
-        label="Arribo"
-      />
+      {/*hora*/}
+      {!canRenderDateTimePicker && (
+        <RHFFlightTimePicker
+          name="datosVuelo.horaArribo"
+          flightType={tipoVuelo}
+          label="Hora de Arribo"
+        />
+      )}
+      {canRenderDateTimePicker && (
+        <RHFFlightTimePicker
+          name="datosVuelo.horaPartida"
+          flightType={tipoVuelo}
+          label="Hora de Partida"
+        />
+      )}
 
       {/*demora*/}
       <RHFRadioGroup<PlanillaSchema>
@@ -110,7 +121,12 @@ export function DatosVuelo() {
         label="Demora"
       ></RHFRadioGroup>
       {/*matriculaAeronave*/}
-      <MatriculaComponent onMatriculaSelected={handleMatSelected} />
+      {canRenderMatricula && (
+        <MatriculaComponent
+          onMatriculaSelected={handleMatSelected}
+          empresaId={empresaIdRef}
+        />
+      )}
       {/*posicion*/}
       <RHFTextField<PlanillaSchema>
         name="datosVuelo.posicion"

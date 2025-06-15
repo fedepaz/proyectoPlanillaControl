@@ -87,4 +87,43 @@ aeronaveRouter.post("/", async (req, res, next) => {
   }
 });
 
+aeronaveRouter.post("/busqueda", async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    const { empresa } = body;
+
+    const requiredFields = ["empresa"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaRes = await Empresa.findById(empresa);
+
+    if (empresaRes === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const matriculas = await MatriculaAeronave.find({
+      empresa: empresa,
+    }).populate("empresa");
+
+    return res.json(matriculas);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default aeronaveRouter;

@@ -5,6 +5,7 @@ import {
   AeropuertosSchema,
   CodVueloSchema,
   EmpresaSchema,
+  MatriculaAeronaveSchema,
 } from "../types/apiSchema";
 
 export function useCreatePlanilla() {
@@ -58,6 +59,20 @@ export function useCreateCodVuelo() {
     retry: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["codVuelo"] });
+    },
+  });
+}
+
+export function useCreateMatricula() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: MatriculaAeronaveSchema) => {
+      const response = await apiClient.post(`/aeronave`, data);
+      return response.data;
+    },
+    retry: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["matriculaAeronave"] });
     },
   });
 }

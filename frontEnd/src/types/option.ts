@@ -15,7 +15,7 @@ export type OficialOption = {
 export type MatriculaOption = {
   id: string;
   matriculaAeronave: string;
-  empresa: string;
+  empresaId: string;
 };
 
 export type EmpresaOption = {

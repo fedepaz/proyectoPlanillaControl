@@ -10,14 +10,12 @@ import {
   UnidadOption,
 } from "../../types/option";
 import {
-  ApiGetEmpresa,
   ApiGetMatriculaAeronave,
   ApiGetOficial,
   ApiGetPersonalEmpresa,
   ApiGetPersonalSeguridad,
 } from "../types/apiTypes";
 import {
-  EmpresaSchema,
   MatriculaAeronaveSchema,
   OficialSchema,
   PersonalEmpresaSchema,
@@ -366,6 +364,26 @@ export function useMatriculaId(matriculaAeronave: string) {
       };
     },
     enabled: !!matriculaAeronave,
+  });
+}
+
+type BuscarMatriculaParams = {
+  empresa: string;
+};
+
+export function useMatriculaBusqueda(params: BuscarMatriculaParams | null) {
+  return useQuery({
+    queryKey: ["matricula", params],
+    queryFn: async () => {
+      if (!params) return [];
+      const response = await apiClient.post<MatriculaOption[]>(
+        `${API_URL}/aeronave/busqueda`,
+        params
+      );
+      const matricula = response.data;
+      return matricula;
+    },
+    enabled: !!params,
   });
 }
 
