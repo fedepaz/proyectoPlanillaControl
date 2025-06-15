@@ -367,7 +367,7 @@ export function MatriculaComponent({
           severity="success"
           sx={{ width: "100%" }}
         >
-          ¡Código de vuelo agregado exitosamente!
+          !Matricula agregado exitosamente!
         </Alert>
       </Snackbar>
     </FormProvider>
