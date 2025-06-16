@@ -8,23 +8,36 @@ const objectIdSchema = z.string().refine(isValidObjectId, {
   message: "Invalid ID format",
 });
 
-const dniSchema = z.string().regex(/^\d{8}$/, "El DNI debe tener 8 números");
+const dniSchema = z
+  .string()
+  .regex(/^\d{8}$/, "El DNI debe tener 8 números")
+  .transform((val) => parseInt(val, 10))
+  .refine((val) => val >= 30000000 && val <= 99999999, {
+    message: "El DNI debe estar entre 30000000 y 99999999",
+  });
+const legajoOficialSchema = z
+  .string()
+  .regex(/^\d{1,6}$/, "El legajo debe contener solo números (máximo 6 dígitos)")
+  .transform((val) => parseInt(val, 10))
+  .refine((val) => val >= 500000 && val <= 999999, {
+    message: "El legajo debe estar entre 500000 y 999999",
+  });
 
 const oficialSchema = z.object({
   dni: dniSchema,
   firstname: z
     .string()
     .min(1, "El Nombre es requerido")
-    .max(20, "El Nombre es muy largo"),
+    .max(20, "El Nombre es muy largo")
+    .transform((val) => val.trim().toUpperCase()),
+
   lastname: z
     .string()
     .min(1, "El Apellido es requerido")
-    .max(20, "El Apellido es muy largo"),
-  legajo: z
-    .number()
-    .int()
-    .min(500000, "Legajo no corresponde")
-    .max(600000, "Legajo no corresponde"),
+    .max(20, "El Apellido es muy largo")
+    .transform((val) => val.trim().toUpperCase()),
+
+  legajo: legajoOficialSchema,
   id: z.string().optional(),
 });
 
@@ -36,6 +49,16 @@ export const defaultValuesOficial: Partial<OficialSchema> = {
   firstname: "",
   lastname: "",
 };
+const legajoPersonalSchema = z
+  .string()
+  .regex(
+    /^\d{1,10}$/,
+    "El legajo debe contener solo números (máximo 6 dígitos)"
+  )
+  .transform((val) => parseInt(val, 10))
+  .refine((val) => val >= 1 && val <= 999999, {
+    message: "El legajo debe estar entre 1 y 999999",
+  });
 
 const personalEmpresaSchema = z.object({
   dni: dniSchema,
@@ -48,11 +71,7 @@ const personalEmpresaSchema = z.object({
     .min(1, "El Apellido es requerido")
     .max(20, "El Apellido es muy largo"),
   empresa: objectIdSchema.describe("Empresa ID"),
-  legajo: z
-    .number({ message: "Solo número se pueden ingresar" })
-    .int()
-    .min(1, "Legajo insuficiente")
-    .max(999999, "El Legajo no existe"),
+  legajo: legajoPersonalSchema,
 });
 
 export { personalEmpresaSchema };
@@ -75,11 +94,7 @@ const personalSeguridadSchema = z.object({
     .min(1, "El Apellido es requerido")
     .max(20, "El Apellido es muy largo"),
   empresa: objectIdSchema.describe("Empresa ID"),
-  legajo: z
-    .number({ message: "Solo número se pueden ingresar" })
-    .int()
-    .min(1, "Legajo insuficiente")
-    .max(999999, "El Legajo no existe"),
+  legajo: legajoPersonalSchema,
 });
 
 export { personalSeguridadSchema };

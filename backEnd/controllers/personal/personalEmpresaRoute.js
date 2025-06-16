@@ -99,14 +99,19 @@ personalEmpresaRouter.post("/", async (req, res, next) => {
 
     const newPersonal = new PersonalEmpresa({
       dni,
-      firstname,
-      lastname,
+      firstname: firstname.trim().toUpperCase(),
+      lastname: lastname.trim().toUpperCase(),
       empresa,
       legajo,
+      isUserCreated: true,
+      needsValidation: true,
     });
 
     const savedPersonal = await newPersonal.save();
-    return res.status(201).json(savedPersonal);
+    const populatedPersonal = await PersonalEmpresa.findById(
+      savedPersonal.id
+    ).populate("empresa");
+    return res.status(201).json(populatedPersonal);
   } catch (err) {
     next(err);
   }

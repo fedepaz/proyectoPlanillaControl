@@ -4,8 +4,8 @@ import { PlanillaSchema } from "../types/planillaSchema";
 
 // Map step numbers to detailed fields paths
 const detailedStepFields = {
-  //"Datos de Psa",
   // 0: [
+  //"Datos de Psa",
   //   "datosPsa.fecha",
   //   "datosPsa.responsable",
   //   "datosPsa.horaIni",

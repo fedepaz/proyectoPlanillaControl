@@ -1,14 +1,32 @@
 import { Stack, Divider, Typography } from "@mui/material";
-import { RHFTextField } from "../../../components/RHFTextField";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { PersonalComponent } from "./components/personalComponent";
-import { RHFToggleButtonGroup } from "../../../components/RHFToggleButtonGroup";
 import { useFuncion } from "../../services/queries";
 import { useFormContext } from "react-hook-form";
+import { PersonalEmpresaOption } from "../../../types/option";
+import { EmpresaComponent } from "./components/empresaComponent";
+import { useState } from "react";
+
+const handlingId = import.meta.env.VITE_HANDLING_ID;
 
 export function DatosTerrestre() {
+  const [empresaIdRef, setEmpresaIdRef] = useState("");
+
   const funcionQuery = useFuncion();
-  const { setValue } = useFormContext<PlanillaSchema>();
+  const { setValue, watch } = useFormContext<PlanillaSchema>();
+
+  const handleEmpresaSelected = (empresaId: string) => {
+    setEmpresaIdRef(empresaId);
+  };
+
+  const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
+    const datosPersonalTerrestre = personalList.map((personal) => ({
+      personalEmpresa: [personal.id],
+      funcion: "superior",
+      grupo: "",
+    }));
+    setValue("datosTerrestre", datosPersonalTerrestre);
+  };
 
   return (
     <Stack
@@ -19,16 +37,16 @@ export function DatosTerrestre() {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Terrestre
       </Typography>
-      <PersonalComponent onPersonalSelected={handlePersonalSelected} />
-
-      <RHFToggleButtonGroup<PlanillaSchema>
-        name="datosTerrestre.0.funcion"
-        options={funcionQuery.data}
-        label="Función"
+      <EmpresaComponent
+        onEmpresaSelected={handleEmpresaSelected}
+        tipoFijoID={handlingId}
+        label="Empresa"
       />
-      <RHFTextField<PlanillaSchema>
-        name="datosTerrestre.0.grupo"
-        label="Grupo"
+      <PersonalComponent
+        onPersonalListChange={handlePersonalListChange}
+        empresaId={empresaIdRef}
+        maxPersonalList={10}
+        minPersonalList={3}
       />
     </Stack>
   );

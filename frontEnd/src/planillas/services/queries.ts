@@ -313,7 +313,7 @@ export function usePersonalEmpresa(dni: number) {
 }
 
 type BuscarPersonalEmpresaParams = {
-  dni: number;
+  dni: string;
   empresa: string;
 };
 
@@ -324,7 +324,7 @@ export function usePersonalEmpresaBusqueda(
     queryKey: ["personalEmpresa", params],
     queryFn: async () => {
       if (!params) return [];
-      const response = await apiClient.post<PersonalEmpresaOption>(
+      const response = await apiClient.post<PersonalEmpresaOption[]>(
         `${API_URL}/personalEmpresa/busqueda`,
         params
       );

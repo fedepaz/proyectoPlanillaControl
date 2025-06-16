@@ -6,6 +6,7 @@ import {
   CodVueloSchema,
   EmpresaSchema,
   MatriculaAeronaveSchema,
+  PersonalEmpresaSchema,
 } from "../types/apiSchema";
 
 export function useCreatePlanilla() {
@@ -80,7 +81,7 @@ export function useCreateMatricula() {
 export function useCreatePersonalEmpresa() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: MatriculaAeronaveSchema) => {
+    mutationFn: async (data: PersonalEmpresaSchema) => {
       const response = await apiClient.post(`/personalEmpresa`, data);
       return response.data;
     },

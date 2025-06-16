@@ -7,23 +7,36 @@ export type Option = {
 
 export type OficialOption = {
   id: string;
-  dni: string;
+  dni: number;
   firstname: string;
   lastname: string;
-  legajo: string;
+  legajo: number;
 };
 
 export type PersonalEmpresaOption = {
   id: string;
-  dni: string;
+  dni: number;
   firstname: string;
   lastname: string;
   empresaId: string;
-  legajo: string;
+  legajo: number;
   isUserCreated?: boolean;
   createdAt?: string;
   needsValidation?: boolean;
 };
+
+export type PersonalSeguridadOption = {
+  id: string;
+  dni: number;
+  firstname: string;
+  lastname: string;
+  empresaId: string;
+  legajo: number;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
+};
+
 export type MatriculaOption = {
   id: string;
   matriculaAeronave: string;

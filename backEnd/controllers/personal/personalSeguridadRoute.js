@@ -103,15 +103,21 @@ personalSeguridadRouter.post("/", async (req, res, next) => {
     }
 
     const newPersonal = new PersonalSeguridadEmpresa({
-      dni,
-      firstname,
-      lastname,
+      dni: dni.trim(),
+      firstname: firstname.trim().toUpperCase(),
+      lastname: lastname.trim().toUpperCase(),
       empresa,
       legajo,
+      isUserCreated: true,
+      needsValidation: true,
     });
 
     const savedPersonal = await newPersonal.save();
-    return res.status(201).json(savedPersonal);
+    const populatedPersonal = await PersonalSeguridadEmpresa.findById(
+      savedPersonal.id
+    ).populate("empresa");
+
+    return res.status(201).json(populatedPersonal);
   } catch (err) {
     next(err);
   }

@@ -2,12 +2,12 @@ import { Schema, model } from "mongoose";
 
 const oficialSchema = new Schema({
   dni: {
-    type: String,
+    type: Number, // Keep as Number
     required: true,
     unique: true,
     validate: {
       validator: function (v) {
-        return /^\d{8}$/.test(v);
+        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
       },
       message: (props) => `${props.value} is not a valid DNI!`,
     },
@@ -19,7 +19,7 @@ const oficialSchema = new Schema({
     required: true,
     unique: true,
     min: [500000, "Legajo no corresponde"],
-    max: [600000, "Legajo no corresponde"],
+    max: [999999, "Legajo no corresponde"],
   },
   currentAirportId: {
     type: Schema.Types.ObjectId,
@@ -44,11 +44,27 @@ oficialSchema.set("toJSON", {
 export const Oficial = model("Oficial", oficialSchema);
 
 const personalEmpresaSchema = new Schema({
-  dni: { type: String, required: true, unique: true },
+  dni: {
+    type: Number, // Standardize to Number
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
+      },
+      message: (props) => `${props.value} is not a valid DNI!`,
+    },
+  },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
-  legajo: { type: Number, required: true, unique: true },
+  legajo: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: [1, "Legajo debe ser mayor a 0"],
+    max: [999999, "Legajo no puede ser mayor a 999999"],
+  },
   isUserCreated: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   needsValidation: { type: Boolean, default: false }, // Flag for admin review
@@ -65,11 +81,27 @@ personalEmpresaSchema.set("toJSON", {
 export const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
 
 const personalSeguridadSchema = new Schema({
-  dni: { type: String, required: true, unique: true },
+  dni: {
+    type: Number, // Standardize to Number (was String)
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
+      },
+      message: (props) => `${props.value} is not a valid DNI!`,
+    },
+  },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
-  legajo: { type: Number, required: true, unique: true },
+  legajo: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: [1, "Legajo debe ser mayor a 0"],
+    max: [999999, "Legajo no puede ser mayor a 999999"],
+  },
   isUserCreated: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   needsValidation: { type: Boolean, default: false }, // Flag for admin review
@@ -89,7 +121,7 @@ export const PersonalSeguridadEmpresa = model(
 );
 
 const empresaSchema = new Schema({
-  empresa: { type: String, required: true, unique: true },
+  empresa: { type: String, required: true },
   tipoEmpresa: {
     type: Schema.Types.ObjectId,
     ref: "TipoEmpresa",
@@ -99,6 +131,8 @@ const empresaSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   needsValidation: { type: Boolean, default: false }, // Flag for admin review
 });
+
+empresaSchema.index({ empresa: 1, tipoEmpresa: 1 }, { unique: true });
 
 empresaSchema.set("toJSON", {
   transform: (document, returnedObject) => {

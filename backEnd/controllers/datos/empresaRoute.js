@@ -68,6 +68,19 @@ empresaRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    const existingEmpresa = await Empresa.findOne({
+      empresa: empresa.toUpperCase(),
+      tipoEmpresa,
+    });
+
+    if (existingEmpresa) {
+      const error = new Error();
+      error.status = 409;
+      error.name = "EmpresaAlreadyExists";
+      error.message = `Empresa ${empresa.toUpperCase()} already exists`;
+      throw error;
+    }
+
     const newEmpresa = new Empresa({
       empresa: empresa.toUpperCase(),
       tipoEmpresa,

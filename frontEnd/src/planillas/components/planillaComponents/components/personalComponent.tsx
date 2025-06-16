@@ -1,67 +1,72 @@
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
   TextField,
-  Typography,
-  Box,
-  useMediaQuery,
-  useTheme,
-  Alert,
   Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  InputAdornment,
-  Snackbar,
-  Stack,
   Card,
   CardContent,
+  Typography,
+  IconButton,
+  Alert,
+  Snackbar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stack,
+  Chip,
+  Box,
 } from "@mui/material";
+
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 import { FormProvider, useForm } from "react-hook-form";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
-import {
-  useEmpresaId,
-  usePersonalEmpresa,
-  usePersonalEmpresaBusqueda,
-} from "../../../services/queries";
+import { usePersonalEmpresaBusqueda } from "../../../services/queries";
 import {
   defaultValuesPersonalEmpresa,
   PersonalEmpresaSchema,
   personalEmpresaSchema,
 } from "../../../types/apiSchema";
-import { RHFTextField } from "../../../../components/RHFTextField";
 import { PersonalEmpresaOption } from "../../../../types/option";
 import { useCreatePersonalEmpresa } from "../../../services/mutations";
+import { useAppError } from "../../../../hooks/useAppError";
+import { RHFTextField } from "../../../../components/RHFTextField";
 
 interface PersonalComponentProps {
-  onPersonalSelected: (
-    lastname: string,
-    firstname: string,
-    dni: number,
-    legajo: number
-  ) => void;
+  onPersonalListChange: (personalList: PersonalEmpresaOption[]) => void;
   empresaId: string;
-  dni?: number;
+  maxPersonalList?: number;
+  minPersonalList?: number;
 }
 
 export function PersonalComponent({
-  onPersonalSelected,
+  onPersonalListChange,
   empresaId,
-  dni,
+  maxPersonalList = 10,
+  minPersonalList = 3,
 }: PersonalComponentProps) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [newDniNumber, setNewDniNumber] = useState("");
-  const [selectedPersonal, setSelectedPersonal] =
+  const [personalList, setPersonalList] = useState<PersonalEmpresaOption[]>([]);
+  const [searchDni, setSearchDni] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [foundPersonal, setFoundPersonal] =
     useState<PersonalEmpresaOption | null>(null);
+  const [showAddDialog, setShowAddDialog] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    "success" | "error" | "warning"
+  >("success");
   const { setError } = useAppError();
-
-  const empresaQuery = useEmpresaId(empresaId);
 
   const methods = useForm<PersonalEmpresaSchema>({
     resolver: zodResolver(personalEmpresaSchema),
@@ -71,304 +76,338 @@ export function PersonalComponent({
     },
     mode: "onChange",
   });
-  const { watch, setValue } = methods;
-  const personalWatch = watch("dni");
 
-  useEffect(() => {
-    setValue("dni", "");
-    setSelectedPersonal(null);
-    onPersonalSelected("");
-  }, [empresaId, onPersonalSelected, setValue]);
-
-  const params = empresaId && dni ? { dni: dni, empresa: empresaId } : null;
-  const personalQuery = usePersonalEmpresa(params);
+  const { reset: resetForm } = methods;
   const createPersonalMutation = useCreatePersonalEmpresa();
 
-  const personalOptions: PersonalEmpresaOption = useMemo(
-    () =>
-      personalQuery.data?.map((item) => ({
-        id: item.id,
-        dni: item.dni,
-        firstname: item.firstname,
-        lastname: item.lastname,
-        empresaId: item.empresa,
-        legajo: item.legajo,
-        isUserCreated: item.isUserCreated,
-        createdAt: item.createdAt,
-        needsValidation: item.needsValidation,
-      })) || [],
-    [personalQuery.data]
-  );
+  console.log(empresaId);
+  console.log(searchDni);
+  const params =
+    empresaId && searchDni ? { dni: searchDni, empresa: empresaId } : null;
+  console.log(params);
+  const personalQuery = usePersonalEmpresaBusqueda(params);
+  console.log(personalQuery.data);
 
-  useEffect(() => {
-    if (personalWatch) {
-      const selected = personalOptions.find(
-        (option) => option.id === personalWatch
+  const handleSearch = () => {
+    console.log("busqueda");
+    if (!searchDni.trim()) {
+      showSnackbar("Por favor ingrese un DNI", "warning");
+      return;
+    }
+
+    if (personalList.some((p) => p.dni === searchDni)) {
+      showSnackbar("El DNI ya existe", "warning");
+      return;
+    }
+
+    if (personalList.length >= maxPersonalList) {
+      showSnackbar(
+        "No puedes agregar mas de ${maxPersonalList} empleados terrestres",
+        "warning"
       );
-      setSelectedPersonal(selected || null);
-      onPersonalSelected(personalWatch);
+      return;
     }
-  }, [personalWatch, personalOptions, onPersonalSelected, setValue]);
 
-  useEffect(() => {
-    if (personalQuery.error) {
-      setError(personalQuery.error);
-    }
-  }, [personalQuery.error, setError]);
-
-  useEffect(() => {
-    if (createPersonalMutation.error) {
-      setError(createPersonalMutation.error);
-    }
-  }, [createPersonalMutation.error, setError]);
-
-  if (!empresaQuery.data) return null;
-  const empresaOption: EmpresaOption = empresaQuery.data;
-
-  const getDisplayInfo = () => {
-    const empresaName = empresaOption.empresa.split(" ");
-
-    let firstLetter = "";
-    let secondLetter = "";
-    if (empresaName.length === 1) {
-      firstLetter = empresaName[0].charAt(0).toUpperCase();
-      secondLetter = empresaName[0].charAt(1).toUpperCase();
-    } else {
-      firstLetter = empresaName[0].charAt(0).toUpperCase();
-      secondLetter = empresaName[1].charAt(0).toUpperCase();
-    }
-    return {
-      label: firstLetter + secondLetter,
-      fullName: empresaOption.empresa,
-      icon: <TagIcon />,
-      color: theme.palette.secondary.main,
-    };
+    setIsSearching(true);
   };
 
-  const {
-    label: displayLabel,
-    fullName: displayFullName,
-    icon: displayIcon,
-    color: displayColor,
-  } = getDisplayInfo();
+  useEffect(() => {
+    if (personalQuery.data && isSearching) {
+      if (personalQuery.data.length > 0) {
+        const personal = personalQuery.data[0];
+        setFoundPersonal({
+          id: personal.id,
+          dni: personal.dni,
+          firstname: personal.firstname,
+          lastname: personal.lastname,
+          empresaId: personal.empresaId,
+          legajo: personal.legajo,
+        });
+      } else {
+        setFoundPersonal(null);
+        setShowAddDialog(true);
+        resetForm({
+          ...defaultValuesPersonalEmpresa,
+          dni: searchDni,
+          empresa: empresaId,
+        });
+      }
+      setIsSearching(false);
+    }
+  }, [personalQuery.data, isSearching, searchDni, resetForm, empresaId]);
 
-  const handleCreateNewPersonal = () => {
-    if (!newDniNumber.trim()) return;
-    const newPersonal: PersonalEmpresaSchema = {
-      dni: newDniNumber.toUpperCase(),
-      firstname: "",
-      lastname: "",
-      empresa: empresaId,
-      legajo: 0,
-    };
+  const handleAddFoundPersonal = () => {
+    if (foundPersonal) {
+      const newList = [...personalList, foundPersonal];
+      setPersonalList(newList);
+      onPersonalListChange(newList);
+      setFoundPersonal(null);
+      setSearchDni("");
+      showSnackbar("Empleado terrestre agregada exitosamente", "success");
+    }
+  };
 
-    createPersonalMutation.mutate(newPersonal, {
-      onSuccess: (data) => {
-        setValue("dni", data.id);
-        setOpenDialog(false);
-        setNewDniNumber("");
-        onPersonalSelected(data.id);
-
-        const newOption: PersonalEmpresaOption = {
-          id: data.id,
-          dni: data.dni,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          empresaId: data.empresa,
-          legajo: data.legajo,
+  const handleCreateNewPersonal = (data: PersonalEmpresaSchema) => {
+    createPersonalMutation.mutate(data, {
+      onSuccess: (newPersonal) => {
+        const personalData: PersonalEmpresaOption = {
+          id: newPersonal.id,
+          dni: newPersonal.dni,
+          firstname: newPersonal.firstname,
+          lastname: newPersonal.lastname,
+          empresaId: newPersonal.empresa,
+          legajo: newPersonal.legajo,
         };
-        setSelectedPersonal(newOption);
+        const newList = [...personalList, personalData];
+        setPersonalList(newList);
+        onPersonalListChange(newList);
         setSnackbarOpen(true);
+        setSnackbarMessage("Empleado terrestre agregado exitosamente");
+        setSnackbarSeverity("success");
+      },
+      onError: (error) => {
+        setError(error);
       },
     });
   };
 
-  const handleClose = () => {
-    setOpenDialog(false);
-    setNewDniNumber("");
+  const handleRemovePersonal = (id: string) => {
+    const newList = personalList.filter((p) => p.id !== id);
+    setPersonalList(newList);
+    onPersonalListChange(newList);
+    showSnackbar("Empleado terrestre eliminado exitosamente", "success");
   };
 
-  const handleClearSelection = () => {
-    setValue("dni", "");
-    setSelectedPersonal(null);
-    onPersonalSelected("");
+  const showSnackbar = (
+    message: string,
+    severity: "success" | "error" | "warning"
+  ) => {
+    setSnackbarOpen(true);
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
   };
+
+  const handleCloseDialog = () => {
+    setShowAddDialog(false);
+    setSearchDni("");
+    setFoundPersonal(null);
+  };
+
+  const isValidCount =
+    personalList.length >= minPersonalList &&
+    personalList.length <= maxPersonalList;
+
+  const countMessage = `${personalList.length}/${maxPersonalList} empleados (mínimo ${minPersonalList})`;
 
   return (
-    <FormProvider {...methods}>
-      <Stack sx={{ gap: 1 }}>
-        {!selectedPersonal && (
-          <RHFDropDownPersonalEmpresa<PersonalEmpresaSchema>
-            name="dni"
-            options={personalQuery.data}
-            label={displayLabel}
-            onAddNew={() => setOpenDialog(true)}
-          />
-        )}
-        {selectedPersonal && (
-          <Card elevation={2} sx={{ borderRadius: 2 }}>
-            <CardContent sx={{ p: 2 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  mb: 1,
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: 32,
-                      height: 32,
-                      borderRadius: "50%",
-                      bgcolor: `${displayColor}20`,
-                      color: displayColor,
-                    }}
-                  >
-                    {displayIcon}
-                  </Box>
-                  <Typography variant="subtitle2" color="text.secondary">
-                    Personal Seleccionada
-                  </Typography>
-                </Box>
-                <IconButton size="small" onClick={handleClearSelection}>
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </Box>
-
-              <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                {selectedPersonal.dni}
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
-                <Chip
-                  label={displayFullName}
-                  size="small"
-                  variant="outlined"
-                  sx={{ bgcolor: `${displayColor}20`, color: displayColor }}
-                />
-              </Box>
-            </CardContent>
-          </Card>
-        )}
-      </Stack>
-
-      <Dialog
-        open={openDialog}
-        onClose={handleClose}
-        fullScreen={fullScreen}
-        PaperProps={{
-          sx: {
-            borderRadius: fullScreen ? 0 : 2,
-            width: fullScreen ? "100%" : "auto",
-            maxWidth: fullScreen ? "100%" : 500,
-          },
-        }}
-      >
-        <DialogTitle
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderBottom: `1px solid ${theme.palette.divider}`,
-            pb: 1,
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? "rgba(255, 255, 255, 0.05)"
-                : "rgba(0, 0, 0, 0.05)",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box
-              sx={{
-                mr: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-                bgcolor: `${theme.palette.primary.main}20`,
-                color: theme.palette.primary.main,
-              }}
-            >
-              <AddIcon />
-            </Box>
-            <Typography variant="h6" component="div">
-              Agregar nuevo DNI
-            </Typography>
-          </Box>
-          <IconButton
-            edge="end"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-            sx={{ minHeight: 44, minWidth: 44 }}
+    <Stack spacing={3}>
+      <Card>
+        <CardContent>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
           >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent sx={{ pt: 3, pb: 2, px: { xs: 2, sm: 3 } }}>
-          <Typography variant="body2" color="text.secondary" paragraph>
-            Ingrese el DNI
+            <PersonAddIcon />
+            Personal de Empresa
           </Typography>
 
-          <TextField
-            autoFocus
-            margin="dense"
-            label="DNI"
-            fullWidth
-            value={newDniNumber}
-            onChange={(e) => setNewDniNumber(e.target.value)}
-            variant="outlined"
-            helperText="DNI"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PersonIcon />
-                </InputAdornment>
-              ),
-            }}
-            sx={{ mt: 2 }}
-          />
-        </DialogContent>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <TextField
+              label="Buscar por DNI"
+              value={searchDni}
+              onChange={(e) => setSearchDni(e.target.value)}
+              disabled={personalList.length >= maxPersonalList}
+              fullWidth
+              size="small"
+            />
+            <Button
+              variant="contained"
+              onClick={handleSearch}
+              disabled={isSearching}
+              startIcon={<SearchIcon />}
+            >
+              Buscar
+            </Button>
+          </Stack>
 
-        <DialogActions
+          <Box mt={2}>
+            <Chip
+              label={countMessage}
+              color={isValidCount ? "success" : "warning"}
+              variant={isValidCount ? "filled" : "outlined"}
+            />
+          </Box>
+        </CardContent>
+      </Card>
+
+      {foundPersonal && (
+        <Card
           sx={{
-            px: { xs: 2, sm: 3 },
-            py: 2,
-            borderTop: `1px solid ${theme.palette.divider}`,
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? "rgba(255, 255, 255, 0.05)"
-                : "rgba(0, 0, 0, 0.02)",
+            bgcolor: "success.light",
+            color: "success.contrastText",
           }}
         >
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            sx={{ minWidth: 100, minHeight: 44 }}
-          >
-            Cancelar
-          </Button>
-          <Button
-            onClick={handleCreateNewPersonal}
-            disabled={!newDniNumber.trim() || createPersonalMutation.isPending}
-            variant="contained"
-            startIcon={<AddIcon />}
-            sx={{
-              minWidth: 100,
-              minHeight: 44,
-            }}
-          >
-            {createPersonalMutation.isPending ? "Agregando..." : "Agregar"}
-          </Button>
-        </DialogActions>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Empleado Encontrado
+            </Typography>
+            <Typography>
+              <strong>Nombre: </strong> {foundPersonal.firstname}{" "}
+              {foundPersonal.lastname}
+            </Typography>
+            <Typography>
+              <strong>DNI: </strong> {foundPersonal.dni}
+            </Typography>
+            <Typography>
+              <strong>Legjo: </strong> {foundPersonal.legajo}
+            </Typography>
+            <Stack direction="row" spacing={2} mt={2}>
+              <Button
+                variant="contained"
+                onClick={handleAddFoundPersonal}
+                startIcon={<AddIcon />}
+              >
+                Agregar a la lista
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => setFoundPersonal(null)}
+                startIcon={<CloseIcon />}
+              >
+                Cancelar
+              </Button>
+            </Stack>
+          </CardContent>
+        </Card>
+      )}
+
+      {personalList.length > 0 && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <strong>Nombre</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Apellido</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>DNI</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Legjo</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>Acciones</strong>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {personalList.map((personal) => (
+                <TableRow key={personal.id} hover>
+                  <TableCell>{personal.firstname}</TableCell>
+                  <TableCell>{personal.lastname}</TableCell>
+                  <TableCell>{personal.dni}</TableCell>
+                  <TableCell>{personal.legajo}</TableCell>
+                  <TableCell align="center">
+                    <IconButton
+                      color="error"
+                      onClick={() => handleRemovePersonal(personal.id)}
+                      size="small"
+                      title="Eliminar"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
+      {personalList.length === 0 && (
+        <Card
+          sx={{
+            textAlign: "center",
+            py: 4,
+          }}
+        >
+          <CardContent>
+            <PersonAddIcon
+              sx={{ fontSize: 48, color: "text.secondary", mb: 2 }}
+            />
+            <Typography variant="h6" color="text.secondary" gutterBottom>
+              No hay empleados terrestres
+            </Typography>
+            <Typography color="text.secondary">
+              Busque por DNI para agregar un empleado terrestre
+            </Typography>
+          </CardContent>
+        </Card>
+      )}
+
+      <Dialog
+        open={showAddDialog}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleCreateNewPersonal)}>
+            <DialogTitle>Agregar Empleado Terrestre</DialogTitle>
+            <DialogContent>
+              <Stack spacing={2} sx={{ mt: 1 }}>
+                <Alert severity="info">
+                  No se encontró ningún empleado terrestre con ese DNI{" "}
+                  {searchDni}. Complete la información del nuevo empleado
+                  terrestre
+                </Alert>
+
+                <RHFTextField<PersonalEmpresaSchema>
+                  name="dni"
+                  label="DNI"
+                  disabled
+                />
+
+                <RHFTextField<PersonalEmpresaSchema>
+                  name="firstname"
+                  label="Nombre"
+                  required
+                />
+
+                <RHFTextField<PersonalEmpresaSchema>
+                  name="lastname"
+                  label="Apellido"
+                  required
+                />
+
+                <RHFTextField<PersonalEmpresaSchema>
+                  name="legajo"
+                  label="Legjo"
+                  required
+                />
+              </Stack>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog} variant="outlined">
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={createPersonalMutation.isPending}
+                startIcon={<AddIcon />}
+              >
+                {createPersonalMutation.isPending
+                  ? "Creando..."
+                  : "Crear y Agregar"}
+              </Button>
+            </DialogActions>
+          </form>
+        </FormProvider>
       </Dialog>
 
       {/* Success Snackbar */}
@@ -380,12 +419,12 @@ export function PersonalComponent({
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity="success"
+          severity={snackbarSeverity}
           sx={{ width: "100%" }}
         >
-          ¡DNI agregado exitosamente!
+          {snackbarMessage}
         </Alert>
       </Snackbar>
-    </FormProvider>
+    </Stack>
   );
 }
