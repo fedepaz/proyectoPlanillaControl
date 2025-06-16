@@ -10,18 +10,6 @@ export function DatosTerrestre() {
   const funcionQuery = useFuncion();
   const { setValue } = useFormContext<PlanillaSchema>();
 
-  const handlePersonalSelected = (
-    lastname: string,
-    firstname: string,
-    dni: number,
-    legajo: number
-  ) => {
-    setValue("datosTerrestre.0.apellidoTerrestre", lastname),
-      setValue("datosTerrestre.0.nombreTerrestre", firstname),
-      setValue("datosTerrestre.0.dniTerrestre", dni),
-      setValue("datosTerrestre.0.legajoTerrestre", legajo);
-  };
-
   return (
     <Stack
       justifyContent="center"

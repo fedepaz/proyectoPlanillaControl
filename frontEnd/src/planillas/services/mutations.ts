@@ -76,3 +76,19 @@ export function useCreateMatricula() {
     },
   });
 }
+
+export function useCreatePersonalEmpresa() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: MatriculaAeronaveSchema) => {
+      const response = await apiClient.post(`/personalEmpresa`, data);
+      return response.data;
+    },
+    retry: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["personalEmpresa"],
+      });
+    },
+  });
+}

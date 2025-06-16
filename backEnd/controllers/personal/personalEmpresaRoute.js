@@ -112,4 +112,41 @@ personalEmpresaRouter.post("/", async (req, res, next) => {
   }
 });
 
+personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
+  const { body } = req;
+  try {
+    const { dni, empresa } = body;
+
+    const requiredFields = ["dni", "empresa"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaExists = await Empresa.findById(empresa);
+    if (empresaExists === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const personal = await PersonalEmpresa.find({
+      dni: dni,
+      empresa: empresa,
+    }).populate("empresa");
+
+    return res.json(personal);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default personalEmpresaRouter;

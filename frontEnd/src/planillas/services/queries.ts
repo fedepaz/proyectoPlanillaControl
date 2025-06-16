@@ -6,6 +6,7 @@ import {
   JerarquiaOption,
   MatriculaOption,
   Option,
+  PersonalEmpresaOption,
   PlanillaOption,
   UnidadOption,
 } from "../../types/option";
@@ -287,6 +288,7 @@ export function useFuncion() {
     },
   });
 }
+
 export function usePersonalEmpresa(dni: number) {
   return useQuery({
     queryKey: ["personalEmpresa", { dni }],
@@ -307,6 +309,29 @@ export function usePersonalEmpresa(dni: number) {
       };
     },
     enabled: !!dni,
+  });
+}
+
+type BuscarPersonalEmpresaParams = {
+  dni: number;
+  empresa: string;
+};
+
+export function usePersonalEmpresaBusqueda(
+  params: BuscarPersonalEmpresaParams | null
+) {
+  return useQuery({
+    queryKey: ["personalEmpresa", params],
+    queryFn: async () => {
+      if (!params) return [];
+      const response = await apiClient.post<PersonalEmpresaOption>(
+        `${API_URL}/personalEmpresa/busqueda`,
+        params
+      );
+      const personalEmpresa = response.data;
+      return personalEmpresa;
+    },
+    enabled: !!params,
   });
 }
 

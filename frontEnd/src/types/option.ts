@@ -12,6 +12,18 @@ export type OficialOption = {
   lastname: string;
   legajo: string;
 };
+
+export type PersonalEmpresaOption = {
+  id: string;
+  dni: string;
+  firstname: string;
+  lastname: string;
+  empresaId: string;
+  legajo: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
+};
 export type MatriculaOption = {
   id: string;
   matriculaAeronave: string;
