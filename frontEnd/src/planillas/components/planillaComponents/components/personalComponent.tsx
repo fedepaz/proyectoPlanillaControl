@@ -21,6 +21,8 @@ import {
   Stack,
   Chip,
   Box,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -68,6 +70,10 @@ export function PersonalComponent({
   >("success");
   const { setError } = useAppError();
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const methods = useForm<PersonalEmpresaSchema>({
     resolver: zodResolver(personalEmpresaSchema),
     defaultValues: {
@@ -90,19 +96,19 @@ export function PersonalComponent({
 
   const handleSearch = () => {
     console.log("busqueda");
-    if (!searchDni.trim()) {
+    if (!searchDni || !searchDni.trim()) {
       showSnackbar("Por favor ingrese un DNI", "warning");
       return;
     }
 
-    if (personalList.some((p) => p.dni === searchDni)) {
-      showSnackbar("El DNI ya existe", "warning");
+    if (personalList.some((p) => p.dni.toString() === searchDni.toString())) {
+      showSnackbar("El DNI ya está cargado", "warning");
       return;
     }
 
     if (personalList.length >= maxPersonalList) {
       showSnackbar(
-        "No puedes agregar mas de ${maxPersonalList} empleados terrestres",
+        `No puedes agregar mas de ${maxPersonalList} empleados terrestres`,
         "warning"
       );
       return;
@@ -128,7 +134,7 @@ export function PersonalComponent({
         setShowAddDialog(true);
         resetForm({
           ...defaultValuesPersonalEmpresa,
-          dni: searchDni,
+          dni: parseInt(searchDni),
           empresa: empresaId,
         });
       }
@@ -202,9 +208,13 @@ export function PersonalComponent({
   return (
     <Stack spacing={3}>
       <Card>
-        <CardContent>
+        <CardContent
+          sx={{
+            pb: isMobile ? 2 : 3,
+          }}
+        >
           <Typography
-            variant="h6"
+            variant={isMobile ? "subtitle1" : "h6"}
             gutterBottom
             sx={{ display: "flex", alignItems: "center", gap: 1 }}
           >
@@ -212,22 +222,30 @@ export function PersonalComponent({
             Personal de Empresa
           </Typography>
 
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing={2}
+            alignItems={isMobile ? "stretch" : "center"}
+          >
             <TextField
               label="Buscar por DNI"
               value={searchDni}
               onChange={(e) => setSearchDni(e.target.value)}
               disabled={personalList.length >= maxPersonalList}
               fullWidth
-              size="small"
+              size={isMobile ? "medium  " : "small"}
             />
             <Button
               variant="contained"
               onClick={handleSearch}
               disabled={isSearching}
+              fullWidth={isMobile}
+              sx={{
+                minWidth: isMobile ? "auto" : 120,
+              }}
               startIcon={<SearchIcon />}
             >
-              Buscar
+              {isSearching ? "Buscando..." : "Buscar"}
             </Button>
           </Stack>
 
@@ -236,6 +254,7 @@ export function PersonalComponent({
               label={countMessage}
               color={isValidCount ? "success" : "warning"}
               variant={isValidCount ? "filled" : "outlined"}
+              size={isMobile ? "small" : "medium"}
             />
           </Box>
         </CardContent>
@@ -248,25 +267,26 @@ export function PersonalComponent({
             color: "success.contrastText",
           }}
         >
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+          <CardContent sx={{ p: isMobile ? 2 : 3 }}>
+            <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>
               Empleado Encontrado
             </Typography>
-            <Typography>
+            <Typography variant={isMobile ? "body2" : "body1"}>
               <strong>Nombre: </strong> {foundPersonal.firstname}{" "}
               {foundPersonal.lastname}
             </Typography>
-            <Typography>
+            <Typography variant={isMobile ? "body2" : "body1"}>
               <strong>DNI: </strong> {foundPersonal.dni}
             </Typography>
-            <Typography>
+            <Typography variant={isMobile ? "body2" : "body1"}>
               <strong>Legjo: </strong> {foundPersonal.legajo}
             </Typography>
-            <Stack direction="row" spacing={2} mt={2}>
+            <Stack direction={isMobile ? "column" : "row"} spacing={2} mt={2}>
               <Button
                 variant="contained"
                 onClick={handleAddFoundPersonal}
                 startIcon={<AddIcon />}
+                fullWidth={isMobile}
               >
                 Agregar a la lista
               </Button>
@@ -274,6 +294,7 @@ export function PersonalComponent({
                 variant="outlined"
                 onClick={() => setFoundPersonal(null)}
                 startIcon={<CloseIcon />}
+                fullWidth={isMobile}
               >
                 Cancelar
               </Button>
@@ -283,8 +304,8 @@ export function PersonalComponent({
       )}
 
       {personalList.length > 0 && (
-        <TableContainer component={Paper}>
-          <Table>
+        <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+          <Table size={isMobile ? "small" : "medium"}>
             <TableHead>
               <TableRow>
                 <TableCell>
@@ -293,7 +314,7 @@ export function PersonalComponent({
                 <TableCell>
                   <strong>Apellido</strong>
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   <strong>DNI</strong>
                 </TableCell>
                 <TableCell>
@@ -307,15 +328,37 @@ export function PersonalComponent({
             <TableBody>
               {personalList.map((personal) => (
                 <TableRow key={personal.id} hover>
-                  <TableCell>{personal.firstname}</TableCell>
-                  <TableCell>{personal.lastname}</TableCell>
-                  <TableCell>{personal.dni}</TableCell>
-                  <TableCell>{personal.legajo}</TableCell>
+                  <TableCell>
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      {personal.firstname}
+                    </Typography>
+                    {/* Show DNI on mobile under the name */}
+                    {isMobile && (
+                      <Typography variant="caption" color="text.secondary">
+                        DNI: {personal.dni}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      {personal.lastname}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      {personal.dni}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      {personal.legajo}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="error"
                       onClick={() => handleRemovePersonal(personal.id)}
-                      size="small"
+                      size={isMobile ? "small" : "medium"}
                       title="Eliminar"
                     >
                       <DeleteIcon />
@@ -332,17 +375,28 @@ export function PersonalComponent({
         <Card
           sx={{
             textAlign: "center",
-            py: 4,
+            py: isMobile ? 3 : 4,
           }}
         >
           <CardContent>
             <PersonAddIcon
-              sx={{ fontSize: 48, color: "text.secondary", mb: 2 }}
+              sx={{
+                fontSize: isMobile ? 40 : 48,
+                color: "text.secondary",
+                mb: 2,
+              }}
             />
-            <Typography variant="h6" color="text.secondary" gutterBottom>
+            <Typography
+              variant={isMobile ? "subtitle1" : "h6"}
+              color="text.secondary"
+              gutterBottom
+            >
               No hay empleados terrestres
             </Typography>
-            <Typography color="text.secondary">
+            <Typography
+              variant={isMobile ? "body2" : "body1"}
+              color="text.secondary"
+            >
               Busque por DNI para agregar un empleado terrestre
             </Typography>
           </CardContent>
@@ -354,16 +408,35 @@ export function PersonalComponent({
         onClose={handleCloseDialog}
         maxWidth="sm"
         fullWidth
+        fullScreen={fullScreen} // Mobile-first: fullscreen on small devices
       >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleCreateNewPersonal)}>
-            <DialogTitle>Agregar Empleado Terrestre</DialogTitle>
-            <DialogContent>
-              <Stack spacing={2} sx={{ mt: 1 }}>
-                <Alert severity="info">
-                  No se encontró ningún empleado terrestre con ese DNI{" "}
+            <DialogTitle sx={{ pb: 1 }}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography variant={isMobile ? "h6" : "h5"}>
+                  Agregar Empleado Terrestre
+                </Typography>
+                {fullScreen && (
+                  <IconButton onClick={handleCloseDialog} size="small">
+                    <CloseIcon />
+                  </IconButton>
+                )}
+              </Stack>
+            </DialogTitle>
+            <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
+              <Stack spacing={isMobile ? 2 : 3} sx={{ mt: 1 }}>
+                <Alert
+                  severity="info"
+                  sx={{ fontSize: isMobile ? "0.875rem" : "1rem" }}
+                >
+                  No se encontró ningún empleado terrestre con el DNI{" "}
                   {searchDni}. Complete la información del nuevo empleado
-                  terrestre
+                  terrestre.
                 </Alert>
 
                 <RHFTextField<PersonalEmpresaSchema>
@@ -386,13 +459,17 @@ export function PersonalComponent({
 
                 <RHFTextField<PersonalEmpresaSchema>
                   name="legajo"
-                  label="Legjo"
+                  label="Legajo"
                   required
                 />
               </Stack>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseDialog} variant="outlined">
+            <DialogActions sx={{ p: isMobile ? 2 : 3, gap: 1 }}>
+              <Button
+                onClick={handleCloseDialog}
+                variant="outlined"
+                fullWidth={isMobile}
+              >
                 Cancelar
               </Button>
               <Button
@@ -400,6 +477,7 @@ export function PersonalComponent({
                 variant="contained"
                 disabled={createPersonalMutation.isPending}
                 startIcon={<AddIcon />}
+                fullWidth={isMobile}
               >
                 {createPersonalMutation.isPending
                   ? "Creando..."

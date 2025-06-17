@@ -11625,4 +11625,20 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-06-17T12:52:56.108Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"99999999","password":"qwertyuiop"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:128:23)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
+    ---------------------
+
     
