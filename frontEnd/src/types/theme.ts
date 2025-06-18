@@ -60,17 +60,16 @@ const commonThemeSettings = {
     },
   },
   shape: {
-    borderRadius: 8, // Slightly more rounded corners for a modern look
+    borderRadius: 8,
   },
-  // Mobile-optimized component overrides
+  // Enhanced component overrides with snackbar and button improvements
   components: {
     MuiButtonBase: {
       defaultProps: {
-        disableRipple: false, // Ensure ripple is enabled for touch feedback
+        disableRipple: false,
       },
       styleOverrides: {
         root: {
-          // Improve touch feedback
           "&.Mui-focusVisible": {
             outline: "2px solid",
             outlineColor: "primary.main",
@@ -82,37 +81,130 @@ const commonThemeSettings = {
     MuiButton: {
       styleOverrides: {
         root: {
-          minHeight: 48, // Larger touch target
+          minHeight: 48,
           padding: "8px 16px",
-          // Improve touch feedback
+          transition: "all 0.2s ease-in-out", // ADDED: Smooth transitions
           "&.Mui-focusVisible": {
             outline: "2px solid",
             outlineColor: "primary.main",
             outlineOffset: "2px",
           },
+          // ADDED: Enhanced hover effects
+          "&:hover": {
+            transform: "translateY(-1px)",
+            boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.15)",
+          },
         },
         contained: {
-          boxShadow: "none", // Flatter design for modern look
-          "&:hover": { boxShadow: "none" },
-          "&:active": { boxShadow: "none" },
+          boxShadow: "none",
+          fontWeight: 600, // ADDED: Bolder text for contained buttons
+          "&:hover": {
+            boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.15)",
+          },
+          "&:active": {
+            boxShadow: "none",
+            transform: "translateY(0px)",
+          },
+        },
+        outlined: {
+          fontWeight: 500, // ADDED: Medium weight for outlined buttons
+          "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.04)",
+          },
         },
         sizeLarge: {
-          minHeight: 56, // Even larger for primary actions
+          minHeight: 56,
           fontSize: "1rem",
+        },
+      },
+      // ADDED: Variants for special button types
+      variants: [
+        {
+          props: { variant: "contained", color: "success" },
+          style: {
+            backgroundColor: "#4caf50",
+            color: "#ffffff",
+            "&:hover": {
+              backgroundColor: "#388e3c",
+              transform: "translateY(-1px)",
+              boxShadow: "0 6px 16px 0 rgba(76, 175, 80, 0.3)",
+            },
+          },
+        },
+      ],
+    },
+    // ADDED: Global Snackbar styling
+    MuiSnackbar: {
+      styleOverrides: {
+        root: {
+          "& .MuiAlert-root": {
+            borderRadius: 12,
+            fontWeight: 500,
+            fontSize: "0.875rem",
+            boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.15)",
+          },
+        },
+      },
+    },
+    // ADDED: Global Alert styling for snackbars
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          fontWeight: 500,
+          "& .MuiAlert-icon": {
+            fontSize: "1.2rem",
+          },
+        },
+        // Success alerts
+        filledSuccess: {
+          backgroundColor: "#4caf50",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        // Error alerts
+        filledError: {
+          backgroundColor: "#f44336",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        // Warning alerts
+        filledWarning: {
+          backgroundColor: "#ff9800",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        // Info alerts
+        filledInfo: {
+          backgroundColor: "#2196f3",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
         },
       },
     },
     MuiIconButton: {
       styleOverrides: {
         root: {
-          padding: 12, // Larger touch target
+          padding: 12,
+          transition: "all 0.2s ease-in-out", // ADDED: Smooth transitions
+          "&:hover": {
+            transform: "scale(1.05)", // ADDED: Subtle scale effect
+          },
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         root: {
-          minHeight: 48, // Larger touch target for inputs
+          minHeight: 48,
         },
       },
     },
@@ -126,8 +218,12 @@ const commonThemeSettings = {
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12, // Slightly more rounded cards
-          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)", // Subtle shadow
+          borderRadius: 12,
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)",
+          transition: "all 0.2s ease-in-out", // ADDED: Smooth transitions
+          "&:hover": {
+            boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.15)", // ADDED: Enhanced hover shadow
+          },
         },
       },
     },
@@ -137,34 +233,34 @@ const commonThemeSettings = {
           borderRadius: 12,
         },
         elevation1: {
-          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)", // Subtle shadow
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)",
         },
         elevation2: {
-          boxShadow: "0 3px 10px 0 rgba(0, 0, 0, 0.12)", // Subtle shadow
+          boxShadow: "0 3px 10px 0 rgba(0, 0, 0, 0.12)",
         },
         elevation3: {
-          boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.14)", // Subtle shadow
+          boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.14)",
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)", // Subtle shadow
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.1)",
         },
       },
     },
     MuiTabs: {
       styleOverrides: {
         root: {
-          minHeight: 56, // Larger touch target
+          minHeight: 56,
         },
       },
     },
     MuiTab: {
       styleOverrides: {
         root: {
-          minHeight: 56, // Larger touch target
+          minHeight: 56,
           minWidth: 96,
           "@media (min-width: 600px)": {
             minWidth: 120,
@@ -175,21 +271,21 @@ const commonThemeSettings = {
     MuiBottomNavigation: {
       styleOverrides: {
         root: {
-          height: 64, // Larger touch target
+          height: 64,
         },
       },
     },
     MuiBottomNavigationAction: {
       styleOverrides: {
         root: {
-          padding: "12px 0", // Better spacing
+          padding: "12px 0",
         },
       },
     },
     MuiListItem: {
       styleOverrides: {
         root: {
-          paddingTop: 12, // More comfortable spacing
+          paddingTop: 12,
           paddingBottom: 12,
         },
       },
@@ -197,7 +293,7 @@ const commonThemeSettings = {
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          paddingTop: 12, // More comfortable spacing
+          paddingTop: 12,
           paddingBottom: 12,
         },
       },
@@ -205,21 +301,21 @@ const commonThemeSettings = {
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          minHeight: 48, // Larger touch target
+          minHeight: 48,
         },
       },
     },
     MuiChip: {
       styleOverrides: {
         root: {
-          height: 36, // Larger touch target
+          height: 36,
         },
       },
     },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          fontSize: "0.875rem", // Larger for better readability
+          fontSize: "0.875rem",
           padding: "8px 12px",
           borderRadius: 6,
         },
@@ -228,26 +324,23 @@ const commonThemeSettings = {
     MuiDialog: {
       styleOverrides: {
         paper: {
-          borderRadius: 12, // More rounded dialogs
+          borderRadius: 12,
         },
       },
     },
     MuiDivider: {
       styleOverrides: {
         root: {
-          margin: "16px 0", // Consistent spacing
+          margin: "16px 0",
         },
       },
     },
-    // Enhance touch ripple effect
     MuiTouchRipple: {
       styleOverrides: {
         ripple: {
-          // Make ripple effect more visible
           opacity: 0.24,
         },
         child: {
-          // Faster animation for better feedback
           animationDuration: "450ms",
         },
       },
@@ -261,24 +354,24 @@ const lightThemeBase = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#3a73b2", // Keeping your blue-gray for accents
-      light: "#6c96c5", // Lighter shade
-      dark: "#2a5080", // Darker shade
+      main: "#3a73b2",
+      light: "#6c96c5",
+      dark: "#2a5080",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#607d8b", // Complementary blue-gray
+      main: "#607d8b",
       light: "#8eacbb",
       dark: "#34515e",
       contrastText: "#ffffff",
     },
     background: {
-      default: "#f5f7fa", // Lighter, cleaner background
-      paper: "#ffffff", // Pure white for paper elements
+      default: "#f5f7fa",
+      paper: "#ffffff",
     },
     text: {
-      primary: "#202124", // Darker gray for text
-      secondary: "#5f6368", // Medium gray
+      primary: "#202124",
+      secondary: "#5f6368",
     },
     error: {
       main: "#d32f2f",
@@ -310,6 +403,44 @@ const lightThemeBase = createTheme({
       focus: "rgba(0, 0, 0, 0.12)",
     },
   },
+  // ADDED: Light mode specific component overrides
+  components: {
+    ...commonThemeSettings.components,
+    MuiAlert: {
+      styleOverrides: {
+        ...commonThemeSettings.components.MuiAlert?.styleOverrides,
+        // Light mode specific alert colors
+        filledSuccess: {
+          backgroundColor: "#4caf50",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledError: {
+          backgroundColor: "#f44336",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledWarning: {
+          backgroundColor: "#ff9800",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledInfo: {
+          backgroundColor: "#2196f3",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+      },
+    },
+  },
 });
 
 // Create the dark theme with enhanced settings
@@ -318,24 +449,24 @@ const darkThemeBase = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#6c96c5", // Keeping your lighter blue-gray for accents
+      main: "#6c96c5",
       light: "#9db8d9",
       dark: "#4a77a8",
       contrastText: "#1a1c20",
     },
     secondary: {
-      main: "#78909c", // Complementary blue-gray
+      main: "#78909c",
       light: "#a7c0cd",
       dark: "#4b636e",
       contrastText: "#1a1c20",
     },
     background: {
-      default: "#1a1c20", // Darker background
-      paper: "#2a2d32", // Slightly lighter for paper elements
+      default: "#1a1c20",
+      paper: "#2a2d32",
     },
     text: {
-      primary: "#e1e3e6", // Lighter text for better contrast
-      secondary: "#a1a4a9", // Medium gray with better contrast
+      primary: "#e1e3e6",
+      secondary: "#a1a4a9",
     },
     error: {
       main: "#f44336",
@@ -373,44 +504,79 @@ const darkThemeBase = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundImage: "none", // Remove default gradient in dark mode
+          backgroundImage: "none",
         },
         rounded: {
           borderRadius: 12,
         },
         elevation1: {
-          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)", // Darker shadow for dark mode
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)",
         },
         elevation2: {
-          boxShadow: "0 3px 10px 0 rgba(0, 0, 0, 0.35)", // Darker shadow for dark mode
+          boxShadow: "0 3px 10px 0 rgba(0, 0, 0, 0.35)",
         },
         elevation3: {
-          boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.4)", // Darker shadow for dark mode
+          boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.4)",
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)", // Darker shadow for dark mode
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
+        ...commonThemeSettings.components.MuiButton?.styleOverrides,
         contained: {
           backgroundColor: "#6c96c5",
           "&:hover": {
             backgroundColor: "#4a77a8",
+            transform: "translateY(-1px)",
+            boxShadow: "0 6px 16px 0 rgba(108, 150, 197, 0.3)",
           },
         },
       },
     },
-    // Enhance touch ripple effect for dark mode
+    // ADDED: Dark mode specific alert colors
+    MuiAlert: {
+      styleOverrides: {
+        ...commonThemeSettings.components.MuiAlert?.styleOverrides,
+        filledSuccess: {
+          backgroundColor: "#66bb6a",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledError: {
+          backgroundColor: "#f44336",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledWarning: {
+          backgroundColor: "#ff9800",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+        filledInfo: {
+          backgroundColor: "#29b6f6",
+          color: "#ffffff",
+          "& .MuiAlert-icon": {
+            color: "#ffffff",
+          },
+        },
+      },
+    },
     MuiTouchRipple: {
       styleOverrides: {
         ripple: {
-          // Make ripple effect more visible in dark mode
           opacity: 0.32,
         },
       },

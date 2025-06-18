@@ -77,11 +77,13 @@ const personalEmpresaSchema = z.object({
 export { personalEmpresaSchema };
 
 export type PersonalEmpresaSchema = z.infer<typeof personalEmpresaSchema>;
+export type PersonalEmpresaSchemaInput = z.input<typeof personalEmpresaSchema>;
 
-export const defaultValuesPersonalEmpresa: Partial<PersonalEmpresaSchema> = {
-  firstname: "",
-  lastname: "",
-};
+export const defaultValuesPersonalEmpresa: Partial<PersonalEmpresaSchemaInput> =
+  {
+    firstname: "",
+    lastname: "",
+  };
 
 const personalSeguridadSchema = z.object({
   dni: dniSchema,

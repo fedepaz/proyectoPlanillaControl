@@ -11641,4 +11641,22 @@
     at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:48:18
     ---------------------
 
+    [2025-06-18T06:44:45.311Z]
+    URL: /personalEmpresa
+    Method: POST
+    Body: {"dni":45123123,"firstname":"gaston","lastname":"a verga","empresa":"6850688b26aea98d186b07c9","legajo":222222}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.personalempresas index: legajo_1 dup key: { legajo: 222222 }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
     

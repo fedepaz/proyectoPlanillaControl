@@ -23,13 +23,14 @@ import {
   Box,
   useTheme,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
-
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +39,7 @@ import {
   defaultValuesPersonalEmpresa,
   PersonalEmpresaSchema,
   personalEmpresaSchema,
+  PersonalEmpresaSchemaInput,
 } from "../../../types/apiSchema";
 import { PersonalEmpresaOption } from "../../../../types/option";
 import { useCreatePersonalEmpresa } from "../../../services/mutations";
@@ -63,6 +65,10 @@ export function PersonalComponent({
   const [foundPersonal, setFoundPersonal] =
     useState<PersonalEmpresaOption | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [selectedPersonal, setSelectedPersonal] =
+    useState<PersonalEmpresaOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -74,7 +80,7 @@ export function PersonalComponent({
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const methods = useForm<PersonalEmpresaSchema>({
+  const methods = useForm<PersonalEmpresaSchemaInput>({
     resolver: zodResolver(personalEmpresaSchema),
     defaultValues: {
       ...defaultValuesPersonalEmpresa,
@@ -86,16 +92,11 @@ export function PersonalComponent({
   const { reset: resetForm } = methods;
   const createPersonalMutation = useCreatePersonalEmpresa();
 
-  console.log(empresaId);
-  console.log(searchDni);
   const params =
     empresaId && searchDni ? { dni: searchDni, empresa: empresaId } : null;
-  console.log(params);
   const personalQuery = usePersonalEmpresaBusqueda(params);
-  console.log(personalQuery.data);
 
   const handleSearch = () => {
-    console.log("busqueda");
     if (!searchDni || !searchDni.trim()) {
       showSnackbar("Por favor ingrese un DNI", "warning");
       return;
@@ -134,7 +135,7 @@ export function PersonalComponent({
         setShowAddDialog(true);
         resetForm({
           ...defaultValuesPersonalEmpresa,
-          dni: parseInt(searchDni),
+          dni: searchDni,
           empresa: empresaId,
         });
       }
@@ -153,8 +154,15 @@ export function PersonalComponent({
     }
   };
 
-  const handleCreateNewPersonal = (data: PersonalEmpresaSchema) => {
-    createPersonalMutation.mutate(data, {
+  const handleCreateNewPersonal = (data: PersonalEmpresaSchemaInput) => {
+    const transformedData: PersonalEmpresaSchema = {
+      dni: parseInt(data.dni.toString(), 10),
+      firstname: data.firstname,
+      lastname: data.lastname,
+      empresa: data.empresa,
+      legajo: parseInt(data.legajo.toString(), 10),
+    };
+    createPersonalMutation.mutate(transformedData, {
       onSuccess: (newPersonal) => {
         const personalData: PersonalEmpresaOption = {
           id: newPersonal.id,
@@ -167,6 +175,9 @@ export function PersonalComponent({
         const newList = [...personalList, personalData];
         setPersonalList(newList);
         onPersonalListChange(newList);
+        setShowAddDialog(false);
+        setSearchDni("");
+        setFoundPersonal(null);
         setSnackbarOpen(true);
         setSnackbarMessage("Empleado terrestre agregado exitosamente");
         setSnackbarSeverity("success");
@@ -177,13 +188,26 @@ export function PersonalComponent({
     });
   };
 
-  const handleRemovePersonal = (id: string) => {
-    const newList = personalList.filter((p) => p.id !== id);
-    setPersonalList(newList);
-    onPersonalListChange(newList);
-    showSnackbar("Empleado terrestre eliminado exitosamente", "success");
+  const handleViewDetails = (personal: PersonalEmpresaOption) => {
+    setSelectedPersonal(personal);
+    setShowDetailsDialog(true);
   };
 
+  const handleDeleteClick = (personal: PersonalEmpresaOption) => {
+    setSelectedPersonal(personal);
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedPersonal) {
+      const newList = personalList.filter((p) => p.id !== selectedPersonal.id);
+      setPersonalList(newList);
+      onPersonalListChange(newList);
+      setShowDeleteDialog(false);
+      setSelectedPersonal(null);
+      showSnackbar("Empleado terrestre eliminado exitosamente", "success");
+    }
+  };
   const showSnackbar = (
     message: string,
     severity: "success" | "error" | "warning"
@@ -204,15 +228,52 @@ export function PersonalComponent({
     personalList.length <= maxPersonalList;
 
   const countMessage = `${personalList.length}/${maxPersonalList} empleados (mínimo ${minPersonalList})`;
+  const CompactPersonalCard = ({
+    personal,
+  }: {
+    personal: PersonalEmpresaOption;
+  }) => (
+    <Card variant="outlined" sx={{ mb: 1 }}>
+      <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          {/* Employee info - takes most space */}
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Typography variant="body2" fontWeight="bold" noWrap>
+              {personal.lastname}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" noWrap>
+              DNI: {personal.dni}
+            </Typography>
+          </Box>
+
+          {/* Action buttons - compact */}
+          <Stack direction="row" spacing={0.5}>
+            <IconButton
+              size="small"
+              color="primary"
+              onClick={() => handleViewDetails(personal)}
+              sx={{ p: 0.5 }}
+            >
+              <VisibilityIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              color="error"
+              onClick={() => handleDeleteClick(personal)}
+              sx={{ p: 0.5 }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Stack>
+        </Stack>
+      </CardContent>
+    </Card>
+  );
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={isMobile ? 2 : 3}>
       <Card>
-        <CardContent
-          sx={{
-            pb: isMobile ? 2 : 3,
-          }}
-        >
+        <CardContent sx={{ p: isMobile ? 2 : 3 }}>
           <Typography
             variant={isMobile ? "subtitle1" : "h6"}
             gutterBottom
@@ -225,25 +286,25 @@ export function PersonalComponent({
           <Stack
             direction={isMobile ? "column" : "row"}
             spacing={2}
-            alignItems={isMobile ? "stretch" : "center"}
+            alignItems="stretch"
           >
             <TextField
               label="Buscar por DNI"
               value={searchDni}
               onChange={(e) => setSearchDni(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
               disabled={personalList.length >= maxPersonalList}
               fullWidth
-              size={isMobile ? "medium  " : "small"}
+              size={isMobile ? "medium" : "small"}
+              type="text"
             />
             <Button
               variant="contained"
               onClick={handleSearch}
-              disabled={isSearching}
-              fullWidth={isMobile}
-              sx={{
-                minWidth: isMobile ? "auto" : 120,
-              }}
+              disabled={isSearching || !searchDni.trim()}
               startIcon={<SearchIcon />}
+              fullWidth={isMobile}
+              sx={{ minWidth: isMobile ? "auto" : 120 }}
             >
               {isSearching ? "Buscando..." : "Buscar"}
             </Button>
@@ -261,12 +322,7 @@ export function PersonalComponent({
       </Card>
 
       {foundPersonal && (
-        <Card
-          sx={{
-            bgcolor: "success.light",
-            color: "success.contrastText",
-          }}
-        >
+        <Card sx={{ bgcolor: "success.light", color: "success.contrastText" }}>
           <CardContent sx={{ p: isMobile ? 2 : 3 }}>
             <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>
               Empleado Encontrado
@@ -279,7 +335,7 @@ export function PersonalComponent({
               <strong>DNI: </strong> {foundPersonal.dni}
             </Typography>
             <Typography variant={isMobile ? "body2" : "body1"}>
-              <strong>Legjo: </strong> {foundPersonal.legajo}
+              <strong>Legajo: </strong> {foundPersonal.legajo}
             </Typography>
             <Stack direction={isMobile ? "column" : "row"} spacing={2} mt={2}>
               <Button
@@ -303,81 +359,88 @@ export function PersonalComponent({
         </Card>
       )}
 
+      {/* Employee List - Mobile Cards or Desktop Table */}
       {personalList.length > 0 && (
-        <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
-          <Table size={isMobile ? "small" : "medium"}>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <strong>Nombre</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Apellido</strong>
-                </TableCell>
-                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                  <strong>DNI</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Legjo</strong>
-                </TableCell>
-                <TableCell align="center">
-                  <strong>Acciones</strong>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        <>
+          {isMobile ? (
+            // Mobile: Card Layout
+            <Box>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                sx={{ mb: 2 }}
+              >
+                Empleados Agregados ({personalList.length})
+              </Typography>
               {personalList.map((personal) => (
-                <TableRow key={personal.id} hover>
-                  <TableCell>
-                    <Typography variant={isMobile ? "body2" : "body1"}>
-                      {personal.firstname}
-                    </Typography>
-                    {/* Show DNI on mobile under the name */}
-                    {isMobile && (
-                      <Typography variant="caption" color="text.secondary">
-                        DNI: {personal.dni}
-                      </Typography>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant={isMobile ? "body2" : "body1"}>
-                      {personal.lastname}
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-                    <Typography variant={isMobile ? "body2" : "body1"}>
-                      {personal.dni}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant={isMobile ? "body2" : "body1"}>
-                      {personal.legajo}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      color="error"
-                      onClick={() => handleRemovePersonal(personal.id)}
-                      size={isMobile ? "small" : "medium"}
-                      title="Eliminar"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
+                <CompactPersonalCard key={personal.id} personal={personal} />
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </Box>
+          ) : (
+            // Desktop: Table Layout
+            <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+              <Table size="medium">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <strong>Nombre</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Apellido</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>DNI</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Legajo</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>Acciones</strong>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {personalList.map((personal) => (
+                    <TableRow key={personal.id} hover>
+                      <TableCell>{personal.firstname}</TableCell>
+                      <TableCell>{personal.lastname}</TableCell>
+                      <TableCell>{personal.dni}</TableCell>
+                      <TableCell>{personal.legajo}</TableCell>
+                      <TableCell align="center">
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          justifyContent="center"
+                        >
+                          <IconButton
+                            color="primary"
+                            onClick={() => handleViewDetails(personal)}
+                            size="small"
+                            title="Ver detalles"
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                          <IconButton
+                            color="error"
+                            onClick={() => handleDeleteClick(personal)}
+                            size="small"
+                            title="Eliminar"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </>
       )}
 
       {personalList.length === 0 && (
-        <Card
-          sx={{
-            textAlign: "center",
-            py: isMobile ? 3 : 4,
-          }}
-        >
+        <Card sx={{ textAlign: "center", py: isMobile ? 3 : 4 }}>
           <CardContent>
             <PersonAddIcon
               sx={{
@@ -403,12 +466,13 @@ export function PersonalComponent({
         </Card>
       )}
 
+      {/* Add New Personal Dialog */}
       <Dialog
         open={showAddDialog}
         onClose={handleCloseDialog}
         maxWidth="sm"
         fullWidth
-        fullScreen={fullScreen} // Mobile-first: fullscreen on small devices
+        fullScreen={fullScreen}
       >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleCreateNewPersonal)}>
@@ -443,24 +507,25 @@ export function PersonalComponent({
                   name="dni"
                   label="DNI"
                   disabled
+                  type="text"
+                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 />
-
                 <RHFTextField<PersonalEmpresaSchema>
                   name="firstname"
                   label="Nombre"
                   required
                 />
-
                 <RHFTextField<PersonalEmpresaSchema>
                   name="lastname"
                   label="Apellido"
                   required
                 />
-
                 <RHFTextField<PersonalEmpresaSchema>
                   name="legajo"
                   label="Legajo"
                   required
+                  type="text"
+                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 />
               </Stack>
             </DialogContent>
@@ -488,7 +553,117 @@ export function PersonalComponent({
         </FormProvider>
       </Dialog>
 
-      {/* Success Snackbar */}
+      {/* Details Dialog */}
+      <Dialog
+        open={showDetailsDialog}
+        onClose={() => setShowDetailsDialog(false)}
+        maxWidth="sm"
+        fullWidth
+        fullScreen={fullScreen}
+      >
+        <DialogTitle sx={{ pb: 1 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography variant={isMobile ? "h6" : "h5"}>
+              Detalles del Empleado
+            </Typography>
+            {fullScreen && (
+              <IconButton
+                onClick={() => setShowDetailsDialog(false)}
+                size="small"
+              >
+                <CloseIcon />
+              </IconButton>
+            )}
+          </Stack>
+        </DialogTitle>
+        <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
+          {selectedPersonal && (
+            <Stack spacing={2} sx={{ mt: 1 }}>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Nombre Completo
+                </Typography>
+                <Typography variant="body1">
+                  {selectedPersonal.firstname} {selectedPersonal.lastname}
+                </Typography>
+              </Box>
+              <Divider />
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary">
+                  DNI
+                </Typography>
+                <Typography variant="body1">{selectedPersonal.dni}</Typography>
+              </Box>
+              <Divider />
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Legajo
+                </Typography>
+                <Typography variant="body1">
+                  {selectedPersonal.legajo}
+                </Typography>
+              </Box>
+            </Stack>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
+          <Button
+            onClick={() => setShowDetailsDialog(false)}
+            variant="contained"
+            fullWidth={isMobile}
+          >
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <DeleteIcon color="error" />
+            <Typography variant="h6">Confirmar Eliminación</Typography>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          {selectedPersonal && (
+            <Typography>
+              ¿Está seguro que desea eliminar a{" "}
+              <strong>
+                {selectedPersonal.firstname} {selectedPersonal.lastname}
+              </strong>{" "}
+              (DNI: {selectedPersonal.dni}) de la lista?
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ p: 3, gap: 1 }}>
+          <Button
+            onClick={() => setShowDeleteDialog(false)}
+            variant="outlined"
+            fullWidth={isMobile}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="error"
+            fullWidth={isMobile}
+          >
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={4000}

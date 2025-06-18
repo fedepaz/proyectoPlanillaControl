@@ -42,12 +42,15 @@ export function DatosTerrestre() {
         tipoFijoID={handlingId}
         label="Empresa"
       />
-      <PersonalComponent
-        onPersonalListChange={handlePersonalListChange}
-        empresaId={empresaIdRef}
-        maxPersonalList={10}
-        minPersonalList={3}
-      />
+      {empresaIdRef !== "" && (
+        <PersonalComponent
+          onPersonalListChange={handlePersonalListChange}
+          empresaId={empresaIdRef}
+          maxPersonalList={10}
+          minPersonalList={3}
+        />
+      )}
+      funcion
     </Stack>
   );
 }

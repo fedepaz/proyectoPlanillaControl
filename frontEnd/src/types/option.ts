@@ -15,11 +15,11 @@ export type OficialOption = {
 
 export type PersonalEmpresaOption = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
   empresaId: string;
-  legajo: number;
+  legajo: string;
   isUserCreated?: boolean;
   createdAt?: string;
   needsValidation?: boolean;
