@@ -61,7 +61,6 @@ const personalEmpresaSchema = new Schema({
   legajo: {
     type: Number,
     required: true,
-    unique: true,
     min: [1, "Legajo debe ser mayor a 0"],
     max: [999999, "Legajo no puede ser mayor a 999999"],
   },
@@ -77,6 +76,8 @@ personalEmpresaSchema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
+
+personalEmpresaSchema.index({ legajo: 1, empresa: 1 }, { unique: true });
 
 export const PersonalEmpresa = model("PersonalEmpresa", personalEmpresaSchema);
 
@@ -98,7 +99,6 @@ const personalSeguridadSchema = new Schema({
   legajo: {
     type: Number,
     required: true,
-    unique: true,
     min: [1, "Legajo debe ser mayor a 0"],
     max: [999999, "Legajo no puede ser mayor a 999999"],
   },
@@ -114,6 +114,8 @@ personalSeguridadSchema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
+
+personalSeguridadSchema.index({ legajo: 1, empresa: 1 }, { unique: true });
 
 export const PersonalSeguridadEmpresa = model(
   "PersonalSeguridadEmpresa",
