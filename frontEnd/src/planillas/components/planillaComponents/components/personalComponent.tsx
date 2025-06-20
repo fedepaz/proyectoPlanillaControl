@@ -45,6 +45,7 @@ import { PersonalEmpresaOption } from "../../../../types/option";
 import { useCreatePersonalEmpresa } from "../../../services/mutations";
 import { useAppError } from "../../../../hooks/useAppError";
 import { RHFTextField } from "../../../../components/RHFTextField";
+import { AxiosError } from "axios";
 
 interface PersonalComponentProps {
   onPersonalListChange: (personalList: PersonalEmpresaOption[]) => void;
@@ -75,6 +76,8 @@ export function PersonalComponent({
     "success" | "error" | "warning"
   >("success");
   const { setError } = useAppError();
+  const [shouldSearch, setShouldSearch] = useState(false);
+  const [searchTriggerDni, setSearchTriggerDni] = useState("");
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -93,7 +96,9 @@ export function PersonalComponent({
   const createPersonalMutation = useCreatePersonalEmpresa();
 
   const params =
-    empresaId && searchDni ? { dni: searchDni, empresa: empresaId } : null;
+    shouldSearch && empresaId && searchTriggerDni
+      ? { dni: searchTriggerDni, empresa: empresaId }
+      : null;
   const personalQuery = usePersonalEmpresaBusqueda(params);
 
   const handleSearch = () => {
@@ -114,14 +119,16 @@ export function PersonalComponent({
       );
       return;
     }
-
     setIsSearching(true);
+    setShouldSearch(true);
+    setSearchTriggerDni(searchDni);
   };
 
   useEffect(() => {
-    if (personalQuery.data && isSearching) {
-      if (personalQuery.data.length > 0) {
-        const personal = personalQuery.data[0];
+    if (personalQuery.data !== undefined && shouldSearch && isSearching) {
+      if (personalQuery.data) {
+        console.log("personalQuery.data", personalQuery.data);
+        const personal = personalQuery.data;
         setFoundPersonal({
           id: personal.id,
           dni: personal.dni,
@@ -140,8 +147,39 @@ export function PersonalComponent({
         });
       }
       setIsSearching(false);
+      setShouldSearch(false);
     }
-  }, [personalQuery.data, isSearching, searchDni, resetForm, empresaId]);
+  }, [
+    personalQuery.data,
+    isSearching,
+    searchDni,
+    resetForm,
+    empresaId,
+    shouldSearch,
+  ]);
+
+  useEffect(() => {
+    if (personalQuery.error && shouldSearch) {
+      setIsSearching(false);
+      setShouldSearch(false);
+      if (
+        personalQuery.error instanceof AxiosError &&
+        personalQuery.error.response
+      ) {
+        const error = personalQuery.error.response.data;
+        if (error.name === "PersonalRegistrado") {
+          showSnackbar(error.message, "warning");
+          setTimeout(() => {
+            setSearchDni("");
+          }, 2000);
+          return;
+        }
+      }
+      setFoundPersonal(null);
+      setError(personalQuery.error);
+      setSearchTriggerDni("");
+    }
+  }, [personalQuery.error, shouldSearch, setError]);
 
   const handleAddFoundPersonal = () => {
     if (foundPersonal) {
@@ -183,6 +221,16 @@ export function PersonalComponent({
         setSnackbarSeverity("success");
       },
       onError: (error) => {
+        if (error instanceof AxiosError && error.response) {
+          if (error.response.data.name === "PersonalRegistrado") {
+            showSnackbar(error.response.data.message, "warning");
+            setTimeout(() => {
+              setShowAddDialog(false);
+              setSearchDni("");
+            }, 2000);
+            return;
+          }
+        }
         setError(error);
       },
     });
@@ -297,6 +345,11 @@ export function PersonalComponent({
               fullWidth
               size={isMobile ? "medium" : "small"}
               type="text"
+              inputRef={(input) => {
+                if (personalQuery.error && shouldSearch && input) {
+                  setTimeout(() => input.focus(), 100);
+                }
+              }}
             />
             <Button
               variant="contained"
@@ -304,7 +357,13 @@ export function PersonalComponent({
               disabled={isSearching || !searchDni.trim()}
               startIcon={<SearchIcon />}
               fullWidth={isMobile}
-              sx={{ minWidth: isMobile ? "auto" : 120 }}
+              sx={{
+                minWidth: isMobile ? "auto" : 120,
+                border:
+                  personalQuery.error && shouldSearch
+                    ? "1px solid red"
+                    : "none",
+              }}
             >
               {isSearching ? "Buscando..." : "Buscar"}
             </Button>

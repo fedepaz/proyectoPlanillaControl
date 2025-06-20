@@ -8,6 +8,12 @@ export interface ErrorTranslation {
 
 // Error patterns and their translations
 const ERROR_TRANSLATIONS: Record<string, ErrorTranslation> = {
+  PersonalRegistrado: {
+    title: "Personal Registrado",
+    message: "El DNI ya esta registrado en la empresa",
+    canRetry: false,
+  },
+
   // Authentication & Authorization
   "token missing or invalid": {
     title: "Sesión Expirada",

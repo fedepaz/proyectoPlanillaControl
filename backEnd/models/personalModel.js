@@ -7,7 +7,7 @@ const oficialSchema = new Schema({
     unique: true,
     validate: {
       validator: function (v) {
-        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
+        return /^\d{8}$/.test(v.toString()) && v >= 10000000 && v <= 99999999;
       },
       message: (props) => `${props.value} is not a valid DNI!`,
     },
@@ -50,7 +50,7 @@ const personalEmpresaSchema = new Schema({
     unique: true,
     validate: {
       validator: function (v) {
-        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
+        return /^\d{8}$/.test(v.toString()) && v >= 10000000 && v <= 99999999;
       },
       message: (props) => `${props.value} is not a valid DNI!`,
     },
@@ -88,7 +88,7 @@ const personalSeguridadSchema = new Schema({
     unique: true,
     validate: {
       validator: function (v) {
-        return /^\d{8}$/.test(v.toString()) && v >= 30000000 && v <= 99999999;
+        return /^\d{8}$/.test(v.toString()) && v >= 10000000 && v <= 99999999;
       },
       message: (props) => `${props.value} is not a valid DNI!`,
     },

@@ -97,6 +97,19 @@ personalEmpresaRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    const existingPersonal = await PersonalEmpresa.findOne({
+      legajo,
+      empresa,
+    }).populate("empresa");
+
+    if (existingPersonal) {
+      const error = new Error();
+      error.status = 409;
+      error.name = "PersonalRegistrado";
+      error.message = `El Legajo ${legajo} ya esta registrado en la empresa ${existingPersonal.empresa.empresa} con el nombre de ${existingPersonal.firstname} ${existingPersonal.lastname}`;
+      throw error;
+    }
+
     const newPersonal = new PersonalEmpresa({
       dni,
       firstname: firstname.trim().toUpperCase(),
@@ -143,12 +156,23 @@ personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
       throw error;
     }
 
-    const personal = await PersonalEmpresa.find({
+    const personalEncontrado = await PersonalEmpresa.findOne({
       dni: dni,
-      empresa: empresa,
     }).populate("empresa");
 
-    return res.json(personal);
+    if (personalEncontrado !== null) {
+      const personalInEmpresa = personalEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalEncontrado.empresa.empresa} con el nombre de ${personalEncontrado.firstname} ${personalEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
+    return res.status(200).json(personalEncontrado);
   } catch (err) {
     next(err);
   }

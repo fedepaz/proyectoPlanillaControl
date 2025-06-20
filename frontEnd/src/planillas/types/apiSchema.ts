@@ -12,8 +12,8 @@ const dniSchema = z
   .string()
   .regex(/^\d{8}$/, "El DNI debe tener 8 números")
   .transform((val) => parseInt(val, 10))
-  .refine((val) => val >= 30000000 && val <= 99999999, {
-    message: "El DNI debe estar entre 30000000 y 99999999",
+  .refine((val) => val >= 10000000 && val <= 99999999, {
+    message: "El DNI debe estar entre 10.000.000 y 99.999.999",
   });
 const legajoOficialSchema = z
   .string()

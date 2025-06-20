@@ -323,8 +323,8 @@ export function usePersonalEmpresaBusqueda(
   return useQuery({
     queryKey: ["personalEmpresa", params],
     queryFn: async () => {
-      if (!params) return [];
-      const response = await apiClient.post<PersonalEmpresaOption[]>(
+      if (!params) return null;
+      const response = await apiClient.post<PersonalEmpresaOption | null>(
         `${API_URL}/personalEmpresa/busqueda`,
         params
       );
@@ -332,6 +332,7 @@ export function usePersonalEmpresaBusqueda(
       return personalEmpresa;
     },
     enabled: !!params,
+    retry: false,
   });
 }
 

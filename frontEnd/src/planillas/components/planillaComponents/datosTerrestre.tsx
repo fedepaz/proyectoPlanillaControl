@@ -50,7 +50,6 @@ export function DatosTerrestre() {
           minPersonalList={3}
         />
       )}
-      funcion
     </Stack>
   );
 }

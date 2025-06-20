@@ -24,6 +24,11 @@ const ERROR_HANDLERS = {
     },
   }),
 
+  PersonalRegistrado: ({ message }) => ({
+    status: 409,
+    body: { error: message },
+  }),
+
   AuthenticationError: ({ message }) => ({
     status: 401,
     body: { error: message },
