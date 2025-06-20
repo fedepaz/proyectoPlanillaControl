@@ -27,11 +27,11 @@ export type PersonalEmpresaOption = {
 
 export type PersonalSeguridadOption = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
   empresaId: string;
-  legajo: number;
+  legajo: string;
   isUserCreated?: boolean;
   createdAt?: string;
   needsValidation?: boolean;
