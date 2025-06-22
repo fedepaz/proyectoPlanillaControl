@@ -253,7 +253,24 @@ export function PersonalComponent({
       onPersonalListChange(newList);
       setShowDeleteDialog(false);
       setSelectedPersonal(null);
-      showSnackbar("Empleado terrestre eliminado exitosamente", "success");
+      showSnackbar(
+        `${selectedPersonal.firstname} ${selectedPersonal.lastname} eliminado exitosamente`,
+        "success"
+      );
+    }
+  };
+
+  const handleDelete = (personal: PersonalEmpresaOption) => {
+    if (personal) {
+      const newList = personalList.filter((p) => p.id !== personal.id);
+      setPersonalList(newList);
+      onPersonalListChange(newList);
+      setShowDeleteDialog(false);
+      setSelectedPersonal(null);
+      showSnackbar(
+        `${personal.firstname} ${personal.lastname} eliminado exitosamente`,
+        "success"
+      );
     }
   };
   const showSnackbar = (
@@ -396,7 +413,11 @@ export function PersonalComponent({
                 Empleados Agregados ({personalList.length})
               </Typography>
               {personalList.map((personal) => (
-                <CompactPersonalCard personal={personal} key={personal.id} />
+                <CompactPersonalCard
+                  personal={personal}
+                  key={personal.id}
+                  onDelete={handleDelete}
+                />
               ))}
             </Box>
           ) : (

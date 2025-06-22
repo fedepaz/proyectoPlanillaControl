@@ -69,7 +69,7 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
                 <IconButton
                   size="small"
                   color="primary"
-                  onClick={() => handleViewDetails}
+                  onClick={handleViewDetails}
                   sx={{ p: 0.5 }}
                 >
                   <VisibilityIcon fontSize="small" />
@@ -77,7 +77,7 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
                 <IconButton
                   size="small"
                   color="error"
-                  onClick={() => handleDeleteClick}
+                  onClick={handleDeleteClick}
                   sx={{ p: 0.5 }}
                 >
                   <DeleteIcon fontSize="small" />
