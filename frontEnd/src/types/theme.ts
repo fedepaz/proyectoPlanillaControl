@@ -389,9 +389,10 @@ const lightThemeBase = createTheme({
       dark: "#01579b",
     },
     success: {
-      main: "#2e7d32",
-      light: "#4caf50",
-      dark: "#1b5e20",
+      main: "#1B5E20", // deep “forest” green
+      light: "#2E7D32", // still dark enough to read white text
+      dark: "#004D40", // for hover states
+      contrastText: "#FFFFFF", // guaranteed white
     },
     divider: "rgba(0, 0, 0, 0.12)",
     action: {
@@ -406,16 +407,55 @@ const lightThemeBase = createTheme({
   // ADDED: Light mode specific component overrides
   components: {
     ...commonThemeSettings.components,
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: "none",
+        },
+        rounded: {
+          borderRadius: 12,
+        },
+        elevation1: {
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)",
+        },
+        elevation2: {
+          boxShadow: "0 3px 10px 0 rgba(0, 0, 0, 0.35)",
+        },
+        elevation3: {
+          boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.4)",
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.3)",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        ...commonThemeSettings.components.MuiButton?.styleOverrides,
+        contained: {
+          backgroundColor: "#6c96c5",
+          "&:hover": {
+            backgroundColor: "#4a77a8",
+            transform: "translateY(-1px)",
+            boxShadow: "0 6px 16px 0 rgba(108, 150, 197, 0.3)",
+          },
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         ...commonThemeSettings.components.MuiAlert?.styleOverrides,
         // Light mode specific alert colors
         filledSuccess: {
-          backgroundColor: "#4caf50",
-          color: "#ffffff",
-          "& .MuiAlert-icon": {
-            color: "#ffffff",
-          },
+          backgroundColor: "#1B5E20", // very deep green
+          color: "#FFFFFF",
+          border: "1px solid #2E7D32", // slightly lighter edge
+          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
+          "& .MuiAlert-icon": { color: "#FFFFFF" },
         },
         filledError: {
           backgroundColor: "#f44336",
@@ -484,10 +524,11 @@ const darkThemeBase = createTheme({
       dark: "#0288d1",
     },
     success: {
-      main: "#66bb6a",
-      light: "#81c784",
-      dark: "#388e3c",
+      main: "#388E3C", // rich forest green
+      light: "#4CAF50", // a touch brighter for accent
+      dark: "#1B5E20", // strong contrast for hover
     },
+
     divider: "rgba(255, 255, 255, 0.12)",
     action: {
       active: "rgba(255, 255, 255, 0.7)",
@@ -545,11 +586,10 @@ const darkThemeBase = createTheme({
       styleOverrides: {
         ...commonThemeSettings.components.MuiAlert?.styleOverrides,
         filledSuccess: {
-          backgroundColor: "#66bb6a",
-          color: "#ffffff",
-          "& .MuiAlert-icon": {
-            color: "#ffffff",
-          },
+          backgroundColor: "#388E3C",
+          color: "#FFFFFF",
+          boxShadow: "0 3px 10px rgba(0, 0, 0, 0.4)", // subtle shadow
+          "& .MuiAlert-icon": { color: "#FFFFFF" },
         },
         filledError: {
           backgroundColor: "#f44336",

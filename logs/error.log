@@ -13252,4 +13252,54 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-06-22T04:42:15.604Z]
+    URL: /empresa
+    Method: POST
+    Body: {"empresa":"ITC","tipoEmpresa":"66b62e906984c8d2498ac3d1"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MongoServerError: E11000 duplicate key error collection: books-coleccion.empresas index: empresa_1 dup key: { empresa: "ITC" }
+    at InsertOneOperation.execute (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async tryOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:199:20)
+    at async executeOperation (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/operations/execute_operation.js:69:16)
+    ---------------------
+
+    [2025-06-22T04:47:56.160Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:167:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-22T04:49:30.986Z]
+    URL: /personalEmpresa
+    Method: POST
+    Body: {"dni":38123123,"firstname":"verga","lastname":"fdsafdsa","empresa":"685789b67d1c81c348dab263","legajo":1234}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El Legajo 1234 ya esta registrado en la empresa HANDLING PRIVADO con el nombre de RODRIGO GONZALEZ
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:106:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
     

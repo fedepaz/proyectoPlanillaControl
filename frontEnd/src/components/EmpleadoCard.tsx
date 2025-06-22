@@ -8,84 +8,96 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import { memo, useState } from "react";
+import type { BasePersonalOption } from "../types/option";
+import { PersonalDetailsDialog } from "./PersonalDetailsDialog.tsx";
+import { PersonalDeleteDialog } from "./PersonalDeleteDialog.tsx";
 
-interface EmpleadoCardProps {
-  id: string;
-  dni: string;
-  firstname: string;
-  lastname: string;
-  empresaId: string;
-  legajo: string;
+interface CompactPersonalCardProps {
+  personal: BasePersonalOption;
+  onDelete?: (personal: BasePersonalOption) => void;
+  showActions?: boolean;
 }
 
 export const CompactPersonalCard = memo(function CompactPersonalCard({
-  id,
-  dni,
-  firstname,
-  lastname,
-  empresaId,
-  legajo,
-}: EmpleadoCardProps) {
-  const [selectedPersonal, setSelectedPersonal] =
-    useState<EmpleadoCardProps | null>(null);
+  personal,
+  onDelete,
+  showActions = true,
+}: CompactPersonalCardProps) {
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  const personal = {
-    id,
-    dni,
-    firstname,
-    lastname,
-    empresaId,
-    legajo,
-  };
-
-  const handleViewDetails = (personal: EmpleadoCardProps) => {
-    setSelectedPersonal(personal);
+  const handleViewDetails = () => {
     setShowDetailsDialog(true);
   };
 
-  const handleDeleteClick = (personal: EmpleadoCardProps) => {
-    setSelectedPersonal(personal);
+  const handleDeleteClick = () => {
     setShowDeleteDialog(true);
   };
 
-  return (
-    <Card variant="outlined" sx={{ mb: 1 }}>
-      <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          {/* Employee info - takes most space */}
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" fontWeight="bold" noWrap>
-              {personal.lastname}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap>
-              DNI: {personal.dni}
-            </Typography>
-          </Box>
+  const handleConfirmDelete = () => {
+    setShowDeleteDialog(false);
+    onDelete?.(personal);
+  };
 
-          {/* Action buttons - compact */}
-          <Stack direction="row" spacing={0.5}>
-            <IconButton
-              size="small"
-              color="primary"
-              onClick={() => handleViewDetails(personal)}
-              sx={{ p: 0.5 }}
-            >
-              <VisibilityIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              color="error"
-              onClick={() => handleDeleteClick(personal)}
-              sx={{ p: 0.5 }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
+  const handleCloseDeleteDialog = () => {
+    setShowDeleteDialog(false);
+  };
+
+  const handleCloseDetailsDialog = () => {
+    setShowDetailsDialog(false);
+  };
+
+  return (
+    <>
+      <Card variant="outlined" sx={{ mb: 1 }}>
+        <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            {/* Employee info - takes most space */}
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography variant="body2" fontWeight="bold" noWrap>
+                {personal.lastname}
+              </Typography>
+              <Typography variant="caption" color="text.secondary" noWrap>
+                DNI: {personal.dni}
+              </Typography>
+            </Box>
+
+            {/* Action buttons - compact */}
+            {showActions && (
+              <Stack direction="row" spacing={0.5}>
+                <IconButton
+                  size="small"
+                  color="primary"
+                  onClick={() => handleViewDetails}
+                  sx={{ p: 0.5 }}
+                >
+                  <VisibilityIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  color="error"
+                  onClick={() => handleDeleteClick}
+                  sx={{ p: 0.5 }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Stack>
+            )}
           </Stack>
-        </Stack>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <PersonalDetailsDialog
+        open={showDetailsDialog}
+        onClose={handleCloseDetailsDialog}
+        personal={personal}
+      />
+      <PersonalDeleteDialog
+        open={showDeleteDialog}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+        personal={personal}
+      />
+    </>
   );
 });

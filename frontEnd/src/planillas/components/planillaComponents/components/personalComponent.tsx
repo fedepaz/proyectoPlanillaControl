@@ -46,6 +46,7 @@ import { useCreatePersonalEmpresa } from "../../../services/mutations";
 import { useAppError } from "../../../../hooks/useAppError";
 import { RHFTextField } from "../../../../components/RHFTextField";
 import { AxiosError } from "axios";
+import { CompactPersonalCard } from "../../../../components/EmpleadoCard";
 
 interface PersonalComponentProps {
   onPersonalListChange: (personalList: PersonalEmpresaOption[]) => void;
@@ -127,7 +128,6 @@ export function PersonalComponent({
   useEffect(() => {
     if (personalQuery.data !== undefined && shouldSearch && isSearching) {
       if (personalQuery.data) {
-        console.log("personalQuery.data", personalQuery.data);
         const personal = personalQuery.data;
         setFoundPersonal({
           id: personal.id,
@@ -276,47 +276,6 @@ export function PersonalComponent({
     personalList.length <= maxPersonalList;
 
   const countMessage = `${personalList.length}/${maxPersonalList} empleados (mínimo ${minPersonalList})`;
-  const CompactPersonalCard = ({
-    personal,
-  }: {
-    personal: PersonalEmpresaOption;
-  }) => (
-    <Card variant="outlined" sx={{ mb: 1 }}>
-      <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          {/* Employee info - takes most space */}
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" fontWeight="bold" noWrap>
-              {personal.lastname}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap>
-              DNI: {personal.dni}
-            </Typography>
-          </Box>
-
-          {/* Action buttons - compact */}
-          <Stack direction="row" spacing={0.5}>
-            <IconButton
-              size="small"
-              color="primary"
-              onClick={() => handleViewDetails(personal)}
-              sx={{ p: 0.5 }}
-            >
-              <VisibilityIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              color="error"
-              onClick={() => handleDeleteClick(personal)}
-              sx={{ p: 0.5 }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </Stack>
-        </Stack>
-      </CardContent>
-    </Card>
-  );
 
   return (
     <Stack spacing={isMobile ? 2 : 3}>
@@ -399,6 +358,7 @@ export function PersonalComponent({
             <Stack direction={isMobile ? "column" : "row"} spacing={2} mt={2}>
               <Button
                 variant="contained"
+                color="success"
                 onClick={handleAddFoundPersonal}
                 startIcon={<AddIcon />}
                 fullWidth={isMobile}
@@ -410,6 +370,10 @@ export function PersonalComponent({
                 onClick={() => setFoundPersonal(null)}
                 startIcon={<CloseIcon />}
                 fullWidth={isMobile}
+                sx={{
+                  backgroundColor: "error.main",
+                  color: "error.contrastText",
+                }}
               >
                 Cancelar
               </Button>
@@ -432,7 +396,7 @@ export function PersonalComponent({
                 Empleados Agregados ({personalList.length})
               </Typography>
               {personalList.map((personal) => (
-                <CompactPersonalCard key={personal.id} personal={personal} />
+                <CompactPersonalCard personal={personal} key={personal.id} />
               ))}
             </Box>
           ) : (
@@ -732,7 +696,13 @@ export function PersonalComponent({
         <Alert
           onClose={() => setSnackbarOpen(false)}
           severity={snackbarSeverity}
-          sx={{ width: "100%" }}
+          sx={{
+            // lift it above the content
+            zIndex: (theme) => theme.zIndex.snackbar + 1,
+            // give a tiny backdrop blur
+            backdropFilter: "blur(4px)",
+            width: "100%",
+          }}
         >
           {snackbarMessage}
         </Alert>

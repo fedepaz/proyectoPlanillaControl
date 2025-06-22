@@ -13,7 +13,7 @@ export type OficialOption = {
   legajo: number;
 };
 
-export type PersonalEmpresaOption = {
+export type BasePersonalOption = {
   id: string;
   dni: string;
   firstname: string;
@@ -25,17 +25,9 @@ export type PersonalEmpresaOption = {
   needsValidation?: boolean;
 };
 
-export type PersonalSeguridadOption = {
-  id: string;
-  dni: string;
-  firstname: string;
-  lastname: string;
-  empresaId: string;
-  legajo: string;
-  isUserCreated?: boolean;
-  createdAt?: string;
-  needsValidation?: boolean;
-};
+export type PersonalEmpresaOption = BasePersonalOption;
+
+export type PersonalSeguridadOption = BasePersonalOption;
 
 export type MatriculaOption = {
   id: string;
