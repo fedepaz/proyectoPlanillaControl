@@ -6,10 +6,15 @@ import { useFormContext } from "react-hook-form";
 import { PersonalEmpresaOption } from "../../../types/option";
 import { EmpresaComponent } from "./components/empresaComponent";
 import { useState } from "react";
+import { UserRole } from "../../../actions/types";
 
 const handlingId = import.meta.env.VITE_HANDLING_ID;
 
-export function DatosTerrestre() {
+interface DatosTerrestreProps {
+  userRole: UserRole;
+}
+
+export function DatosTerrestre({ userRole }: DatosTerrestreProps) {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
 
   const funcionQuery = useFuncion();
@@ -48,6 +53,7 @@ export function DatosTerrestre() {
           empresaId={empresaIdRef}
           maxPersonalList={10}
           minPersonalList={3}
+          userRole={userRole}
         />
       )}
     </Stack>

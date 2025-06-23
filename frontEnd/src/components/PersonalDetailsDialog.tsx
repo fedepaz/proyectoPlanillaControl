@@ -35,13 +35,7 @@ export function PersonalDetailsDialog({
   if (!personal) return null;
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="sm"
-      fullWidth
-      fullScreen={fullScreen}
-    >
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullScreen={fullScreen}>
       <DialogTitle sx={{ pb: 1 }}>
         <Stack
           direction="row"
@@ -82,52 +76,6 @@ export function PersonalDetailsDialog({
             </Typography>
             <Typography variant="body1">{personal.legajo}</Typography>
           </Box>
-          <Divider />
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">
-              ID de Empresa
-            </Typography>
-            <Typography variant="body1">{personal.empresaId}</Typography>
-          </Box>
-          {personal.isUserCreated && (
-            <>
-              <Divider />
-              <Box>
-                <Typography variant="subtitle2" color="warning.main">
-                  Estado
-                </Typography>
-                <Typography variant="body2" color="warning.main">
-                  Creado por usuario
-                </Typography>
-              </Box>
-            </>
-          )}
-          {personal.needsValidation && (
-            <>
-              <Divider />
-              <Box>
-                <Typography variant="subtitle2" color="error.main">
-                  Validación
-                </Typography>
-                <Typography variant="body2" color="error.main">
-                  Requiere validación
-                </Typography>
-              </Box>
-            </>
-          )}
-          {personal.createdAt && (
-            <>
-              <Divider />
-              <Box>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Fecha de Creación
-                </Typography>
-                <Typography variant="body2">
-                  {new Date(personal.createdAt).toLocaleDateString()}
-                </Typography>
-              </Box>
-            </>
-          )}
         </Stack>
       </DialogContent>
       <DialogActions sx={{ p: isMobile ? 2 : 3 }}>

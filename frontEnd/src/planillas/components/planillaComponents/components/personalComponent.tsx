@@ -23,7 +23,6 @@ import {
   Box,
   useTheme,
   useMediaQuery,
-  Divider,
 } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
@@ -47,12 +46,16 @@ import { useAppError } from "../../../../hooks/useAppError";
 import { RHFTextField } from "../../../../components/RHFTextField";
 import { AxiosError } from "axios";
 import { CompactPersonalCard } from "../../../../components/EmpleadoCard";
+import { PersonalDeleteDialog } from "../../../../components/PersonalDeleteDialog";
+import { PersonalDetailsDialog } from "../../../../components/PersonalDetailsDialog";
+import { UserRole } from "../../../../actions/types";
 
 interface PersonalComponentProps {
   onPersonalListChange: (personalList: PersonalEmpresaOption[]) => void;
   empresaId: string;
   maxPersonalList?: number;
   minPersonalList?: number;
+  userRole?: UserRole;
 }
 
 export function PersonalComponent({
@@ -417,6 +420,7 @@ export function PersonalComponent({
                   personal={personal}
                   key={personal.id}
                   onDelete={handleDelete}
+                  userRole={userRole}
                 />
               ))}
             </Box>
@@ -598,115 +602,18 @@ export function PersonalComponent({
       </Dialog>
 
       {/* Details Dialog */}
-      <Dialog
+      <PersonalDetailsDialog
         open={showDetailsDialog}
         onClose={() => setShowDetailsDialog(false)}
-        maxWidth="sm"
-        fullWidth
-        fullScreen={fullScreen}
-      >
-        <DialogTitle sx={{ pb: 1 }}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography variant={isMobile ? "h6" : "h5"}>
-              Detalles del Empleado
-            </Typography>
-            {fullScreen && (
-              <IconButton
-                onClick={() => setShowDetailsDialog(false)}
-                size="small"
-              >
-                <CloseIcon />
-              </IconButton>
-            )}
-          </Stack>
-        </DialogTitle>
-        <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
-          {selectedPersonal && (
-            <Stack spacing={2} sx={{ mt: 1 }}>
-              <Box>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Nombre Completo
-                </Typography>
-                <Typography variant="body1">
-                  {selectedPersonal.firstname} {selectedPersonal.lastname}
-                </Typography>
-              </Box>
-              <Divider />
-              <Box>
-                <Typography variant="subtitle2" color="text.secondary">
-                  DNI
-                </Typography>
-                <Typography variant="body1">{selectedPersonal.dni}</Typography>
-              </Box>
-              <Divider />
-              <Box>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Legajo
-                </Typography>
-                <Typography variant="body1">
-                  {selectedPersonal.legajo}
-                </Typography>
-              </Box>
-            </Stack>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
-          <Button
-            onClick={() => setShowDetailsDialog(false)}
-            variant="contained"
-            fullWidth={isMobile}
-          >
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+        personal={selectedPersonal}
+      />
       {/* Delete Confirmation Dialog */}
-      <Dialog
+      <PersonalDeleteDialog
         open={showDeleteDialog}
         onClose={() => setShowDeleteDialog(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          <Stack direction="row" alignItems="center" gap={1}>
-            <DeleteIcon color="error" />
-            <Typography variant="h6">Confirmar Eliminación</Typography>
-          </Stack>
-        </DialogTitle>
-        <DialogContent>
-          {selectedPersonal && (
-            <Typography>
-              ¿Está seguro que desea eliminar a{" "}
-              <strong>
-                {selectedPersonal.firstname} {selectedPersonal.lastname}
-              </strong>{" "}
-              (DNI: {selectedPersonal.dni}) de la lista?
-            </Typography>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ p: 3, gap: 1 }}>
-          <Button
-            onClick={() => setShowDeleteDialog(false)}
-            variant="outlined"
-            fullWidth={isMobile}
-          >
-            Cancelar
-          </Button>
-          <Button
-            onClick={handleConfirmDelete}
-            variant="contained"
-            color="error"
-            fullWidth={isMobile}
-          >
-            Eliminar
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirm={handleConfirmDelete}
+        personal={selectedPersonal}
+      />
 
       <Snackbar
         open={snackbarOpen}

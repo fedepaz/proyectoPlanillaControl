@@ -8,7 +8,11 @@ import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
-import { UserRole } from "./actions/types";
+import {
+  getEffectiveRoles,
+  UserRole,
+  validateAndCreateUser,
+} from "./actions/types";
 
 const csrfTokenRoute = "/csrf-token";
 interface LoginResponse {
@@ -31,14 +35,6 @@ interface LoginResponse {
     };
     role: string;
   };
-}
-
-function ensureUserRole(role: string): UserRole {
-  if (Object.values(UserRole).includes(role as UserRole)) {
-    return role as UserRole;
-  }
-
-  return UserRole.AUXILIAR;
 }
 
 function AppContent() {
@@ -81,9 +77,14 @@ function AppContent() {
       setIsLoggedIn(true);
       setUserInfo(data);
       setCurrentView(View.DASHBOARD);
-      if (data.user.role) {
-        setUserRole(ensureUserRole(data.user.role));
-      }
+      const validatedUser = validateAndCreateUser(
+        data.user.role,
+        data.user.oficialId.jerarquiaId.jerarquia
+      );
+      console.log("validatedUser", validatedUser);
+      const permissions = getEffectiveRoles(validatedUser);
+      console.log("permissions", permissions);
+      setUserRole(validatedUser.role);
     }
   }, [data, error, isLoading]);
 

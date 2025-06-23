@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import type { BasePersonalOption } from "../types/personal";
+import type { BasePersonalOption } from "../types/option";
 
 interface PersonalDeleteDialogProps {
   open: boolean;

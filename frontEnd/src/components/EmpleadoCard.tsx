@@ -5,6 +5,7 @@ import {
   Box,
   Typography,
   IconButton,
+  Chip,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,20 +13,27 @@ import { memo, useState } from "react";
 import type { BasePersonalOption } from "../types/option";
 import { PersonalDetailsDialog } from "./PersonalDetailsDialog.tsx";
 import { PersonalDeleteDialog } from "./PersonalDeleteDialog.tsx";
+import { hasPermission, RolePermissions, UserRole } from "../actions/types.ts";
+import { PersonalStatusChips } from "./PersonalStatusChips.tsx";
 
 interface CompactPersonalCardProps {
   personal: BasePersonalOption;
   onDelete?: (personal: BasePersonalOption) => void;
   showActions?: boolean;
+  userRole?: UserRole;
 }
 
 export const CompactPersonalCard = memo(function CompactPersonalCard({
   personal,
   onDelete,
   showActions = true,
+  userRole = UserRole.AUXILIAR,
 }: CompactPersonalCardProps) {
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const canDelete = hasPermission(userRole, RolePermissions.ALL);
+  const canViewDetails = hasPermission(userRole, RolePermissions.ALL);
 
   const handleViewDetails = () => {
     setShowDetailsDialog(true);
@@ -62,26 +70,35 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
                 DNI: {personal.dni}
               </Typography>
             </Box>
+            <PersonalStatusChips
+              personal={personal}
+              userRole={userRole}
+              direction="column"
+            />
 
             {/* Action buttons - compact */}
             {showActions && (
               <Stack direction="row" spacing={0.5}>
-                <IconButton
-                  size="small"
-                  color="primary"
-                  onClick={handleViewDetails}
-                  sx={{ p: 0.5 }}
-                >
-                  <VisibilityIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  color="error"
-                  onClick={handleDeleteClick}
-                  sx={{ p: 0.5 }}
-                >
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
+                {canViewDetails && (
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={handleViewDetails}
+                    sx={{ p: 0.5 }}
+                  >
+                    <VisibilityIcon fontSize="small" />
+                  </IconButton>
+                )}
+                {canDelete && (
+                  <IconButton
+                    size="small"
+                    color="error"
+                    onClick={handleDeleteClick}
+                    sx={{ p: 0.5 }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                )}
               </Stack>
             )}
           </Stack>

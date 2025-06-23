@@ -11,6 +11,7 @@ import { useSession } from "../../services/session";
 import { CssBaseline, Box, Snackbar, Alert } from "@mui/material";
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
+import { User, UserRole, validateAndCreateUser } from "../../actions/types";
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
@@ -19,6 +20,8 @@ interface PlanillasProviderProps {
 export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [USER, setUser] = useState<User | null>(null);
+  const [ROLE, setRole] = useState<UserRole>(UserRole.AUXILIAR);
 
   const methods = useForm<PlanillaSchema>({
     mode: "onChange",
@@ -31,6 +34,13 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
 
   useEffect(() => {
     if (data && !error) {
+      const validatedUser = validateAndCreateUser(
+        data.user.role,
+        data.user.oficialId.jerarquiaId.jerarquia
+      );
+      setUser(validatedUser);
+      setRole(validatedUser.role);
+
       setValue("datosPsa.responsable", data?.user.oficialId.id);
     }
   }, [data, setValue, error]);
@@ -111,6 +121,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
           onBack={sendBack}
           onNext={handleNext}
           onPrevious={handleBack}
+          userRole={ROLE}
         />
         <Snackbar
           open={!!errorMessage}
