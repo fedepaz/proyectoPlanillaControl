@@ -1,22 +1,30 @@
 import { Stack, Divider, Typography } from "@mui/material";
-import { useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../../types/planillaSchema";
-import { SeguridadComponent } from "./components/seguridadComponent";
+import { useFormContext } from "react-hook-form";
+import { PersonalSeguridadComponent } from "./components/seguridadComponent";
+import { EmpresaComponent } from "./components/empresaComponent";
+import { useState } from "react";
+import { PersonalSeguridadOption } from "../../../types/option";
+
+const seguridadId = import.meta.env.VITE_SEGURIDAD_ID;
 
 export function DatosSeguridad() {
+  const [empresaIdRef, setEmpresaIdRef] = useState("");
   const { setValue } = useFormContext<PlanillaSchema>();
-  const handlePersonalSelected = (
-    lastname: string,
-    firstname: string,
-    dni: number,
-    legajo: number,
-    empresa: string
+
+  const handleEmpresaSelected = (empresaId: string) => {
+    setEmpresaIdRef(empresaId);
+  };
+
+  const handlePersonalListChange = (
+    personalList: PersonalSeguridadOption[]
   ) => {
-    setValue("datosSeguridad.0.apellidoSeguridad", lastname),
-      setValue("datosSeguridad.0.nombreSeguridad", firstname),
-      setValue("datosSeguridad.0.dniSeguridad", dni),
-      setValue("datosSeguridad.0.legajoSeguridad", legajo);
-    setValue("datosSeguridad.0.empresaSeguridad", empresa);
+    const datosPersonalSeguridad = personalList.map((personal) => ({
+      personalSegEmpresa: [personal.id],
+      empresaSeguridad: personal.empresaId,
+    }));
+
+    setValue("datosSeguridad", datosPersonalSeguridad);
   };
 
   return (
@@ -28,7 +36,19 @@ export function DatosSeguridad() {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Seguridad
       </Typography>
-      <SeguridadComponent onPersonalSelected={handlePersonalSelected} />
+      <EmpresaComponent
+        onEmpresaSelected={handleEmpresaSelected}
+        tipoFijoID={seguridadId}
+        label="Empresa"
+      />
+      {empresaIdRef !== "" && (
+        <PersonalSeguridadComponent
+          onPersonalListChange={handlePersonalListChange}
+          empresaId={empresaIdRef}
+          maxPersonalList={10}
+          minPersonalList={3}
+        />
+      )}
     </Stack>
   );
 }

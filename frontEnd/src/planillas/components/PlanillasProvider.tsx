@@ -12,6 +12,7 @@ import { CssBaseline, Box, Snackbar, Alert } from "@mui/material";
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
 import { User, UserRole, validateAndCreateUser } from "../../actions/types";
+import { useAuth } from "../../hooks/useAuth";
 
 interface PlanillasProviderProps {
   onBack: (data: boolean) => void;
@@ -20,8 +21,6 @@ interface PlanillasProviderProps {
 export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [USER, setUser] = useState<User | null>(null);
-  const [ROLE, setRole] = useState<UserRole>(UserRole.AUXILIAR);
 
   const methods = useForm<PlanillaSchema>({
     mode: "onChange",
@@ -30,20 +29,13 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   });
   const { setValue, handleSubmit } = methods;
 
-  const { data, error, isError, isLoading, refetch } = useSession();
+  const { user, userInfo, error, isError, isLoading, refetch } = useAuth();
 
   useEffect(() => {
-    if (data && !error) {
-      const validatedUser = validateAndCreateUser(
-        data.user.role,
-        data.user.oficialId.jerarquiaId.jerarquia
-      );
-      setUser(validatedUser);
-      setRole(validatedUser.role);
-
-      setValue("datosPsa.responsable", data?.user.oficialId.id);
+    if (userInfo.authenticated && userInfo.user.oficialId.id) {
+      setValue("datosPsa.responsable", userInfo.user.oficialId.id);
     }
-  }, [data, setValue, error]);
+  }, [userInfo, setValue]);
 
   const onSubmit = async (data: PlanillaSchema) => {
     console.log("Form submitted with data:", data);
@@ -121,7 +113,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
           onBack={sendBack}
           onNext={handleNext}
           onPrevious={handleBack}
-          userRole={ROLE}
+          user={user}
         />
         <Snackbar
           open={!!errorMessage}

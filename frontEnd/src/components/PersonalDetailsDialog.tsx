@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import type { BasePersonalOption } from "../types/option";
+import { PersonalStatusChips } from "./PersonalStatusChips";
 
 interface PersonalDetailsDialogProps {
   open: boolean;
@@ -75,6 +76,10 @@ export function PersonalDetailsDialog({
               Legajo
             </Typography>
             <Typography variant="body1">{personal.legajo}</Typography>
+          </Box>
+
+          <Box>
+            <PersonalStatusChips personal={personal} direction="row" />
           </Box>
         </Stack>
       </DialogContent>

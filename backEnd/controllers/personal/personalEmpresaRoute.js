@@ -1,5 +1,9 @@
 import express from "express";
-import { PersonalEmpresa, Empresa } from "../../models/personalModel.js";
+import {
+  PersonalEmpresa,
+  Empresa,
+  PersonalSeguridadEmpresa,
+} from "../../models/personalModel.js";
 
 const personalEmpresaRouter = express.Router();
 
@@ -154,6 +158,22 @@ personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
       error.status = 404;
       error.name = "EmpresaNotFound";
       throw error;
+    }
+    const personalSeguridadEncontrado = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalSeguridadEncontrado !== null) {
+      const personalInEmpresa =
+        personalSeguridadEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalSeguridadEncontrado.empresa.empresa} con el nombre de ${personalSeguridadEncontrado.firstname} ${personalSeguridadEncontrado.lastname}`;
+        throw error;
+      }
     }
 
     const personalEncontrado = await PersonalEmpresa.findOne({

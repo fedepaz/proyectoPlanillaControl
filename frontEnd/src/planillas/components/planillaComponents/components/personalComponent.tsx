@@ -1,11 +1,4 @@
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   TextField,
   Button,
   Card,
@@ -26,10 +19,8 @@ import {
 } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +31,7 @@ import {
   personalEmpresaSchema,
   PersonalEmpresaSchemaInput,
 } from "../../../types/apiSchema";
-import { PersonalEmpresaOption } from "../../../../types/option";
+import { BasePersonalOption } from "../../../../types/option";
 import { useCreatePersonalEmpresa } from "../../../services/mutations";
 import { useAppError } from "../../../../hooks/useAppError";
 import { RHFTextField } from "../../../../components/RHFTextField";
@@ -48,14 +39,13 @@ import { AxiosError } from "axios";
 import { CompactPersonalCard } from "../../../../components/EmpleadoCard";
 import { PersonalDeleteDialog } from "../../../../components/PersonalDeleteDialog";
 import { PersonalDetailsDialog } from "../../../../components/PersonalDetailsDialog";
-import { UserRole } from "../../../../actions/types";
+import { PersonalTableDetails } from "../../../../components/PersonalTableDetails";
 
 interface PersonalComponentProps {
-  onPersonalListChange: (personalList: PersonalEmpresaOption[]) => void;
+  onPersonalListChange: (personalList: BasePersonalOption[]) => void;
   empresaId: string;
   maxPersonalList?: number;
   minPersonalList?: number;
-  userRole?: UserRole;
 }
 
 export function PersonalComponent({
@@ -63,18 +53,18 @@ export function PersonalComponent({
   empresaId,
   maxPersonalList = 10,
   minPersonalList = 3,
-  userRole = UserRole.AUXILIAR,
 }: PersonalComponentProps) {
-  const [personalList, setPersonalList] = useState<PersonalEmpresaOption[]>([]);
+  const [personalList, setPersonalList] = useState<BasePersonalOption[]>([]);
   const [searchDni, setSearchDni] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [foundPersonal, setFoundPersonal] =
-    useState<PersonalEmpresaOption | null>(null);
+  const [foundPersonal, setFoundPersonal] = useState<BasePersonalOption | null>(
+    null
+  );
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedPersonal, setSelectedPersonal] =
-    useState<PersonalEmpresaOption | null>(null);
+    useState<BasePersonalOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -140,6 +130,8 @@ export function PersonalComponent({
           lastname: personal.lastname,
           empresaId: personal.empresaId,
           legajo: personal.legajo,
+          needsValidation: personal.needsValidation,
+          isUserCreated: personal.isUserCreated,
         });
       } else {
         setFoundPersonal(null);
@@ -206,13 +198,15 @@ export function PersonalComponent({
     };
     createPersonalMutation.mutate(transformedData, {
       onSuccess: (newPersonal) => {
-        const personalData: PersonalEmpresaOption = {
+        const personalData: BasePersonalOption = {
           id: newPersonal.id,
           dni: newPersonal.dni,
           firstname: newPersonal.firstname,
           lastname: newPersonal.lastname,
           empresaId: newPersonal.empresa,
           legajo: newPersonal.legajo,
+          needsValidation: newPersonal.needsValidation,
+          isUserCreated: newPersonal.isUserCreated,
         };
         const newList = [...personalList, personalData];
         setPersonalList(newList);
@@ -240,16 +234,6 @@ export function PersonalComponent({
     });
   };
 
-  const handleViewDetails = (personal: PersonalEmpresaOption) => {
-    setSelectedPersonal(personal);
-    setShowDetailsDialog(true);
-  };
-
-  const handleDeleteClick = (personal: PersonalEmpresaOption) => {
-    setSelectedPersonal(personal);
-    setShowDeleteDialog(true);
-  };
-
   const handleConfirmDelete = () => {
     if (selectedPersonal) {
       const newList = personalList.filter((p) => p.id !== selectedPersonal.id);
@@ -264,7 +248,7 @@ export function PersonalComponent({
     }
   };
 
-  const handleDelete = (personal: PersonalEmpresaOption) => {
+  const handleDelete = (personal: BasePersonalOption) => {
     if (personal) {
       const newList = personalList.filter((p) => p.id !== personal.id);
       setPersonalList(newList);
@@ -421,69 +405,14 @@ export function PersonalComponent({
                   personal={personal}
                   key={personal.id}
                   onDelete={handleDelete}
-                  userRole={userRole}
                 />
               ))}
             </Box>
           ) : (
-            // Desktop: Table Layout
-            <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
-              <Table size="medium">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <strong>Nombre</strong>
-                    </TableCell>
-                    <TableCell>
-                      <strong>Apellido</strong>
-                    </TableCell>
-                    <TableCell>
-                      <strong>DNI</strong>
-                    </TableCell>
-                    <TableCell>
-                      <strong>Legajo</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>Acciones</strong>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {personalList.map((personal) => (
-                    <TableRow key={personal.id} hover>
-                      <TableCell>{personal.firstname}</TableCell>
-                      <TableCell>{personal.lastname}</TableCell>
-                      <TableCell>{personal.dni}</TableCell>
-                      <TableCell>{personal.legajo}</TableCell>
-                      <TableCell align="center">
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          justifyContent="center"
-                        >
-                          <IconButton
-                            color="primary"
-                            onClick={() => handleViewDetails(personal)}
-                            size="small"
-                            title="Ver detalles"
-                          >
-                            <VisibilityIcon />
-                          </IconButton>
-                          <IconButton
-                            color="error"
-                            onClick={() => handleDeleteClick(personal)}
-                            size="small"
-                            title="Eliminar"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <PersonalTableDetails
+              personalList={personalList}
+              onDelete={handleDelete}
+            />
           )}
         </>
       )}

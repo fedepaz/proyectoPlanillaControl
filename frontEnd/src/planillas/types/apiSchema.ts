@@ -102,8 +102,11 @@ const personalSeguridadSchema = z.object({
 export { personalSeguridadSchema };
 
 export type PersonalSeguridadSchema = z.infer<typeof personalSeguridadSchema>;
+export type PersonalSeguridadSchemaInput = z.input<
+  typeof personalSeguridadSchema
+>;
 
-export const defaultValuesPersonalSeguridad: Partial<PersonalSeguridadSchema> =
+export const defaultValuesPersonalSeguridad: Partial<PersonalEmpresaSchemaInput> =
   {
     firstname: "",
     lastname: "",

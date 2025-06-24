@@ -9,31 +9,37 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import type { BasePersonalOption } from "../types/option";
 import { PersonalDetailsDialog } from "./PersonalDetailsDialog.tsx";
 import { PersonalDeleteDialog } from "./PersonalDeleteDialog.tsx";
-import { hasPermission, RolePermissions, UserRole } from "../actions/types.ts";
+import { hasPermission, RolePermissions } from "../actions/types.ts";
 import { PersonalStatusChips } from "./PersonalStatusChips.tsx";
+import { useAuth } from "../hooks/useAuth.ts";
 
 interface CompactPersonalCardProps {
   personal: BasePersonalOption;
   onDelete?: (personal: BasePersonalOption) => void;
   showActions?: boolean;
-  userRole?: UserRole;
 }
 
 export const CompactPersonalCard = memo(function CompactPersonalCard({
   personal,
   onDelete,
   showActions = true,
-  userRole = UserRole.AUXILIAR,
 }: CompactPersonalCardProps) {
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
+  const [canViewDetails, setCanViewDetails] = useState(false);
+  const { user } = useAuth();
 
-  const canDelete = hasPermission(userRole, RolePermissions.ALL);
-  const canViewDetails = hasPermission(userRole, RolePermissions.ALL);
+  useEffect(() => {
+    if (user) {
+      setCanDelete(hasPermission(user, RolePermissions.ALL));
+      setCanViewDetails(hasPermission(user, RolePermissions.ALL));
+    }
+  }, [user, setCanDelete, setCanViewDetails]);
 
   const handleViewDetails = () => {
     setShowDetailsDialog(true);
@@ -69,12 +75,8 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
               <Typography variant="caption" color="text.secondary" noWrap>
                 DNI: {personal.dni}
               </Typography>
+              <PersonalStatusChips personal={personal} direction="row" />
             </Box>
-            <PersonalStatusChips
-              personal={personal}
-              userRole={userRole}
-              direction="column"
-            />
 
             {/* Action buttons - compact */}
             {showActions && (

@@ -21,7 +21,7 @@ import { DatosPsa } from "./planillaComponents/datosPsa";
 import { useStepValidation } from "../hooks/useStepValidation";
 import { ErrorProvider } from "../../provider/ErrorProvider";
 import { StepErrorWrapper } from "./planillaComponents/components/stepErrorWrapperComponent";
-import { UserRole } from "../../actions/types";
+import { User } from "../../actions/types";
 
 interface PlanillaProps {
   activeStep: number;
@@ -30,7 +30,7 @@ interface PlanillaProps {
   onBack: (data: boolean) => void;
   onNext: () => void;
   onPrevious: () => void;
-  userRole: UserRole;
+  user: User | null;
 }
 
 export function Planillas({
@@ -40,7 +40,7 @@ export function Planillas({
   onBack,
   onNext,
   onPrevious,
-  userRole,
+  user,
 }: PlanillaProps) {
   //const { setValue } = useFormContext<PlanillaSchema>();
 
@@ -71,7 +71,7 @@ export function Planillas({
         case 1:
           return <DatosVuelo />;
         case 2:
-          return <DatosTerrestre userRole={userRole} />;
+          return <DatosTerrestre userRole={user.role} />;
         case 3:
           return <DatosSeguridad />;
         case 4: // vehiculos

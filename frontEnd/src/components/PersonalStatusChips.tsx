@@ -1,26 +1,39 @@
 import { Stack, Chip } from "@mui/material";
 import { BasePersonalOption } from "../types/option";
-import { UserRole } from "../actions/types";
 import { hasPermission, RolePermissions } from "../actions/types";
+import { useAuth } from "../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 interface PersonalStatusChipsProps {
   personal: BasePersonalOption;
-  userRole?: UserRole;
   direction?: "row" | "column";
   size?: "small" | "medium";
 }
 
 export function PersonalStatusChips({
   personal,
-  userRole = UserRole.AUXILIAR,
   direction = "row",
   size = "small",
 }: PersonalStatusChipsProps) {
-  const canViewUserCreated = hasPermission(userRole, RolePermissions.ALL);
-
-  const canViewValidationStatus = hasPermission(userRole, RolePermissions.ALL);
-
-  const showActiveStatus = !personal.isUserCreated && !personal.needsValidation;
+  const { user } = useAuth();
+  const [canViewUserCreated, setCanViewUserCreated] = useState(false);
+  const [canViewValidationStatus, setCanViewValidationStatus] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  useEffect(() => {
+    if (user) {
+      setCanViewUserCreated(hasPermission(user, RolePermissions.ALL));
+      setCanViewValidationStatus(hasPermission(user, RolePermissions.ALL));
+      if (hasPermission(user, RolePermissions.ALL)) {
+        setIsValid(!personal.isUserCreated && !personal.needsValidation);
+      }
+    }
+  }, [
+    user,
+    setCanViewUserCreated,
+    setCanViewValidationStatus,
+    setIsValid,
+    personal,
+  ]);
 
   return (
     <Stack direction={direction} spacing={0.5} flexWrap="wrap">
@@ -30,8 +43,8 @@ export function PersonalStatusChips({
       {canViewValidationStatus && personal.needsValidation && (
         <Chip label="Validacion" size={size} color="error" variant="outlined" />
       )}
-      {showActiveStatus && (
-        <Chip label="Activo" size={size} color="success" variant="outlined" />
+      {isValid && (
+        <Chip label="Validado" size={size} color="success" variant="outlined" />
       )}
     </Stack>
   );

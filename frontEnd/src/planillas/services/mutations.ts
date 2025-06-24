@@ -93,3 +93,19 @@ export function useCreatePersonalEmpresa() {
     },
   });
 }
+
+export function useCreatePersonalSeguridad() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: PersonalEmpresaSchema) => {
+      const response = await apiClient.post(`/personalSeguridad`, data);
+      return response.data;
+    },
+    retry: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["personalSeguridad"],
+      });
+    },
+  });
+}

@@ -9,78 +9,37 @@ import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
 import { User, validateAndCreateUser } from "./actions/types";
+import { useAuth } from "./hooks/useAuth";
+import { AuthProvider } from "./provider/AuthContextProvider";
 
 const csrfTokenRoute = "/csrf-token";
-interface LoginResponse {
-  authenticated: boolean;
-  user: {
-    dni: string;
-    oficialId: {
-      dni: string;
-      firstname: string;
-      lastname: string;
-      legajo: string;
-      currentAirportId: {
-        aeropuerto: string;
-        codIATA: string;
-        codOACI: string;
-      };
-      jerarquiaId: {
-        jerarquia: string;
-      };
-    };
-    role: string;
-  };
-}
 
 function AppContent() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentView, setCurrentView] = useState<View>(View.LOGIN);
-  const [user, setUser] = useState<User | null>(null);
-  const [userInfo, setUserInfo] = useState<LoginResponse>({
-    authenticated: false,
-    user: {
-      dni: "",
-      oficialId: {
-        dni: "",
-        firstname: "",
-        lastname: "",
-        legajo: "",
-        currentAirportId: {
-          aeropuerto: "",
-          codIATA: "",
-          codOACI: "",
-        },
-        jerarquiaId: {
-          jerarquia: "",
-        },
-      },
-      role: "",
-    },
-  });
+
+  const {
+    user,
+    userInfo,
+    isLoggedIn,
+    isLoading,
+    error,
+    isError,
+    currentView,
+    setUser,
+    setCurrentView,
+    setIsLoggedIn,
+    refetch,
+    handleLogin,
+    handleLogout,
+    handleNavigate,
+    handleBack,
+  } = useAuth();
 
   const theme = isDarkMode ? darkTheme : lightTheme;
   const toggleColorMode = useCallback(() => {
     setIsDarkMode((prevMode) => !prevMode);
   }, []);
-
-  const { data, error, isError, isLoading, refetch } = useSession();
-
-  useEffect(() => {
-    if (!isLoading && data?.authenticated && !error) {
-      setIsLoggedIn(true);
-      setUserInfo(data);
-      setCurrentView(View.DASHBOARD);
-      const validatedUser = validateAndCreateUser(
-        data.user.role,
-        data.user.oficialId.jerarquiaId.jerarquia
-      );
-
-      setUser(validatedUser);
-    }
-  }, [data, error, isLoading]);
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -104,50 +63,28 @@ function AppContent() {
     }
   }, [isLoggedIn]);
 
-  const handleLogin = useCallback((loginData: LoginResponse) => {
-    setIsLoggedIn(loginData.authenticated);
-    if (loginData.authenticated) {
-      if (loginData.user.role) {
-        const validatedUser = validateAndCreateUser(
-          loginData.user.role,
-          loginData.user.oficialId.jerarquiaId.jerarquia
-        );
-        setUser(validatedUser);
-      }
-      setCurrentView(View.DASHBOARD);
-    } else {
-      setCurrentView(View.LOGIN);
-    }
-  }, []);
   const handleRegister = useCallback(() => {
-    setCurrentView(View.REGISTER);
-  }, []);
+    handleNavigate(View.REGISTER);
+  }, [handleNavigate]);
+
   const handleReset = useCallback(() => {
-    setCurrentView(View.RESET_PASSWORD);
-  }, []);
-  const handleLogout = useCallback(() => {
-    setCurrentView(View.LOGOUT);
-  }, []);
+    handleNavigate(View.RESET_PASSWORD);
+  }, [handleNavigate]);
+
   const handleGeneratePlanillas = useCallback(() => {
-    setCurrentView(View.GENERATE_PLANILLAS);
-  }, []);
-
-  const handleBack = useCallback(() => {
-    setCurrentView(isLoggedIn ? View.DASHBOARD : View.LOGIN);
-  }, [isLoggedIn]);
-
-  const handleNavigate = useCallback((view: View) => {
-    setCurrentView(view);
-  }, []);
+    handleNavigate(View.GENERATE_PLANILLAS);
+  }, [handleNavigate]);
 
   const viewProps = {
     onLogin: handleLogin,
-    onRegister: () => handleRegister(),
-    onResetPassword: () => handleReset(),
-    onGeneratePlanillas: () => handleGeneratePlanillas(),
-    onBackHome: () => handleBack(),
+    onRegister: handleRegister,
+    onResetPassword: handleReset,
+    onGeneratePlanillas: handleGeneratePlanillas,
+    onBackHome: handleBack,
     onNavigate: handleNavigate,
     user,
+    userInfo,
+    isLoggedIn,
   };
 
   const CurrentViewComponent = viewComponents[currentView];
@@ -237,5 +174,9 @@ function AppContent() {
 }
 
 export function App() {
-  return <AppContent />;
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
 }

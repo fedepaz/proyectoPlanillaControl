@@ -7,6 +7,7 @@ import {
   MatriculaOption,
   Option,
   PersonalEmpresaOption,
+  PersonalSeguridadOption,
   PlanillaOption,
   UnidadOption,
 } from "../../types/option";
@@ -312,13 +313,13 @@ export function usePersonalEmpresa(dni: number) {
   });
 }
 
-type BuscarPersonalEmpresaParams = {
+type BuscarPersonalParams = {
   dni: string;
   empresa: string;
 };
 
 export function usePersonalEmpresaBusqueda(
-  params: BuscarPersonalEmpresaParams | null
+  params: BuscarPersonalParams | null
 ) {
   return useQuery({
     queryKey: ["personalEmpresa", params],
@@ -356,6 +357,24 @@ export function usePersonalEmpresaSeg(dni: number) {
       };
     },
     enabled: !!dni,
+  });
+}
+export function usePersonalSeguridadBusqueda(
+  params: BuscarPersonalParams | null
+) {
+  return useQuery({
+    queryKey: ["personalSeguridad", params],
+    queryFn: async () => {
+      if (!params) return null;
+      const response = await apiClient.post<PersonalSeguridadOption | null>(
+        `${API_URL}/personalSeguridad/busqueda`,
+        params
+      );
+      const personalSeguridad = response.data;
+      return personalSeguridad;
+    },
+    enabled: !!params,
+    retry: false,
   });
 }
 

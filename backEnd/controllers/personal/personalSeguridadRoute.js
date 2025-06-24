@@ -2,6 +2,7 @@ import express from "express";
 import {
   PersonalSeguridadEmpresa,
   Empresa,
+  PersonalEmpresa,
 } from "../../models/personalModel.js";
 
 const personalSeguridadRouter = express.Router();
@@ -102,8 +103,21 @@ personalSeguridadRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    const existingPersonal = await PersonalSeguridadEmpresa.findOne({
+      legajo,
+      empresa,
+    }).populate("empresa");
+
+    if (existingPersonal) {
+      const error = new Error();
+      error.status = 409;
+      error.name = "PersonalRegistrado";
+      error.message = `El Legajo ${legajo} ya esta registrado en la empresa ${existingPersonal.empresa.empresa} con el nombre de ${existingPersonal.firstname} ${existingPersonal.lastname}`;
+      throw error;
+    }
+
     const newPersonal = new PersonalSeguridadEmpresa({
-      dni: dni.trim(),
+      dni,
       firstname: firstname.trim().toUpperCase(),
       lastname: lastname.trim().toUpperCase(),
       empresa,
@@ -116,8 +130,72 @@ personalSeguridadRouter.post("/", async (req, res, next) => {
     const populatedPersonal = await PersonalSeguridadEmpresa.findById(
       savedPersonal.id
     ).populate("empresa");
-
     return res.status(201).json(populatedPersonal);
+  } catch (err) {
+    next(err);
+  }
+});
+
+personalSeguridadRouter.post("/busqueda", async (req, res, next) => {
+  const { body } = req;
+  try {
+    const { dni, empresa } = body;
+
+    const requiredFields = ["dni", "empresa"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaExists = await Empresa.findById(empresa);
+    if (empresaExists === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+
+    const personalEmpresaEncontrado = await PersonalEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalEmpresaEncontrado !== null) {
+      const personalInEmpresa =
+        personalEmpresaEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalEmpresaEncontrado.empresa.empresa} con el nombre de ${personalEmpresaEncontrado.firstname} ${personalEmpresaEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
+    const personalEncontrado = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalEncontrado !== null) {
+      const personalInEmpresa = personalEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalEncontrado.empresa.empresa} con el nombre de ${personalEncontrado.firstname} ${personalEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
+    return res.status(200).json(personalEncontrado);
   } catch (err) {
     next(err);
   }

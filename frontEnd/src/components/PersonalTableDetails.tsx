@@ -8,14 +8,16 @@ import {
   TableBody,
   Stack,
   IconButton,
-  Chip,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { BasePersonalOption } from "../types/option";
 import { PersonalDeleteDialog } from "./PersonalDeleteDialog";
 import { PersonalDetailsDialog } from "./PersonalDetailsDialog";
+import { PersonalStatusChips } from "./PersonalStatusChips";
+import { useAuth } from "../hooks/useAuth";
+import { hasPermission, RolePermissions } from "../actions/types";
 
 interface PersonalTableDetailsProps {
   personalList: BasePersonalOption[];
@@ -32,6 +34,16 @@ export const PersonalTableDetails = memo(function PersonalTableDetails({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedPersonal, setSelectedPersonal] =
     useState<BasePersonalOption | null>(null);
+  const [canDelete, setCanDelete] = useState(false);
+  const [canViewDetails, setCanViewDetails] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      setCanDelete(hasPermission(user, RolePermissions.ALL));
+      setCanViewDetails(hasPermission(user, RolePermissions.ALL));
+    }
+  }, [user, setCanDelete, setCanViewDetails]);
 
   const handleViewDetails = (personal: BasePersonalOption) => {
     setSelectedPersonal(personal);
@@ -82,6 +94,9 @@ export const PersonalTableDetails = memo(function PersonalTableDetails({
               <TableCell align="center">
                 <strong>Acciones</strong>
               </TableCell>
+              <TableCell align="center">
+                <strong>Estado</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,57 +106,42 @@ export const PersonalTableDetails = memo(function PersonalTableDetails({
                 <TableCell>{personal.lastname}</TableCell>
                 <TableCell>{personal.dni}</TableCell>
                 <TableCell>{personal.legajo}</TableCell>
-                <TableCell>
-                  <Stack direction="row" spacing={0.5} flexWrap="wrap">
-                    {personal.isUserCreated && (
-                      <Chip
-                        label="Usuario"
-                        size="small"
-                        color="warning"
-                        variant="outlined"
-                      />
-                    )}
-                    {personal.needsValidation && (
-                      <Chip
-                        label="Validacion"
-                        size="small"
-                        color="error"
-                        variant="outlined"
-                      />
-                    )}
-                    {personal.isUserCreated && personal.needsValidation && (
-                      <Chip
-                        label="Activo"
-                        size="small"
-                        color="success"
-                        variant="outlined"
-                      />
-                    )}
-                  </Stack>
-                </TableCell>
                 {showActions && (
                   <TableCell align="center">
                     {/* Action buttons - compact */}
                     <Stack direction="row" spacing={1} justifyContent="center">
-                      <IconButton
-                        color="primary"
-                        onClick={() => handleViewDetails(personal)}
-                        size="small"
-                        title="Ver detalles"
-                      >
-                        <VisibilityIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => handleDeleteClick(personal)}
-                        size="small"
-                        title="Eliminar"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      {canViewDetails && (
+                        <IconButton
+                          color="primary"
+                          onClick={() => handleViewDetails(personal)}
+                          size="small"
+                          title="Ver detalles"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      )}
+                      {canDelete && (
+                        <IconButton
+                          color="error"
+                          onClick={() => handleDeleteClick(personal)}
+                          size="small"
+                          title="Eliminar"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
                     </Stack>
                   </TableCell>
                 )}
+
+                <TableCell align="center">
+                  <Stack direction="row" spacing={0.5} justifyContent="center">
+                    <PersonalStatusChips
+                      personal={personal}
+                      direction="column"
+                    />
+                  </Stack>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

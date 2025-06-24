@@ -6,19 +6,13 @@ import { useFormContext } from "react-hook-form";
 import { PersonalEmpresaOption } from "../../../types/option";
 import { EmpresaComponent } from "./components/empresaComponent";
 import { useState } from "react";
-import { UserRole } from "../../../actions/types";
 
 const handlingId = import.meta.env.VITE_HANDLING_ID;
 
-interface DatosTerrestreProps {
-  userRole: UserRole;
-}
-
-export function DatosTerrestre({ userRole }: DatosTerrestreProps) {
+export function DatosTerrestre() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
 
   const funcionQuery = useFuncion();
-  console.log("funcionQuery", funcionQuery.data);
   const { setValue, watch } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {
@@ -54,7 +48,6 @@ export function DatosTerrestre({ userRole }: DatosTerrestreProps) {
           empresaId={empresaIdRef}
           maxPersonalList={10}
           minPersonalList={3}
-          userRole={userRole}
         />
       )}
     </Stack>
