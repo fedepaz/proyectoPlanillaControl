@@ -8,11 +8,7 @@ import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
-import {
-  getEffectiveRoles,
-  UserRole,
-  validateAndCreateUser,
-} from "./actions/types";
+import { User, validateAndCreateUser } from "./actions/types";
 
 const csrfTokenRoute = "/csrf-token";
 interface LoginResponse {
@@ -42,7 +38,7 @@ function AppContent() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentView, setCurrentView] = useState<View>(View.LOGIN);
-  const [userRole, setUserRole] = useState<UserRole>(UserRole.AUXILIAR);
+  const [user, setUser] = useState<User | null>(null);
   const [userInfo, setUserInfo] = useState<LoginResponse>({
     authenticated: false,
     user: {
@@ -81,10 +77,8 @@ function AppContent() {
         data.user.role,
         data.user.oficialId.jerarquiaId.jerarquia
       );
-      console.log("validatedUser", validatedUser);
-      const permissions = getEffectiveRoles(validatedUser);
-      console.log("permissions", permissions);
-      setUserRole(validatedUser.role);
+
+      setUser(validatedUser);
     }
   }, [data, error, isLoading]);
 
@@ -114,7 +108,11 @@ function AppContent() {
     setIsLoggedIn(loginData.authenticated);
     if (loginData.authenticated) {
       if (loginData.user.role) {
-        setUserRole(ensureUserRole(loginData.user.role));
+        const validatedUser = validateAndCreateUser(
+          loginData.user.role,
+          loginData.user.oficialId.jerarquiaId.jerarquia
+        );
+        setUser(validatedUser);
       }
       setCurrentView(View.DASHBOARD);
     } else {
@@ -149,7 +147,7 @@ function AppContent() {
     onGeneratePlanillas: () => handleGeneratePlanillas(),
     onBackHome: () => handleBack(),
     onNavigate: handleNavigate,
-    userRole,
+    user,
   };
 
   const CurrentViewComponent = viewComponents[currentView];

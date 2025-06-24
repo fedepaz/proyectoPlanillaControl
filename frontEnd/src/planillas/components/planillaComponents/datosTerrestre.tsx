@@ -18,6 +18,7 @@ export function DatosTerrestre({ userRole }: DatosTerrestreProps) {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
 
   const funcionQuery = useFuncion();
+  console.log("funcionQuery", funcionQuery.data);
   const { setValue, watch } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {

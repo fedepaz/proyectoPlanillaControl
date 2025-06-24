@@ -63,6 +63,7 @@ export function PersonalComponent({
   empresaId,
   maxPersonalList = 10,
   minPersonalList = 3,
+  userRole = UserRole.AUXILIAR,
 }: PersonalComponentProps) {
   const [personalList, setPersonalList] = useState<PersonalEmpresaOption[]>([]);
   const [searchDni, setSearchDni] = useState("");

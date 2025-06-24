@@ -7,41 +7,65 @@ import {
   Grid,
   Box,
   Divider,
+  Chip,
 } from "@mui/material";
-import { UserRole } from "../../actions/types";
+import { User } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { memo } from "react";
 import { View } from "../../views";
 import { RoleBadge } from "../../components/RoleBadge";
 interface DashboardProps {
-  onGeneratePlanillas: () => void;
-  onViewHistory: () => void;
-  onViewProfile: () => void;
-  onOpenSettings: () => void;
-  onManageUsers: () => void;
+  onGeneratePlanillas?: () => void;
+  onHistorialSupervisores?: () => void;
+  onHistorialResponsables?: () => void;
+  onHistorialAuxiliares?: () => void;
+  onUserRoles?: () => void;
+  onReports?: () => void;
+  onViewHistory?: () => void;
+  onViewProfile?: () => void;
+  onOpenSettings?: () => void;
+  onManageUsers?: () => void;
   onNavigate?: (view: View) => void;
-  userRole: UserRole;
+  user: User;
 }
 
 export const Dashboard = memo(function Dashboard({
   onGeneratePlanillas,
+  onHistorialSupervisores,
+  onHistorialResponsables,
+  onHistorialAuxiliares,
+  onUserRoles,
+  onReports,
   onViewHistory,
   onViewProfile,
   onOpenSettings,
   onManageUsers,
   onNavigate,
-  userRole,
+  user,
 }: DashboardProps) {
-  const { mainActions, accountActions, adminActions } = useDashboardActions(
+  const {
+    mainActions,
+    accountActions,
+    settingsActions,
+    reportsActions,
+    adminActions,
+    effectiveRoles,
+    canAccessAdmin,
+  } = useDashboardActions(
     {
       onGeneratePlanillas,
+      onHistorialSupervisores,
+      onHistorialResponsables,
+      onHistorialAuxiliares,
+      onUserRoles,
+      onReports,
       onViewHistory,
       onViewProfile,
       onOpenSettings,
       onManageUsers,
       onNavigate,
     },
-    userRole
+    user
   );
 
   return (
@@ -70,26 +94,30 @@ export const Dashboard = memo(function Dashboard({
           Panel de Control
         </Typography>
         {/* Role indicator */}
-        <Box
-          sx={{
-            mb: 3,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Typography
-            variant="subtitle2"
+        {effectiveRoles.length > 0 && (
+          <Box
             sx={{
-              mr: 1,
-              color: "text.secondary",
+              mb: 3,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
             }}
           >
-            Rol :
-          </Typography>
-          <RoleBadge role={userRole} />
-        </Box>
-
+            <Typography
+              variant="subtitle2"
+              sx={{
+                mr: 1,
+                color: "text.secondary",
+              }}
+            >
+              Rol :
+            </Typography>
+            {effectiveRoles.map((role) => (
+              <RoleBadge key={role} role={role} />
+            ))}
+          </Box>
+        )}
         {/* Main Actions Section */}
         {mainActions.length > 0 && (
           <Box
@@ -131,6 +159,49 @@ export const Dashboard = memo(function Dashboard({
           </Box>
         )}
 
+        {/* Reports Actions Section */}
+        {reportsActions.length > 0 && (
+          <>
+            <Divider sx={{ my: 3, width: "100%" }} />
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 500,
+                  mb: 1,
+                  textAlign: "center",
+                }}
+              >
+                Reportes
+              </Typography>
+              <Grid container spacing={2} justifyContent="center">
+                {reportsActions.map((action) => (
+                  <Grid item xs={12} sm={10} key={action.id}>
+                    <Button
+                      fullWidth
+                      variant={action.primary ? "contained" : "outlined"}
+                      size="large"
+                      startIcon={action.icon}
+                      onClick={action.onClick}
+                      sx={{
+                        py: 1.5,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {action.label}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </>
+        )}
+
         {/* Account Actions Section */}
         {accountActions.length > 0 && (
           <>
@@ -152,6 +223,91 @@ export const Dashboard = memo(function Dashboard({
               </Typography>
               <Grid container spacing={2} justifyContent="center">
                 {accountActions.map((action) => (
+                  <Grid item xs={12} sm={10} key={action.id}>
+                    <Button
+                      fullWidth
+                      variant={action.primary ? "contained" : "outlined"}
+                      size="large"
+                      startIcon={action.icon}
+                      onClick={action.onClick}
+                      sx={{
+                        py: 1.5,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {action.label}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </>
+        )}
+        {/* Settings Actions Section */}
+        {settingsActions.length > 0 && (
+          <>
+            <Divider sx={{ my: 3, width: "100%" }} />
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 500,
+                  mb: 1,
+                  textAlign: "center",
+                }}
+              >
+                Configuración
+              </Typography>
+              <Grid container spacing={2} justifyContent="center">
+                {settingsActions.map((action) => (
+                  <Grid item xs={12} sm={10} key={action.id}>
+                    <Button
+                      fullWidth
+                      variant={action.primary ? "contained" : "outlined"}
+                      size="large"
+                      startIcon={action.icon}
+                      onClick={action.onClick}
+                      sx={{
+                        py: 1.5,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {action.label}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </>
+        )}
+
+        {/* canAccessAdmin */}
+        {canAccessAdmin && (
+          <>
+            <Divider sx={{ my: 3, width: "100%" }} />
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 500,
+                  mb: 1,
+                  textAlign: "center",
+                }}
+              >
+                Administración
+              </Typography>
+              <Grid container spacing={2} justifyContent="center">
+                {adminActions.map((action) => (
                   <Grid item xs={12} sm={10} key={action.id}>
                     <Button
                       fullWidth
