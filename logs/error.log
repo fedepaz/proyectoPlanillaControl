@@ -13456,4 +13456,52 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     ---------------------
 
+    [2025-06-24T20:00:30.479Z]
+    URL: /personalSeguridad/busqueda
+    Method: POST
+    Body: {"dni":"25123123","empresa":"685ada4111c51b9a7ca0ef90"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 25123123 ya esta registrado en la empresa FLY SEG con el nombre de POPO PITO
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalSeguridadRoute.js:174:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-06-24T20:12:15.425Z]
+    URL: /personalSeguridad/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685ad3da9a4d25d4951ad715"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalSeguridadRoute.js:174:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-06-24T20:58:32.694Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"25123123","empresa":"685559cd0430453551684962"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 25123123 ya esta registrado en la empresa FLY SEG con el nombre de POPO PITO
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:171:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
     

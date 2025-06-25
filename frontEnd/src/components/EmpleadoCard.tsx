@@ -66,12 +66,22 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
     <>
       <Card variant="outlined" sx={{ mb: 1 }}>
         <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack
+            direction={showActions ? "row" : "column"}
+            alignItems={showActions ? "center" : "flex-start"}
+            spacing={1}
+          >
             {/* Employee info - takes most space */}
-            <Box sx={{ flex: 1, minWidth: 0 }}>
-              <Typography variant="body2" fontWeight="bold" noWrap>
-                {personal.lastname}
-              </Typography>
+            <Box sx={{ minWidth: 0 }}>
+              {showActions ? (
+                <Typography variant="body2" fontWeight="bold" noWrap>
+                  {personal.lastname}
+                </Typography>
+              ) : (
+                <Typography variant="body2" fontWeight="bold" noWrap>
+                  {personal.lastname} - {personal.firstname}
+                </Typography>
+              )}
               <Typography variant="caption" color="text.secondary" noWrap>
                 DNI: {personal.dni}
               </Typography>

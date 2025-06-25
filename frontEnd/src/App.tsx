@@ -3,12 +3,12 @@ import { useEffect, useState, useCallback } from "react";
 import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { PlanillasNavbar } from "./components/PlanillasNavBar";
 import { darkTheme, lightTheme } from "./types/theme";
-import { useSession } from "./services/session";
+
 import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
 import { View, viewComponents } from "./views";
-import { User, validateAndCreateUser } from "./actions/types";
+
 import { useAuth } from "./hooks/useAuth";
 import { AuthProvider } from "./provider/AuthContextProvider";
 

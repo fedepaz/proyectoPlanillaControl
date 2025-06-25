@@ -1,10 +1,10 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { OficialSchema } from "../planillas/types/apiSchema";
+import { OficialSchemaInput } from "../planillas/types/apiSchema";
 
 interface CardComponentProps {
-  oficialObject: OficialSchema;
+  oficialObject: OficialSchemaInput;
 }
 
 export default function CardComponent({ oficialObject }: CardComponentProps) {

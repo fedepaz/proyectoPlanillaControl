@@ -9,15 +9,16 @@ import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
 import { useEffect, useState } from "react";
-import { useSession } from "../../../services/session";
+
 import { RHFFlightTimePicker } from "../../../components/RHFFlightTimePicker";
+import { useAuth } from "../../../hooks/useAuth";
 
 const airlineId = import.meta.env.VITE_AEROLINE_ID;
 
 export function DatosVuelo() {
   const demoraQuery = useDemora();
   const tipoVueloQuery = useTipoVuelo();
-  const { data } = useSession();
+  const { userInfo } = useAuth();
   const [origenIdRef, setOrigenIdRef] = useState("");
   const [destinoIdRef, setDestinoIdRef] = useState("");
   const [empresaIdRef, setEmpresaIdRef] = useState("");
@@ -45,8 +46,8 @@ export function DatosVuelo() {
   };
 
   useEffect(() => {
-    if (data?.user?.oficialId?.currentAirportId?.aeropuerto && tipoVuelo) {
-      const currentAirportId = data.user.oficialId.currentAirportId.id;
+    if (userInfo?.user?.oficialId?.currentAirportId?.id && tipoVuelo) {
+      const currentAirportId = userInfo.user.oficialId.currentAirportId.id;
 
       if (tipoVuelo === "partida") {
         setOrigenIdRef(currentAirportId);
@@ -54,7 +55,7 @@ export function DatosVuelo() {
         setDestinoIdRef(currentAirportId);
       }
     }
-  }, [data, tipoVuelo]);
+  }, [userInfo, tipoVuelo]);
 
   const sendCodVuelo = (codVueloId: string) => {
     setValue("datosVuelo.codVuelo", codVueloId);

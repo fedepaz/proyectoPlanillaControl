@@ -16,11 +16,14 @@ import {
   Box,
   useTheme,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import SaveIcon from "@mui/icons-material/Save";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,18 +46,27 @@ import { PersonalTableDetails } from "../../../../components/PersonalTableDetail
 
 interface PersonalComponentProps {
   onPersonalListChange: (personalList: BasePersonalOption[]) => void;
+  onPersonalListConfirm?: (personalList: BasePersonalOption[]) => void;
   empresaId: string;
   maxPersonalList?: number;
   minPersonalList?: number;
+  requireConfirmation?: boolean;
+  initialPersonalList?: BasePersonalOption[];
 }
 
 export function PersonalComponent({
   onPersonalListChange,
+  onPersonalListConfirm,
   empresaId,
   maxPersonalList = 10,
   minPersonalList = 3,
+  requireConfirmation = false,
+  initialPersonalList = [],
 }: PersonalComponentProps) {
-  const [personalList, setPersonalList] = useState<BasePersonalOption[]>([]);
+  const [personalList, setPersonalList] =
+    useState<BasePersonalOption[]>(initialPersonalList);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [searchDni, setSearchDni] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [foundPersonal, setFoundPersonal] = useState<BasePersonalOption | null>(
@@ -95,6 +107,12 @@ export function PersonalComponent({
       ? { dni: searchTriggerDni, empresa: empresaId }
       : null;
   const personalQuery = usePersonalEmpresaBusqueda(params);
+
+  useEffect(() => {
+    if (!requireConfirmation) {
+      onPersonalListChange(personalList);
+    }
+  }, [personalList, onPersonalListChange, requireConfirmation]);
 
   const handleSearch = () => {
     if (!searchDni || !searchDni.trim()) {
@@ -184,6 +202,7 @@ export function PersonalComponent({
       onPersonalListChange(newList);
       setFoundPersonal(null);
       setSearchDni("");
+      setIsConfirmed(false);
       showSnackbar("Empleado terrestre agregada exitosamente", "success");
     }
   };
@@ -214,6 +233,7 @@ export function PersonalComponent({
         setShowAddDialog(false);
         setSearchDni("");
         setFoundPersonal(null);
+        setIsConfirmed(false);
         setSnackbarOpen(true);
         setSnackbarMessage("Empleado terrestre agregado exitosamente");
         setSnackbarSeverity("success");
@@ -234,33 +254,44 @@ export function PersonalComponent({
     });
   };
 
-  const handleConfirmDelete = () => {
-    if (selectedPersonal) {
-      const newList = personalList.filter((p) => p.id !== selectedPersonal.id);
-      setPersonalList(newList);
-      onPersonalListChange(newList);
-      setShowDeleteDialog(false);
-      setSelectedPersonal(null);
-      showSnackbar(
-        `${selectedPersonal.firstname} ${selectedPersonal.lastname} eliminado exitosamente`,
-        "success"
-      );
-    }
-  };
-
   const handleDelete = (personal: BasePersonalOption) => {
     if (personal) {
       const newList = personalList.filter((p) => p.id !== personal.id);
       setPersonalList(newList);
-      onPersonalListChange(newList);
-      setShowDeleteDialog(false);
-      setSelectedPersonal(null);
+      setIsConfirmed(false);
       showSnackbar(
         `${personal.firstname} ${personal.lastname} eliminado exitosamente`,
         "success"
       );
     }
   };
+
+  const handleConfirmDelete = () => {
+    if (selectedPersonal) {
+      handleDelete(selectedPersonal);
+      setShowDeleteDialog(false);
+      setSelectedPersonal(null);
+    }
+  };
+
+  const handleConfirmList = () => {
+    if (requireConfirmation) {
+      setShowConfirmDialog(true);
+    } else {
+      setIsConfirmed(true);
+      onPersonalListConfirm?.(personalList);
+      showSnackbar("Lista de empleados confirmada exitosamente", "success");
+    }
+  };
+
+  const handleConfirmDialogAccept = () => {
+    setIsConfirmed(true);
+    setShowConfirmDialog(false);
+    onPersonalListChange(personalList);
+    onPersonalListConfirm?.(personalList);
+    showSnackbar("Lista de empleados confirmada exitosamente", "success");
+  };
+
   const showSnackbar = (
     message: string,
     severity: "success" | "error" | "warning"
@@ -280,6 +311,8 @@ export function PersonalComponent({
     personalList.length >= minPersonalList &&
     personalList.length <= maxPersonalList;
 
+  const canConfirm = isValidCount && personalList.length > 0 && !isConfirmed;
+
   const countMessage = `${personalList.length}/${maxPersonalList} empleados (mínimo ${minPersonalList})`;
 
   return (
@@ -293,6 +326,7 @@ export function PersonalComponent({
           >
             <PersonAddIcon />
             Personal de Empresa
+            {isConfirmed && <CheckCircleIcon color="success" />}
           </Typography>
 
           <Stack
@@ -305,7 +339,7 @@ export function PersonalComponent({
               value={searchDni}
               onChange={(e) => setSearchDni(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-              disabled={personalList.length >= maxPersonalList}
+              disabled={personalList.length >= maxPersonalList || isConfirmed}
               fullWidth
               size={isMobile ? "medium" : "small"}
               type="text"
@@ -318,7 +352,7 @@ export function PersonalComponent({
             <Button
               variant="contained"
               onClick={handleSearch}
-              disabled={isSearching || !searchDni.trim()}
+              disabled={isSearching || !searchDni.trim() || isConfirmed}
               startIcon={<SearchIcon />}
               fullWidth={isMobile}
               sx={{
@@ -332,19 +366,30 @@ export function PersonalComponent({
               {isSearching ? "Buscando..." : "Buscar"}
             </Button>
           </Stack>
-
-          <Box mt={2}>
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing={2}
+            alignItems="center"
+            mt={2}
+          >
             <Chip
               label={countMessage}
               color={isValidCount ? "success" : "warning"}
               variant={isValidCount ? "filled" : "outlined"}
               size={isMobile ? "small" : "medium"}
             />
-          </Box>
+          </Stack>
+
+          {isConfirmed && (
+            <Alert severity="success" sx={{ mt: 2 }}>
+              Lista de empleados confirmada. {personalList.length} empleados
+              seleccionados.
+            </Alert>
+          )}
         </CardContent>
       </Card>
 
-      {foundPersonal && (
+      {foundPersonal && !isConfirmed && (
         <Card sx={{ bgcolor: "success.light", color: "success.contrastText" }}>
           <CardContent sx={{ p: isMobile ? 2 : 3 }}>
             <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>
@@ -404,15 +449,31 @@ export function PersonalComponent({
                 <CompactPersonalCard
                   personal={personal}
                   key={personal.id}
-                  onDelete={handleDelete}
+                  onDelete={isConfirmed ? undefined : handleDelete}
+                  showActions={!isConfirmed}
                 />
               ))}
             </Box>
           ) : (
             <PersonalTableDetails
               personalList={personalList}
-              onDelete={handleDelete}
+              onDelete={isConfirmed ? undefined : handleDelete}
+              showActions={!isConfirmed}
             />
+          )}
+
+          {requireConfirmation && !isConfirmed && (
+            <Button
+              variant={isConfirmed ? "outlined" : "contained"}
+              color={isConfirmed ? "success" : "primary"}
+              onClick={handleConfirmList}
+              disabled={!canConfirm}
+              startIcon={isConfirmed ? <CheckCircleIcon /> : <SaveIcon />}
+              size={isMobile ? "small" : "medium"}
+              fullWidth={isMobile}
+            >
+              Confirmar Lista
+            </Button>
           )}
         </>
       )}
@@ -443,6 +504,72 @@ export function PersonalComponent({
           </CardContent>
         </Card>
       )}
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={showConfirmDialog}
+        onClose={() => setShowConfirmDialog(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <CheckCircleIcon color="primary" />
+            <Typography variant="h6">Confirmar Lista de Empleados</Typography>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>
+            ¿Está seguro que desea confirmar la lista con{" "}
+            <strong>{personalList.length} empleados</strong>?
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Una vez confirmada, no podrá realizar más cambios en esta lista.
+          </Typography>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Typography variant="subtitle2" gutterBottom>
+            Empleados en la lista:
+          </Typography>
+          <Stack spacing={1} sx={{ maxHeight: 200, overflow: "auto" }}>
+            {personalList.map((personal, index) => (
+              <Box
+                key={personal.id}
+                sx={{ display: "flex", alignItems: "center", gap: 1 }}
+              >
+                {isMobile ? (
+                  <Typography variant="body2">
+                    {index + 1}. {personal.lastname} - DNI: {personal.dni}
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">
+                    {index + 1}. {personal.firstname} {personal.lastname} - DNI:{" "}
+                    {personal.dni}
+                  </Typography>
+                )}
+              </Box>
+            ))}
+          </Stack>
+        </DialogContent>
+        <DialogActions sx={{ p: 3, gap: 1 }}>
+          <Button
+            onClick={() => setShowConfirmDialog(false)}
+            variant="outlined"
+            fullWidth={isMobile}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirmDialogAccept}
+            variant="contained"
+            color="primary"
+            fullWidth={isMobile}
+          >
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Add New Personal Dialog */}
       <Dialog

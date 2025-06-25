@@ -28,7 +28,6 @@ import FlightIcon from "@mui/icons-material/Flight";
 import SecurityIcon from "@mui/icons-material/Security";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import InfoIcon from "@mui/icons-material/InfoOutlined";
 import {
   defaultValuesEmpresa,
   EmpresaSchema,
@@ -72,19 +71,19 @@ export function EmpresaComponent({
         };
       case "seguridad":
         return {
-          label: label || "Empresa de Seguridad",
+          label: "Seguridad",
           icon: <SecurityIcon />,
           color: theme.palette.error.main,
         };
       case "limpieza":
         return {
-          label: label || "Empresa de Limpieza",
+          label: "Limpieza",
           icon: <CleaningServicesIcon />,
           color: theme.palette.info.main,
         };
       case "handling":
         return {
-          label: label || "Empresa de Handling",
+          label: "Handling",
           icon: <LocalShippingIcon />,
           color: theme.palette.warning.main,
         };
@@ -227,7 +226,7 @@ export function EmpresaComponent({
                     {displayIcon}
                   </Box>
                   <Typography variant="subtitle2" color="text.secondary">
-                    {displayLabel.toLowerCase()} Seleccionada
+                    {displayLabel} Seleccionada
                   </Typography>
                 </Box>
                 <IconButton size="small" onClick={handleClearSelection}>

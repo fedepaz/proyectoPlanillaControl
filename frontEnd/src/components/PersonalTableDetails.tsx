@@ -94,9 +94,11 @@ export const PersonalTableDetails = memo(function PersonalTableDetails({
               <TableCell align="center">
                 <strong>Acciones</strong>
               </TableCell>
-              <TableCell align="center">
-                <strong>Estado</strong>
-              </TableCell>
+              {showActions && (
+                <TableCell align="center">
+                  <strong>Estado</strong>
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>

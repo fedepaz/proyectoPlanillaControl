@@ -4,12 +4,24 @@ import { useFormContext } from "react-hook-form";
 import { PersonalSeguridadComponent } from "./components/seguridadComponent";
 import { EmpresaComponent } from "./components/empresaComponent";
 import { useState } from "react";
-import { PersonalSeguridadOption } from "../../../types/option";
+import {
+  BasePersonalOption,
+  PersonalSeguridadOption,
+} from "../../../types/option";
+import { ConfirmedListComponent } from "../../../components/ConfirmedListComponent";
 
 const seguridadId = import.meta.env.VITE_SEGURIDAD_ID;
 
 export function DatosSeguridad() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const [confirmedPersonalList, setConfirmedPersonalList] = useState<
+    BasePersonalOption[]
+  >([]);
+  const [currentPersonalList, setCurrentPersonalList] = useState<
+    BasePersonalOption[]
+  >([]);
   const { setValue } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {
@@ -19,12 +31,14 @@ export function DatosSeguridad() {
   const handlePersonalListChange = (
     personalList: PersonalSeguridadOption[]
   ) => {
-    const datosPersonalSeguridad = personalList.map((personal) => ({
-      personalSegEmpresa: [personal.id],
-      empresaSeguridad: personal.empresaId,
-    }));
+    setCurrentPersonalList(personalList);
+  };
 
-    setValue("datosSeguridad", datosPersonalSeguridad);
+  const handlePersonalListConfirm = (
+    personalList: PersonalSeguridadOption[]
+  ) => {
+    setConfirmedPersonalList(personalList);
+    setIsConfirmed(personalList.length > 0);
   };
 
   return (
@@ -36,17 +50,31 @@ export function DatosSeguridad() {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Seguridad
       </Typography>
-      <EmpresaComponent
-        onEmpresaSelected={handleEmpresaSelected}
-        tipoFijoID={seguridadId}
-        label="Empresa"
-      />
-      {empresaIdRef !== "" && (
-        <PersonalSeguridadComponent
-          onPersonalListChange={handlePersonalListChange}
-          empresaId={empresaIdRef}
-          maxPersonalList={10}
-          minPersonalList={3}
+      {!isConfirmed && (
+        <>
+          <EmpresaComponent
+            onEmpresaSelected={handleEmpresaSelected}
+            tipoFijoID={seguridadId}
+            label="seguridad"
+          />
+          {empresaIdRef !== "" && (
+            <PersonalSeguridadComponent
+              empresaId={empresaIdRef}
+              onPersonalListChange={handlePersonalListChange}
+              onPersonalListConfirm={handlePersonalListConfirm}
+              requireConfirmation={true}
+              initialPersonalList={[]}
+              minPersonalList={1}
+            />
+          )}
+        </>
+      )}
+
+      {/* Show confirmed list once confirmed */}
+      {isConfirmed && confirmedPersonalList.length > 0 && (
+        <ConfirmedListComponent
+          personalList={confirmedPersonalList}
+          title="Personal Seguridad Confirmado"
         />
       )}
     </Stack>

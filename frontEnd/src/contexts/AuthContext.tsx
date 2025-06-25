@@ -13,6 +13,7 @@ interface LoginResponse {
       lastname: string;
       legajo: string;
       currentAirportId: {
+        id?: string;
         aeropuerto: string;
         codIATA: string;
         codOACI: string;

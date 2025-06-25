@@ -7,11 +7,11 @@ import {
 } from "../types/planillaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useSession } from "../../services/session";
+
 import { CssBaseline, Box, Snackbar, Alert } from "@mui/material";
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
-import { User, UserRole, validateAndCreateUser } from "../../actions/types";
+
 import { useAuth } from "../../hooks/useAuth";
 
 interface PlanillasProviderProps {

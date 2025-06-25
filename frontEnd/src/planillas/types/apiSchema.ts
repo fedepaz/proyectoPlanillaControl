@@ -44,8 +44,9 @@ const oficialSchema = z.object({
 export { oficialSchema };
 
 export type OficialSchema = z.infer<typeof oficialSchema>;
+export type OficialSchemaInput = z.input<typeof oficialSchema>;
 
-export const defaultValuesOficial: Partial<OficialSchema> = {
+export const defaultValuesOficial: Partial<OficialSchemaInput> = {
   firstname: "",
   lastname: "",
 };

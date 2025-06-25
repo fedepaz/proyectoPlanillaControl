@@ -15,6 +15,7 @@ interface LoginResponse {
       lastname: string;
       legajo: string;
       currentAirportId: {
+        id?: string;
         aeropuerto: string;
         codIATA: string;
         codOACI: string;
@@ -38,6 +39,7 @@ const defaultUserInfo: LoginResponse = {
       lastname: "",
       legajo: "",
       currentAirportId: {
+        id: "",
         aeropuerto: "",
         codIATA: "",
         codOACI: "",

@@ -1,16 +1,28 @@
-import { Stack, Divider, Typography } from "@mui/material";
+import { Stack, Divider, Typography, Alert } from "@mui/material";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { PersonalComponent } from "./components/personalComponent";
 import { useFuncion } from "../../services/queries";
 import { useFormContext } from "react-hook-form";
-import { PersonalEmpresaOption } from "../../../types/option";
+import {
+  BasePersonalOption,
+  PersonalEmpresaOption,
+} from "../../../types/option";
 import { EmpresaComponent } from "./components/empresaComponent";
 import { useState } from "react";
+import { ConfirmedListComponent } from "../../../components/ConfirmedListComponent";
 
 const handlingId = import.meta.env.VITE_HANDLING_ID;
 
 export function DatosTerrestre() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const [confirmedPersonalList, setConfirmedPersonalList] = useState<
+    BasePersonalOption[]
+  >([]);
+  const [currentPersonalList, setCurrentPersonalList] = useState<
+    BasePersonalOption[]
+  >([]);
 
   const funcionQuery = useFuncion();
   const { setValue, watch } = useFormContext<PlanillaSchema>();
@@ -20,12 +32,12 @@ export function DatosTerrestre() {
   };
 
   const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
-    const datosPersonalTerrestre = personalList.map((personal) => ({
-      personalEmpresa: [personal.id],
-      funcion: "superior",
-      grupo: "",
-    }));
-    setValue("datosTerrestre", datosPersonalTerrestre);
+    setCurrentPersonalList(personalList);
+  };
+
+  const handlePersonalListConfirm = (personalList: PersonalEmpresaOption[]) => {
+    setConfirmedPersonalList(personalList);
+    setIsConfirmed(personalList.length > 0);
   };
 
   return (
@@ -37,17 +49,32 @@ export function DatosTerrestre() {
       <Typography variant="h6" align="center" gutterBottom>
         Datos Terrestre
       </Typography>
-      <EmpresaComponent
-        onEmpresaSelected={handleEmpresaSelected}
-        tipoFijoID={handlingId}
-        label="Empresa"
-      />
-      {empresaIdRef !== "" && (
-        <PersonalComponent
-          onPersonalListChange={handlePersonalListChange}
-          empresaId={empresaIdRef}
-          maxPersonalList={10}
-          minPersonalList={3}
+
+      {/* Show components only if not confirmed */}
+      {!isConfirmed && (
+        <>
+          <EmpresaComponent
+            onEmpresaSelected={handleEmpresaSelected}
+            tipoFijoID={handlingId}
+            label="handling"
+          />
+          {empresaIdRef !== "" && (
+            <PersonalComponent
+              empresaId={empresaIdRef}
+              onPersonalListChange={handlePersonalListChange}
+              onPersonalListConfirm={handlePersonalListConfirm}
+              requireConfirmation={true}
+              initialPersonalList={[]}
+            />
+          )}
+        </>
+      )}
+
+      {/* Show confirmed list once confirmed */}
+      {isConfirmed && confirmedPersonalList.length > 0 && (
+        <ConfirmedListComponent
+          personalList={confirmedPersonalList}
+          title="Personal Terrestre Confirmado"
         />
       )}
     </Stack>

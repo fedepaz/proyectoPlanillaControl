@@ -1,22 +1,23 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  OficialSchema,
   oficialSchema,
   defaultValuesOficial,
+  OficialSchemaInput,
 } from "../../../types/apiSchema";
 import CardComponent from "../../../../components/CardComponent";
-import { useSession } from "../../../../services/session";
+
 import { useEffect } from "react";
+import { useAuth } from "../../../../hooks/useAuth";
 
 export function OficialComponent() {
-  const methods = useForm<OficialSchema>({
+  const methods = useForm<OficialSchemaInput>({
     resolver: zodResolver(oficialSchema),
     defaultValues: defaultValuesOficial,
     mode: "onChange",
   });
 
-  const { data } = useSession();
+  const { userInfo: data } = useAuth();
   const oficialObject = {
     dni: methods.watch("dni"),
     firstname: methods.watch("firstname"),
