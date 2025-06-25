@@ -20,11 +20,13 @@ import type { BasePersonalOption } from "../types/option";
 interface ConfirmedListComponentProps {
   personalList: BasePersonalOption[];
   title?: string;
+  empresaColor: string;
 }
 
 export const ConfirmedListComponent = memo(function ConfirmedListComponent({
   personalList,
   title,
+  empresaColor,
 }: ConfirmedListComponentProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -33,7 +35,7 @@ export const ConfirmedListComponent = memo(function ConfirmedListComponent({
     <Card
       sx={{
         border: "1px solid",
-        borderColor: "success.main",
+        borderColor: empresaColor,
         bgcolor: "success.50",
       }}
     >
@@ -45,27 +47,19 @@ export const ConfirmedListComponent = memo(function ConfirmedListComponent({
           justifyContent="space-between"
           mb={2}
         >
-          <Box display="flex" alignItems="center" gap={1}>
-            <CheckCircleIcon
-              color="success"
-              fontSize={isMobile ? "medium" : "large"}
-            />
+          <Box display="flex" alignItems="center" gap={1} mr={2}>
             <Typography
               variant={isMobile ? "subtitle1" : "h6"}
-              color="success.main"
+              color={empresaColor}
               fontWeight="600"
             >
               {title}
             </Typography>
+            <CheckCircleIcon
+              color="success"
+              fontSize={isMobile ? "medium" : "large"}
+            />
           </Box>
-          <Chip
-            label={`${personalList.length} empleado${
-              personalList.length !== 1 ? "s" : ""
-            }`}
-            size={isMobile ? "small" : "medium"}
-            color="success"
-            variant="filled"
-          />
         </Box>
 
         {/* Employee List */}

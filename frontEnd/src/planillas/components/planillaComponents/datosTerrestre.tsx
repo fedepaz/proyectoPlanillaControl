@@ -1,4 +1,4 @@
-import { Stack, Divider, Typography, Alert } from "@mui/material";
+import { Stack, Divider, Typography } from "@mui/material";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { PersonalComponent } from "./components/personalComponent";
 import { useFuncion } from "../../services/queries";
@@ -24,11 +24,17 @@ export function DatosTerrestre() {
     BasePersonalOption[]
   >([]);
 
+  const [empresaColorRef, setEmpresaColorRef] = useState("");
+
   const funcionQuery = useFuncion();
   const { setValue, watch } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {
     setEmpresaIdRef(empresaId);
+  };
+
+  const handleColorByTipoEmpresa = (color: string) => {
+    setEmpresaColorRef(color);
   };
 
   const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
@@ -54,6 +60,7 @@ export function DatosTerrestre() {
       {!isConfirmed && (
         <>
           <EmpresaComponent
+            onColorByTipoEmpresa={handleColorByTipoEmpresa}
             onEmpresaSelected={handleEmpresaSelected}
             tipoFijoID={handlingId}
             label="handling"
@@ -73,6 +80,7 @@ export function DatosTerrestre() {
       {/* Show confirmed list once confirmed */}
       {isConfirmed && confirmedPersonalList.length > 0 && (
         <ConfirmedListComponent
+          empresaColor={empresaColorRef}
           personalList={confirmedPersonalList}
           title="Personal Terrestre Confirmado"
         />

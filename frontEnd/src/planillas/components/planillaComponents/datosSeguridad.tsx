@@ -14,6 +14,7 @@ const seguridadId = import.meta.env.VITE_SEGURIDAD_ID;
 
 export function DatosSeguridad() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
+  const [empresaColorRef, setEmpresaColorRef] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const [confirmedPersonalList, setConfirmedPersonalList] = useState<
@@ -26,6 +27,10 @@ export function DatosSeguridad() {
 
   const handleEmpresaSelected = (empresaId: string) => {
     setEmpresaIdRef(empresaId);
+  };
+
+  const handleColorByTipoEmpresa = (color: string) => {
+    setEmpresaColorRef(color);
   };
 
   const handlePersonalListChange = (
@@ -54,6 +59,7 @@ export function DatosSeguridad() {
         <>
           <EmpresaComponent
             onEmpresaSelected={handleEmpresaSelected}
+            onColorByTipoEmpresa={handleColorByTipoEmpresa}
             tipoFijoID={seguridadId}
             label="seguridad"
           />
@@ -73,6 +79,7 @@ export function DatosSeguridad() {
       {/* Show confirmed list once confirmed */}
       {isConfirmed && confirmedPersonalList.length > 0 && (
         <ConfirmedListComponent
+          empresaColor={empresaColorRef}
           personalList={confirmedPersonalList}
           title="Personal Seguridad Confirmado"
         />

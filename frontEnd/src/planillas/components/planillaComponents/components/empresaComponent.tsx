@@ -42,12 +42,14 @@ import { HelperTextWarning } from "../../../../components/WarningChip";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
+  onColorByTipoEmpresa: (color: string) => void;
   tipoFijoID: string;
   label: string;
 }
 
 export function EmpresaComponent({
   onEmpresaSelected,
+  onColorByTipoEmpresa,
   tipoFijoID,
   label,
 }: EmpresaComponentProps) {
@@ -136,8 +138,15 @@ export function EmpresaComponent({
       );
       setSelectedEmpresa(selected || null);
       onEmpresaSelected(empresaWatch);
+      onColorByTipoEmpresa(displayColor);
     }
-  }, [empresaWatch, onEmpresaSelected, empresaOptions]);
+  }, [
+    empresaWatch,
+    onEmpresaSelected,
+    empresaOptions,
+    onColorByTipoEmpresa,
+    displayColor,
+  ]);
 
   useEffect(() => {
     if (createEmpresaMutation.error) {
