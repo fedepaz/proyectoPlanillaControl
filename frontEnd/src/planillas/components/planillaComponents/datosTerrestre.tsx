@@ -1,7 +1,6 @@
 import { Stack, Divider, Typography } from "@mui/material";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { PersonalComponent } from "./components/personalComponent";
-import { useFuncion } from "../../services/queries";
 import { useFormContext } from "react-hook-form";
 import {
   BasePersonalOption,
@@ -10,8 +9,12 @@ import {
 import { EmpresaComponent } from "./components/empresaComponent";
 import { useState } from "react";
 import { ConfirmedListComponent } from "../../../components/ConfirmedListComponent";
+import { MobileFunctionSelector } from "../../../components/MobileFunctionSelector";
 
 const handlingId = import.meta.env.VITE_HANDLING_ID;
+interface PersonalWithFunction extends BasePersonalOption {
+  assignedFunctionIds?: string[];
+}
 
 export function DatosTerrestre() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
@@ -25,12 +28,21 @@ export function DatosTerrestre() {
   >([]);
 
   const [empresaColorRef, setEmpresaColorRef] = useState("");
+  const [personalWithFunctionsRef, setPersonalWithFunctionsRef] = useState<
+    PersonalWithFunction[]
+  >([]);
 
-  const funcionQuery = useFuncion();
   const { setValue, watch } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {
     setEmpresaIdRef(empresaId);
+  };
+
+  const handleFunctionAssignment = (
+    personalWithFunctions: PersonalWithFunction[]
+  ) => {
+    setPersonalWithFunctionsRef(personalWithFunctions);
+    console.log("Assignments:", personalWithFunctionsRef);
   };
 
   const handleColorByTipoEmpresa = (color: string) => {
@@ -72,19 +84,29 @@ export function DatosTerrestre() {
               onPersonalListConfirm={handlePersonalListConfirm}
               requireConfirmation={true}
               initialPersonalList={[]}
+              minPersonalList={1}
             />
           )}
         </>
       )}
 
       {/* Show confirmed list once confirmed */}
-      {isConfirmed && confirmedPersonalList.length > 0 && (
-        <ConfirmedListComponent
-          empresaColor={empresaColorRef}
-          personalList={confirmedPersonalList}
-          title="Personal Terrestre Confirmado"
-        />
-      )}
+      {isConfirmed &&
+        (confirmedPersonalList.length > 0 ? (
+          <MobileFunctionSelector
+            personalList={confirmedPersonalList}
+            onAssignmentChange={handleFunctionAssignment}
+            title="Asignar Funciones"
+            empresaColor="primary.main"
+            maxSelectionsPerPerson={2}
+          />
+        ) : (
+          <ConfirmedListComponent
+            empresaColor={empresaColorRef}
+            personalList={confirmedPersonalList}
+            title="Personal Terrestre Confirmado"
+          />
+        ))}
     </Stack>
   );
 }

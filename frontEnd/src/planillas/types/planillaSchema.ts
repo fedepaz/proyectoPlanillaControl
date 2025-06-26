@@ -99,7 +99,7 @@ const planillaSchema = z
       .array(
         z.object({
           personalEmpresa: z
-            .array(z.string())
+            .string()
             .min(1, "Se requiere al menos una persona"),
           funcion: z.string().min(1, "Se requiere una función"),
           grupo: z.string().min(1, "Se requiere un grupo"),
