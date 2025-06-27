@@ -42,7 +42,7 @@ import { HelperTextWarning } from "../../../../components/WarningChip";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
-  onColorByTipoEmpresa: (color: string) => void;
+  onColorByTipoEmpresa?: (color: string) => void;
   tipoFijoID: string;
   label: string;
 }

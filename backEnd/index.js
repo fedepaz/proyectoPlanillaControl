@@ -22,6 +22,7 @@ import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 import sessionRouter from "./controllers/session/loginRoute.js";
 import resetPasswordRouter from "./controllers/session/resetPassword.js";
 import crsfTokenRouter from "./crsf-token.js";
+import scrapeArribosRouter from "./controllers/datos/scrapeArribosRoute.js";
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/scrape-arribos", scrapeArribosRouter)
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");

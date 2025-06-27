@@ -13682,4 +13682,58 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     ---------------------
 
+    [2025-06-27T20:54:31.248Z]
+    URL: /scrape-arribos/mdz%0A
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AxiosError: Request failed with status code 500
+    at settle (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/core/settle.js:19:12)
+    at IncomingMessage.handleStreamEnd (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/adapters/http.js:599:11)
+    at IncomingMessage.emit (node:events:536:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    ---------------------
+
+    [2025-06-27T20:58:24.166Z]
+    URL: /scrape-arribos/aep%0A
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AxiosError: Request failed with status code 500
+    at settle (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/core/settle.js:19:12)
+    at IncomingMessage.handleStreamEnd (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/adapters/http.js:599:11)
+    at IncomingMessage.emit (node:events:536:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    ---------------------
+
+    [2025-06-27T20:59:03.324Z]
+    URL: /scrape-arribos/aep%0A
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.44.0
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: AxiosError: Request failed with status code 500
+    at settle (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/core/settle.js:19:12)
+    at IncomingMessage.handleStreamEnd (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/axios@1.10.0/node_modules/axios/lib/adapters/http.js:599:11)
+    at IncomingMessage.emit (node:events:536:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    ---------------------
+
     
