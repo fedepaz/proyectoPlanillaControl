@@ -7,7 +7,6 @@ import {
   Grid,
   Box,
   Divider,
-  Chip,
 } from "@mui/material";
 import { User } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
@@ -50,7 +49,6 @@ export const Dashboard = memo(function Dashboard({
     reportsActions,
     adminActions,
     effectiveRoles,
-    canAccessAdmin,
   } = useDashboardActions(
     {
       onGeneratePlanillas,
@@ -288,47 +286,6 @@ export const Dashboard = memo(function Dashboard({
         )}
 
         {/* canAccessAdmin */}
-        {canAccessAdmin && (
-          <>
-            <Divider sx={{ my: 3, width: "100%" }} />
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Administración
-              </Typography>
-              <Grid container spacing={2} justifyContent="center">
-                {adminActions.map((action) => (
-                  <Grid item xs={12} sm={10} key={action.id}>
-                    <Button
-                      fullWidth
-                      variant={action.primary ? "contained" : "outlined"}
-                      size="large"
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                      sx={{
-                        py: 1.5,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {action.label}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </>
-        )}
 
         {/* Admin Actions Section */}
         {adminActions.length > 0 && (

@@ -173,4 +173,13 @@ export class UserRepository {
 
     return { oficial: existingOficial, user: existingUser };
   }
+
+  static async findAll() {
+    // users without hashed password and with all the populated data
+    const users = await User.find().populate({
+      path: "oficialId",
+      populate: [{ path: "currentAirportId" }, { path: "jerarquiaId" }],
+    });
+    return users;
+  }
 }

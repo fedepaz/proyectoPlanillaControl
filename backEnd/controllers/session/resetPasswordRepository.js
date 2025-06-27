@@ -141,6 +141,7 @@ export class ResetPasswordRepository {
       throw error;
     }
   }
+
   static async changePassword(user) {
     const userPasswordChanged = await UserRepository.findByEmail(user.email);
     const saltRounds = parseInt(process.env.SALT_ROUNDS);

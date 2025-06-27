@@ -101,6 +101,23 @@ personalEmpresaRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    const personalSeguridadEncontrado = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalSeguridadEncontrado !== null) {
+      const personalInEmpresa =
+        personalSeguridadEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalSeguridadEncontrado.empresa.empresa} con el nombre de ${personalSeguridadEncontrado.firstname} ${personalSeguridadEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
     const existingPersonal = await PersonalEmpresa.findOne({
       legajo,
       empresa,
@@ -159,6 +176,7 @@ personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
       error.name = "EmpresaNotFound";
       throw error;
     }
+
     const personalSeguridadEncontrado = await PersonalSeguridadEmpresa.findOne({
       dni: dni,
     }).populate("empresa");

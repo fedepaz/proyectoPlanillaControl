@@ -13568,4 +13568,70 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-06-27T00:38:28.101Z]
+    URL: /session/usuarios
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: TypeError: UserRepository.findAll is not a function
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:51:40
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-06-27T00:53:40.518Z]
+    URL: /session/register
+    Method: POST
+    Body: {"dni":"45123123","password":"zxcvbnm123","email":"lala@lala.com","firstname":"hernando","lastname":"rodriguez","legajo":501100,"currentAirportId":"681fe9c15063a0b66be11190","jerarquiaId":"681fd02d0cb1fd25eb8d82e8"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ReferenceError: empresa is not defined
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:162:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-06-27T00:55:57.824Z]
+    URL: /session/register
+    Method: POST
+    Body: {"dni":"45123123","password":"zxcvbnm123","email":"lala@lala.com","firstname":"hernando","lastname":"rodriguez","legajo":501100,"currentAirportId":"681fe9c15063a0b66be11190","jerarquiaId":"681fd02d0cb1fd25eb8d82e8"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El Legajo 501100 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:165:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-06-27T00:56:44.579Z]
+    URL: /session/register
+    Method: POST
+    Body: {"dni":"45123123","password":"zxcvbnm123","email":"lala@lala.com","firstname":"hernando","lastname":"rodriguez","legajo":501100,"currentAirportId":"681fe9c15063a0b66be11190","jerarquiaId":"681fd02d0cb1fd25eb8d82e8"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:165:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
     

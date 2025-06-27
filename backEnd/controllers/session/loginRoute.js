@@ -3,7 +3,11 @@ import { UserRepository } from "./userRepository.js";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils.js";
 import { ResetPasswordRepository } from "./resetPasswordRepository.js";
 import { Jerarquia } from "../../models/opcionesModel.js";
-import { Aeropuerto } from "../../models/personalModel.js";
+import {
+  Aeropuerto,
+  PersonalEmpresa,
+  PersonalSeguridadEmpresa,
+} from "../../models/personalModel.js";
 
 const sessionRouter = express.Router();
 
@@ -39,6 +43,15 @@ sessionRouter.get("/", (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     res.status(200).json({ authenticated: false });
+  }
+});
+
+sessionRouter.get("/usuarios", async (req, res, next) => {
+  try {
+    const users = await UserRepository.findAll();
+    res.json(users);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -126,10 +139,40 @@ sessionRouter.post("/register", async (req, res, next) => {
       error.message = "El usuario ya existe, comunicarse con el administrador";
       throw error;
     }
+
+    const personalSeguridadEncontrado = await PersonalSeguridadEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalSeguridadEncontrado !== null) {
+      const personalInEmpresa =
+        personalSeguridadEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalSeguridadEncontrado.empresa.empresa} con el nombre de ${personalSeguridadEncontrado.firstname} ${personalSeguridadEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
+    const existingPersonal = await PersonalEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (existingPersonal) {
+      const error = new Error();
+      error.status = 409;
+      error.name = "PersonalRegistrado";
+      error.message = `El DNI ${dni} ya esta registrado en la empresa ${existingPersonal.empresa.empresa} con el nombre de ${existingPersonal.firstname} ${existingPersonal.lastname}`;
+      throw error;
+    }
+
     const oficialId = await UserRepository.createOficial({
       dni,
-      firstname,
-      lastname,
+      firstname: firstname.trim().toUpperCase(),
+      lastname: lastname.trim().toUpperCase(),
       legajo,
       currentAirportId,
       jerarquiaId,
@@ -137,7 +180,7 @@ sessionRouter.post("/register", async (req, res, next) => {
     try {
       const userID = await UserRepository.create({
         dni,
-        email,
+        email: email.trim().toLowerCase(),
         password,
         oficialId,
       });

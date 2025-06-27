@@ -103,6 +103,23 @@ personalSeguridadRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
+    const personalEmpresaEncontrado = await PersonalEmpresa.findOne({
+      dni: dni,
+    }).populate("empresa");
+
+    if (personalEmpresaEncontrado !== null) {
+      const personalInEmpresa =
+        personalEmpresaEncontrado.empresa.id !== empresa;
+
+      if (personalInEmpresa) {
+        const error = new Error();
+        error.status = 404;
+        error.name = "PersonalRegistrado";
+        error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalEmpresaEncontrado.empresa.empresa} con el nombre de ${personalEmpresaEncontrado.firstname} ${personalEmpresaEncontrado.lastname}`;
+        throw error;
+      }
+    }
+
     const existingPersonal = await PersonalSeguridadEmpresa.findOne({
       legajo,
       empresa,

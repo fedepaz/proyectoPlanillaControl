@@ -65,7 +65,7 @@ export const createDashboardActions = (callbacks: {
     {
       id: "view_history",
       label: "Historial de Planillas",
-      icon: <HistoryIcon />,
+      icon: <FolderSharedIcon />, // Better represents shared document history
       onClick: createNavigationHandler(
         View.VIEW_HISTORY,
         callbacks.onViewHistory
