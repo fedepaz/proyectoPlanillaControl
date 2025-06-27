@@ -15,10 +15,10 @@ import Loading from "../../components/Loading";
 import { useAuth } from "../../hooks/useAuth";
 
 interface PlanillasProviderProps {
-  onBack: (data: boolean) => void;
+  onBackHome: (data: boolean) => void;
 }
 
-export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
+export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -49,7 +49,7 @@ export function PlanillasProvider({ onBack }: PlanillasProviderProps) {
   };
 
   const sendBack = (data: boolean) => {
-    onBack(data);
+    onBackHome(data);
   };
   const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 4));
   const handleBack = () => setActiveStep((prev) => Math.max(prev - 1, 0));

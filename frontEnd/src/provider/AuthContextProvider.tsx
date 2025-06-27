@@ -1,6 +1,7 @@
 import { ReactNode, useState, useEffect, useCallback } from "react";
 import { User, validateAndCreateUser } from "../actions/types";
 import { useSession } from "../services/session";
+import { useLogout } from "../login/services/logout";
 import { View } from "../views";
 import { AuthContext, AuthContextType } from "../contexts/AuthContext";
 
@@ -58,6 +59,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { data, error, isError, isLoading, refetch } = useSession();
+  const { mutate: logout } = useLogout();
   const [user, setUser] = useState<User | null>(null);
   const [userInfo, setUserInfo] = useState<LoginResponse>(defaultUserInfo);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,11 +102,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const handleLogout = useCallback(() => {
-    setIsLoggedIn(false);
-    setUser(null);
-    setUserInfo(defaultUserInfo);
-    setCurrentView(View.LOGIN);
-  }, []);
+    logout(undefined, {
+      onSuccess: () => {
+        setIsLoggedIn(false);
+        setUser(null);
+        setUserInfo(defaultUserInfo);
+        setCurrentView(View.LOGIN);
+      },
+    });
+  }, [logout]);
 
   const handleNavigate = useCallback((view: View) => {
     setCurrentView(view);

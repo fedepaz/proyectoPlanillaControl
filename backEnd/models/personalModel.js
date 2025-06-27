@@ -36,6 +36,13 @@ const oficialSchema = new Schema({
 oficialSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;
+    //return the firstname and lastname with the First letter in uppercase and all the other letters in lowercase
+    returnedObject.firstname =
+      returnedObject.firstname.charAt(0).toUpperCase() +
+      returnedObject.firstname.slice(1).toLowerCase();
+    returnedObject.lastname =
+      returnedObject.lastname.charAt(0).toUpperCase() +
+      returnedObject.lastname.slice(1).toLowerCase();
     delete returnedObject._id;
     delete returnedObject.__v;
   },

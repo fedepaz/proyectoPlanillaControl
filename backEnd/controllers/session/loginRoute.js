@@ -105,7 +105,13 @@ sessionRouter.post("/login", async (req, res, next) => {
 
 sessionRouter.delete("/", (req, res) => {
   res
-    .clearCookie("access_token")
+    .clearCookie("access_token", {
+      httpOnly: true,
+      maxAge: 86400000 / 2, //12hs
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      signed: true,
+    })
     .status(200)
     .json({ message: "Logout correcto" });
 });

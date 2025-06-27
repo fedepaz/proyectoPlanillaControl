@@ -45,9 +45,9 @@ const HIERARCHY_LEVELS = {
 
 const HIERARCHY_ROLES_OVERRIDES: Record<UserHierarchy, UserRole[]> = {
   [UserHierarchy.AYUDANTE]: [],
-  [UserHierarchy.PRINCIPAL]: [UserRole.SUPERVISOR],
-  [UserHierarchy.MAYOR]: [UserRole.RESPONSABLE],
-  [UserHierarchy.JEFE]: [UserRole.RESPONSABLE],
+  [UserHierarchy.PRINCIPAL]: [UserRole.RESPONSABLE],
+  [UserHierarchy.MAYOR]: [UserRole.SUPERVISOR],
+  [UserHierarchy.JEFE]: [UserRole.SUPERVISOR, UserRole.OPER_UNIDAD],
   [UserHierarchy.SUBINSPECTOR]: [UserRole.OPER_UNIDAD],
   [UserHierarchy.INSPECTOR]: [UserRole.OPER_REGIONAL],
   [UserHierarchy.COMISIONADO]: [UserRole.OPER_CEAC],

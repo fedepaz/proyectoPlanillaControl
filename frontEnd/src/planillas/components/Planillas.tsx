@@ -71,7 +71,7 @@ export function Planillas({
         case 1:
           return <DatosVuelo />;
         case 2:
-          return <DatosTerrestre userRole={user.role} />;
+          return <DatosTerrestre />;
         case 3:
           return <DatosSeguridad />;
         case 4: // vehiculos

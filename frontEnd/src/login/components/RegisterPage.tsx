@@ -35,9 +35,9 @@ interface OficialData {
 }
 
 interface RegisterPageProps {
-  onRegisterBack: (data: boolean) => void;
+  onBackHome: (data: boolean) => void;
 }
-export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
+export function RegisterPage({ onBackHome }: RegisterPageProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -68,11 +68,11 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
     if (isSuccess) {
       setShowSuccessMessage(true);
       const timeout = setTimeout(() => {
-        onRegisterBack(true);
+        onBackHome(true);
       }, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [isSuccess, onRegisterBack]);
+  }, [isSuccess, onBackHome]);
 
   const handleOficialSubmit = (data: OficialData) => {
     setOficialData(data);
@@ -94,14 +94,11 @@ export function RegisterPage({ onRegisterBack }: RegisterPageProps) {
     register(completeData);
   };
   const onRegreso = () => {
-    onRegisterBack(true);
+    onBackHome(true);
   };
 
   return isFirstStep ? (
-    <OficialSubmitPage
-      onSuccess={handleOficialSubmit}
-      onRegisterBack={onRegreso}
-    />
+    <OficialSubmitPage onSuccess={handleOficialSubmit} onBackHome={onRegreso} />
   ) : (
     <FormProvider {...methods}>
       <Container component="main" maxWidth="xs">

@@ -4,26 +4,32 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import axios from "axios";
+import apiClient from "../../services/csrfToken";
 
-const API_URL = import.meta.env.VITE_API_URL;
 const logoutUrl = "/session/";
 
 export function useLogout(): UseMutationResult<unknown, Error, void> {
   const queryClient = useQueryClient();
   return useMutation({
+    mutationKey: ["logout"],
     mutationFn: async () => {
-      const response = await axios.delete(`${API_URL}${logoutUrl}`, {
-        withCredentials: true,
-      });
-      return response.data;
-    },
-    onSuccess: async () => {
-      queryClient.removeQueries();
-      window.location.href = "/";
-      await queryClient.invalidateQueries({ queryKey: [""] });
-    },
-    onError: (error) => {
-      return error;
+      try {
+        const res = await apiClient.delete(logoutUrl, {
+          withCredentials: true,
+        });
+        queryClient.clear();
+        return res.data;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (!error.response) {
+            throw new Error(
+              "Unable to connect to the server. Please check your connection and try again."
+            );
+          }
+        }
+
+        throw new Error("An unexpected error occurred while logging out.");
+      }
     },
   });
 }

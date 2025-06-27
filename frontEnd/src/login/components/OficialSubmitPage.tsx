@@ -36,12 +36,12 @@ interface SuccessData {
 
 interface OficialSubmitPageProps {
   onSuccess: (data: SuccessData) => void;
-  onRegisterBack: (data: boolean) => void;
+  onBackHome: (data: boolean) => void;
 }
 
 export function OficialSubmitPage({
   onSuccess,
-  onRegisterBack,
+  onBackHome,
 }: OficialSubmitPageProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -70,7 +70,7 @@ export function OficialSubmitPage({
       id: item.id,
       aeropuerto: item.aeropuerto,
       codIATA: item.codIATA,
-      codOAĆI: item.codOAĆI,
+      codOACI: item.codOACI,
     })) || [];
 
   const onSubmit = (formData: OficialSchema) => {
@@ -84,7 +84,7 @@ export function OficialSubmitPage({
     });
   };
   const onRegreso = () => {
-    onRegisterBack(true);
+    onBackHome(true);
   };
 
   return (
