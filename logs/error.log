@@ -13736,4 +13736,20 @@
     at endReadableNT (node:internal/streams/readable:1698:12)
     ---------------------
 
+    [2025-06-27T23:48:58.758Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"18123123","empresa":"685559cd0430453551684962"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 18123123 ya esta registrado en la empresa FLY BONDI con el nombre de JOSE RODRIGUEZ
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
     

@@ -12,8 +12,10 @@ import { ConfirmedListComponent } from "../../../components/ConfirmedListCompone
 import { MobileFunctionSelector } from "../../../components/MobileFunctionSelector";
 
 const handlingId = import.meta.env.VITE_HANDLING_ID;
-interface PersonalWithFunction extends BasePersonalOption {
-  assignedFunctionIds?: string[];
+interface PersonalWithFunction {
+  personalEmpresa: string;
+  funcion: string;
+  grupo: string;
 }
 
 export function DatosTerrestre() {
@@ -28,11 +30,8 @@ export function DatosTerrestre() {
   >([]);
 
   const [empresaColorRef, setEmpresaColorRef] = useState("");
-  const [personalWithFunctionsRef, setPersonalWithFunctionsRef] = useState<
-    PersonalWithFunction[]
-  >([]);
 
-  const { setValue, watch } = useFormContext<PlanillaSchema>();
+  const { setValue } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {
     setEmpresaIdRef(empresaId);
@@ -41,8 +40,11 @@ export function DatosTerrestre() {
   const handleFunctionAssignment = (
     personalWithFunctions: PersonalWithFunction[]
   ) => {
-    setPersonalWithFunctionsRef(personalWithFunctions);
-    console.log("Assignments:", personalWithFunctionsRef);
+    if (!personalWithFunctions || personalWithFunctions.length === 0) {
+      setIsConfirmed(false);
+    } else {
+      setValue("datosTerrestre", personalWithFunctions);
+    }
   };
 
   const handleColorByTipoEmpresa = (color: string) => {
@@ -51,6 +53,7 @@ export function DatosTerrestre() {
 
   const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
     setCurrentPersonalList(personalList);
+    setIsConfirmed(currentPersonalList.length > 0);
   };
 
   const handlePersonalListConfirm = (personalList: PersonalEmpresaOption[]) => {
@@ -95,10 +98,9 @@ export function DatosTerrestre() {
         (confirmedPersonalList.length > 0 ? (
           <MobileFunctionSelector
             personalList={confirmedPersonalList}
-            onAssignmentChange={handleFunctionAssignment}
+            onPersonalListChange={handleFunctionAssignment}
             title="Asignar Funciones"
             empresaColor="primary.main"
-            maxSelectionsPerPerson={2}
           />
         ) : (
           <ConfirmedListComponent

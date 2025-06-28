@@ -29,14 +29,14 @@ import type { BasePersonalOption, Option } from "../types/option";
 import { useFuncion } from "../planillas/services/queries";
 
 interface PersonalWithFunction {
-  personalEmpresa: BasePersonalOption;
-  assignedFunctionIds?: string;
-  grupo?: string;
+  personalEmpresa: string;
+  funcion: string;
+  grupo: string;
 }
 
 interface MobileFunctionSelectorProps {
   personalList: BasePersonalOption[];
-  onAssignmentChange: (personalWithFunctions: PersonalWithFunction[]) => void;
+  onPersonalListChange: (personalList: PersonalWithFunction[]) => void;
   title?: string;
   empresaColor?: string;
   maxSelectionsPerPerson?: number;
@@ -45,7 +45,7 @@ interface MobileFunctionSelectorProps {
 
 export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
   personalList,
-  onAssignmentChange,
+  onPersonalListChange,
   title = "Asignar Funciones",
   empresaColor = "primary.main",
   maxSelectionsPerPerson = 1,
@@ -59,9 +59,10 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
   const [expandedPersons, setExpandedPersons] = useState<Set<string>>(
     new Set()
   );
-  const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [assignments, setAssignments] = useState<Record<string, string[]>>({});
   const [grupo, setGrupo] = useState(defaultGroup);
   const [hasChanges, setHasChanges] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   useEffect(() => {
     if (functionQuery.data) {
@@ -81,12 +82,12 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
   }, [assignments, grupo, personalList.length]);
 
   const handleConfirmAssignments = () => {
-    const datosTerrestre = [];
+    const datosTerrestre: PersonalWithFunction[] = [];
 
     personalList.forEach((person) => {
       const personAssignments = assignments[person.id] || [];
 
-      personAssignments.forEach((functionId) => {
+      personAssignments.forEach((functionId: string) => {
         datosTerrestre.push({
           personalEmpresa: person.id, // Just the person ID
           funcion: functionId, // Just the function ID
@@ -95,10 +96,9 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
       });
     });
 
-    console.log("Formatted data for Zod schema:", datosTerrestre);
-
-    onAssignmentChange(datosTerrestre);
+    onPersonalListChange(datosTerrestre);
     setHasChanges(false);
+    setIsConfirmed(true);
   };
 
   const toggleExpanded = (personId: string) => {
