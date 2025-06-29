@@ -98,21 +98,23 @@ const planillaSchema = Schema(
           ref: "PersonalEmpresa",
           required: true,
         },
+        isObservaciones: { type: Boolean, default: false },
 
         observacionesVehiculo: { type: String, required: true },
       },
     ],
+
     novEquipajes: {
-      type: String,
-      required: true,
+      isRequired: { type: Boolean, default: false },
+      observaciones: { type: String, required: true },
     },
     novInspeccion: {
-      type: String,
-      required: true,
+      isRequired: { type: Boolean, default: false },
+      observaciones: { type: String, required: true },
     },
     novOtras: {
-      type: String,
-      required: true,
+      isRequired: { type: Boolean, default: false },
+      observaciones: { type: String, required: true },
     },
   },
   { timestamps: true }

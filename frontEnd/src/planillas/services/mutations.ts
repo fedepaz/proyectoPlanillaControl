@@ -7,6 +7,7 @@ import {
   EmpresaSchema,
   MatriculaAeronaveSchema,
   PersonalEmpresaSchema,
+  VehiculosSchema,
 } from "../types/apiSchema";
 
 export function useCreatePlanilla() {
@@ -106,6 +107,20 @@ export function useCreatePersonalSeguridad() {
       await queryClient.invalidateQueries({
         queryKey: ["personalSeguridad"],
       });
+    },
+  });
+}
+
+export function useCreateVehiculo() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: VehiculosSchema) => {
+      const response = await apiClient.post(`/vehiculos`, data);
+      return response.data;
+    },
+    retry: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["vehiculos"] });
     },
   });
 }

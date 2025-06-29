@@ -354,7 +354,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
           >
             <Typography variant="body2">
               {assignedPersons === personalList.length
-                ? `✓ Todos los empleados tienen funciones asignadas`
+                ? `✓ Todos los empleados tienen el grupo y las funciones asignadas`
                 : `${personalList.length - assignedPersons} empleado${
                     personalList.length - assignedPersons > 1 ? "s" : ""
                   } sin asignar`}

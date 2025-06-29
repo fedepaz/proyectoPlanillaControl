@@ -125,15 +125,25 @@ const planillaSchema = z
         z.object({
           vehiculo: z.string().min(1, "Se requiere un vehículo"),
           operadorVehiculo: z.string().min(1, "Se requiere un operador"),
-          observacionesVehiculo: z.string().min(1, "Se requiere observaciones"),
+          isObservaciones: z.boolean().default(false),
+          observacionesVehiculo: z.string().optional().default(""),
         })
       )
       .optional()
       .default([]),
 
-    novEquipajes: z.string().default(""),
-    novInspeccion: z.string().default(""),
-    novOtras: z.string().default(""),
+    novEquipajes: z.object({
+      isRequired: z.boolean().default(false),
+      observaciones: z.string().default(""),
+    }),
+    novInspeccion: z.object({
+      isRequired: z.boolean().default(false),
+      observaciones: z.string().default(""),
+    }),
+    novOtras: z.object({
+      isRequired: z.boolean().default(false),
+      observaciones: z.string().default(""),
+    }),
   })
   // Add validation to ensure arrival time isn't before PSA start time
   .refine(
@@ -198,9 +208,18 @@ export const defaultValuesPlanilla: PlanillaSchema = {
   datosTerrestre: [],
   datosSeguridad: [],
   datosVehiculos: [],
-  novEquipajes: "",
-  novInspeccion: "",
-  novOtras: "",
+  novEquipajes: {
+    isRequired: false,
+    observaciones: "",
+  },
+  novInspeccion: {
+    isRequired: false,
+    observaciones: "",
+  },
+  novOtras: {
+    isRequired: false,
+    observaciones: "",
+  },
 };
 
 // Fixed function to avoid type errors

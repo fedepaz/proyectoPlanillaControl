@@ -111,3 +111,17 @@ jerarquiaSchema.set("toJSON", {
 });
 
 export const Jerarquia = model("Jerarquia", jerarquiaSchema);
+
+const tipoVehiculoSchema = new Schema({
+  label: { type: String, required: true },
+});
+
+tipoVehiculoSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+export const TipoVehiculo = model("TipoVehiculo", tipoVehiculoSchema);

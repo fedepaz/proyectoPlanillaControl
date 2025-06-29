@@ -176,10 +176,7 @@ export const defaultValuesAeropuertos: AeropuertosSchema = {
 };
 
 const vehiculoSchema = z.object({
-  tipoVehiculo: z
-    .string()
-    .max(50, "El tipo de vehículo es muy largo")
-    .optional(),
+  tipoVehiculo: objectIdSchema.describe("Tipo de vehículo"),
   empresa: objectIdSchema.describe("Empresa ID"),
   numInterno: z.string().min(1, "Número interno requerido"),
 });
@@ -187,8 +184,9 @@ const vehiculoSchema = z.object({
 export { vehiculoSchema };
 
 export type VehiculosSchema = z.infer<typeof vehiculoSchema>;
+export type VehiculosSchemaInput = z.input<typeof vehiculoSchema>;
 
-export const defaultValuesVehiculos: Partial<VehiculosSchema> = {
+export const defaultValuesVehiculos: Partial<VehiculosSchemaInput> = {
   tipoVehiculo: "",
   numInterno: "",
 };

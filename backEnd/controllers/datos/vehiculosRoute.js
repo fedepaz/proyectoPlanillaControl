@@ -1,5 +1,6 @@
 import express from "express";
 import { Vehiculo, Empresa } from "../../models/personalModel.js";
+import { TipoVehiculo } from "../../models/opcionesModel.js";
 
 const vehiculoRouter = express.Router();
 
@@ -64,10 +65,41 @@ vehiculoRouter.post("/", async (req, res, next) => {
       throw error;
     }
     const empresaExists = await Empresa.findById(empresa);
+    const tipoVehiculoExists = await TipoVehiculo.findById(tipoVehiculo);
+    const tipoHandling = "66b62e906984c8d2498ac3d1";
     if (empresaExists === null) {
       const error = new Error();
       error.status = 404;
       error.name = "EmpresaNotFound";
+      throw error;
+    }
+    const tipoEmpresaIdHex = empresaExists.tipoEmpresa.id.toString("hex");
+
+    if (tipoEmpresaIdHex !== tipoHandling) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotMatching";
+      throw error;
+    }
+
+    if (tipoVehiculoExists === null) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "TipoVehiculoNotFound";
+      throw error;
+    }
+
+    const vehiculoExists = await Vehiculo.findOne({
+      numInterno,
+      empresa,
+      tipoVehiculo,
+    });
+
+    if (vehiculoExists) {
+      const error = new Error();
+      error.status = 409;
+      error.name = "VehiculoAlreadyExists";
+      error.message = `Vehiculo ${numInterno} already exists`;
       throw error;
     }
 
@@ -75,9 +107,51 @@ vehiculoRouter.post("/", async (req, res, next) => {
       numInterno,
       empresa,
       tipoVehiculo,
+      isUserCreated: true,
+      needsValidation: true,
     });
     const savedVehiculo = await newVehiculo.save();
     return res.status(201).json(savedVehiculo);
+  } catch (error) {
+    next(error);
+  }
+});
+
+vehiculoRouter.post("/busqueda", async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    const { empresa, numInterno } = body;
+
+    const requiredFields = ["empresa", "numInterno"];
+    const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (missingFields.length > 0) {
+      const error = new Error(
+        `Missing required fields: ${missingFields
+          .map((field) => field.toUpperCase())
+          .join(", ")}`
+      );
+      error.status = 400;
+      error.name = "MissingData";
+      throw error;
+    }
+
+    const empresaExist = await Empresa.findById(empresa);
+    if (!empresaExist) {
+      const error = new Error();
+      error.status = 404;
+      error.name = "EmpresaNotFound";
+      throw error;
+    }
+    const vehiculoEncontrado = await Vehiculo.findOne({
+      numInterno: numInterno,
+      empresa: empresa,
+    })
+      .populate("empresa")
+      .populate("tipoVehiculo");
+
+    return res.status(200).json(vehiculoEncontrado);
   } catch (error) {
     next(error);
   }

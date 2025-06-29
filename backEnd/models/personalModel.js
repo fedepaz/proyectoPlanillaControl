@@ -196,7 +196,11 @@ export const Aeropuerto = model("Aeropuerto", aeropuertoSchema);
 const vehiculoSchema = new Schema({
   numInterno: { type: String, required: true },
   empresa: { type: Schema.Types.ObjectId, ref: "Empresa", required: true },
-  tipoVehiculo: { type: String, required: true },
+  tipoVehiculo: {
+    type: Schema.Types.ObjectId,
+    ref: "TipoVehiculo",
+    required: true,
+  },
   isUserCreated: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   needsValidation: { type: Boolean, default: false }, // Flag for admin review
@@ -210,6 +214,7 @@ vehiculoSchema.set("toJSON", {
   },
 });
 
+vehiculoSchema.index({ empresa: 1, numInterno: 1 }, { unique: true });
 export const Vehiculo = model("Vehiculo", vehiculoSchema);
 
 const codVueloSchema = new Schema({

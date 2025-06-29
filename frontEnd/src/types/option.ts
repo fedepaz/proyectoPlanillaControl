@@ -18,7 +18,7 @@ export type BasePersonalOption = {
   dni: string;
   firstname: string;
   lastname: string;
-  empresaId: string;
+  empresa: EmpresaOption;
   legajo: string;
   isUserCreated?: boolean;
   createdAt?: string;
@@ -73,6 +73,19 @@ export type CodVueloOption = {
 export type JerarquiaOption = {
   id: string;
   label: UserHierarchy;
+};
+
+export type VehiculoOption = {
+  id: string;
+  tipoVehiculo: {
+    id: string;
+    label: string;
+  };
+  empresa: EmpresaOption | string;
+  numInterno: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
 };
 
 export type PlanillaOption = {

@@ -65,7 +65,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/scrape-arribos", scrapeArribosRouter)
+app.use("/scrape-arribos", scrapeArribosRouter);
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   return res.status(234).send("ok");

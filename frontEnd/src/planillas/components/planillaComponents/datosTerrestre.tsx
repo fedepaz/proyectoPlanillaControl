@@ -21,14 +21,14 @@ interface PersonalWithFunction {
 export function DatosTerrestre() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-
   const [confirmedPersonalList, setConfirmedPersonalList] = useState<
     BasePersonalOption[]
   >([]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPersonalList, setCurrentPersonalList] = useState<
     BasePersonalOption[]
   >([]);
-
   const [empresaColorRef, setEmpresaColorRef] = useState("");
 
   const { setValue } = useFormContext<PlanillaSchema>();
@@ -42,6 +42,7 @@ export function DatosTerrestre() {
   ) => {
     if (!personalWithFunctions || personalWithFunctions.length === 0) {
       setIsConfirmed(false);
+      setValue("datosTerrestre", []);
     } else {
       setValue("datosTerrestre", personalWithFunctions);
     }
@@ -53,12 +54,14 @@ export function DatosTerrestre() {
 
   const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
     setCurrentPersonalList(personalList);
-    setIsConfirmed(currentPersonalList.length > 0);
   };
 
   const handlePersonalListConfirm = (personalList: PersonalEmpresaOption[]) => {
     setConfirmedPersonalList(personalList);
     setIsConfirmed(personalList.length > 0);
+    if (personalList.length > 0) {
+      setValue("datosTerrestre", []);
+    }
   };
 
   return (

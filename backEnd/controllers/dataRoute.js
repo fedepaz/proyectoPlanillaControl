@@ -7,6 +7,7 @@ import {
   TipoVuelo,
   Funcion,
   TipoEmpresa,
+  TipoVehiculo,
 } from "../models/opcionesModel.js";
 
 const dataRouter = express.Router();
@@ -58,6 +59,11 @@ dataRouter.get("/funcion", async (req, res) => {
 dataRouter.get("/tipoEmpresa", async (req, res) => {
   const tipoEmpresa = await fetchOptions(TipoEmpresa);
   res.json(tipoEmpresa);
+});
+
+dataRouter.get("/tipoVehiculo", async (req, res) => {
+  const tipoVehiculo = await fetchOptions(TipoVehiculo);
+  res.json(tipoVehiculo);
 });
 
 export default dataRouter;

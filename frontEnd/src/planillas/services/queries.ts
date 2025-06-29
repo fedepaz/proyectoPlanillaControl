@@ -10,6 +10,7 @@ import {
   PersonalSeguridadOption,
   PlanillaOption,
   UnidadOption,
+  VehiculoOption,
 } from "../../types/option";
 import {
   ApiGetMatriculaAeronave,
@@ -290,6 +291,19 @@ export function useFuncion() {
   });
 }
 
+export function useTipoVehiculo() {
+  return useQuery({
+    queryKey: ["tipoVehiculo"],
+    queryFn: async () => {
+      const response = await apiClient.get<Option[]>(
+        `${API_URL}/data/tipoVehiculo`
+      );
+      const tipoVehiculo = response.data;
+      return tipoVehiculo;
+    },
+  });
+}
+
 export function usePersonalEmpresa(dni: number) {
   return useQuery({
     queryKey: ["personalEmpresa", { dni }],
@@ -444,6 +458,7 @@ export function useEmpresa(tipoEmpresa?: string) {
     },
   });
 }
+
 export const useEmpresaTipoId = (tipoEmpresaId: string) => {
   return useQuery({
     queryKey: ["empresa", tipoEmpresaId],
@@ -541,6 +556,40 @@ export function useCodVueloBusqueda(params: BuscarCodVueloParams | null) {
       );
       const codVuelo = response.data;
       return codVuelo;
+    },
+    enabled: !!params,
+  });
+}
+
+export function usePersonalHandlingEmpresa(id: string) {
+  return useQuery({
+    queryKey: ["personalHandling", id],
+    queryFn: async () => {
+      const response = await apiClient.get<PersonalEmpresaOption>(
+        `${API_URL}/personalEmpresa/${id}`
+      );
+      const empresaHandling = response.data;
+      return empresaHandling;
+    },
+    enabled: !!id,
+  });
+}
+export type BuscarVehiculosParams = {
+  empresa: string;
+  numInterno: string;
+};
+
+export function useVehiculoBusqueda(params: BuscarVehiculosParams | null) {
+  return useQuery({
+    queryKey: ["vehiculo", params],
+    queryFn: async () => {
+      if (!params) return null;
+      const response = await apiClient.post<VehiculoOption>(
+        `${API_URL}/vehiculos/busqueda`,
+        params
+      );
+      const vehiculo = response.data;
+      return vehiculo;
     },
     enabled: !!params,
   });
