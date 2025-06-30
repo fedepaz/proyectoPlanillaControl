@@ -268,15 +268,6 @@ export function PersonalOneComponent({
           >
             <PersonAddIcon />
             {label}
-            {required && (
-              <Chip
-                label="Requerido"
-                size="small"
-                color="warning"
-                variant="outlined"
-                sx={{ ml: 1 }}
-              />
-            )}
           </Typography>
 
           {/* Show selected personal */}
@@ -330,7 +321,6 @@ export function PersonalOneComponent({
                   fullWidth
                   size={isMobile ? "medium" : "small"}
                   type="text"
-                  error={required && !selectedPersonal}
                   helperText={
                     required && !selectedPersonal
                       ? "Este campo es requerido"
@@ -365,7 +355,7 @@ export function PersonalOneComponent({
 
       {/* Found personal card */}
       {foundPersonal && !selectedPersonal && (
-        <Card sx={{ bgcolor: "info.light" }}>
+        <Card sx={{ bgcolor: "info.light", color: "info.contrastText" }}>
           <CardContent sx={{ p: isMobile ? 2 : 3 }}>
             <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>
               Empleado Encontrado
@@ -395,6 +385,10 @@ export function PersonalOneComponent({
                 onClick={() => setFoundPersonal(null)}
                 startIcon={<CloseIcon />}
                 fullWidth={isMobile}
+                sx={{
+                  backgroundColor: "error.main",
+                  color: "error.contrastText",
+                }}
               >
                 Cancelar
               </Button>

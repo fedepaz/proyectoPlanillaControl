@@ -14352,4 +14352,86 @@
     at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-06-30T04:41:15.473Z]
+    URL: /vehiculos
+    Method: POST
+    Body: {"tipoVehiculo":"68601de71b2bc1269a6c953f","empresa":"6850688b26aea98d186b07c9","numInterno":"1234"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: VehiculoAlreadyExists: Vehiculo 1234 already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/vehiculosRoute.js:99:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-30T04:44:59.837Z]
+    URL: /vehiculos
+    Method: POST
+    Body: {"tipoVehiculo":"68601ddd1b2bc1269a6c953e","empresa":"6850688b26aea98d186b07c9","numInterno":"12345"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Vehiculo validation failed: tipoVehiculo: Path `tipoVehiculo` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-06-30T04:46:35.714Z]
+    URL: /vehiculos
+    Method: POST
+    Body: {"tipoVehiculo":"68601ddd1b2bc1269a6c953e","empresa":"6850688b26aea98d186b07c9","numInterno":"678"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: VehiculoAlreadyExists: Vehiculo 678 already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/vehiculosRoute.js:101:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-30T04:49:23.676Z]
+    URL: /vehiculos
+    Method: POST
+    Body: {"tipoVehiculo":"68601de71b2bc1269a6c953f","empresa":"6850688b26aea98d186b07c9","numInterno":"453"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: VehiculoAlreadyExists: Vehiculo 453 already exists
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/vehiculosRoute.js:101:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-06-30T05:40:32.523Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"19123123","empresa":"685559cd0430453551684962"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 19123123 ya esta registrado en la empresa FLY BONDI con el nombre de JOSE ALBERTO
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
     

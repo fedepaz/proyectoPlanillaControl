@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -24,12 +23,12 @@ import {
   ExpandMore,
   ExpandLess,
   Assignment,
-  CheckCircle,
   Save,
   DirectionsCar,
   AirportShuttle,
   Build,
   Agriculture,
+  Edit,
 } from "@mui/icons-material";
 import type { VehiculoOption, BasePersonalOption } from "../types/option";
 import { PersonalOneComponent } from "../planillas/components/planillaComponents/components/personalOneComponent";
@@ -38,7 +37,7 @@ interface VehiculoWithOperator {
   vehiculo: string;
   operadorVehiculo: string;
   isObservaciones: boolean;
-  observacionesVehiculo?: string;
+  observacionesVehiculo: string;
 }
 
 interface OperatorAndObservationsSelectionProps {
@@ -49,6 +48,7 @@ interface OperatorAndObservationsSelectionProps {
   title?: string;
   empresaId: string;
   requireObservations?: boolean;
+  empresaColor?: string;
 }
 
 export const OperatorAndObservationsSelection: React.FC<
@@ -59,6 +59,7 @@ export const OperatorAndObservationsSelection: React.FC<
   title = "Asignar Operadores y Observaciones",
   empresaId,
   requireObservations = false,
+  empresaColor = "primary.main",
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -74,6 +75,7 @@ export const OperatorAndObservationsSelection: React.FC<
     Record<string, boolean>
   >({});
   const [hasChanges, setHasChanges] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   // Vehicle icon helper
   const getVehiculoIcon = (tipoVehiculo: string) => {
@@ -91,33 +93,46 @@ export const OperatorAndObservationsSelection: React.FC<
 
   // Check if all required assignments are complete
   useEffect(() => {
-    const assignedVehicles = Object.keys(assignments).filter(
-      (vehicleId) => assignments[vehicleId] !== null
-    );
-    const allVehiclesAssigned =
-      assignedVehicles.length === vehiculoList.length &&
-      vehiculoList.length > 0;
+    if (vehiculoList.length === 0) {
+      setHasChanges(false);
+      return;
+    }
 
-    // Check observations if required
-    let observationsComplete = true;
+    // Check if all vehicles have operators assigned
+    const assignedVehicles = vehiculoList.filter(
+      (vehicle) =>
+        assignments[vehicle.id] !== null &&
+        assignments[vehicle.id] !== undefined
+    );
+    const allVehiclesAssigned = assignedVehicles.length === vehiculoList.length;
+
+    // Check observations requirement
+    let observationsValid = true;
     if (requireObservations) {
-      observationsComplete = vehiculoList.every((vehicle) => {
-        const hasObservation = observationFlags[vehicle.id];
+      // If observations are required globally, every vehicle with observation flag must have text
+      observationsValid = vehiculoList.every((vehicle) => {
+        const hasObservationFlag = observationFlags[vehicle.id];
         return (
-          !hasObservation ||
-          (hasObservation && observations[vehicle.id]?.trim())
+          !hasObservationFlag ||
+          (hasObservationFlag && observations[vehicle.id]?.trim())
         );
+      });
+    } else {
+      // If observations are not required globally, just check that enabled flags have text
+      observationsValid = vehiculoList.every((vehicle) => {
+        const hasObservationFlag = observationFlags[vehicle.id];
+        return !hasObservationFlag || observations[vehicle.id]?.trim();
       });
     }
 
-    setHasChanges(allVehiclesAssigned && observationsComplete);
+    const newHasChanges = allVehiclesAssigned && observationsValid;
+    setHasChanges(newHasChanges);
   }, [
     assignments,
     observations,
     observationFlags,
-    vehiculoList.length,
-    requireObservations,
     vehiculoList,
+    requireObservations,
   ]);
 
   const toggleExpanded = (vehicleId: string) => {
@@ -138,15 +153,7 @@ export const OperatorAndObservationsSelection: React.FC<
       ...prev,
       [vehicleId]: personal,
     }));
-
-    // Auto-collapse when operator is assigned
-    if (personal) {
-      setExpandedVehicles((prev) => {
-        const newExpanded = new Set(prev);
-        newExpanded.delete(vehicleId);
-        return newExpanded;
-      });
-    }
+    setIsConfirmed(false);
   };
 
   const handleObservationChange = (vehicleId: string, observation: string) => {
@@ -154,6 +161,9 @@ export const OperatorAndObservationsSelection: React.FC<
       ...prev,
       [vehicleId]: observation,
     }));
+
+    // Reset confirmed state when changes are made
+    setIsConfirmed(false);
   };
 
   const handleObservationFlagChange = (
@@ -172,6 +182,9 @@ export const OperatorAndObservationsSelection: React.FC<
         [vehicleId]: "",
       }));
     }
+
+    // Reset confirmed state when changes are made
+    setIsConfirmed(false);
   };
 
   const handleConfirmAssignments = () => {
@@ -189,15 +202,20 @@ export const OperatorAndObservationsSelection: React.FC<
       }
     });
 
-    console.log("Vehicle assignments:", vehiculosWithOperators);
     onPersonalAssignment(vehiculosWithOperators);
+    setHasChanges(false);
+    setIsConfirmed(true);
   };
 
   const getAssignmentSummary = () => {
     const assignedCount = Object.values(assignments).filter(
-      (assignment) => assignment !== null
+      (assignment) => assignment !== null && assignment !== undefined
     ).length;
-    return { assignedCount, totalCount: vehiculoList.length };
+
+    return {
+      assignedCount,
+      totalCount: vehiculoList.length,
+    };
   };
 
   const { assignedCount, totalCount } = getAssignmentSummary();
@@ -216,7 +234,7 @@ export const OperatorAndObservationsSelection: React.FC<
     <Card
       sx={{
         border: "1px solid",
-        borderColor: theme.palette.primary.main,
+        borderColor: empresaColor,
         bgcolor: "background.paper",
       }}
     >
@@ -229,36 +247,30 @@ export const OperatorAndObservationsSelection: React.FC<
           mb={2}
         >
           <Box display="flex" alignItems="center" gap={1}>
-            <Assignment sx={{ color: theme.palette.primary.main }} />
+            <Assignment sx={{ color: empresaColor }} />
             <Typography
               variant={isMobile ? "subtitle1" : "h6"}
-              color="primary"
+              color={empresaColor}
               fontWeight="600"
             >
               {title}
             </Typography>
           </Box>
-          <Box display="flex" gap={1}>
-            <Chip
-              label={`${assignedCount}/${totalCount} asignados`}
-              size="small"
-              color={assignedCount === totalCount ? "success" : "primary"}
-              variant="filled"
-            />
-          </Box>
         </Box>
 
+        {/* Initial instruction */}
         {assignedCount === 0 && (
           <Alert severity="info" sx={{ mb: 2, fontSize: "0.875rem" }}>
-            Seleccione un operador para cada vehículo
+            Toca en cada vehículo para asignar su operador
           </Alert>
         )}
 
-        <Stack spacing={2}>
+        <Stack spacing={1}>
           {vehiculoList.map((vehicle) => {
             const isExpanded = expandedVehicles.has(vehicle.id);
             const assignedPersonal = assignments[vehicle.id];
-            const hasAssignment = assignedPersonal !== null;
+            const hasAssignment =
+              assignedPersonal !== null && assignedPersonal !== undefined;
             const vehicleInfo = getVehiculoIcon(vehicle.tipoVehiculo.label);
             const hasObservation = observationFlags[vehicle.id] || false;
 
@@ -277,7 +289,7 @@ export const OperatorAndObservationsSelection: React.FC<
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    p: 2,
+                    p: 1.5,
                     cursor: "pointer",
                   }}
                   onClick={() => toggleExpanded(vehicle.id)}
@@ -286,44 +298,40 @@ export const OperatorAndObservationsSelection: React.FC<
                     {vehicleInfo.icon}
                   </Box>
                   <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="body1" fontWeight="500">
-                      {vehicle.tipoVehiculo.label.toUpperCase()}
-                      {" - "}
+                    <Typography variant="body2" fontWeight="500">
+                      {vehicle.tipoVehiculo.label.toUpperCase()} -{" "}
                       {vehicle.numInterno}
                     </Typography>
                     {assignedPersonal && (
-                      <Typography
-                        variant="caption"
-                        color="success.main"
-                        sx={{ fontWeight: 500 }}
-                      >
+                      <Typography variant="caption" color="text.secondary">
                         Operador: {assignedPersonal.firstname}{" "}
                         {assignedPersonal.lastname}
                       </Typography>
                     )}
                   </Box>
 
-                  {/* Status indicators */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mr: 1,
-                    }}
-                  >
-                    {hasAssignment && (
-                      <CheckCircle color="success" fontSize="small" />
-                    )}
-                    {hasObservation && (
-                      <Chip
-                        label="Con observaciones"
-                        size="small"
-                        color="warning"
-                        variant="outlined"
-                      />
-                    )}
-                  </Box>
+                  {/* Assignment chips and edit indicator */}
+                  {hasAssignment && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        gap: 0.5,
+                        mr: 1,
+                        flexWrap: "wrap",
+                        alignItems: "center",
+                      }}
+                    >
+                      {hasObservation && (
+                        <Chip
+                          label="Con observaciones"
+                          size="small"
+                          color="warning"
+                          variant="outlined"
+                          sx={{ fontSize: "0.75rem", height: 20 }}
+                        />
+                      )}
+                    </Box>
+                  )}
 
                   <IconButton size="small">
                     {isExpanded ? <ExpandLess /> : <ExpandMore />}
@@ -332,9 +340,14 @@ export const OperatorAndObservationsSelection: React.FC<
 
                 {/* Expanded Content */}
                 <Collapse in={isExpanded}>
-                  <Box sx={{ px: 2, pb: 2 }}>
-                    <Divider sx={{ mb: 2 }} />
-
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      pt: 0,
+                      borderTop: "1px solid",
+                      borderColor: "divider",
+                    }}
+                  >
                     {/* Personal Selection */}
                     <Box sx={{ mb: 2 }}>
                       <PersonalOneComponent
@@ -342,13 +355,13 @@ export const OperatorAndObservationsSelection: React.FC<
                           handlePersonalChange(vehicle.id, personal)
                         }
                         empresaId={empresaId}
-                        label={`Operador para ${vehicle.tipoVehiculo.label.toUpperCase()} ${
-                          vehicle.numInterno
-                        }`}
+                        label="Selecciona operador"
                         required={true}
                         initialPersonal={assignedPersonal}
                       />
                     </Box>
+
+                    <Divider sx={{ my: 1 }} />
 
                     {/* Observations Section */}
                     <Box>
@@ -363,9 +376,14 @@ export const OperatorAndObservationsSelection: React.FC<
                               )
                             }
                             color="primary"
+                            size="small"
                           />
                         }
-                        label="Agregar observaciones"
+                        label={
+                          <Typography variant="caption" color="text.secondary">
+                            Agregar observaciones
+                          </Typography>
+                        }
                         sx={{ mb: hasObservation ? 1 : 0 }}
                       />
 
@@ -373,13 +391,13 @@ export const OperatorAndObservationsSelection: React.FC<
                         <TextField
                           fullWidth
                           multiline
-                          rows={3}
-                          label="Observaciones del vehículo"
+                          rows={2}
+                          label="Observaciones"
                           value={observations[vehicle.id] || ""}
                           onChange={(e) =>
                             handleObservationChange(vehicle.id, e.target.value)
                           }
-                          placeholder="Ingrese observaciones sobre el vehículo o su operación..."
+                          placeholder="Observaciones del vehículo..."
                           size="small"
                           required={requireObservations}
                           error={
@@ -391,7 +409,7 @@ export const OperatorAndObservationsSelection: React.FC<
                             requireObservations &&
                             hasObservation &&
                             !observations[vehicle.id]?.trim()
-                              ? "Las observaciones son requeridas"
+                              ? "Observaciones requeridas"
                               : ""
                           }
                         />
@@ -440,20 +458,6 @@ export const OperatorAndObservationsSelection: React.FC<
             </Button>
           </Box>
         )}
-
-        {/* Debug section */}
-        <Box>
-          <strong>Debug Info:</strong>
-          <br />
-          Assigned: {assignedCount}/{totalCount}
-          <br />
-          Has Changes: {hasChanges.toString()}
-          <br />
-          Assignments:{" "}
-          {JSON.stringify(
-            Object.keys(assignments).filter((k) => assignments[k])
-          )}
-        </Box>
       </CardContent>
     </Card>
   );

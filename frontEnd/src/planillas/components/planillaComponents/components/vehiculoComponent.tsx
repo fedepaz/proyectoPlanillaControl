@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardContent,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -25,10 +24,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import SaveIcon from "@mui/icons-material/Save";
 
-import AirportShuttle from "@mui/icons-material/AirportShuttle";
-import SwapHoriz from "@mui/icons-material/SwapHoriz";
-import Agriculture from "@mui/icons-material/Agriculture";
-import { RHFDropDownVehiculo } from "../../../../components/RHFDropDownVehiculo";
 import {
   defaultValuesVehiculos,
   vehiculoSchema,
@@ -39,18 +34,19 @@ import {
   useTipoVehiculo,
   useVehiculoBusqueda,
 } from "../../../services/queries";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { VehiculoOption } from "../../../../types/option";
 import { useAppError } from "../../../../hooks/useAppError";
 import { useCreateVehiculo } from "../../../services/mutations";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import { RHFCheckBox } from "../../../../components/RHFCheckBox";
+
 import { VehiculoDetailsDialog } from "../../../../components/VehiculoDetailsDialog";
 import { VehiculoDeleteDialog } from "../../../../components/VehiculoDeleteDialog";
 import { CompactVehiculoCard } from "../../../../components/CompactVehiculoCard";
 import { VehiculoTableDetails } from "../../../../components/VehiculoTableDetails";
+import { RHFRadioGroup } from "../../../../components/RHFRadioGroup";
 //import {  useForm } from "react-hook-form";
 
 interface VehiculoComponentProps {
@@ -234,6 +230,7 @@ export function VehiculoComponent({
           isUserCreated: newVehiculo.isUserCreated,
           needsValidation: newVehiculo.needsValidation,
         };
+
         const newList = [...vehiculoList, vehiculoData];
         setVehiculoList(newList);
         onVehiculosListChange(newList);
@@ -580,10 +577,10 @@ export function VehiculoComponent({
             </DialogTitle>
             <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
               <Stack spacing={2}>
-                <RHFCheckBox<VehiculosSchema>
+                <RHFRadioGroup<VehiculosSchema>
                   name="tipoVehiculo"
                   label="Tipo de Vehiculo"
-                  options={useTipoVehiculo().data || []}
+                  options={useTipoVehiculo().data}
                 />
                 <TextField
                   name="numInterno"

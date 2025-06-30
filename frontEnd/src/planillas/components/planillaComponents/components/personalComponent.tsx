@@ -390,7 +390,7 @@ export function PersonalComponent({
       </Card>
 
       {foundPersonal && !isConfirmed && (
-        <Card sx={{ bgcolor: "success.light", color: "success.contrastText" }}>
+        <Card sx={{ bgcolor: "info.light", color: "info.contrastText" }}>
           <CardContent sx={{ p: isMobile ? 2 : 3 }}>
             <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>
               Empleado Encontrado

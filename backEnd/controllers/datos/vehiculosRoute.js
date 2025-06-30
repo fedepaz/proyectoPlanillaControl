@@ -93,7 +93,9 @@ vehiculoRouter.post("/", async (req, res, next) => {
       numInterno,
       empresa,
       tipoVehiculo,
-    });
+    })
+      .populate("tipoVehiculo")
+      .populate("empresa");
 
     if (vehiculoExists) {
       const error = new Error();
@@ -111,7 +113,10 @@ vehiculoRouter.post("/", async (req, res, next) => {
       needsValidation: true,
     });
     const savedVehiculo = await newVehiculo.save();
-    return res.status(201).json(savedVehiculo);
+    const populatedVehiculo = await Vehiculo.findById(savedVehiculo.id)
+      .populate("tipoVehiculo")
+      .populate("empresa");
+    return res.status(201).json(populatedVehiculo);
   } catch (error) {
     next(error);
   }
