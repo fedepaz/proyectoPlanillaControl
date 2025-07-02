@@ -7,6 +7,11 @@ type Edit = {
   id: string;
 };
 
+export interface NovedadesData {
+  isRequired: boolean;
+  observaciones: string;
+}
+
 export type PlanillaCommon = {
   id: string;
   datosPsa: {
@@ -41,11 +46,12 @@ export type PlanillaCommon = {
   datosVehiculos: {
     vehiculo: string;
     operadorVehiculo: string;
+    isObservaciones: boolean;
     observacionesVehiculo: string;
   }[];
-  novEquipajes: string;
-  novInspeccion: string;
-  novOtras: string;
+  novEquipajes: NovedadesData;
+  novInspeccion: NovedadesData;
+  novOtras: NovedadesData;
 };
 
 export type PlanillaCreateEdit = PlanillaCommon & (Create | Edit);

@@ -27,7 +27,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     resolver: zodResolver(planillaSchema),
     defaultValues: defaultValuesPlanilla,
   });
-  const { setValue, handleSubmit } = methods;
+  const { setValue, handleSubmit, getValues } = methods;
 
   const { user, userInfo, error, isError, isLoading, refetch } = useAuth();
 
@@ -41,17 +41,54 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     console.log("Form submitted with data:", data);
     try {
       const validationResult = planillaSchema.safeParse(data);
-
-      console.log("Validation passed " + validationResult);
+      if (validationResult.success) {
+        console.log("Validation passed", validationResult.data);
+        // Here you can add your actual submission logic
+      } else {
+        console.error("Validation errors:", validationResult.error);
+        setErrorMessage("Solucione los errores anteriores");
+      }
     } catch (error) {
       console.error("Error in onSubmit:", error);
+    }
+  };
+
+  // New function to handle finalization with debugging
+  const handleFinalize = async () => {
+    console.log("=== FINALIZING FORM ===");
+
+    // Get current form values (even if invalid)
+    const currentValues = getValues();
+    console.log("Current form values:", currentValues);
+
+    // Try to validate and submit
+    try {
+      const validationResult = planillaSchema.safeParse(currentValues);
+      if (validationResult.success) {
+        console.log("✅ Form is valid, submitting...");
+        await onSubmit(validationResult.data);
+      } else {
+        console.log("❌ Form has validation errors:");
+        console.log("Validation errors:", validationResult.error.errors);
+
+        // Still log the data for debugging
+        console.log("Raw form data (with errors):", currentValues);
+
+        // Show error message
+        setErrorMessage(
+          "Hay errores en el formulario. Revise los datos ingresados."
+        );
+      }
+    } catch (error) {
+      console.error("Error during finalization:", error);
+      console.log("Raw form data (error case):", currentValues);
     }
   };
 
   const sendBack = (data: boolean) => {
     onBackHome(data);
   };
-  const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 4));
+  const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 5));
   const handleBack = () => setActiveStep((prev) => Math.max(prev - 1, 0));
 
   const clearErrorMessage = () => {
@@ -113,6 +150,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
           onBack={sendBack}
           onNext={handleNext}
           onPrevious={handleBack}
+          onFinalize={handleFinalize}
           user={user}
         />
         <Snackbar

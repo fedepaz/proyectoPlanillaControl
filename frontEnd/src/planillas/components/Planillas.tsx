@@ -9,10 +9,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
-//import { useFormContext } from "react-hook-form";
-import { PlanillaSchema } from "../types/planillaSchema";
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
-import { RHFTextField } from "../../components/RHFTextField";
 import { FormStepper } from "./planillaComponents/components/formStepperComponent";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";
 import { DatosSeguridad } from "./planillaComponents/datosSeguridad";
@@ -22,6 +19,7 @@ import { useStepValidation } from "../hooks/useStepValidation";
 import { ErrorProvider } from "../../provider/ErrorProvider";
 import { StepErrorWrapper } from "./planillaComponents/components/stepErrorWrapperComponent";
 import { User } from "../../actions/types";
+import { DatosNovedades } from "./planillaComponents/datosNovedades";
 
 interface PlanillaProps {
   activeStep: number;
@@ -30,6 +28,7 @@ interface PlanillaProps {
   onBack: (data: boolean) => void;
   onNext: () => void;
   onPrevious: () => void;
+  onFinalize: () => Promise<void>;
   user: User | null;
 }
 
@@ -40,10 +39,9 @@ export function Planillas({
   onBack,
   onNext,
   onPrevious,
+  onFinalize,
   user,
 }: PlanillaProps) {
-  //const { setValue } = useFormContext<PlanillaSchema>();
-
   const { validateCurrentStep } = useStepValidation(
     activeStep,
     setErrorMessage
@@ -52,7 +50,7 @@ export function Planillas({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const sendBack = () => {
-    onBack(false);
+    onBack(true);
   };
 
   const handleNext = async () => {
@@ -61,6 +59,10 @@ export function Planillas({
     if (isValid) {
       onNext();
     }
+  };
+  const handleFinalize = async () => {
+    clearErrorMessage();
+    await onFinalize();
   };
 
   const renderStepContent = () => {
@@ -77,28 +79,7 @@ export function Planillas({
         case 4: // vehiculos
           return <DatosVehiculos />;
         case 5:
-          return (
-            <Stack spacing={2}>
-              <RHFTextField<PlanillaSchema>
-                name="novEquipajes"
-                label="Novedades Equipajes"
-                multiline
-                rows={2}
-              />
-              <RHFTextField<PlanillaSchema>
-                name="novInspeccion"
-                label="Novedades Inspección"
-                multiline
-                rows={2}
-              />
-              <RHFTextField<PlanillaSchema>
-                name="novOtras"
-                label="Otras Novedades"
-                multiline
-                rows={2}
-              />
-            </Stack>
-          );
+          return <DatosNovedades />;
         default:
           return null;
       }
@@ -172,11 +153,12 @@ export function Planillas({
             )}
             {isLastStep ? (
               <Button
-                type="submit"
+                type="button"
                 variant="contained"
                 color="primary"
                 startIcon={<CheckIcon />}
                 sx={{ minWidth: "120px" }}
+                onClick={handleFinalize}
               >
                 Finalizar
               </Button>

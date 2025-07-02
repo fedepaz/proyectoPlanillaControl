@@ -28,6 +28,7 @@ export function RHFDropDownMatricula<T extends FieldValues>({
 }: Props<T>) {
   const { control } = useFormContext<T>();
   const ADD_NEW_MATRICULA = "ADD_NEW_MATRICULA";
+  console.log(options);
 
   return (
     <Controller

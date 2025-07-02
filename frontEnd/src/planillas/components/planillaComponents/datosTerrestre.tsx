@@ -103,7 +103,7 @@ export function DatosTerrestre() {
             personalList={confirmedPersonalList}
             onPersonalListChange={handleFunctionAssignment}
             title="Asignar Funciones"
-            empresaColor="primary.main"
+            empresaColor={empresaColorRef}
           />
         ) : (
           <ConfirmedListComponent

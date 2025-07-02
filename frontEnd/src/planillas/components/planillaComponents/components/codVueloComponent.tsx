@@ -17,6 +17,7 @@ import {
   Stack,
   Card,
   CardContent,
+  FormLabel,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useMemo, useState } from "react";
@@ -198,6 +199,7 @@ export function CodVueloComponent({
 
   return (
     <FormProvider {...methods}>
+      <FormLabel>Codigo de vuelo</FormLabel>
       <Stack sx={{ gap: 1 }}>
         {!selectedCodVuelo && (
           <RHFDropDownCodVuelo<CodVueloSchema>

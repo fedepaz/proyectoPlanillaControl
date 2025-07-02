@@ -7,14 +7,10 @@ import {
   Chip,
   useTheme,
   Stack,
-  Divider,
   Alert,
-  Button,
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import BusinessIcon from "@mui/icons-material/Business";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import EditIcon from "@mui/icons-material/Edit";
 import { useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { EmpresaOption, VehiculoOption } from "../../../types/option";
@@ -128,10 +124,6 @@ export function DatosVehiculos() {
     }
   };
 
-  const handleEditAssignments = () => {
-    setIsOperatorsAssigned(false);
-  };
-
   const getVehiculoInfo = (vehiculoId: string) => {
     return confirmedVehiculoList.find((v) => v.id === vehiculoId);
   };
@@ -152,11 +144,7 @@ export function DatosVehiculos() {
   const operatorSummary = getOperatorSummary();
 
   return (
-    <Stack
-      justifyContent="center"
-      sx={{ gap: 2, py: 3 }}
-      divider={<Divider orientation="horizontal" flexItem />}
-    >
+    <Stack>
       <Card elevation={2} sx={{ borderRadius: 2 }}>
         <CardContent sx={{ p: 2 }}>
           <Box
@@ -244,37 +232,15 @@ export function DatosVehiculos() {
           }}
         >
           <CardContent sx={{ p: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-              <CheckCircleIcon sx={{ color: "success.main" }} />
-              <Typography variant="h6" color="success.main" fontWeight="600">
-                Asignaciones Completadas
-              </Typography>
-            </Box>
-
             <Alert severity="success" sx={{ mb: 2 }}>
-              <Typography variant="body2">
+              <Typography variant="caption">
                 ✓ Todos los operadores han sido asignados exitosamente. Puedes
                 continuar al siguiente paso.
               </Typography>
             </Alert>
 
             <Box sx={{ mb: 2 }}>
-              <Typography
-                variant="subtitle2"
-                color="text.secondary"
-                gutterBottom
-              >
-                Resumen de Asignaciones:
-              </Typography>
               <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-                <Chip
-                  label={`${operatorSummary.totalAssigned} vehículo${
-                    operatorSummary.totalAssigned > 1 ? "s" : ""
-                  } asignado${operatorSummary.totalAssigned > 1 ? "s" : ""}`}
-                  size="small"
-                  color="success"
-                  variant="outlined"
-                />
                 {operatorSummary.withObservations > 0 && (
                   <Chip
                     label={`${operatorSummary.withObservations} con observaciones`}
@@ -303,27 +269,18 @@ export function DatosVehiculos() {
                     <Typography
                       key={index}
                       variant="body2"
-                      color="text.secondary"
+                      color={
+                        assignment.isObservaciones
+                          ? "warning.main"
+                          : "text.primary"
+                      }
                     >
-                      • {vehiculoInfo?.tipoVehiculo.label} -{" "}
+                      • {vehiculoInfo?.tipoVehiculo.label.toLocaleUpperCase()} -{" "}
                       {vehiculoInfo?.numInterno}
-                      {assignment.isObservaciones && " (con observaciones)"}
                     </Typography>
                   );
                 })}
               </Stack>
-            </Box>
-
-            {/* Edit button */}
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                variant="outlined"
-                startIcon={<EditIcon />}
-                onClick={handleEditAssignments}
-                sx={{ minWidth: 150 }}
-              >
-                Editar Asignaciones
-              </Button>
             </Box>
           </CardContent>
         </Card>

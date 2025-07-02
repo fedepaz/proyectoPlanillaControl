@@ -74,7 +74,7 @@ export function useCreateMatricula() {
     },
     retry: false,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["matriculaAeronave"] });
+      await queryClient.invalidateQueries({ queryKey: ["matricula"] });
     },
   });
 }

@@ -33,6 +33,9 @@ export type MatriculaOption = {
   id: string;
   matriculaAeronave: string;
   empresaId: string;
+  isUserCreated?: boolean;
+  createdAt?: string;
+  needsValidation?: boolean;
 };
 
 export type EmpresaOption = {

@@ -44,6 +44,10 @@ export function DatosSeguridad() {
   ) => {
     setConfirmedPersonalList(personalList);
     setIsConfirmed(personalList.length > 0);
+    setValue("datosSeguridad", personalList, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   return (

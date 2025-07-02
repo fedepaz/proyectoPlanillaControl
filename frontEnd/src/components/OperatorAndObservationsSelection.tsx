@@ -32,6 +32,7 @@ import {
 } from "@mui/icons-material";
 import type { VehiculoOption, BasePersonalOption } from "../types/option";
 import { PersonalOneComponent } from "../planillas/components/planillaComponents/components/personalOneComponent";
+import { NovedadesComponent } from "./NovedadesComponent";
 
 interface VehiculoWithOperator {
   vehiculo: string;
@@ -364,57 +365,22 @@ export const OperatorAndObservationsSelection: React.FC<
                     <Divider sx={{ my: 1 }} />
 
                     {/* Observations Section */}
-                    <Box>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={hasObservation}
-                            onChange={(e) =>
-                              handleObservationFlagChange(
-                                vehicle.id,
-                                e.target.checked
-                              )
-                            }
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        label={
-                          <Typography variant="caption" color="text.secondary">
-                            Agregar observaciones
-                          </Typography>
-                        }
-                        sx={{ mb: hasObservation ? 1 : 0 }}
-                      />
-
-                      {hasObservation && (
-                        <TextField
-                          fullWidth
-                          multiline
-                          rows={2}
-                          label="Observaciones"
-                          value={observations[vehicle.id] || ""}
-                          onChange={(e) =>
-                            handleObservationChange(vehicle.id, e.target.value)
-                          }
-                          placeholder="Observaciones del vehículo..."
-                          size="small"
-                          required={requireObservations}
-                          error={
-                            requireObservations &&
-                            hasObservation &&
-                            !observations[vehicle.id]?.trim()
-                          }
-                          helperText={
-                            requireObservations &&
-                            hasObservation &&
-                            !observations[vehicle.id]?.trim()
-                              ? "Observaciones requeridas"
-                              : ""
-                          }
-                        />
-                      )}
-                    </Box>
+                    <NovedadesComponent
+                      isRequired={observationFlags[vehicle.id] || false}
+                      observaciones={observations[vehicle.id] || ""}
+                      onRequiredChange={(isRequired) =>
+                        handleObservationFlagChange(vehicle.id, isRequired)
+                      }
+                      onObservacionesChange={(observaciones) =>
+                        handleObservationChange(vehicle.id, observaciones)
+                      }
+                      switchLabel="Agregar observaciones"
+                      textFieldLabel="Observaciones"
+                      placeholder="Observaciones del vehículo..."
+                      required={requireObservations}
+                      rows={2}
+                      size="small"
+                    />
                   </Box>
                 </Collapse>
               </Card>
@@ -441,6 +407,9 @@ export const OperatorAndObservationsSelection: React.FC<
         {/* Confirmation Button */}
         {hasChanges && (
           <Box sx={{ mt: 2, textAlign: "center" }}>
+            <Typography variant="caption" color="text.secondary">
+              Una vez confirmada, no podrá realizar más cambios en esta lista.
+            </Typography>
             <Button
               variant="contained"
               color="primary"

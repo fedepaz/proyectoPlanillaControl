@@ -17,6 +17,7 @@ import {
   Stack,
   Card,
   CardContent,
+  FormLabel,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useMemo, useState } from "react";
@@ -46,7 +47,8 @@ export function MatriculaComponent({
   empresaId,
 }: MatriculaComponentProps) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [newMatriculaNumber, setNewMatriculaNumber] = useState("");
+  const [newMatriculaFirst, setNewMatriculaFirst] = useState("");
+  const [newMatriculaSecond, setNewMatriculaSecond] = useState("");
   const [selectedMatricula, setSelectedMatricula] =
     useState<MatriculaOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -96,7 +98,7 @@ export function MatriculaComponent({
       setSelectedMatricula(selected || null);
       onMatriculaSelected(matriculaWatch);
     }
-  }, [matriculaWatch, matriculaOptions, onMatriculaSelected, setValue]);
+  }, [matriculaWatch, matriculaOptions, onMatriculaSelected]);
 
   useEffect(() => {
     if (matriculaQuery.error) {
@@ -141,9 +143,13 @@ export function MatriculaComponent({
   } = getDisplayInfo();
 
   const handleCreateNewMatricula = () => {
-    if (!newMatriculaNumber.trim()) return;
+    if (!newMatriculaFirst.trim() || !newMatriculaSecond.trim()) return;
+
     const newMatricula: MatriculaAeronaveSchema = {
-      matriculaAeronave: newMatriculaNumber.toUpperCase(),
+      matriculaAeronave:
+        newMatriculaFirst.toUpperCase() +
+        "-" +
+        newMatriculaSecond.toUpperCase(),
       empresa: empresaId,
     };
 
@@ -151,7 +157,8 @@ export function MatriculaComponent({
       onSuccess: (data) => {
         setValue("matriculaAeronave", data.id);
         setOpenDialog(false);
-        setNewMatriculaNumber("");
+        setNewMatriculaFirst("");
+        setNewMatriculaSecond("");
         onMatriculaSelected(data.id);
 
         const newOption: MatriculaOption = {
@@ -167,7 +174,8 @@ export function MatriculaComponent({
 
   const handleClose = () => {
     setOpenDialog(false);
-    setNewMatriculaNumber("");
+    setNewMatriculaFirst("");
+    setNewMatriculaSecond("");
   };
 
   const handleClearSelection = () => {
@@ -178,6 +186,7 @@ export function MatriculaComponent({
 
   return (
     <FormProvider {...methods}>
+      <FormLabel>Matricula Aeronave</FormLabel>
       <Stack sx={{ gap: 1 }}>
         {!selectedMatricula && (
           <RHFDropDownMatricula<MatriculaAeronaveSchema>
@@ -281,7 +290,7 @@ export function MatriculaComponent({
               <AddIcon />
             </Box>
             <Typography variant="h6" component="div">
-              Agregar nueva Matricula
+              Agregar nueva Matrícula
             </Typography>
           </Box>
           <IconButton
@@ -297,27 +306,48 @@ export function MatriculaComponent({
 
         <DialogContent sx={{ pt: 3, pb: 2, px: { xs: 2, sm: 3 } }}>
           <Typography variant="body2" color="text.secondary" paragraph>
-            Ingrese la Matricula
+            Ingrese la Matrícula separando con un guión (-). Ej: LV-PAZ
           </Typography>
-
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Matrícula"
-            fullWidth
-            value={newMatriculaNumber}
-            onChange={(e) => setNewMatriculaNumber(e.target.value)}
-            variant="outlined"
-            helperText="Matrícula"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FlightIcon />
-                </InputAdornment>
-              ),
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              flexDirection: "row",
+              alignItems: "center",
             }}
-            sx={{ mt: 2 }}
-          />
+          >
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Matrícula"
+              fullWidth
+              value={newMatriculaFirst}
+              onChange={(e) => setNewMatriculaFirst(e.target.value)}
+              variant="outlined"
+              helperText="Ej: lv"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FlightIcon />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ mt: 2 }}
+            />
+            <Typography variant="body2" color="text.secondary" paragraph>
+              -
+            </Typography>
+            <TextField
+              autoFocus
+              margin="dense"
+              fullWidth
+              value={newMatriculaSecond}
+              onChange={(e) => setNewMatriculaSecond(e.target.value)}
+              variant="outlined"
+              helperText="Ej: paz"
+              sx={{ mt: 2 }}
+            />
+          </Box>
         </DialogContent>
 
         <DialogActions
@@ -341,7 +371,9 @@ export function MatriculaComponent({
           <Button
             onClick={handleCreateNewMatricula}
             disabled={
-              !newMatriculaNumber.trim() || createMatriculaMutation.isPending
+              !newMatriculaFirst.trim() ||
+              !newMatriculaSecond.trim() ||
+              createMatriculaMutation.isPending
             }
             variant="contained"
             startIcon={<AddIcon />}

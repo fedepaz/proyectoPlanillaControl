@@ -24,9 +24,6 @@ export function DatosVuelo() {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
   const { setValue, watch } = useFormContext<PlanillaSchema>();
 
-  const handleMatSelected = (matriculaAeronave: string) => {
-    setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
-  };
   const sendEmpresa = (empresaId: string) => {
     setValue("datosVuelo.empresa", empresaId);
     setEmpresaIdRef(empresaId);
@@ -60,6 +57,9 @@ export function DatosVuelo() {
   const sendCodVuelo = (codVueloId: string) => {
     setValue("datosVuelo.codVuelo", codVueloId);
   };
+  const sendMatricula = (matriculaAeronave: string) => {
+    setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
+  };
 
   const canRenderCodVuelo = origenIdRef && destinoIdRef && empresaIdRef;
   const canRenderMatricula = empresaIdRef;
@@ -76,6 +76,7 @@ export function DatosVuelo() {
         onEmpresaSelected={sendEmpresa}
         tipoFijoID={airlineId}
         label="aerolinea"
+        onColorByTipoEmpresa={() => {}}
       />
 
       {/*tipoVuelo*/}
@@ -124,7 +125,7 @@ export function DatosVuelo() {
       {/*matriculaAeronave*/}
       {canRenderMatricula && (
         <MatriculaComponent
-          onMatriculaSelected={handleMatSelected}
+          onMatriculaSelected={sendMatricula}
           empresaId={empresaIdRef}
         />
       )}
