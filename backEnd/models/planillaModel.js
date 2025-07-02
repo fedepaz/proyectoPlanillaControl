@@ -35,8 +35,8 @@ const planillaSchema = Schema(
         required: true,
       },
 
-      horaArribo: { type: String, required: true },
-      horaPartida: { type: String, required: true },
+      horaArribo: { type: String },
+      horaPartida: { type: String },
       demora: { type: Schema.Types.ObjectId, ref: "Demora", required: true },
       tipoVuelo: {
         type: Schema.Types.ObjectId,

@@ -50,6 +50,7 @@ export function DatosVehiculos() {
   >([]);
   const [isVehiculosConfirmed, setIsVehiculosConfirmed] = useState(false);
   const [isOperatorsAssigned, setIsOperatorsAssigned] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const { data } = usePersonalHandlingEmpresa(datosTerrestre?.personalEmpresa);
 
@@ -61,6 +62,20 @@ export function DatosVehiculos() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+      // If there's no vehicle data on initialization, ensure clean state
+      if (!datosVehiculos || datosVehiculos.length === 0) {
+        setConfirmedVehiculoList([]);
+        setIsVehiculosConfirmed(false);
+        setIsOperatorsAssigned(false);
+        setCurrentVehiculoList([]);
+      }
+    }
+  }, [isInitialized, datosVehiculos]);
+
+  // Handle operators assignment status
   useEffect(() => {
     if (datosVehiculos && datosVehiculos.length > 0) {
       setIsOperatorsAssigned(true);

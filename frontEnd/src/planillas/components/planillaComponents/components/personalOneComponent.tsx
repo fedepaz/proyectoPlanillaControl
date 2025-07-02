@@ -24,7 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import EditIcon from "@mui/icons-material/Edit";
+
 import PersonIcon from "@mui/icons-material/Person";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -232,18 +232,8 @@ export function PersonalOneComponent({
     });
   };
 
-  const handleClearSelection = () => {
-    setSelectedPersonal(null);
-    setSearchDni("");
-    setFoundPersonal(null);
-  };
-
   const handleCloseDialog = () => {
     setShowAddDialog(false);
-    resetForm({
-      ...defaultValuesPersonalEmpresa,
-      empresa: empresaId,
-    });
     setSearchDni("");
     setFoundPersonal(null);
   };
@@ -268,92 +258,66 @@ export function PersonalOneComponent({
           >
             <PersonAddIcon />
             {label}
+            {selectedPersonal && <CheckCircleIcon color="success" />}
           </Typography>
 
-          {/* Show selected personal */}
-          {selectedPersonal ? (
-            <Card sx={{ bgcolor: "success.light", mb: 2 }}>
-              <CardContent sx={{ p: 2 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <CheckCircleIcon color="success" />
-                    <Box>
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        {selectedPersonal.firstname} {selectedPersonal.lastname}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        DNI: {selectedPersonal.dni} | Legajo:{" "}
-                        {selectedPersonal.legajo}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={handleClearSelection}
-                    startIcon={<EditIcon />}
-                    sx={{ minWidth: "auto" }}
-                  >
-                    Cambiar
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          ) : (
-            <>
-              {/* Search section */}
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                spacing={2}
-                alignItems="stretch"
-              >
-                <TextField
-                  label="Buscar por DNI"
-                  value={searchDni}
-                  onChange={(e) => setSearchDni(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                  fullWidth
-                  size={isMobile ? "medium" : "small"}
-                  type="text"
-                  helperText={
-                    required && !selectedPersonal
-                      ? "Este campo es requerido"
-                      : ""
-                  }
-                />
-                <Button
-                  variant="contained"
-                  onClick={handleSearch}
-                  disabled={isSearching || !searchDni.trim()}
-                  startIcon={<SearchIcon />}
-                  fullWidth={isMobile}
-                  sx={{ minWidth: isMobile ? "auto" : 120 }}
-                >
-                  {isSearching ? "Buscando..." : "Buscar"}
-                </Button>
-              </Stack>
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing={2}
+            alignItems="stretch"
+          >
+            <TextField
+              label="Buscar por DNI"
+              value={searchDni}
+              onChange={(e) => setSearchDni(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+              disabled={!!selectedPersonal}
+              fullWidth
+              size={isMobile ? "medium" : "small"}
+              type="text"
+              inputRef={(input) => {
+                if (personalQuery.error && shouldSearch && input) {
+                  setTimeout(() => input.focus(), 100);
+                }
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={handleSearch}
+              disabled={isSearching || !searchDni.trim() || !!selectedPersonal}
+              startIcon={<SearchIcon />}
+              fullWidth={isMobile}
+              sx={{
+                minWidth: isMobile ? "auto" : 120,
+                border:
+                  personalQuery.error && shouldSearch
+                    ? "1px solid red"
+                    : "none",
+              }}
+            >
+              {isSearching ? "Buscando..." : "Buscar"}
+            </Button>
+          </Stack>
 
-              {/* Empty state */}
-              <Box sx={{ textAlign: "center", py: 3, color: "text.secondary" }}>
-                <PersonIcon sx={{ fontSize: 48, mb: 1, opacity: 0.5 }} />
-                <Typography variant="body2">
-                  {required
-                    ? "Busque por DNI para seleccionar un empleado"
-                    : "Ningún empleado seleccionado"}
-                </Typography>
-              </Box>
-            </>
-          )}
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing={2}
+            alignItems="center"
+            mt={2}
+          >
+            {required && !selectedPersonal && (
+              <Chip
+                label="Requerido"
+                color="warning"
+                variant="outlined"
+                size={isMobile ? "small" : "medium"}
+              />
+            )}
+          </Stack>
         </CardContent>
       </Card>
 
-      {/* Found personal card */}
+      {/* Found Personal Card - Appears right after main card, similar to PersonalComponent */}
       {foundPersonal && !selectedPersonal && (
         <Card sx={{ bgcolor: "info.light", color: "info.contrastText" }}>
           <CardContent sx={{ p: isMobile ? 2 : 3 }}>
@@ -361,24 +325,24 @@ export function PersonalOneComponent({
               Empleado Encontrado
             </Typography>
             <Typography variant={isMobile ? "body2" : "body1"}>
-              <strong>Nombre:</strong> {foundPersonal.firstname}{" "}
+              <strong>Nombre: </strong> {foundPersonal.firstname}{" "}
               {foundPersonal.lastname}
             </Typography>
             <Typography variant={isMobile ? "body2" : "body1"}>
-              <strong>DNI:</strong> {foundPersonal.dni}
+              <strong>DNI: </strong> {foundPersonal.dni}
             </Typography>
             <Typography variant={isMobile ? "body2" : "body1"}>
-              <strong>Legajo:</strong> {foundPersonal.legajo}
+              <strong>Legajo: </strong> {foundPersonal.legajo}
             </Typography>
             <Stack direction={isMobile ? "column" : "row"} spacing={2} mt={2}>
               <Button
                 variant="contained"
-                color="primary"
+                color="success"
                 onClick={handleSelectFoundPersonal}
-                startIcon={<CheckCircleIcon />}
+                startIcon={<AddIcon />}
                 fullWidth={isMobile}
               >
-                Seleccionar
+                Seleccionar empleado
               </Button>
               <Button
                 variant="outlined"
@@ -393,6 +357,64 @@ export function PersonalOneComponent({
                 Cancelar
               </Button>
             </Stack>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Selected Personal Display - Similar to PersonalComponent's list display */}
+      {selectedPersonal && (
+        <Card>
+          <CardContent sx={{ p: isMobile ? 2 : 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexDirection: isMobile ? "column" : "row",
+                gap: isMobile ? 2 : 0,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <CheckCircleIcon color="success" />
+                <Box>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                    {selectedPersonal.firstname} {selectedPersonal.lastname}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    DNI: {selectedPersonal.dni} | Legajo:{" "}
+                    {selectedPersonal.legajo}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Empty State - Only show when no personal is selected and no search is active */}
+      {!selectedPersonal && !foundPersonal && (
+        <Card sx={{ textAlign: "center", py: isMobile ? 3 : 4 }}>
+          <CardContent>
+            <PersonIcon
+              sx={{
+                fontSize: isMobile ? 40 : 48,
+                color: "text.secondary",
+                mb: 2,
+              }}
+            />
+            <Typography
+              variant={isMobile ? "subtitle1" : "h6"}
+              color="text.secondary"
+              gutterBottom
+            >
+              No hay empleado seleccionado
+            </Typography>
+            <Typography
+              variant={isMobile ? "body2" : "body1"}
+              color="text.secondary"
+            >
+              Busque por DNI para seleccionar un empleado
+            </Typography>
           </CardContent>
         </Card>
       )}
@@ -414,7 +436,7 @@ export function PersonalOneComponent({
                 justifyContent="space-between"
               >
                 <Typography variant={isMobile ? "h6" : "h5"}>
-                  Crear Nuevo Empleado
+                  Agregar Empleado Terrestre
                 </Typography>
                 {fullScreen && (
                   <IconButton onClick={handleCloseDialog} size="small">
@@ -429,9 +451,11 @@ export function PersonalOneComponent({
                   severity="info"
                   sx={{ fontSize: isMobile ? "0.875rem" : "1rem" }}
                 >
-                  No se encontró ningún empleado con el DNI {searchDni}.
-                  Complete la información para crear un nuevo empleado.
+                  No se encontró ningún empleado terrestre con el DNI{" "}
+                  {searchDni}. Complete la información del nuevo empleado
+                  terrestre.
                 </Alert>
+
                 <RHFTextField<PersonalEmpresaSchema>
                   name="dni"
                   label="DNI"

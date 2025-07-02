@@ -13,6 +13,7 @@ import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
 
 import { useAuth } from "../../hooks/useAuth";
+import { FormReview } from "./planillaShow/formReview";
 
 interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
@@ -21,6 +22,9 @@ interface PlanillasProviderProps {
 export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [showReview, setShowReview] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<PlanillaSchema>({
     mode: "onChange",
@@ -39,11 +43,18 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const onSubmit = async (data: PlanillaSchema) => {
     console.log("Form submitted with data:", data);
+    setIsSubmitting(true);
     try {
       const validationResult = planillaSchema.safeParse(data);
       if (validationResult.success) {
         console.log("Validation passed", validationResult.data);
         // Here you can add your actual submission logic
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        // Success - you might want to show a success message or redirect
+        console.log("✅ Form submitted successfully!");
+        setShowReview(false);
       } else {
         console.error("Validation errors:", validationResult.error);
         setErrorMessage("Solucione los errores anteriores");
@@ -53,38 +64,67 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     }
   };
 
-  // New function to handle finalization with debugging
   const handleFinalize = async () => {
-    console.log("=== FINALIZING FORM ===");
+    console.log("=== SHOWING REVIEW ===");
 
-    // Get current form values (even if invalid)
+    // Get current form values
     const currentValues = getValues();
     console.log("Current form values:", currentValues);
 
-    // Try to validate and submit
-    try {
-      const validationResult = planillaSchema.safeParse(currentValues);
-      if (validationResult.success) {
-        console.log("✅ Form is valid, submitting...");
-        await onSubmit(validationResult.data);
-      } else {
-        console.log("❌ Form has validation errors:");
-        console.log("Validation errors:", validationResult.error.errors);
+    // Validate everything except horaFin (which will be set in review)
+    const tempData = { ...currentValues };
+    tempData.datosPsa.horaFin = "2359"; // Temporary value for validation
 
-        // Still log the data for debugging
-        console.log("Raw form data (with errors):", currentValues);
+    const validationResult = planillaSchema.safeParse(tempData);
 
-        // Show error message
+    if (validationResult.success) {
+      console.log("✅ Form is ready for review");
+      setShowReview(true);
+    } else {
+      console.log("❌ Form has validation errors:");
+      console.log("Validation errors:", validationResult.error.errors);
+
+      // Filter out horaFin errors for display
+      const nonHoraFinErrors = validationResult.error.errors.filter(
+        (err) => !err.path.includes("horaFin")
+      );
+
+      if (nonHoraFinErrors.length > 0) {
         setErrorMessage(
-          "Hay errores en el formulario. Revise los datos ingresados."
+          "Hay errores en el formulario. Revise los datos ingresados antes de continuar."
         );
+      } else {
+        // Only horaFin errors, proceed to review
+        setShowReview(true);
       }
-    } catch (error) {
-      console.error("Error during finalization:", error);
-      console.log("Raw form data (error case):", currentValues);
     }
   };
 
+  // Handle final confirmation from review component
+  const handleReviewConfirm = async (finalHoraFin: string) => {
+    const currentValues = getValues();
+
+    // Set the final horaFin value
+    setValue("datosPsa.horaFin", finalHoraFin);
+
+    // Create the final data object
+    const finalData = {
+      ...currentValues,
+      datosPsa: {
+        ...currentValues.datosPsa,
+        horaFin: finalHoraFin,
+      },
+    };
+
+    console.log("Final data with horaFin:", finalData);
+
+    // Submit the form
+    await onSubmit(finalData);
+  };
+
+  const handleBackFromReview = () => {
+    setShowReview(false);
+  };
   const sendBack = (data: boolean) => {
     onBackHome(data);
   };
@@ -140,6 +180,35 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     );
   }
 
+  if (showReview) {
+    return (
+      <FormProvider {...methods}>
+        <CssBaseline />
+        <Box sx={{ py: 3, px: 2 }}>
+          <FormReview
+            formData={getValues()}
+            onConfirm={handleReviewConfirm}
+            onBack={handleBackFromReview}
+            isSubmitting={isSubmitting}
+          />
+        </Box>
+        <Snackbar
+          open={!!errorMessage}
+          autoHideDuration={6000}
+          onClose={clearErrorMessage}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={clearErrorMessage}
+            severity="error"
+            sx={{ width: "100%", whiteSpace: "pre-line" }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      </FormProvider>
+    );
+  }
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>

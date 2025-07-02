@@ -36,8 +36,10 @@ export function DatosVuelo() {
   }
   const sendAeropuerto = (aeropuertoId: string) => {
     if (tipoVuelo === "partida") {
+      setValue("datosVuelo.horaArribo", "");
       setDestinoIdRef(aeropuertoId);
     } else {
+      setValue("datosVuelo.horaPartida", "");
       setOrigenIdRef(aeropuertoId);
     }
   };

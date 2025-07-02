@@ -43,11 +43,16 @@ export function DatosSeguridad() {
     personalList: PersonalSeguridadOption[]
   ) => {
     setConfirmedPersonalList(personalList);
-    setIsConfirmed(personalList.length > 0);
-    setValue("datosSeguridad", personalList, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
+    if (personalList.length > 0) {
+      setIsConfirmed(true);
+      const datosSeguridadConfirm = [
+        {
+          personalSegEmpresa: personalList.map((p) => p.id),
+          empresaSeguridad: empresaIdRef,
+        },
+      ];
+      setValue("datosSeguridad", datosSeguridadConfirm);
+    }
   };
 
   return (

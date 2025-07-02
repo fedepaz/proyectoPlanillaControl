@@ -31,7 +31,6 @@ export function VehiculoDetailsDialog({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  console.log("vehiculo", vehiculo);
   if (!vehiculo) return null;
 
   const empresaName =

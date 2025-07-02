@@ -34,6 +34,67 @@ const isTimeBeforeOrEqual = (time1: string, time2: string): boolean => {
   return parseInt(time1, 10) <= parseInt(time2, 10);
 };
 
+const datosVueloSchema = z
+  .object({
+    tipoVuelo: z.string().min(1, "Tipo de vuelo es requerido"),
+    empresa: z.string().min(1, "Empresa es requerida"),
+    codVuelo: z.string().min(1, "Código de vuelo es requerido"),
+    horaArribo: z.string().optional(),
+    horaPartida: z.string().optional(),
+    demora: z.string().min(1, "Tipo de demora es requerido"),
+    matriculaAeronave: z.string().min(1, "Matrícula es requerida"),
+    posicion: z.string().min(1, "Posición es requerida"),
+  })
+  .superRefine((data, ctx) => {
+    const { horaArribo, horaPartida } = data;
+    const hasArribo = !!horaArribo && horaArribo.trim() !== "";
+    const hasPartida = !!horaPartida && horaPartida.trim() !== "";
+
+    if (!hasArribo && !hasPartida) {
+      ctx.addIssue({
+        path: ["horaArribo"],
+        code: z.ZodIssueCode.custom,
+        message: "Debe ingresarse al menos una hora de arribo o partida",
+      });
+      ctx.addIssue({
+        path: ["horaPartida"],
+        code: z.ZodIssueCode.custom,
+        message: "Debe ingresarse al menos una hora de arribo o partida",
+      });
+      return;
+    }
+
+    if (hasArribo && !timeFormatValidator(horaArribo!)) {
+      ctx.addIssue({
+        path: ["horaArribo"],
+        code: z.ZodIssueCode.custom,
+        message: "Hora de arribo debe estar en formato 24-horas (HHMM)",
+      });
+    }
+
+    if (hasPartida && !timeFormatValidator(horaPartida!)) {
+      ctx.addIssue({
+        path: ["horaPartida"],
+        code: z.ZodIssueCode.custom,
+        message: "Hora de partida debe estar en formato 24-horas (HHMM)",
+      });
+    }
+
+    if (
+      hasArribo &&
+      hasPartida &&
+      timeFormatValidator(horaArribo!) &&
+      timeFormatValidator(horaPartida!) &&
+      !isTimeBeforeOrEqual(horaArribo!, horaPartida!)
+    ) {
+      ctx.addIssue({
+        path: ["horaPartida"],
+        code: z.ZodIssueCode.custom,
+        message: "La hora de partida no puede ser anterior a la hora de arribo",
+      });
+    }
+  });
+
 const planillaSchema = z
   .object({
     id: z.string().optional(),
@@ -63,38 +124,7 @@ const planillaSchema = z
         path: ["horaFin"],
       }),
 
-    datosVuelo: z
-      .object({
-        tipoVuelo: z.string().min(1, "Tipo de vuelo es requerido"),
-        empresa: z.string().min(1, "Empresa es requerida"),
-        codVuelo: z.string().min(1, "Codigo de vuelo es requerido"),
-        horaArribo: z
-          .string()
-          .min(1, "Hora de arribo es requerida")
-          .refine(timeFormatValidator, {
-            message: "Hora de arribo debe estar en formato 24-horas (HHMM)",
-          }),
-        horaPartida: z
-          .string()
-          .min(1, "Hora de partida es requerida")
-          .refine(timeFormatValidator, {
-            message: "Hora de partida debe estar en formato 24-horas (HHMM)",
-          }),
-        demora: z.string().min(1, "Tipo de demora es requerido"),
-        matriculaAeronave: z
-          .string()
-          .min(1, "Matricula de aeronave es requerida"),
-        posicion: z.string().min(1, "Posicion es requerida"),
-      })
-      .refine(
-        (data) => isTimeBeforeOrEqual(data.horaArribo, data.horaPartida),
-        {
-          message:
-            "La hora de partida no puede ser anterior a la hora de arribo",
-          path: ["horaPartida"],
-        }
-      ),
-
+    datosVuelo: datosVueloSchema,
     datosTerrestre: z
       .array(
         z.object({

@@ -60,6 +60,7 @@ export function Planillas({
       onNext();
     }
   };
+
   const handleFinalize = async () => {
     clearErrorMessage();
     await onFinalize();
