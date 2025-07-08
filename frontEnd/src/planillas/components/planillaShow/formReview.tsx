@@ -1,22 +1,36 @@
 "use client";
+import { useState, useCallback } from "react";
+import type React from "react";
 
-import { useState } from "react";
 import {
   Paper,
   Typography,
   Box,
   Button,
   Stack,
-  Divider,
   TextField,
   Grid,
-  Card,
-  CardContent,
-  CardHeader,
   Alert,
+  useTheme,
+  useMediaQuery,
+  Container,
+  Avatar,
 } from "@mui/material";
-import { CheckCircle, ArrowBack } from "@mui/icons-material";
+import {
+  CheckCircle,
+  ArrowBack,
+  Person,
+  Schedule,
+  Flight,
+  DirectionsCar,
+  Security,
+  Luggage,
+} from "@mui/icons-material";
 import type { PlanillaSchema } from "../../types/planillaSchema";
+import { useAuth } from "../../../hooks/useAuth";
+import { ResponsiveCard } from "../planillaComponents/components/responsiveCard";
+import { FieldDisplay } from "../planillaComponents/components/fieldDisplay";
+import { useCodVuelo } from "../../services/queries";
 
 interface FormReviewProps {
   formData: PlanillaSchema;
@@ -34,6 +48,17 @@ export function FormReview({
   const [horaFin, setHoraFin] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const codVueloCheckInfo = useCodVuelo();
+  const codVueloCheck = codVueloCheckInfo.data?.filter(
+    (item) => item.id === formData.datosVuelo.codVuelo
+  );
+
+  // Get user information
+  const { userInfo } = useAuth();
+
   const validateTimeFormat = (time: string) => {
     const timeRegex = /^([01]?[0-9]|2[0-3])[0-5][0-9]$/;
     return timeRegex.test(time);
@@ -41,33 +66,34 @@ export function FormReview({
 
   const validateEndTime = (startTime: string, endTime: string) => {
     if (!startTime || !endTime) return false;
-
     const start = Number.parseInt(startTime);
     const end = Number.parseInt(endTime);
-
     return end >= start;
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = useCallback(async () => {
     setError(null);
-
     if (!horaFin.trim()) {
       setError("La hora de fin es requerida");
       return;
     }
-
     if (!validateTimeFormat(horaFin)) {
       setError("La hora debe estar en formato 24-horas (HHMM)");
       return;
     }
-
     if (!validateEndTime(formData.datosPsa.horaIni, horaFin)) {
       setError("La hora de fin debe ser mayor o igual a la hora de inicio");
       return;
     }
-
     await onConfirm(horaFin);
-  };
+  }, [horaFin, formData.datosPsa.horaIni, onConfirm]);
+
+  const handleHoraFinChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setHoraFin(e.target.value);
+    },
+    []
+  );
 
   const formatTime = (time: string) => {
     if (!time || time.length !== 4) return time;
@@ -75,284 +101,399 @@ export function FormReview({
   };
 
   const formatDate = (date: string) => {
-    // Assuming date is in DD/MM/YYYY format
     return date;
   };
 
-  return (
-    <Paper elevation={2} sx={{ p: 3, maxWidth: 800, mx: "auto" }}>
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{ display: "flex", alignItems: "center", gap: 1 }}
-        >
-          <CheckCircle color="primary" />
-          Revisión Final del Formulario
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Revise todos los datos ingresados antes de finalizar el proceso
-        </Typography>
-      </Box>
+  const getUserDisplayName = () => {
+    if (!userInfo?.user) return "Usuario no identificado";
 
-      <Stack spacing={3}>
-        {/* Datos PSA */}
-        <Card variant="outlined">
-          <CardHeader title="Datos PSA" sx={{ pb: 1 }} />
-          <CardContent sx={{ pt: 0 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Fecha:
+    const firstName = userInfo.user.oficialId?.firstname;
+    const lastName = userInfo.user.oficialId?.lastname;
+
+    if (firstName && lastName) {
+      return `${firstName} ${lastName}`;
+    }
+  };
+
+  const getUserInitials = () => {
+    if (!userInfo?.user) return "U";
+
+    const firstName = userInfo.user.oficialId?.firstname;
+    const lastName = userInfo.user.oficialId?.lastname;
+
+    if (firstName && lastName) {
+      return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    }
+  };
+
+  return (
+    <Container
+      maxWidth={isMobile ? "sm" : isTablet ? "md" : "lg"}
+      sx={{
+        px: isMobile ? 1 : 2,
+        pb: isMobile ? 2 : 3,
+      }}
+    >
+      <Paper
+        elevation={isMobile ? 1 : 2}
+        sx={{
+          p: isMobile ? 2 : 3,
+          borderRadius: isMobile ? 2 : 1,
+        }}
+      >
+        {/* Header */}
+        <Box sx={{ mb: 3 }}>
+          <Typography
+            variant={isMobile ? "h5" : "h4"}
+            gutterBottom
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              flexDirection: isMobile ? "column" : "row",
+              textAlign: isMobile ? "center" : "left",
+            }}
+          >
+            <CheckCircle color="primary" />
+            Revisión Final del Formulario
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ textAlign: isMobile ? "center" : "left" }}
+          >
+            Revise todos los datos ingresados antes de finalizar el proceso
+          </Typography>
+        </Box>
+
+        <Stack spacing={isMobile ? 2 : 3}>
+          {/* User Information */}
+          <ResponsiveCard
+            title="Responsable"
+            icon={<Person color="primary" />}
+            isMobile={isMobile}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                flexDirection: isMobile ? "column" : "row",
+                textAlign: isMobile ? "center" : "left",
+              }}
+            >
+              <Avatar
+                sx={{
+                  bgcolor: theme.palette.primary.main,
+                  width: isMobile ? 48 : 40,
+                  height: isMobile ? 48 : 40,
+                }}
+              >
+                {getUserInitials()}
+              </Avatar>
+              <Box>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
+                  {userInfo?.user?.oficialId?.jerarquiaId?.jerarquia.toUpperCase()}{" "}
                 </Typography>
-                <Typography variant="body1">
-                  {formatDate(formData.datosPsa.fecha)}
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  {getUserDisplayName()}
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Cantidad:
-                </Typography>
-                <Typography variant="body1">
-                  {formData.datosPsa.cant}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Hora Inicio:
-                </Typography>
-                <Typography variant="body1">
-                  {formatTime(formData.datosPsa.horaIni)}
-                </Typography>
-              </Grid>
+
+                {userInfo?.user?.oficialId?.currentAirportId?.aeropuerto && (
+                  <Typography variant="body2" color="text.secondary">
+                    {userInfo.user.oficialId.currentAirportId.aeropuerto}
+                  </Typography>
+                )}
+              </Box>
+            </Box>
+          </ResponsiveCard>
+
+          {/* Datos PSA */}
+          <ResponsiveCard
+            title="Datos PSA"
+            icon={<Schedule color="primary" />}
+            isMobile={isMobile}
+          >
+            <Grid container spacing={isMobile ? 2 : 2}>
+              <FieldDisplay
+                label="Fecha"
+                value={formatDate(formData.datosPsa.fecha)}
+                isMobile={isMobile}
+              />
+              <FieldDisplay
+                label="Cantidad"
+                value={formData.datosPsa.cant}
+                isMobile={isMobile}
+              />
+              <FieldDisplay
+                label="Hora Inicio"
+                value={formatTime(formData.datosPsa.horaIni)}
+                isMobile={isMobile}
+              />
               <Grid item xs={12} sm={6}>
                 <Box>
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    gutterBottom
+                    sx={{ fontWeight: 500, mb: 1 }}
                   >
                     Hora Fin: *
                   </Typography>
                   <TextField
-                    size="small"
+                    size={isMobile ? "medium" : "small"}
                     placeholder="HHMM"
                     value={horaFin}
-                    onChange={(e) => setHoraFin(e.target.value)}
+                    onChange={handleHoraFinChange}
                     error={!!error}
                     helperText={error || "Formato: HHMM (ej: 1430)"}
-                    inputProps={{ maxLength: 4 }}
+                    inputProps={{
+                      maxLength: 4,
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
+                    }}
                     disabled={isSubmitting}
+                    fullWidth
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        fontSize: isMobile ? "16px" : "14px", // Prevents zoom on iOS
+                      },
+                    }}
                   />
                 </Box>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
+          </ResponsiveCard>
 
-        {/* Datos Vuelo */}
-        <Card variant="outlined">
-          <CardHeader title="Datos de Vuelo" sx={{ pb: 1 }} />
-          <CardContent sx={{ pt: 0 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Posición:
-                </Typography>
-                <Typography variant="body1">
-                  {formData.datosVuelo.posicion}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Hora Partida:
-                </Typography>
-                <Typography variant="body1">
-                  {formatTime(formData.datosVuelo.horaPartida)}
-                </Typography>
-              </Grid>
+          {/* Datos Vuelo */}
+          <ResponsiveCard
+            title="Datos de Vuelo"
+            icon={<Flight color="primary" />}
+            isMobile={isMobile}
+          >
+            <Grid container spacing={isMobile ? 2 : 2}>
+              {codVueloCheck && (
+                <FieldDisplay
+                  label="Empresa"
+                  value={codVueloCheck[0].empresa.empresa}
+                  isMobile={isMobile}
+                />
+              )}
+              {codVueloCheck && (
+                <FieldDisplay
+                  label="Código de vuelo"
+                  value={codVueloCheck[0].codVuelo}
+                  isMobile={isMobile}
+                />
+              )}
+              {codVueloCheck && (
+                <FieldDisplay
+                  label="Origen"
+                  value={codVueloCheck[0].origen.codIATA}
+                  isMobile={isMobile}
+                />
+              )}
+              {codVueloCheck && (
+                <FieldDisplay
+                  label="Destino"
+                  value={codVueloCheck[0].destino.codIATA}
+                  isMobile={isMobile}
+                />
+              )}
+              <FieldDisplay
+                label="Posición"
+                value={formData.datosVuelo.posicion}
+                isMobile={isMobile}
+              />
+              {formData.datosVuelo.horaPartida && (
+                <FieldDisplay
+                  label="Hora Partida"
+                  value={formatTime(formData.datosVuelo.horaPartida)}
+                  isMobile={isMobile}
+                />
+              )}
               {formData.datosVuelo.horaArribo && (
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Hora Arribo:
-                  </Typography>
-                  <Typography variant="body1">
-                    {formatTime(formData.datosVuelo.horaArribo)}
-                  </Typography>
-                </Grid>
+                <FieldDisplay
+                  label="Hora Arribo"
+                  value={formatTime(formData.datosVuelo.horaArribo)}
+                  isMobile={isMobile}
+                />
               )}
             </Grid>
-          </CardContent>
-        </Card>
+          </ResponsiveCard>
 
-        {/* Datos Terrestre */}
-        {formData.datosTerrestre && formData.datosTerrestre.length > 0 && (
-          <Card variant="outlined">
-            <CardHeader
-              title={`Personal Terrestre (${formData.datosTerrestre.length})`}
-              sx={{ pb: 1 }}
-            />
-            <CardContent sx={{ pt: 0 }}>
-              {formData.datosTerrestre.map((item, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    mb: index < formData.datosTerrestre.length - 1 ? 2 : 0,
-                  }}
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    Personal {index + 1} - Grupo: {item.grupo}
-                  </Typography>
-                  {index < formData.datosTerrestre.length - 1 && (
-                    <Divider sx={{ mt: 1 }} />
-                  )}
-                </Box>
-              ))}
-            </CardContent>
-          </Card>
-        )}
+          {/* Datos Terrestre */}
+          {formData.datosTerrestre && formData.datosTerrestre.length > 0 && (
+            <ResponsiveCard
+              title="Personal Terrestre"
+              icon={<Person color="primary" />}
+              isMobile={isMobile}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {formData.datosTerrestre.length} registro(s) de personal
+                terrestre configurado(s)
+              </Typography>
+            </ResponsiveCard>
+          )}
 
-        {/* Datos Seguridad */}
-        {formData.datosSeguridad && formData.datosSeguridad.length > 0 && (
-          <Card variant="outlined">
-            <CardHeader
-              title={`Datos de Seguridad (${formData.datosSeguridad.length})`}
-              sx={{ pb: 1 }}
-            />
-            <CardContent sx={{ pt: 0 }}>
+          {/* Datos Seguridad */}
+          {formData.datosSeguridad && formData.datosSeguridad.length > 0 && (
+            <ResponsiveCard
+              title="Datos de Seguridad"
+              icon={<Security color="primary" />}
+              isMobile={isMobile}
+            >
               <Typography variant="body2" color="text.secondary">
                 {formData.datosSeguridad.length} registro(s) de seguridad
                 configurado(s)
               </Typography>
-            </CardContent>
-          </Card>
-        )}
+            </ResponsiveCard>
+          )}
 
-        {/* Datos Vehículos */}
-        {formData.datosVehiculos && formData.datosVehiculos.length > 0 && (
-          <Card variant="outlined">
-            <CardHeader
-              title={`Vehículos (${formData.datosVehiculos.length})`}
-              sx={{ pb: 1 }}
-            />
-            <CardContent sx={{ pt: 0 }}>
-              {formData.datosVehiculos.map((vehiculo, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    mb: index < formData.datosVehiculos.length - 1 ? 2 : 0,
-                  }}
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    Vehículo {index + 1}
-                    {vehiculo.isObservaciones &&
-                      vehiculo.observacionesVehiculo && (
+          {/* Datos Vehículos */}
+          {formData.datosVehiculos && formData.datosVehiculos.length > 0 && (
+            <ResponsiveCard
+              title="Vehículos"
+              icon={<DirectionsCar color="primary" />}
+              isMobile={isMobile}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {formData.datosVehiculos.length} registro(s) de vehiculos
+                configurado(s)
+              </Typography>
+            </ResponsiveCard>
+          )}
+
+          {/* Novedades */}
+          <ResponsiveCard
+            title="Novedades"
+            icon={<Luggage color="primary" />}
+            isMobile={isMobile}
+          >
+            <Grid container spacing={isMobile ? 2 : 2}>
+              <FieldDisplay
+                label="Equipajes"
+                value={
+                  <Box>
+                    <Typography component="span">
+                      {formData.novEquipajes?.isRequired ? "Sí" : "No"}
+                    </Typography>
+                    {formData.novEquipajes?.isRequired &&
+                      formData.novEquipajes.observaciones && (
                         <Typography
                           variant="body2"
                           sx={{ mt: 0.5, fontStyle: "italic" }}
                         >
-                          Obs: {vehiculo.observacionesVehiculo}
+                          {formData.novEquipajes.observaciones}
                         </Typography>
                       )}
-                  </Typography>
-                  {index < formData.datosVehiculos.length - 1 && (
-                    <Divider sx={{ mt: 1 }} />
-                  )}
-                </Box>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Novedades */}
-        <Card variant="outlined">
-          <CardHeader title="Novedades" sx={{ pb: 1 }} />
-          <CardContent sx={{ pt: 0 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="body2" color="text.secondary">
-                  Equipajes:
-                </Typography>
-                <Typography variant="body1">
-                  {formData.novEquipajes?.isRequired ? "Sí" : "No"}
-                </Typography>
-                {formData.novEquipajes?.isRequired &&
-                  formData.novEquipajes.observaciones && (
-                    <Typography
-                      variant="body2"
-                      sx={{ mt: 0.5, fontStyle: "italic" }}
-                    >
-                      {formData.novEquipajes.observaciones}
+                  </Box>
+                }
+                isMobile={isMobile}
+              />
+              <FieldDisplay
+                label="Inspección"
+                value={
+                  <Box>
+                    <Typography component="span">
+                      {formData.novInspeccion?.isRequired ? "Sí" : "No"}
                     </Typography>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="body2" color="text.secondary">
-                  Inspección:
-                </Typography>
-                <Typography variant="body1">
-                  {formData.novInspeccion?.isRequired ? "Sí" : "No"}
-                </Typography>
-                {formData.novInspeccion?.isRequired &&
-                  formData.novInspeccion.observaciones && (
-                    <Typography
-                      variant="body2"
-                      sx={{ mt: 0.5, fontStyle: "italic" }}
-                    >
-                      {formData.novInspeccion.observaciones}
+                    {formData.novInspeccion?.isRequired &&
+                      formData.novInspeccion.observaciones && (
+                        <Typography
+                          variant="body2"
+                          sx={{ mt: 0.5, fontStyle: "italic" }}
+                        >
+                          {formData.novInspeccion.observaciones}
+                        </Typography>
+                      )}
+                  </Box>
+                }
+                isMobile={isMobile}
+              />
+              <FieldDisplay
+                label="Otras"
+                value={
+                  <Box>
+                    <Typography component="span">
+                      {formData.novOtras?.isRequired ? "Sí" : "No"}
                     </Typography>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="body2" color="text.secondary">
-                  Otras:
-                </Typography>
-                <Typography variant="body1">
-                  {formData.novOtras?.isRequired ? "Sí" : "No"}
-                </Typography>
-                {formData.novOtras?.isRequired &&
-                  formData.novOtras.observaciones && (
-                    <Typography
-                      variant="body2"
-                      sx={{ mt: 0.5, fontStyle: "italic" }}
-                    >
-                      {formData.novOtras.observaciones}
-                    </Typography>
-                  )}
-              </Grid>
+                    {formData.novOtras?.isRequired &&
+                      formData.novOtras.observaciones && (
+                        <Typography
+                          variant="body2"
+                          sx={{ mt: 0.5, fontStyle: "italic" }}
+                        >
+                          {formData.novOtras.observaciones}
+                        </Typography>
+                      )}
+                  </Box>
+                }
+                fullWidth
+                isMobile={isMobile}
+              />
             </Grid>
-          </CardContent>
-        </Card>
+          </ResponsiveCard>
 
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
-        )}
+          {/* Error Alert */}
+          {error && (
+            <Alert severity="error" sx={{ borderRadius: isMobile ? 2 : 1 }}>
+              {error}
+            </Alert>
+          )}
 
-        {/* Action Buttons */}
-        <Paper elevation={1} sx={{ p: 2, mt: 3 }}>
-          <Stack direction="row" spacing={2} justifyContent="space-between">
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBack />}
-              onClick={onBack}
-              disabled={isSubmitting}
+          {/* Action Buttons */}
+          <Paper
+            elevation={1}
+            sx={{
+              p: isMobile ? 2 : 2,
+              borderRadius: isMobile ? 2 : 1,
+              position: isMobile ? "sticky" : "static",
+              bottom: isMobile ? 0 : "auto",
+              zIndex: isMobile ? 1000 : "auto",
+              boxShadow: isMobile ? theme.shadows[8] : theme.shadows[1],
+            }}
+          >
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "stretch",
+              }}
             >
-              Volver a Editar
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<CheckCircle />}
-              onClick={handleConfirm}
-              disabled={isSubmitting || !horaFin.trim()}
-              sx={{ minWidth: 140 }}
-            >
-              {isSubmitting ? "Enviando..." : "Confirmar y Enviar"}
-            </Button>
-          </Stack>
-        </Paper>
-      </Stack>
-    </Paper>
+              <Button
+                variant="outlined"
+                startIcon={<ArrowBack />}
+                onClick={onBack}
+                disabled={isSubmitting}
+                size={isMobile ? "large" : "medium"}
+                sx={{
+                  minWidth: isMobile ? "100%" : "140px",
+                  order: isMobile ? 2 : 1,
+                  mt: isMobile ? 2 : 0,
+                  mb: isMobile ? 2 : 0,
+                }}
+              >
+                Volver a Editar
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<CheckCircle />}
+                onClick={handleConfirm}
+                disabled={isSubmitting || !horaFin.trim()}
+                size={isMobile ? "large" : "medium"}
+                sx={{
+                  minWidth: isMobile ? "100%" : "140px",
+                  order: isMobile ? 1 : 2,
+                  mt: isMobile ? 2 : 0,
+                  mb: isMobile ? 2 : 0,
+                }}
+              >
+                {isSubmitting ? "Enviando..." : "Confirmar y Enviar"}
+              </Button>
+            </Stack>
+          </Paper>
+        </Stack>
+      </Paper>
+    </Container>
   );
 }

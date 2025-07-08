@@ -77,7 +77,7 @@ export function Planillas({
           return <DatosTerrestre />;
         case 3:
           return <DatosSeguridad />;
-        case 4: // vehiculos
+        case 4:
           return <DatosVehiculos />;
         case 5:
           return <DatosNovedades />;

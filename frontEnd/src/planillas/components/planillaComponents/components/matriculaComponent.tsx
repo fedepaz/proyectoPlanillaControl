@@ -69,12 +69,6 @@ export function MatriculaComponent({
   const { watch, setValue } = methods;
   const matriculaWatch = watch("matriculaAeronave");
 
-  useEffect(() => {
-    setValue("matriculaAeronave", "");
-    setSelectedMatricula(null);
-    onMatriculaSelected("");
-  }, [empresaId, onMatriculaSelected, setValue]);
-
   const params = empresaId ? { empresa: empresaId } : null;
 
   const matriculaQuery = useMatriculaBusqueda(params);
@@ -95,10 +89,17 @@ export function MatriculaComponent({
       const selected = matriculaOptions.find(
         (option) => option.id === matriculaWatch
       );
-      setSelectedMatricula(selected || null);
-      onMatriculaSelected(matriculaWatch);
+      if (selectedMatricula?.id !== selected?.id) {
+        setSelectedMatricula(selected || null);
+        onMatriculaSelected(matriculaWatch);
+      }
     }
-  }, [matriculaWatch, matriculaOptions, onMatriculaSelected]);
+  }, [
+    matriculaWatch,
+    matriculaOptions,
+    onMatriculaSelected,
+    selectedMatricula,
+  ]);
 
   useEffect(() => {
     if (matriculaQuery.error) {

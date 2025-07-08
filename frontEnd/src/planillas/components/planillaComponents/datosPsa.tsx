@@ -54,7 +54,12 @@ export function DatosPsa() {
         name="datosPsa.horaIni"
         label="Hora de Inicio"
       />
-      <RHFTextField<PlanillaSchema> name="datosPsa.cant" label="Cantidad" />
+      <RHFTextField<PlanillaSchema>
+        name="datosPsa.cant"
+        label="Cantidad"
+        type="number"
+        inputProps={{ inputMode: "numeric", pattern: "[0-9]*", maxLength: 2 }}
+      />
       <RHFToggleButtonGroup<PlanillaSchema>
         name="datosPsa.tipoControl"
         options={tipoControlQuery}

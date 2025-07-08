@@ -75,12 +75,6 @@ export function CodVueloComponent({
   const { watch, setValue } = methods;
   const codVueloWatch = watch("codVuelo");
 
-  useEffect(() => {
-    setValue("codVuelo", "");
-    setSelectedCodVuelo(null);
-    onCodVueloSelected("");
-  }, [origenId, destinoId, empresaId, onCodVueloSelected, setValue]);
-
   const params =
     origenId && destinoId && empresaId
       ? { origen: origenId, destino: destinoId, empresa: empresaId }
@@ -110,10 +104,13 @@ export function CodVueloComponent({
       const selected = codVueloOptions.find(
         (option) => option.id === codVueloWatch
       );
-      setSelectedCodVuelo(selected || null);
-      onCodVueloSelected(codVueloWatch);
+
+      if (selectedCodVuelo?.id !== selected?.id) {
+        setSelectedCodVuelo(selected || null);
+        onCodVueloSelected(codVueloWatch);
+      }
     }
-  }, [codVueloWatch, onCodVueloSelected, codVueloOptions]);
+  }, [codVueloWatch, onCodVueloSelected, codVueloOptions, selectedCodVuelo]);
 
   useEffect(() => {
     if (codVueloQuery.error) {

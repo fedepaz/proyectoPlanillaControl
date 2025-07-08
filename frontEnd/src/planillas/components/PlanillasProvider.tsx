@@ -44,23 +44,32 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const onSubmit = async (data: PlanillaSchema) => {
     console.log("Form submitted with data:", data);
     setIsSubmitting(true);
+    setErrorMessage(null);
     try {
       const validationResult = planillaSchema.safeParse(data);
       if (validationResult.success) {
         console.log("Validation passed", validationResult.data);
         // Here you can add your actual submission logic
-
         await new Promise((resolve) => setTimeout(resolve, 2000));
-
         // Success - you might want to show a success message or redirect
         console.log("✅ Form submitted successfully!");
         setShowReview(false);
+        setIsSubmitting(false);
       } else {
         console.error("Validation errors:", validationResult.error);
-        setErrorMessage("Solucione los errores anteriores");
+        const errorMessages = validationResult.error.errors
+          .map((error) => {
+            const fieldPath = error.path.join(" -> ");
+            return `${fieldPath}: ${error.message}`;
+          })
+          .join("\n");
+        setErrorMessage(`Solucione los siguientes errores:\n${errorMessages}`);
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.error("Error in onSubmit:", error);
+      setErrorMessage("Error al enviar formulario");
+      setIsSubmitting(false);
     }
   };
 
@@ -90,16 +99,21 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       );
 
       if (nonHoraFinErrors.length > 0) {
-        setErrorMessage(
-          "Hay errores en el formulario. Revise los datos ingresados antes de continuar."
-        );
+        const errorMessages = nonHoraFinErrors
+          .map((err) => {
+            const fieldPath = err.path.join(".");
+            return `${fieldPath}: ${err.message}`;
+          })
+          .join("\n");
+
+        setErrorMessage(`Hay errores en el formulario:\n${errorMessages}`);
       } else {
         // Only horaFin errors, proceed to review
         setShowReview(true);
+        setErrorMessage(null);
       }
     }
   };
-
   // Handle final confirmation from review component
   const handleReviewConfirm = async (finalHoraFin: string) => {
     const currentValues = getValues();
@@ -124,7 +138,10 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const handleBackFromReview = () => {
     setShowReview(false);
+    setErrorMessage(null);
+    setIsSubmitting(false);
   };
+
   const sendBack = (data: boolean) => {
     onBackHome(data);
   };

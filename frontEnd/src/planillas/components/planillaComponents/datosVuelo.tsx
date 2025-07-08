@@ -8,7 +8,7 @@ import { EmpresaComponent } from "./components/empresaComponent";
 import { MatriculaComponent } from "./components/matriculaComponent";
 import { AeropuertoComponent } from "./components/aeropuertoComponent";
 import { CodVueloComponent } from "./components/codVueloComponent";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { RHFFlightTimePicker } from "../../../components/RHFFlightTimePicker";
 import { useAuth } from "../../../hooks/useAuth";
@@ -56,12 +56,18 @@ export function DatosVuelo() {
     }
   }, [userInfo, tipoVuelo]);
 
-  const sendCodVuelo = (codVueloId: string) => {
-    setValue("datosVuelo.codVuelo", codVueloId);
-  };
-  const sendMatricula = (matriculaAeronave: string) => {
-    setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
-  };
+  const sendCodVuelo = useCallback(
+    (codVueloId: string) => {
+      setValue("datosVuelo.codVuelo", codVueloId);
+    },
+    [setValue]
+  );
+  const sendMatricula = useCallback(
+    (matriculaAeronave: string) => {
+      setValue("datosVuelo.matriculaAeronave", matriculaAeronave);
+    },
+    [setValue]
+  );
 
   const canRenderCodVuelo = origenIdRef && destinoIdRef && empresaIdRef;
   const canRenderMatricula = empresaIdRef;
@@ -93,16 +99,6 @@ export function DatosVuelo() {
         label="Destino"
         onAeropuertoSelected={sendAeropuerto}
       />
-      {/*codVuelo*/}
-      {canRenderCodVuelo && (
-        <CodVueloComponent
-          onCodVueloSelected={sendCodVuelo}
-          origenId={origenIdRef}
-          destinoId={destinoIdRef}
-          empresaId={empresaIdRef}
-        />
-      )}
-      {/*hora*/}
       {!canRenderDateTimePicker && (
         <RHFFlightTimePicker
           name="datosVuelo.horaArribo"
@@ -117,6 +113,16 @@ export function DatosVuelo() {
           label="Hora de Partida"
         />
       )}
+      {/*codVuelo*/}
+      {canRenderCodVuelo && (
+        <CodVueloComponent
+          onCodVueloSelected={sendCodVuelo}
+          origenId={origenIdRef}
+          destinoId={destinoIdRef}
+          empresaId={empresaIdRef}
+        />
+      )}
+      {/*hora*/}
 
       {/*demora*/}
       <RHFRadioGroup<PlanillaSchema>

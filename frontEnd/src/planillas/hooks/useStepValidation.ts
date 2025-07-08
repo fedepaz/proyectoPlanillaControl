@@ -2,45 +2,46 @@ import { useState, useCallback, useEffect } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../types/planillaSchema";
 
-// Map step numbers to detailed fields paths
 const detailedStepFields = {
-  // 0: [
-  //"Datos de Psa",
-  //   "datosPsa.fecha",
-  //   "datosPsa.responsable",
-  //   "datosPsa.horaIni",
-  //   "datosPsa.cant",
-  //   "datosPsa.tipoControl",
-  //   "datosPsa.medioTec",
-  //   "datosPsa.tipoPro",
-  // ],
+  0: [
+    // Datos de PSA
+    "datosPsa.fecha",
+    "datosPsa.responsable",
+    "datosPsa.horaIni",
+    "datosPsa.cant",
+    "datosPsa.tipoControl",
+    "datosPsa.medioTec",
+    "datosPsa.tipoPro",
+  ],
   1: [
-    //   "Datos de vuelo",
-    // "datosVuelo.empresa",
-    // "datosVuelo.tipoVuelo",
-    // "datosVuelo.codVuelo",
-    // "datosVuelo.horaArribo",
-    // "datosVuelo.demora",
-    // "datosVuelo.matriculaAeronave",
-    // "datosVuelo.posicion",
+    // Datos de vuelo
+    "datosVuelo.empresa",
+    "datosVuelo.tipoVuelo",
+    "datosVuelo.codVuelo",
+    "datosVuelo.demora",
+    "datosVuelo.matriculaAeronave",
+    "datosVuelo.posicion",
+    // Note: horaArribo and horaPartida are handled by custom validation in schema
   ],
   2: [
-    //   "Datos de terrestre",
+    // Datos de terrestre
     "datosTerrestre.personalEmpresa",
     "datosTerrestre.funcion",
     "datosTerrestre.grupo",
   ],
-  3:
-    //   "Datos de seguridad",
-    ["datosSeguridad.personalSegEmpresa", "datosSeguridad.empresaSeguridad"],
+  3: [
+    // Datos de seguridad
+    "datosSeguridad.personalSegEmpresa",
+    "datosSeguridad.empresaSeguridad",
+  ],
   4: [
-    //   "Datos de vehiculos",
+    // Datos de vehiculos
     "datosVehiculos.vehiculo",
     "datosVehiculos.operadorVehiculo",
     "datosVehiculos.observacionesVehiculo",
   ],
   5: [
-    //   "Datos de novedades",
+    // Datos de novedades
     "novEquipajes",
     "novInspeccion",
     "novOtras",
@@ -51,6 +52,7 @@ const fieldNames: Record<string, string> = {
   "datosPsa.fecha": "Fecha",
   "datosPsa.responsable": "Responsable",
   "datosPsa.horaIni": "Hora de inicio",
+  "datosPsa.horaFin": "Hora de fin",
   "datosPsa.cant": "Cantidad",
   "datosPsa.tipoControl": "Tipo de control",
   "datosPsa.medioTec": "Medio técnico",
@@ -91,7 +93,7 @@ export function useStepValidation(
   const [internalErrorMessage, setInternalErrorMessage] = useState<
     string | null
   >(null);
-  const { trigger, formState } = useFormContext<PlanillaSchema>();
+  const { trigger, formState, getValues } = useFormContext<PlanillaSchema>();
 
   // This ensures we're properly syncing the error message with the parent component
   useEffect(() => {
@@ -130,9 +132,124 @@ export function useStepValidation(
     return fieldNames[field] || field.split(".").pop() || field;
   }, []);
 
+  const validateArrayFields = useCallback(
+    (stepNumber: number, formValues: PlanillaSchema): string[] => {
+      const errors: string[] = [];
+
+      // Special validation for array fields that need at least one entry
+      if (stepNumber === 2) {
+        // Datos terrestre - check if array has at least one complete entry
+        if (
+          !formValues.datosTerrestre ||
+          formValues.datosTerrestre.length === 0
+        ) {
+          errors.push("Datos de terrestre - Se requiere al menos una entrada");
+        } else {
+          // Check if any entry is incomplete
+          const incompleteEntries = formValues.datosTerrestre.filter(
+            (entry) => !entry.personalEmpresa || !entry.funcion || !entry.grupo
+          );
+          if (incompleteEntries.length > 0) {
+            errors.push("Datos de terrestre - Todos los campos son requeridos");
+          }
+        }
+      }
+
+      if (stepNumber === 3) {
+        // Datos seguridad - check if array has at least one complete entry
+        if (
+          !formValues.datosSeguridad ||
+          formValues.datosSeguridad.length === 0
+        ) {
+          errors.push("Datos de seguridad - Se requiere al menos una entrada");
+        } else {
+          // Check if any entry is incomplete
+          const incompleteEntries = formValues.datosSeguridad.filter(
+            (entry) =>
+              !entry.personalSegEmpresa ||
+              entry.personalSegEmpresa.length === 0 ||
+              !entry.empresaSeguridad
+          );
+          if (incompleteEntries.length > 0) {
+            errors.push("Datos de seguridad - Todos los campos son requeridos");
+          }
+        }
+      }
+
+      if (stepNumber === 4) {
+        // Datos vehiculos - check if array has at least one complete entry
+        if (
+          !formValues.datosVehiculos ||
+          formValues.datosVehiculos.length === 0
+        ) {
+          errors.push("Datos de vehículos - Se requiere al menos una entrada");
+        } else {
+          // Check if any entry is incomplete
+          const incompleteEntries = formValues.datosVehiculos.filter(
+            (entry) => !entry.vehiculo || !entry.operadorVehiculo
+          );
+          if (incompleteEntries.length > 0) {
+            errors.push(
+              "Datos de vehículos - Vehículo y operador son requeridos"
+            );
+          }
+        }
+      }
+
+      return errors;
+    },
+    []
+  );
+
   const validateCurrentStep = useCallback(async (): Promise<boolean> => {
     const fieldsToValidate =
       detailedStepFields[activeStep as keyof typeof detailedStepFields] || [];
+
+    const formValues = getValues();
+
+    // Check for array validation errors first
+    const arrayErrors = validateArrayFields(activeStep, formValues);
+
+    if (arrayErrors.length > 0) {
+      const messageToSet =
+        arrayErrors.length === 1
+          ? arrayErrors[0]
+          : `Se requieren completar los siguientes campos:\n• ${arrayErrors.join(
+              "\n• "
+            )}`;
+
+      setInternalErrorMessage(messageToSet);
+      if (externalSetErrorMessage) {
+        externalSetErrorMessage(messageToSet);
+      }
+      return false;
+    }
+
+    // For step 5 (novedades), we don't need to validate individual fields
+    // since they're all optional
+    if (activeStep === 5) {
+      setInternalErrorMessage(null);
+      if (externalSetErrorMessage) {
+        externalSetErrorMessage(null);
+      }
+      return true;
+    }
+
+    // Skip array field validation for steps 2, 3, 4 since we handled them above
+    const fieldsToTrigger = fieldsToValidate.filter((field) => {
+      if (activeStep === 2 && field.startsWith("datosTerrestre.")) return false;
+      if (activeStep === 3 && field.startsWith("datosSeguridad.")) return false;
+      if (activeStep === 4 && field.startsWith("datosVehiculos.")) return false;
+      return true;
+    });
+
+    if (fieldsToTrigger.length === 0) {
+      setInternalErrorMessage(null);
+      if (externalSetErrorMessage) {
+        externalSetErrorMessage(null);
+      }
+      return true;
+    }
 
     // First trigger validation for all fields in this step
     const results = await Promise.all(

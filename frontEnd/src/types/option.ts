@@ -65,9 +65,9 @@ export type AeropuertoOption = {
 export type CodVueloOption = {
   id: string;
   codVuelo: string;
-  origenId: string;
-  destinoId: string;
-  empresaId: string;
+  origen: AeropuertoOption;
+  destino: AeropuertoOption;
+  empresa: EmpresaOption;
   isUserCreated?: boolean;
   createdAt?: string;
   needsValidation?: boolean;
