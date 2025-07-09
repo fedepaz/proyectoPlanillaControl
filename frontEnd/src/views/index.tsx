@@ -6,6 +6,7 @@ import { PlanillasProvider } from "../planillas/components/PlanillasProvider";
 import { ResetPasswordPage } from "../login/components/ResetPassword";
 import type React from "react";
 import { UnderConstruction } from "../components/UnderConstruction";
+import { PlanillasList } from "../planillas/components/planillaShow/PlanillaShow";
 
 export enum View {
   LOGIN = "login",
@@ -75,13 +76,6 @@ export const featureDescriptions: Record<
     description:
       "Crea y gestiona planillas para el control de equipajes y servicios según tu rol",
     status: "active",
-  },
-  [View.VIEW_HISTORY]: {
-    name: "Historial de Planillas",
-    description:
-      "Consulta, filtra y exporta el historial completo de planillas generadas. Incluye búsqueda avanzada por fechas, usuarios y estados.",
-    estimatedTime: "Julio 2025",
-    status: "under_construction",
   },
   [View.VIEW_PROFILE]: {
     name: "Perfil de Usuario",
@@ -173,7 +167,7 @@ export const viewComponents: Record<View, React.ComponentType<any>> = {
   [View.DASHBOARD]: Dashboard,
   [View.LOGOUT]: LogoutPage,
   [View.GENERATE_PLANILLAS]: PlanillasProvider,
-  [View.VIEW_HISTORY]: createUnderConstructionView(View.VIEW_HISTORY),
+  [View.VIEW_HISTORY]: PlanillasList,
   [View.VIEW_PROFILE]: createUnderConstructionView(View.VIEW_PROFILE),
   [View.SETTINGS]: createUnderConstructionView(View.SETTINGS),
   [View.MANAGE_USERS]: createUnderConstructionView(View.MANAGE_USERS),
