@@ -8,7 +8,6 @@ import {
   Option,
   PersonalEmpresaOption,
   PersonalSeguridadOption,
-  PlanillaOption,
   UnidadOption,
   VehiculoOption,
 } from "../../types/option";
@@ -24,19 +23,10 @@ import {
   PersonalEmpresaSchema,
   PersonalSeguridadSchema,
 } from "../types/apiSchema";
-import { PlanillaGet } from "../types/planillaType";
-import { PlanillaSchema } from "../types/planillaSchema";
 import apiClient from "../../services/csrfToken";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface PaginatedResponse {
-  data: PlanillaOption[];
-  currentPage: number;
-  totalPages: number;
-  totalCount: number;
-  pageSize: number;
-}
 interface CreateOficialResponse {
   _id: string;
   dni: number;
@@ -83,127 +73,6 @@ export function useOficial(dni: string) {
       };
     },
     enabled: !!dni,
-  });
-}
-
-export function usePlanillas(page: number = 1, pageSize: number = 10) {
-  return useQuery<PaginatedResponse, Error>({
-    queryKey: ["planillas", page, pageSize],
-    queryFn: async (): Promise<PaginatedResponse> => {
-      const response = await apiClient.get<PaginatedResponse>(
-        `${API_URL}/planillas?page=${page}&pageSize=${pageSize}`
-      );
-
-      return {
-        ...response.data,
-        data: response.data.data.map((planilla) => ({
-          id: planilla.id,
-          datosPsa: {
-            fecha: planilla.datosPsa.fecha,
-            responsable: planilla.datosPsa.responsable,
-            horaIni: planilla.datosPsa.horaIni,
-            horaFin: planilla.datosPsa.horaFin,
-            cant: planilla.datosPsa.cant,
-            tipoControl: planilla.datosPsa.tipoControl,
-            medioTec: planilla.datosPsa.medioTec,
-            tipoPro: planilla.datosPsa.tipoPro,
-          },
-          datosVuelo: {
-            aerolinea: planilla.datosVuelo.aerolinea,
-            codVuelo: planilla.datosVuelo.codVuelo,
-            origen: planilla.datosVuelo.origen,
-            destino: planilla.datosVuelo.destino,
-            horaArribo: planilla.datosVuelo.horaArribo,
-            horaPartida: planilla.datosVuelo.horaPartida,
-            demora: planilla.datosVuelo.demora,
-            tipoVuelo: planilla.datosVuelo.tipoVuelo,
-            matriculaAeronave: planilla.datosVuelo.matriculaAeronave,
-            posicion: planilla.datosVuelo.posicion,
-          },
-          datosTerrestre: planilla.datosTerrestre.map((terrestre) => ({
-            dniTerrestre: terrestre.dniTerrestre,
-            apellidoTerrestre: terrestre.apellidoTerrestre,
-            nombreTerrestre: terrestre.nombreTerrestre,
-            legajoTerrestre: terrestre.legajoTerrestre,
-            funcion: terrestre.funcion,
-            grupo: terrestre.grupo,
-          })),
-          datosSeguridad: planilla.datosSeguridad.map((seguridad) => ({
-            apellidoSeguridad: seguridad.apellidoSeguridad,
-            nombreSeguridad: seguridad.nombreSeguridad,
-            dniSeguridad: seguridad.dniSeguridad,
-            legajoSeguridad: seguridad.legajoSeguridad,
-            empresaSeguridad: seguridad.empresaSeguridad,
-          })),
-          datosVehiculos: planilla.datosVehiculos.map((vehiculo) => ({
-            tipoVehiculo: vehiculo.tipoVehiculo,
-            empresaVehiculo: vehiculo.empresaVehiculo,
-            numInterno: vehiculo.numInterno,
-            operadorVehiculo: vehiculo.operadorVehiculo,
-            observacionesVehiculo: vehiculo.observacionesVehiculo,
-          })),
-          novEquipajes: planilla.novEquipajes,
-          novInspeccion: planilla.novInspeccion,
-          novOtras: planilla.novOtras,
-        })),
-      };
-    },
-  });
-}
-
-export function usePlanillaID(_id: string) {
-  return useQuery({
-    queryKey: ["planilla", { _id }],
-    queryFn: async (): Promise<PlanillaSchema> => {
-      if (!_id) {
-        throw new Error("Invalid ID: _id is undefined");
-      }
-
-      const { data } = await apiClient.get<PlanillaGet>(
-        `${API_URL}/planillas/${_id}`
-      );
-      return {
-        id: data.id,
-        datosPsa: {
-          fecha: data.datosPsa.fecha,
-          responsable: data.datosPsa.responsable,
-          horaIni: data.datosPsa.horaIni,
-          horaFin: data.datosPsa.horaFin,
-          cant: data.datosPsa.cant,
-          tipoControl: [data.datosPsa.tipoControl],
-          medioTec: [data.datosPsa.medioTec],
-          tipoPro: [data.datosPsa.tipoPro],
-        },
-        datosVuelo: {
-          empresa: data.datosVuelo.empresa,
-          codVuelo: data.datosVuelo.codVuelo,
-          horaArribo: data.datosVuelo.horaArribo,
-          horaPartida: data.datosVuelo.horaPartida,
-          demora: data.datosVuelo.demora,
-          tipoVuelo: data.datosVuelo.tipoVuelo,
-          matriculaAeronave: data.datosVuelo.matriculaAeronave,
-          posicion: data.datosVuelo.posicion,
-        },
-        datosTerrestre: data.datosTerrestre.map((terrestre) => ({
-          personalEmpresa: terrestre.personalEmpresa,
-          funcion: terrestre.funcion,
-          grupo: terrestre.grupo,
-        })),
-        datosSeguridad: data.datosSeguridad.map((seguridad) => ({
-          personalSegEmpresa: seguridad.personalSegEmpresa,
-          empresaSeguridad: seguridad.empresaSeguridad,
-        })),
-        datosVehiculos: data.datosVehiculos.map((vehiculo) => ({
-          vehiculo: vehiculo.vehiculo,
-          operadorVehiculo: vehiculo.operadorVehiculo,
-          observacionesVehiculo: vehiculo.observacionesVehiculo,
-        })),
-        novEquipajes: data.novEquipajes,
-        novInspeccion: data.novInspeccion,
-        novOtras: data.novOtras,
-      };
-    },
-    enabled: !!_id,
   });
 }
 
@@ -469,7 +338,7 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
       const empresaRes = response.data;
       return empresaRes;
     },
-    enabled: !!tipoEmpresaId, // Only run query when we have a tipoEmpresaId
+    enabled: !!tipoEmpresaId,
   });
 };
 

@@ -35,7 +35,7 @@ export type PlanillaCommon = {
     posicion: string;
   };
   datosTerrestre: {
-    personalEmpresa: string[];
+    personalEmpresa: string;
     funcion: string;
     grupo: string;
   }[];

@@ -66,7 +66,7 @@ planillasRouter.post("/", async (req, res, next) => {
       },
       datosVuelo: {
         tipoVuelo,
-        empresa, // ADD THIS
+        empresa,
         codVuelo,
         horaArribo,
         horaPartida,
@@ -92,7 +92,7 @@ planillasRouter.post("/", async (req, res, next) => {
       "datosPsa.medioTec",
       "datosPsa.tipoPro",
       "datosVuelo.tipoVuelo",
-      "datosVuelo.empresa", // ADD THIS
+      "datosVuelo.empresa",
       "datosVuelo.codVuelo",
       "datosVuelo.demora",
       "datosVuelo.matriculaAeronave",
@@ -125,7 +125,7 @@ planillasRouter.post("/", async (req, res, next) => {
 
     // Validate single references
     await validateReference(Oficial, body.datosPsa.responsable);
-    await validateReference(Empresa, body.datosVuelo.empresa); // ADD THIS
+    await validateReference(Empresa, body.datosVuelo.empresa);
     await validateReference(CodVuelo, body.datosVuelo.codVuelo);
     await validateReference(Demora, body.datosVuelo.demora);
     await validateReference(TipoVuelo, body.datosVuelo.tipoVuelo);
@@ -146,31 +146,38 @@ planillasRouter.post("/", async (req, res, next) => {
     }
 
     // Validate datosTerrestre array
-    for (const terrestre of body.datosTerrestre) {
-      await validateReference(PersonalEmpresa, terrestre.personalEmpresa);
-      await validateReference(Funcion, terrestre.funcion);
+    if (Array.isArray(body.datosTerrestre)) {
+      for (const terrestre of body.datosTerrestre) {
+        await validateReference(PersonalEmpresa, terrestre.personalEmpresa);
+        await validateReference(Funcion, terrestre.funcion);
 
-      // Validate grupo field
-      if (!terrestre.grupo || terrestre.grupo.trim() === "") {
-        const error = new Error("Grupo is required for datosTerrestre entries");
-        error.name = "MissingData";
-        throw error;
+        // Validate grupo field
+        if (!terrestre.grupo || terrestre.grupo.trim() === "") {
+          const error = new Error(
+            "Grupo is required for datosTerrestre entries"
+          );
+          error.name = "MissingData";
+          throw error;
+        }
       }
     }
 
     // Validate datosSeguridad array
-    for (const seguridad of body.datosSeguridad) {
-      // personalSegEmpresa is an array of IDs
-      for (const personalId of seguridad.personalSegEmpresa) {
-        await validateReference(PersonalSeguridadEmpresa, personalId);
+    if (Array.isArray(body.datosSeguridad)) {
+      for (const seguridad of body.datosSeguridad) {
+        // personalSegEmpresa is an array of IDs
+        for (const personalId of seguridad.personalSegEmpresa) {
+          await validateReference(PersonalSeguridadEmpresa, personalId);
+        }
+        await validateReference(Empresa, seguridad.empresaSeguridad);
       }
-      await validateReference(Empresa, seguridad.empresaSeguridad);
     }
-
     // Validate datosVehiculos array
-    for (const vehiculo of body.datosVehiculos) {
-      await validateReference(Vehiculo, vehiculo.vehiculo);
-      await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
+    if (Array.isArray(body.datosVehiculos)) {
+      for (const vehiculo of body.datosVehiculos) {
+        await validateReference(Vehiculo, vehiculo.vehiculo);
+        await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
+      }
     }
 
     const newPlanilla = new Planilla({
@@ -235,12 +242,13 @@ planillasRouter.get("/", async (req, res, next) => {
       typeof populate === "string" ? populate.split(",") : []
     );
     let planillaQuery = Planilla.find(query);
-    sort({ createdAt: -1 })
-      .skip((validPage - 1) * pageSize)
-      .limit(parseInt(pageSize, 10));
 
     for (const field of populatedArray) {
-      planillaQuery = planillaQuery.populate(field);
+      planillaQuery = planillaQuery
+        .populate(field)
+        .sort({ createdAt: -1 })
+        .skip((validPage - 1) * pageSize)
+        .limit(parseInt(pageSize, 10));
     }
 
     const planillas = await planillaQuery.lean().exec();
@@ -421,8 +429,12 @@ planillasRouter.put("/:id", async (req, res, next) => {
       await validateReference(Vehiculo, vehiculo.vehiculo);
       await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
     }
+    const updated = await Planilla.findByIdAndUpdate(id, body, { new: true });
 
-    return res.send({ message: "Planilla updated successfully", data: result });
+    return res.send({
+      message: "Planilla updated successfully",
+      data: updated,
+    });
   } catch (error) {
     next(error);
   }
