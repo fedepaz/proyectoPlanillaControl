@@ -9,7 +9,14 @@ import {
   useTheme,
   useMediaQuery,
   Paper,
-  Stack,
+  Button,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { Assignment } from "@mui/icons-material";
 import { usePlanillas } from "../../services/planillas";
@@ -38,6 +45,7 @@ export const PlanillasList: React.FC = () => {
     ...dateFilters, // Spread the date filters
     populate: ["datosPsa.responsable", "datosVuelo.codVuelo"],
   });
+  console.log(data);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -85,71 +93,60 @@ export const PlanillasList: React.FC = () => {
   }
 
   return (
-    <Container
-      maxWidth={isMobile ? "sm" : isTablet ? "md" : "lg"}
-      sx={{
-        px: isMobile ? 1 : 2,
-        py: 3,
-      }}
-    >
-      {/* Header */}
-      <Paper
-        elevation={isMobile ? 1 : 2}
-        sx={{
-          p: isMobile ? 2 : 3,
-          mb: 3,
-          borderRadius: isMobile ? 2 : 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            flexDirection: isMobile ? "column" : "row",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          <Assignment color="primary" sx={{ fontSize: isMobile ? 32 : 28 }} />
-          <Box>
-            <Typography
-              variant={isMobile ? "h5" : "h4"}
-              component="h1"
-              gutterBottom
-            >
-              Lista de Planillas
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {data.totalCount} planillas encontradas
-              {Object.keys(dateFilters).length > 0 && " (filtradas)"}
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
+    <Container maxWidth="lg" sx={{ py: 3 }}>
+      {/* Encabezado */}
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h4" gutterBottom>
+          Lista de Planillas
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {data.totalCount} planillas encontradas
+          {Object.keys(dateFilters).length > 0 && " (filtradas)"}
+        </Typography>
+      </Box>
 
-      {/* Date Filter */}
-      <DateFilter onFilterChange={handleFilterChange} isMobile={isMobile} />
+      {/* Filtro por fecha */}
+      <DateFilter onFilterChange={handleFilterChange} />
 
-      {/* Planillas List */}
-      <Stack spacing={0}>
-        {data.data.map((planilla) => (
-          <PlanillaCard
-            key={planilla._id} // Fixed: using _id instead of id
-            planilla={planilla}
-            isMobile={isMobile}
-          />
-        ))}
-      </Stack>
+      {/* Tabla */}
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Fecha</TableCell>
+              <TableCell>Empresa</TableCell>
+              <TableCell>Código de Vuelo</TableCell>
+              <TableCell>Responsable</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.data.map((planilla) => (
+              <TableRow key={planilla.id}>
+                <TableCell>{planilla.datosPsa.fecha?.slice(0, 10)}</TableCell>
+                <TableCell>
+                  {typeof planilla.datosVuelo.empresa === "object"
+                    ? planilla.datosVuelo.empresa
+                    : planilla.datosVuelo.empresa}
+                </TableCell>
+                <TableCell>
+                  {typeof planilla.datosVuelo.codVuelo === "object"
+                    ? planilla.datosVuelo.codVuelo
+                    : planilla.datosVuelo.codVuelo}
+                </TableCell>
+                <TableCell>
+                  {typeof planilla.datosPsa.responsable === "object"
+                    ? planilla.datosPsa.responsable
+                    : planilla.datosPsa.responsable}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      {/* Pagination */}
+      {/* Paginación */}
       {data.totalPages > 1 && (
-        <Paper
-          elevation={1}
-          sx={{
-            mt: 3,
-            borderRadius: isMobile ? 2 : 1,
-          }}
-        >
+        <Box sx={{ mt: 3 }}>
           <PaginationControls
             currentPage={data.currentPage}
             totalPages={data.totalPages}
@@ -157,7 +154,7 @@ export const PlanillasList: React.FC = () => {
             onPageChange={handlePageChange}
             isMobile={isMobile}
           />
-        </Paper>
+        </Box>
       )}
     </Container>
   );

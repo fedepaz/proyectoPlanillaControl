@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../../services/csrfToken";
-import { PlanillaSchema } from "../types/planillaSchema";
+
 import {
   AeropuertosSchema,
   CodVueloSchema,
@@ -9,19 +9,6 @@ import {
   PersonalEmpresaSchema,
   VehiculosSchema,
 } from "../types/apiSchema";
-
-export function useCreatePlanilla() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (data: PlanillaSchema) => {
-      const response = await apiClient.post(`/planillas`, data);
-      return response.data;
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["planillas"] });
-    },
-  });
-}
 
 export function useCreateEmpresa() {
   const queryClient = useQueryClient();

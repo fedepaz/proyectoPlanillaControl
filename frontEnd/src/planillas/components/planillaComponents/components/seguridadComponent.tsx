@@ -216,7 +216,7 @@ export function PersonalSeguridadComponent({
           dni: newPersonal.dni,
           firstname: newPersonal.firstname,
           lastname: newPersonal.lastname,
-          empresaId: newPersonal.empresa,
+          empresa: newPersonal.empresa,
           legajo: newPersonal.legajo,
           needsValidation: newPersonal.needsValidation,
           isUserCreated: newPersonal.isUserCreated,

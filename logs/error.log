@@ -15138,4 +15138,22 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-07-11T20:55:10.314Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"31/12/1699","responsable":"682841427311742085848b8a","horaIni":"1700","horaFin":"1755","cant":"1","tipoControl":["665a0f2c9447132ad0d67771","665a0f509447132ad0d67773","665a0f439447132ad0d67772"],"medioTec":["665a0f0f9447132ad0d67770","665a0f019447132ad0d6776f","665a0ef39447132ad0d6776e"],"tipoPro":["665a0f6a9447132ad0d67775","665a0f609447132ad0d67774","665a0f799447132ad0d67776"]},"datosVuelo":{"tipoVuelo":"665a0f979447132ad0d67778","empresa":"684c2dbdc4a2838968082c09","codVuelo":"686d9d672845d138eb06392a","horaArribo":"","horaPartida":"1730","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863ec8aac159bca2ad41798","posicion":"48"},"datosTerrestre":[{"personalEmpresa":"68558bae9775dd7f236e1d6a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6858b84272492d17940ee3b1","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"685b118a55f1223179bcd135","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["68632bcc79afd9dfb3503239"],"empresaSeguridad":"685ada4111c51b9a7ca0ef90"}],"datosVehiculos":[{"vehiculo":"686088ed8db25582e7082ca8","operadorVehiculo":"6858b84272492d17940ee3b1","isObservaciones":false,"observacionesVehiculo":""},{"vehiculo":"686076de8db25582e7082c07","operadorVehiculo":"685b118a55f1223179bcd135","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":false,"observaciones":""},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: novOtras.observaciones: Path `novOtras.observaciones` is required., novInspeccion.observaciones: Path `novInspeccion.observaciones` is required., novEquipajes.observaciones: Path `novEquipajes.observaciones` is required., datosVehiculos.0.observacionesVehiculo: Path `observacionesVehiculo` is required., datosVehiculos.1.observacionesVehiculo: Path `observacionesVehiculo` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
     

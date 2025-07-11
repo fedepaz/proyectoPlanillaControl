@@ -100,21 +100,21 @@ const planillaSchema = Schema(
         },
         isObservaciones: { type: Boolean, default: false },
 
-        observacionesVehiculo: { type: String, required: true },
+        observacionesVehiculo: { type: String, default: "" },
       },
     ],
 
     novEquipajes: {
       isRequired: { type: Boolean, default: false },
-      observaciones: { type: String, required: true },
+      observaciones: { type: String, default: "" },
     },
     novInspeccion: {
       isRequired: { type: Boolean, default: false },
-      observaciones: { type: String, required: true },
+      observaciones: { type: String, default: "" },
     },
     novOtras: {
       isRequired: { type: Boolean, default: false },
-      observaciones: { type: String, required: true },
+      observaciones: { type: String, default: "" },
     },
   },
   { timestamps: true }

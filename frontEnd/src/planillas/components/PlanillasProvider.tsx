@@ -14,6 +14,8 @@ import Loading from "../../components/Loading";
 
 import { useAuth } from "../../hooks/useAuth";
 import { FormReview } from "./planillaShow/formReview";
+import { useCreatePlanilla } from "../services/planillas";
+import { AxiosError } from "axios";
 
 interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
@@ -25,6 +27,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const [showReview, setShowReview] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const createPlanilla = useCreatePlanilla();
 
   const methods = useForm<PlanillaSchema>({
     mode: "onChange",
@@ -45,31 +48,30 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     console.log("Form submitted with data:", data);
     setIsSubmitting(true);
     setErrorMessage(null);
+    const validationResult = planillaSchema.safeParse(data);
+    if (!validationResult.success) {
+      console.error("Validation errors:", validationResult.error);
+      const errorMessages = validationResult.error.errors
+        .map((error) => {
+          const fieldPath = error.path.join(" -> ");
+          return `${fieldPath}: ${error.message}`;
+        })
+        .join("\n");
+      setErrorMessage(`Solucione los siguientes errores:\n${errorMessages}`);
+      setIsSubmitting(false);
+      return;
+    }
     try {
-      const validationResult = planillaSchema.safeParse(data);
-      if (validationResult.success) {
-        console.log("Validation passed", validationResult.data);
-        // Here you can add your actual submission logic
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        // Success - you might want to show a success message or redirect
-        console.log("✅ Form submitted successfully!");
-        setShowReview(false);
-        setIsSubmitting(false);
-      } else {
-        console.error("Validation errors:", validationResult.error);
-        const errorMessages = validationResult.error.errors
-          .map((error) => {
-            const fieldPath = error.path.join(" -> ");
-            return `${fieldPath}: ${error.message}`;
-          })
-          .join("\n");
-        setErrorMessage(`Solucione los siguientes errores:\n${errorMessages}`);
+      await createPlanilla.mutateAsync(data);
+      console.log("✅ Form submitted successfully!");
+      setShowReview(false);
+      setIsSubmitting(false);
+      onBackHome(true);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        setErrorMessage(error.response.data.message);
         setIsSubmitting(false);
       }
-    } catch (error) {
-      console.error("Error in onSubmit:", error);
-      setErrorMessage("Error al enviar formulario");
-      setIsSubmitting(false);
     }
   };
 
