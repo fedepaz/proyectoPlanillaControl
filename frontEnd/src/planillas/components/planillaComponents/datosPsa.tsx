@@ -30,10 +30,38 @@ export function DatosPsa() {
   });
 
   useEffect(() => {
-    const fechaControl = startTime
-      ? format(new Date(startTime), "dd/MM/yyyy")
-      : format(new Date(), "dd/MM/yyyy");
+    const now = new Date();
+    const currentHour = now.getHours();
+    let controlDate: Date | null = null;
+    if (startTime) {
+      let selectedHour: number;
+      if (startTime.includes("T")) {
+        selectedHour = new Date(startTime).getHours();
+      } else if (startTime.length === 4) {
+        selectedHour = parseInt(startTime.substring(0, 2), 10);
+      } else {
+        selectedHour = currentHour;
+      }
 
+      if (
+        currentHour >= 0 &&
+        currentHour <= 1 &&
+        selectedHour >= 22 &&
+        selectedHour <= 23
+      ) {
+        // Control happened yesterday
+        controlDate = new Date(now);
+        controlDate.setDate(controlDate.getDate() - 1);
+      } else {
+        // Control happens today
+        controlDate = now;
+      }
+    } else {
+      // No start time selected, use current date
+      controlDate = now;
+    }
+
+    const fechaControl = format(controlDate, "dd/MM/yyyy");
     setValue("datosPsa.fecha", fechaControl);
   }, [setValue, startTime]);
 

@@ -251,7 +251,7 @@ planillasRouter.get("/", async (req, res, next) => {
         .limit(parseInt(pageSize, 10));
     }
 
-    const planillas = await planillaQuery.lean().exec();
+    const planillas = await planillaQuery.exec();
 
     return res.json({
       data: planillas,

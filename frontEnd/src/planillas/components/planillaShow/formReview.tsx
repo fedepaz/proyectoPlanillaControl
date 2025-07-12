@@ -31,6 +31,8 @@ import { useAuth } from "../../../hooks/useAuth";
 import { ResponsiveCard } from "../planillaComponents/components/responsiveCard";
 import { FieldDisplay } from "../planillaComponents/components/fieldDisplay";
 import { useCodVuelo } from "../../services/queries";
+import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";
+import { RHFDateTimePickerEnd } from "../../../components/RHFDateTimePickerEnd";
 
 interface FormReviewProps {
   formData: PlanillaSchema;
@@ -88,12 +90,11 @@ export function FormReview({
     await onConfirm(horaFin);
   }, [horaFin, formData.datosPsa.horaIni, onConfirm]);
 
-  const handleHoraFinChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setHoraFin(e.target.value);
-    },
-    []
-  );
+  // Updated handler for DateTimePicker
+  const handleHoraFinChange = useCallback((value: string) => {
+    setHoraFin(value);
+    setError(null); // Clear error when value changes
+  }, []);
 
   const formatTime = (time: string) => {
     if (!time || time.length !== 4) return time;
@@ -103,7 +104,6 @@ export function FormReview({
   const formatDate = (date: string) => {
     return date;
   };
-
   const getUserDisplayName = () => {
     if (!userInfo?.user) return "Usuario no identificado";
 
@@ -239,25 +239,13 @@ export function FormReview({
                   >
                     Hora Fin: *
                   </Typography>
-                  <TextField
-                    size={isMobile ? "medium" : "small"}
-                    placeholder="HHMM"
+                  <RHFDateTimePickerEnd
                     value={horaFin}
                     onChange={handleHoraFinChange}
-                    error={!!error}
-                    helperText={error || "Formato: HHMM (ej: 1430)"}
-                    inputProps={{
-                      maxLength: 4,
-                      inputMode: "numeric",
-                      pattern: "[0-9]*",
-                    }}
+                    label="Hora Fin"
+                    isEndTime={true}
+                    startTimeValue={formData.datosPsa.horaIni}
                     disabled={isSubmitting}
-                    fullWidth
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        fontSize: isMobile ? "16px" : "14px", // Prevents zoom on iOS
-                      },
-                    }}
                   />
                 </Box>
               </Grid>

@@ -8,6 +8,20 @@ type TypographyTextTransform = NonNullable<
 
 // Common theme settings for both light and dark modes
 const commonThemeSettings = {
+  MuiCssBaseline: {
+    styleOverrides: `
+    [aria-hidden="true"] input,
+    [aria-hidden="true"] button,
+    [aria-hidden="true"] select,
+    [aria-hidden="true"] textarea {
+     pointer-events: none !important;
+     outline: none !important;
+    }
+    [aria-hidden="true"] .MuiInputBase-input {
+      pointer-events: none !important;
+  }
+    `,
+  },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
