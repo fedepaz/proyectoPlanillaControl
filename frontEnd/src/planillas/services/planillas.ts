@@ -3,8 +3,56 @@ import { PlanillaGet } from "../types/planillaType";
 import { PlanillaSchema } from "../types/planillaSchema";
 import apiClient from "../../services/csrfToken";
 
+interface PlanillaData {
+  id: string;
+  datosPsa: {
+    fecha: string;
+    responsable: {
+      firstname: string;
+      lastname: string;
+      id: string;
+    };
+    horaIni?: string | undefined;
+    horaFin?: string | undefined;
+    cant: string;
+    tipoControl: string | string[];
+    medioTec: string | string[];
+    tipoPro: string | string[];
+  };
+  datosVuelo: {
+    empresa: { empresa: string; id: string } | string;
+    codVuelo: { codVuelo: string; id: string } | string;
+    horaArribo?: string | undefined;
+    horaPartida?: string | undefined;
+    demora: string;
+    tipoVuelo: string;
+    matriculaAeronave: string;
+    posicion: string;
+  };
+  datosTerrestre: {
+    personalEmpresa: string;
+    funcion: string;
+    grupo: string;
+  }[];
+  datosSeguridad: {
+    personalSegEmpresa: string[];
+    empresaSeguridad: string;
+  }[];
+  datosVehiculos: {
+    vehiculo: string;
+    operadorVehiculo: string;
+    isObservaciones: boolean;
+    observacionesVehiculo: string;
+  }[];
+  novEquipajes: { isRequired: boolean; observaciones: string };
+  novInspeccion: { isRequired: boolean; observaciones: string };
+  novOtras: { isRequired: boolean; observaciones: string };
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface PaginatedResponse {
-  data: PlanillaSchema[];
+  data: PlanillaData[];
   currentPage: number;
   totalPages: number;
   totalCount: number;
@@ -49,8 +97,11 @@ export function usePlanillas(filters: PlanillaFilters = {}) {
       const { data } = await apiClient.get<PaginatedResponse>(
         `/planillas?${params.toString()}`
       );
+
       return data;
     },
+    staleTime: 5 * 60 * 1000,
+    enabled: !!filters.page,
   });
 }
 
@@ -58,14 +109,18 @@ export function usePlanillaID(_id: string) {
   return useQuery({
     queryKey: ["planilla", _id],
     enabled: !!_id,
-    queryFn: async (): Promise<PlanillaSchema> => {
+    queryFn: async (): Promise<PlanillaData> => {
       const { data } = await apiClient.get<PlanillaGet>(`/planillas/${_id}`);
 
       return {
         id: data.id,
         datosPsa: {
           fecha: data.datosPsa.fecha,
-          responsable: data.datosPsa.responsable,
+          responsable: {
+            firstname: data.datosPsa.responsable.firstname,
+            lastname: data.datosPsa.responsable.lastname,
+            id: data.datosPsa.responsable.id,
+          },
           horaIni: data.datosPsa.horaIni,
           horaFin: data.datosPsa.horaFin,
           cant: data.datosPsa.cant,
@@ -89,19 +144,8 @@ export function usePlanillaID(_id: string) {
           matriculaAeronave: data.datosVuelo.matriculaAeronave,
           posicion: data.datosVuelo.posicion,
         },
-        datosTerrestre: Array.isArray(data.datosTerrestre)
-          ? data.datosTerrestre.map((item) => ({
-              personalEmpresa: item.personalEmpresa as string,
-              funcion: item.funcion,
-              grupo: item.grupo,
-            }))
-          : [],
-        datosSeguridad: Array.isArray(data.datosSeguridad)
-          ? data.datosSeguridad.map((item) => ({
-              personalSegEmpresa: item.personalSegEmpresa,
-              empresaSeguridad: item.empresaSeguridad,
-            }))
-          : [],
+        datosTerrestre: data.datosTerrestre,
+        datosSeguridad: data.datosSeguridad,
         datosVehiculos: Array.isArray(data.datosVehiculos)
           ? data.datosVehiculos.map((item) => ({
               vehiculo: item.vehiculo,
@@ -113,6 +157,8 @@ export function usePlanillaID(_id: string) {
         novEquipajes: data.novEquipajes,
         novInspeccion: data.novInspeccion,
         novOtras: data.novOtras,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
       };
     },
   });

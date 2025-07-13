@@ -7,6 +7,7 @@ import {
   Chip,
   Stack,
   Divider,
+  useTheme,
 } from "@mui/material";
 import {
   Person,
@@ -16,42 +17,20 @@ import {
   Security,
   Luggage,
 } from "@mui/icons-material";
-import type { PlanillaSchema } from "../../types/planillaSchema";
+import {
+  ProcessedPlanillaData,
+  formatDate,
+  formatDateTime,
+  formatTime,
+} from "../../../types/searchTypes";
 
 interface PlanillaCardProps {
-  planilla: PlanillaSchema & {
-    _id: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  planilla: ProcessedPlanillaData;
   isMobile: boolean;
 }
 
 export function PlanillaCard({ planilla, isMobile }: PlanillaCardProps) {
-  const formatTime = (time: string) => {
-    if (!time || time.length !== 4) return time;
-    return `${time.slice(0, 2)}:${time.slice(2)}`;
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("es-ES", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  };
-
-  const formatDateTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("es-ES", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+  const theme = useTheme();
 
   return (
     <Card
@@ -82,7 +61,7 @@ export function PlanillaCard({ planilla, isMobile }: PlanillaCardProps) {
                 variant={isMobile ? "h6" : "subtitle1"}
                 component="div"
               >
-                Planilla #{planilla._id.slice(-6)}
+                Planilla #{planilla.id?.slice(-6)}
               </Typography>
             </Box>
             <Chip
@@ -206,31 +185,31 @@ export function PlanillaCard({ planilla, isMobile }: PlanillaCardProps) {
                   </Typography>
                 </Box>
                 <Box sx={{ pl: 3 }}>
-                  {planilla.novEquipajes && (
+                  {planilla.novEquipajes.isRequired && (
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ fontStyle: "italic" }}
                     >
-                      Equipajes: {planilla.novEquipajes}
+                      Equipajes: {planilla.novEquipajes.observaciones}
                     </Typography>
                   )}
-                  {planilla.novInspeccion && (
+                  {planilla.novInspeccion.isRequired && (
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ fontStyle: "italic" }}
                     >
-                      Inspección: {planilla.novInspeccion}
+                      Inspección: {planilla.novInspeccion.observaciones}
                     </Typography>
                   )}
-                  {planilla.novOtras && (
+                  {planilla.novOtras.isRequired && (
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ fontStyle: "italic" }}
                     >
-                      Otras: {planilla.novOtras}
+                      Otras: {planilla.novOtras.observaciones}
                     </Typography>
                   )}
                 </Box>
@@ -242,7 +221,7 @@ export function PlanillaCard({ planilla, isMobile }: PlanillaCardProps) {
           <Box
             sx={{
               pt: 1,
-              borderTop: `1px solid ${(theme) => theme.palette.divider}`,
+              borderTop: `1px solid ${theme.palette.divider}`,
             }}
           >
             <Typography variant="caption" color="text.secondary">

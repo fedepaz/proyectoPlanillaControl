@@ -5,6 +5,8 @@ type Create = {
 type Edit = {
   variant: "edit";
   id: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export interface NovedadesData {
@@ -16,7 +18,11 @@ export type PlanillaCommon = {
   id: string;
   datosPsa: {
     fecha: string;
-    responsable: string;
+    responsable: {
+      firstname: string;
+      lastname: string;
+      id: string;
+    };
     horaIni: string;
     horaFin: string;
     cant: string;

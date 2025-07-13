@@ -1,7 +1,12 @@
 export const getPopulateFields = (fields = []) => {
   const allFields = {
-    empresa: { path: "datosVuelo.empresa", select: "nombre" },
-    codVuelo: { path: "datosVuelo.codVuelo", select: "codVuelo" },
+    responsable: { path: "datosPsa.responsable", select: "firstname lastname" },
+
+    empresa: { path: "datosVuelo.empresa", select: "empresa" },
+    codVuelo: {
+      path: "datosVuelo.codVuelo",
+      select: "codVuelo",
+    },
     demora: { path: "datosVuelo.demora", select: "label" },
     tipoVuelo: { path: "datosVuelo.tipoVuelo", select: "label" },
     matriculaAeronave: {
@@ -10,12 +15,12 @@ export const getPopulateFields = (fields = []) => {
     },
     personalEmpresa: {
       path: "datosTerrestre.personalEmpresa",
-      select: "firstname lastname",
+      select: "firstname lastname dni",
     },
     funcion: { path: "datosTerrestre.funcion", select: "label" },
     personalSegEmpresa: {
       path: "datosSeguridad.personalSegEmpresa",
-      select: "firstname lastname",
+      select: "firstname lastname dni",
     },
     empresaSeguridad: {
       path: "datosSeguridad.empresaSeguridad",

@@ -224,6 +224,7 @@ planillasRouter.get("/", async (req, res, next) => {
     empresa,
     fechaDesde,
     fechaHasta,
+    populate,
   } = req.query;
 
   const query = {};
@@ -233,6 +234,7 @@ planillasRouter.get("/", async (req, res, next) => {
     if (fechaDesde) query["datosPsa.fecha"].$gte = new Date(fechaDesde);
     if (fechaHasta) query["datosPsa.fecha"].$lte = new Date(fechaHasta);
   }
+
   try {
     const totalCount = await Planilla.countDocuments(query);
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -241,24 +243,30 @@ planillasRouter.get("/", async (req, res, next) => {
     const populatedArray = getPopulateFields(
       typeof populate === "string" ? populate.split(",") : []
     );
-    let planillaQuery = Planilla.find(query);
+    let planillaQuery = Planilla.find(query)
+      .sort({ createdAt: -1 })
+      .skip((validPage - 1) * parseInt(pageSize))
+      .limit(parseInt(pageSize, 10));
 
     for (const field of populatedArray) {
-      planillaQuery = planillaQuery
-        .populate(field)
-        .sort({ createdAt: -1 })
-        .skip((validPage - 1) * pageSize)
-        .limit(parseInt(pageSize, 10));
+      planillaQuery = planillaQuery.populate(field);
     }
 
     const planillas = await planillaQuery.exec();
+
+    console.log("Populate query parameter:", populate);
+    console.log(
+      "Populate array after split:",
+      typeof populate === "string" ? populate.split(",") : []
+    );
+    console.log("Populated fields from getPopulateFields:", populatedArray);
 
     return res.json({
       data: planillas,
       currentPage: validPage,
       totalPages,
       totalCount,
-      pageSize,
+      pageSize: parseInt(pageSize, 10),
     });
   } catch (error) {
     next(error);
