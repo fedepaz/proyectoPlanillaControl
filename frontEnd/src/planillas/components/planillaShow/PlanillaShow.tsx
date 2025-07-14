@@ -9,12 +9,6 @@ import {
   useTheme,
   useMediaQuery,
   Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Chip,
   IconButton,
   Tooltip,
@@ -32,14 +26,15 @@ import {
   FlightTakeoff,
   FlightLand,
   AccessTime,
-  Business,
-  ExpandMore,
-  ExpandLess,
 } from "@mui/icons-material";
 import { usePlanillas } from "../../services/planillas";
 import Loading from "../../../components/Loading";
 import ErrorPage from "../../../components/Error";
-import { PlanillaCard } from "../planillaComponents/components/planillaCard";
+import {
+  PlanillaCard,
+  PlanillaMobileItem,
+  PlanillaMobileList,
+} from "../planillaComponents/components/planillaMobileList";
 import { PaginationControls } from "../planillaComponents/components/paginationControls";
 import { DateFilter } from "../planillaComponents/components/dateFilter";
 
@@ -49,8 +44,8 @@ import {
   processPlantillaData,
   DEFAULT_PAGE_SIZE,
   PLANILLA_POPULATE_FIELDS,
-  formatDateTime,
 } from "../../types/searchTypes";
+import { PlanillasTable } from "../planillaComponents/components/planillasTableShow";
 
 export const PlanillasList: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -181,191 +176,13 @@ export const PlanillasList: React.FC = () => {
 
       {/* Mobile View - Compact List */}
       {isMobile ? (
-        <Paper sx={{ borderRadius: 2 }}>
-          <List disablePadding>
-            {processedData.map((planilla, index) => (
-              <Box key={planilla.id}>
-                <ListItem
-                  button
-                  onClick={() => handleToggleExpand(planilla.id)}
-                  sx={{
-                    py: 2,
-                    "&:hover": { backgroundColor: "action.hover" },
-                  }}
-                >
-                  <ListItemText
-                    primary={
-                      <Typography variant="body1" fontWeight="medium">
-                        {planilla.formattedDate}
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography variant="caption" color="text.secondary">
-                        Creado: {formatDateTime(planilla.createdAt)}
-                      </Typography>
-                    }
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      edge="end"
-                      onClick={() => handleToggleExpand(planilla.id)}
-                    >
-                      {expandedPlanilla === planilla.id ? (
-                        <ExpandLess />
-                      ) : (
-                        <ExpandMore />
-                      )}
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-
-                <Collapse
-                  in={expandedPlanilla === planilla.id}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <Box sx={{ px: 2, pb: 2 }}>
-                    <PlanillaCard planilla={planilla} isMobile={isMobile} />
-                  </Box>
-                </Collapse>
-
-                {index < processedData.length - 1 && <Divider />}
-              </Box>
-            ))}
-          </List>
-        </Paper>
+        <PlanillaMobileList
+          planillas={processedData}
+          onView={handleViewPlanilla}
+        />
       ) : (
         /* Desktop View - Table (unchanged) */
-        <TableContainer component={Paper} sx={{ mt: 2, borderRadius: 2 }}>
-          <Table size={isTablet ? "small" : "medium"}>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Fecha
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <Business fontSize="small" />
-                    <span>Empresa</span>
-                  </Stack>
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Código de Vuelo
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Responsable
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Horarios
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Posición
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Novedades
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-                  Acciones
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {processedData.map((planilla) => (
-                <TableRow
-                  key={planilla.id}
-                  hover
-                  sx={{ "&:hover": { backgroundColor: "action.hover" } }}
-                >
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Typography variant="body2" fontWeight="medium">
-                      {planilla.formattedDate}
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                      <Business fontSize="small" color="primary" />
-                      <Typography variant="body2">
-                        {planilla.empresa}
-                      </Typography>
-                    </Stack>
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Chip
-                      label={planilla.codVuelo}
-                      size="small"
-                      variant="outlined"
-                      color="primary"
-                    />
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Typography variant="body2">
-                      {planilla.responsable}
-                    </Typography>
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Stack spacing={0.5}>
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        {getFlightTypeIcon(
-                          planilla.datosVuelo.horaArribo,
-                          planilla.datosVuelo.horaPartida
-                        )}
-                        <Typography variant="caption">
-                          {planilla.formattedHoraIni} -{" "}
-                          {planilla.formattedHoraFin}
-                        </Typography>
-                      </Stack>
-                      {planilla.datosVuelo.horaArribo && (
-                        <Typography variant="caption" color="success.main">
-                          Arribo: {planilla.formattedHoraArribo}
-                        </Typography>
-                      )}
-                      {planilla.datosVuelo.horaPartida && (
-                        <Typography variant="caption" color="warning.main">
-                          Partida: {planilla.formattedHoraPartida}
-                        </Typography>
-                      )}
-                    </Stack>
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Chip
-                      label={planilla.datosVuelo.posicion || "N/A"}
-                      size="small"
-                      variant="filled"
-                      color="secondary"
-                    />
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {planilla.novedadesCount > 0 ? (
-                      <Chip
-                        label={`${planilla.novedadesCount} novedad${
-                          planilla.novedadesCount > 1 ? "es" : ""
-                        }`}
-                        size="small"
-                        color="warning"
-                        variant="outlined"
-                      />
-                    ) : (
-                      <Typography variant="caption" color="text.secondary">
-                        Sin novedades
-                      </Typography>
-                    )}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Tooltip title="Ver planilla">
-                      <IconButton
-                        size="small"
-                        onClick={() => handleViewPlanilla(planilla.id)}
-                        color="primary"
-                      >
-                        <Visibility fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <PlanillasTable planillas={processedData} onView={handleViewPlanilla} />
       )}
 
       {/* Pagination */}

@@ -254,13 +254,6 @@ planillasRouter.get("/", async (req, res, next) => {
 
     const planillas = await planillaQuery.exec();
 
-    console.log("Populate query parameter:", populate);
-    console.log(
-      "Populate array after split:",
-      typeof populate === "string" ? populate.split(",") : []
-    );
-    console.log("Populated fields from getPopulateFields:", populatedArray);
-
     return res.json({
       data: planillas,
       currentPage: validPage,

@@ -230,7 +230,7 @@ export enum NovedadType {
 
 export const DEFAULT_PAGE_SIZE = 10;
 
-export const PLANILLA_POPULATE_FIELDS = ["responsable", "codVuelo", "empresa"];
+export const PLANILLA_POPULATE_FIELDS = ["codVuelo", "empresa"];
 
 // ==================== TYPE GUARDS ====================
 
