@@ -101,11 +101,13 @@ export interface PlanillasApiResponse {
 }
 
 export interface UsePlanillasParams {
-  page: number;
-  pageSize: number;
+  page?: number;
+  pageSize?: number;
+  empresa?: string;
   fechaDesde?: string;
   fechaHasta?: string;
-  populate: string[];
+  populate?: string[];
+  enabled?: boolean;
 }
 
 // ==================== UTILITY FUNCTIONS ====================

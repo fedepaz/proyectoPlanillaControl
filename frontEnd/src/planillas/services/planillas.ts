@@ -2,73 +2,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PlanillaGet } from "../types/planillaType";
 import { PlanillaSchema } from "../types/planillaSchema";
 import apiClient from "../../services/csrfToken";
+import {
+  PlanillaData,
+  PlanillasApiResponse,
+  UsePlanillasParams,
+} from "../types/searchTypes";
 
-interface PlanillaData {
-  id: string;
-  datosPsa: {
-    fecha: string;
-    responsable: {
-      firstname: string;
-      lastname: string;
-      id: string;
-    };
-    horaIni?: string | undefined;
-    horaFin?: string | undefined;
-    cant: string;
-    tipoControl: string | string[];
-    medioTec: string | string[];
-    tipoPro: string | string[];
-  };
-  datosVuelo: {
-    empresa: { empresa: string; id: string } | string;
-    codVuelo: { codVuelo: string; id: string } | string;
-    horaArribo?: string | undefined;
-    horaPartida?: string | undefined;
-    demora: string;
-    tipoVuelo: string;
-    matriculaAeronave: string;
-    posicion: string;
-  };
-  datosTerrestre: {
-    personalEmpresa: string;
-    funcion: string;
-    grupo: string;
-  }[];
-  datosSeguridad: {
-    personalSegEmpresa: string[];
-    empresaSeguridad: string;
-  }[];
-  datosVehiculos: {
-    vehiculo: string;
-    operadorVehiculo: string;
-    isObservaciones: boolean;
-    observacionesVehiculo: string;
-  }[];
-  novEquipajes: { isRequired: boolean; observaciones: string };
-  novInspeccion: { isRequired: boolean; observaciones: string };
-  novOtras: { isRequired: boolean; observaciones: string };
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface PaginatedResponse {
-  data: PlanillaData[];
-  currentPage: number;
-  totalPages: number;
-  totalCount: number;
-  pageSize: number;
-}
-
-interface PlanillaFilters {
-  page?: number;
-  pageSize?: number;
-  empresa?: string;
-  fechaDesde?: string;
-  fechaHasta?: string;
-  populate?: string[];
-}
-
-export function usePlanillas(filters: PlanillaFilters = {}) {
+export function usePlanillas(filters: UsePlanillasParams = {}) {
   const {
     page = 1,
     pageSize = 10,
@@ -76,9 +16,10 @@ export function usePlanillas(filters: PlanillaFilters = {}) {
     fechaDesde,
     fechaHasta,
     populate = [],
+    enabled = false,
   } = filters;
 
-  return useQuery<PaginatedResponse, Error>({
+  return useQuery<PlanillasApiResponse, Error>({
     queryKey: [
       "planillas",
       { page, pageSize, empresa, fechaDesde, fechaHasta, populate },
@@ -94,14 +35,13 @@ export function usePlanillas(filters: PlanillaFilters = {}) {
       if (fechaHasta) params.append("fechaHasta", fechaHasta);
       if (populate.length > 0) params.append("populate", populate.join(","));
 
-      const { data } = await apiClient.get<PaginatedResponse>(
+      const { data } = await apiClient.get<PlanillasApiResponse>(
         `/planillas?${params.toString()}`
       );
-
       return data;
     },
     staleTime: 5 * 60 * 1000,
-    enabled: !!filters.page,
+    enabled: enabled,
   });
 }
 

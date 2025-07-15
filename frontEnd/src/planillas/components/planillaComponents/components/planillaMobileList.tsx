@@ -3,8 +3,6 @@
 import React from "react";
 import {
   Typography,
-  useTheme,
-  useMediaQuery,
   Paper,
   Stack,
   Table,
@@ -26,9 +24,6 @@ export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
   planillas,
   onView,
 }) => {
-  const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("xs"));
-
   const getFlightTypeIcon = (
     horaArribo: string | undefined,
     horaPartida: string | undefined

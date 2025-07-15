@@ -20,6 +20,10 @@ import {
 import { validateReference } from "../utils/validateReference.js";
 import { getPopulateFields } from "../utils/populateHelper.js";
 import { populate } from "dotenv";
+import {
+  buildDateRangeQuery,
+  validateDateFormat,
+} from "../utils/dateParser.js";
 
 const planillasRouter = express.Router();
 
@@ -218,49 +222,103 @@ planillasRouter.post("/", async (req, res, next) => {
 });
 
 planillasRouter.get("/", async (req, res, next) => {
-  const {
-    page = 1,
-    pageSize = 10,
-    empresa,
-    fechaDesde,
-    fechaHasta,
-    populate,
-  } = req.query;
-
-  const query = {};
-  if (empresa) query["datosVuelo.empresa"] = empresa;
-  if (fechaDesde || fechaHasta) {
-    query["datosPsa.fecha"] = {};
-    if (fechaDesde) query["datosPsa.fecha"].$gte = new Date(fechaDesde);
-    if (fechaHasta) query["datosPsa.fecha"].$lte = new Date(fechaHasta);
-  }
-
   try {
-    const totalCount = await Planilla.countDocuments(query);
-    const totalPages = Math.ceil(totalCount / pageSize);
-    const validPage = Math.min(Math.max(1, page), totalPages);
+    const {
+      page = 1,
+      pageSize = 10,
+      empresa,
+      fechaDesde,
+      fechaHasta,
+      populate,
+    } = req.query;
 
-    const populatedArray = getPopulateFields(
-      typeof populate === "string" ? populate.split(",") : []
-    );
-    let planillaQuery = Planilla.find(query)
-      .sort({ createdAt: -1 })
-      .skip((validPage - 1) * parseInt(pageSize))
-      .limit(parseInt(pageSize, 10));
-
-    for (const field of populatedArray) {
-      planillaQuery = planillaQuery.populate(field);
+    // Validate dates
+    if (
+      (fechaDesde && !validateDateFormat(fechaDesde)) ||
+      (fechaHasta && !validateDateFormat(fechaHasta))
+    ) {
+      const error = new Error("Invalid date format. Use YYYY-MM-DD");
+      error.status = 400;
+      error.name = "BadRequest";
+      throw error;
     }
 
-    const planillas = await planillaQuery.exec();
+    // Build base query for non-date fields
+    const query = {};
+    if (empresa) query["datosVuelo.empresa"] = empresa;
 
-    return res.json({
-      data: planillas,
-      currentPage: validPage,
-      totalPages,
-      totalCount,
-      pageSize: parseInt(pageSize, 10),
-    });
+    // If we have date filters, we need to use aggregation
+    if (fechaDesde || fechaHasta) {
+      const pipeline = [
+        ...buildDateRangeQuery(fechaDesde, fechaHasta),
+        { $match: query }, // Add other filters
+        { $sort: { createdAt: -1 } },
+      ];
+
+      // Get total count
+      const countPipeline = [...pipeline, { $count: "totalCount" }];
+      const totalResult = await Planilla.aggregate(countPipeline);
+      const totalCount = totalResult[0]?.totalCount || 0;
+
+      // Add pagination
+      const validPage = Math.max(1, parseInt(page));
+      const pageSizeInt = parseInt(pageSize, 10);
+      const totalPages = Math.ceil(totalCount / pageSizeInt);
+
+      pipeline.push(
+        { $skip: (validPage - 1) * pageSizeInt },
+        { $limit: pageSizeInt },
+        { $addFields: { id: "$_id" } }, // Add id field
+        { $unset: ["parsedDate", "_id"] } // Remove unwanted fields
+      );
+
+      let planillas = await Planilla.aggregate(pipeline);
+
+      // Handle population
+      const populatedArray = getPopulateFields(
+        typeof populate === "string" ? populate.split(",") : []
+      );
+
+      if (populatedArray.length > 0) {
+        planillas = await Planilla.populate(planillas, populatedArray);
+      }
+
+      return res.json({
+        data: planillas,
+        currentPage: validPage,
+        totalPages,
+        totalCount,
+        pageSize: pageSizeInt,
+      });
+    } else {
+      // No date filtering, use regular Mongoose query
+      const totalCount = await Planilla.countDocuments(query);
+      const totalPages = Math.ceil(totalCount / pageSize);
+      const validPage = Math.min(Math.max(1, page), totalPages) || 1;
+
+      const populatedArray = getPopulateFields(
+        typeof populate === "string" ? populate.split(",") : []
+      );
+
+      let planillaQuery = Planilla.find(query)
+        .sort({ createdAt: -1 })
+        .skip((validPage - 1) * parseInt(pageSize))
+        .limit(parseInt(pageSize, 10));
+
+      for (const field of populatedArray) {
+        planillaQuery = planillaQuery.populate(field);
+      }
+
+      const planillas = await planillaQuery.exec();
+
+      return res.json({
+        data: planillas,
+        currentPage: validPage,
+        totalPages,
+        totalCount,
+        pageSize: parseInt(pageSize, 10),
+      });
+    }
   } catch (error) {
     next(error);
   }

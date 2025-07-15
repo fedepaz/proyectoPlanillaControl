@@ -75,9 +75,6 @@ export const PlanillasTable: React.FC<PlanillasTableProps> = ({
             <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
               Novedades
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
-              Acciones
-            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -85,7 +82,13 @@ export const PlanillasTable: React.FC<PlanillasTableProps> = ({
             <TableRow
               key={planilla.id}
               hover
-              sx={{ "&:hover": { backgroundColor: "action.hover" } }}
+              onClick={() => onView(planilla.id)}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "action.hover",
+                  cursor: "pointer",
+                },
+              }}
             >
               <TableCell sx={{ textAlign: "center" }}>
                 <Typography variant="body2" fontWeight="medium">
@@ -108,25 +111,22 @@ export const PlanillasTable: React.FC<PlanillasTableProps> = ({
               </TableCell>
               <TableCell sx={{ textAlign: "center" }}>
                 <Stack spacing={0.5}>
-                  <Stack direction="row" alignItems="center" spacing={1}>
+                  <Stack direction="column" alignItems="center" spacing={1}>
                     {getFlightTypeIcon(
                       planilla.datosVuelo.horaArribo,
                       planilla.datosVuelo.horaPartida
                     )}
-                    <Typography variant="caption">
-                      {planilla.formattedHoraIni} - {planilla.formattedHoraFin}
-                    </Typography>
+                    {planilla.datosVuelo.horaArribo && (
+                      <Typography variant="caption" color="success.main">
+                        Arribo: {planilla.formattedHoraArribo}
+                      </Typography>
+                    )}
+                    {planilla.datosVuelo.horaPartida && (
+                      <Typography variant="caption" color="warning.main">
+                        Partida: {planilla.formattedHoraPartida}
+                      </Typography>
+                    )}
                   </Stack>
-                  {planilla.datosVuelo.horaArribo && (
-                    <Typography variant="caption" color="success.main">
-                      Arribo: {planilla.formattedHoraArribo}
-                    </Typography>
-                  )}
-                  {planilla.datosVuelo.horaPartida && (
-                    <Typography variant="caption" color="warning.main">
-                      Partida: {planilla.formattedHoraPartida}
-                    </Typography>
-                  )}
                 </Stack>
               </TableCell>
               <TableCell sx={{ textAlign: "center" }}>
@@ -152,17 +152,6 @@ export const PlanillasTable: React.FC<PlanillasTableProps> = ({
                     Sin novedades
                   </Typography>
                 )}
-              </TableCell>
-              <TableCell sx={{ textAlign: "center" }}>
-                <Tooltip title="Ver planilla">
-                  <IconButton
-                    size="small"
-                    onClick={() => onView(planilla.id)}
-                    color="primary"
-                  >
-                    <Visibility fontSize="small" />
-                  </IconButton>
-                </Tooltip>
               </TableCell>
             </TableRow>
           ))}
