@@ -28,11 +28,20 @@ import {
   DEFAULT_PAGE_SIZE,
   PLANILLA_POPULATE_FIELDS,
 } from "../../types/searchTypes";
+import { PlanillaModal } from "../planillaComponents/components/planillaModal";
+import { PlanillaDetailById } from "../planillaComponents/components/planillaDetailById";
 
 export const PlanillasList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [dateFilters, setDateFilters] = useState<DateFilters>({});
   const [hasSearched, setHasSearched] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPlanilla, setSelectedPlanilla] =
+    useState<ProcessedPlanillaData | null>(null);
+
+  const [selectedPlanillaId, setSelectedPlanillaId] = useState<string>("");
+  const [planillaDetailByIdOpen, setPlanillaDetailByIdOpen] = useState(false);
 
   const pageSize = DEFAULT_PAGE_SIZE;
   const theme = useTheme();
@@ -59,13 +68,30 @@ export const PlanillasList: React.FC = () => {
 
   const handleFilterChange = (filters: DateFilters) => {
     setDateFilters(filters);
-
     setPage(1);
     setHasSearched(true);
   };
 
-  const handleViewPlanilla = (id: string) => {
-    console.log("View planilla:", id);
+  const handleViewPlanillaModal = (planilla: ProcessedPlanillaData) => {
+    setSelectedPlanilla(planilla);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPlanilla(null);
+    setModalOpen(false);
+  };
+
+  const handleViewPlanillaDetailById = (planillaId: string) => {
+    setSelectedPlanillaId(planillaId);
+    setPlanillaDetailByIdOpen(true);
+    setSelectedPlanilla(null);
+    setModalOpen(false);
+  };
+
+  const handleClosePlanillaDetailById = () => {
+    setSelectedPlanillaId("");
+    setPlanillaDetailByIdOpen(false);
   };
 
   if (isLoading) return <Loading />;
@@ -149,11 +175,14 @@ export const PlanillasList: React.FC = () => {
       {isMobile ? (
         <PlanillaMobileList
           planillas={processedData}
-          onView={handleViewPlanilla}
+          onView={handleViewPlanillaModal}
         />
       ) : (
         /* Desktop View - Table (unchanged) */
-        <PlanillasTable planillas={processedData} onView={handleViewPlanilla} />
+        <PlanillasTable
+          planillas={processedData}
+          onView={handleViewPlanillaModal}
+        />
       )}
 
       {/* Pagination */}
@@ -168,6 +197,21 @@ export const PlanillasList: React.FC = () => {
           />
         </Box>
       )}
+
+      {/* Planilla Modal */}
+      <PlanillaModal
+        onView={handleViewPlanillaDetailById}
+        open={modalOpen}
+        planilla={selectedPlanilla}
+        onClose={handleCloseModal}
+      />
+
+      {/* Planilla Detail by ID */}
+      <PlanillaDetailById
+        open={planillaDetailByIdOpen}
+        planillaId={selectedPlanillaId}
+        onClose={handleClosePlanillaDetailById}
+      />
     </Container>
   );
 };

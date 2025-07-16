@@ -17,7 +17,7 @@ import { ProcessedPlanillaData } from "../../../types/searchTypes";
 
 interface PlanillaMobileItemProps {
   planillas: ProcessedPlanillaData[];
-  onView: (id: string) => void;
+  onView: (planilla: ProcessedPlanillaData) => void;
 }
 
 export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
@@ -86,7 +86,7 @@ export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
             <TableRow
               key={planilla.id}
               hover
-              onClick={() => onView(planilla.id)}
+              onClick={() => onView(planilla)}
               sx={{
                 cursor: "pointer",
                 "&:hover": {

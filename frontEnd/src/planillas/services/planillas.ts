@@ -51,7 +51,7 @@ export function usePlanillaID(_id: string) {
     enabled: !!_id,
     queryFn: async (): Promise<PlanillaData> => {
       const { data } = await apiClient.get<PlanillaGet>(`/planillas/${_id}`);
-
+      console.log(data);
       return {
         id: data.id,
         datosPsa: {

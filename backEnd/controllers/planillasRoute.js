@@ -366,13 +366,13 @@ planillasRouter.get("/:id", async (req, res, next) => {
       })
       .populate({
         path: "datosVehiculos.vehiculo",
-        select: "matricula",
+        select: "vehiculo",
       })
       .populate({
         path: "datosVehiculos.operadorVehiculo",
         select: "firstname lastname",
-      })
-      .lean();
+      });
+
     if (!planilla) {
       const error = new Error();
       error.status = 404;

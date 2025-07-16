@@ -29,7 +29,7 @@ import { ProcessedPlanillaData } from "../../../types/searchTypes";
 
 interface PlanillasTableProps {
   planillas: ProcessedPlanillaData[];
-  onView: (id: string) => void;
+  onView: (planilla: ProcessedPlanillaData) => void;
 }
 
 export const PlanillasTable: React.FC<PlanillasTableProps> = ({
@@ -82,7 +82,7 @@ export const PlanillasTable: React.FC<PlanillasTableProps> = ({
             <TableRow
               key={planilla.id}
               hover
-              onClick={() => onView(planilla.id)}
+              onClick={() => onView(planilla)}
               sx={{
                 "&:hover": {
                   backgroundColor: "action.hover",
