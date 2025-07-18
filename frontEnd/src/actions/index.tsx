@@ -72,6 +72,7 @@ export const createDashboardActions = (callbacks: {
       ),
       category: ActionCategory.MAIN,
       allowedRoles: [
+        UserRole.AUXILIAR,
         UserRole.RESPONSABLE,
         UserRole.SUPERVISOR,
         UserRole.ADMIN,
