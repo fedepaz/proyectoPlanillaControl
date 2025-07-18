@@ -1,4 +1,4 @@
-import { RoleAccessMatrix, RolesHierarchy } from "../config/roles.config";
+import { RoleAccessMatrix, RolesHierarchy } from "../config/roles.config.js";
 
 export const authorize = (requiredRoles = [], requiredPermission) => {
   return async (req, res, next) => {

@@ -1,4 +1,4 @@
-import { Roles } from "../enums/enums";
+import { Roles } from "../enums/enums.js";
 
 export const RolesHierarchy = {
   [Roles.ADMIN]: 100,

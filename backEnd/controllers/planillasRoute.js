@@ -19,11 +19,11 @@ import {
 } from "../models/personalModel.js";
 import { validateReference } from "../utils/validateReference.js";
 import { getPopulateFields } from "../utils/populateHelper.js";
-import { populate } from "dotenv";
 import {
   buildDateRangeQuery,
   validateDateFormat,
 } from "../utils/dateParser.js";
+import { authorize } from "../middlewares/authorize.js";
 
 const planillasRouter = express.Router();
 
@@ -211,6 +211,8 @@ planillasRouter.post("/", async (req, res, next) => {
       novEquipajes,
       novInspeccion,
       novOtras,
+      createdBy: req.user.id,
+      updatedBy: req.user.id,
     });
 
     const savedPlanilla = await newPlanilla.save();
@@ -221,6 +223,14 @@ planillasRouter.post("/", async (req, res, next) => {
   }
 });
 
+// Helper function to determine if user should see all planillas
+const shouldShowAllPlanillas = (userRole) => {
+  // Define roles that can see all planillas
+  const adminRoles = ["admin", "supervisor", "manager"]; // Adjust these to match your role names
+  return adminRoles.includes(userRole);
+};
+
+// GET all planillas - filtered by user or role
 planillasRouter.get("/", async (req, res, next) => {
   try {
     const {
@@ -247,11 +257,16 @@ planillasRouter.get("/", async (req, res, next) => {
     const query = {};
     if (empresa) query["datosVuelo.empresa"] = empresa;
 
+    // Add user filtering based on role
+    if (!shouldShowAllPlanillas(req.user.role)) {
+      query.createdBy = req.user.id;
+    }
+
     // If we have date filters, we need to use aggregation
     if (fechaDesde || fechaHasta) {
       const pipeline = [
         ...buildDateRangeQuery(fechaDesde, fechaHasta),
-        { $match: query }, // Add other filters
+        { $match: query }, // Add other filters including user filter
         { $sort: { createdAt: -1 } },
       ];
 
@@ -324,10 +339,17 @@ planillasRouter.get("/", async (req, res, next) => {
   }
 });
 
+// GET single planilla by ID - filtered by user or role
 planillasRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const planilla = await Planilla.findById(id)
+    // Build query with user filtering
+    const query = { _id: id };
+    if (!shouldShowAllPlanillas(req.user.role)) {
+      query.createdBy = req.user.id;
+    }
+
+    const planilla = await Planilla.findOne(query)
       .populate({
         path: "datosPsa.responsable",
         select: "firstname lastname dni legajo",
@@ -417,17 +439,25 @@ planillasRouter.get("/:id", async (req, res, next) => {
   }
 });
 
+// PUT update planilla - only allow users to update their own planillas
 planillasRouter.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { body } = req;
   try {
-    const planilla = await Planilla.findById(id);
+    // Build query with user filtering
+    const query = { _id: id };
+    if (!shouldShowAllPlanillas(req.user.role)) {
+      query.createdBy = req.user.id;
+    }
+
+    const planilla = await Planilla.findOne(query);
     if (!planilla) {
       const error = new Error();
       error.status = 404;
       error.name = "PlanillaNotFound";
       throw error;
     }
+
     const requiredFields = [
       "datosPsa.fecha",
       "datosPsa.responsable",
@@ -520,7 +550,39 @@ planillasRouter.put("/:id", async (req, res, next) => {
       await validateReference(Vehiculo, vehiculo.vehiculo);
       await validateReference(PersonalEmpresa, vehiculo.operadorVehiculo);
     }
-    const updated = await Planilla.findByIdAndUpdate(id, body, { new: true });
+    const updateData = {
+      datosPsa: {
+        fecha: body.datosPsa.fecha,
+        responsable: body.datosPsa.responsable,
+        horaIni: body.datosPsa.horaIni,
+        horaFin: body.datosPsa.horaFin,
+        cant: body.datosPsa.cant,
+        tipoControl: body.datosPsa.tipoControl,
+        medioTec: body.datosPsa.medioTec,
+        tipoPro: body.datosPsa.tipoPro,
+      },
+      datosVuelo: {
+        empresa: body.datosVuelo.empresa,
+        codVuelo: body.datosVuelo.codVuelo,
+        horaArribo: body.datosVuelo.horaArribo,
+        horaPartida: body.datosVuelo.horaPartida,
+        demora: body.datosVuelo.demora,
+        tipoVuelo: body.datosVuelo.tipoVuelo,
+        matriculaAeronave: body.datosVuelo.matriculaAeronave,
+        posicion: body.datosVuelo.posicion,
+      },
+      datosTerrestre: body.datosTerrestre,
+      datosSeguridad: body.datosSeguridad,
+      datosVehiculos: body.datosVehiculos,
+      novEquipajes: body.novEquipajes,
+      novInspeccion: body.novInspeccion,
+      novOtras: body.novOtras,
+      updatedBy: req.user.id,
+    };
+
+    const updated = await Planilla.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
 
     return res.send({
       message: "Planilla updated successfully",
@@ -531,10 +593,17 @@ planillasRouter.put("/:id", async (req, res, next) => {
   }
 });
 
+// DELETE planilla - only allow users to delete their own planillas
 planillasRouter.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const result = await Planilla.findByIdAndDelete(id);
+    // Build query with user filtering
+    const query = { _id: id };
+    if (!shouldShowAllPlanillas(req.user.role)) {
+      query.createdBy = req.user.id;
+    }
+
+    const result = await Planilla.findOneAndDelete(query);
     if (!result) {
       const error = new Error();
       error.status = 404;
