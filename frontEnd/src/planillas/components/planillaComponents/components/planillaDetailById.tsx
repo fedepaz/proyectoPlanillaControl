@@ -30,6 +30,7 @@ import {
   Warning,
   CheckCircle,
   Close,
+  Business,
 } from "@mui/icons-material";
 import ErrorPage from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
@@ -120,6 +121,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             color="text.secondary"
             fontWeight="medium"
             sx={{ fontSize: isMobile ? "0.85rem" : "0.875rem" }}
+            component="div"
           >
             {label}:
           </Typography>
@@ -129,6 +131,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             variant="body2"
             color="text.primary"
             sx={{ fontSize: isMobile ? "0.85rem" : "0.875rem" }}
+            component="div"
           >
             {value}
           </Typography>
@@ -137,7 +140,14 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
     );
 
     const PersonCard: React.FC<{
-      person: { firstname: string; lastname: string; id: string };
+      person: {
+        firstname: string;
+        lastname: string;
+        dni: number;
+        legajo: number;
+        id: string;
+        empresa?: { empresa: string; id: string };
+      };
       subtitle?: string;
       additionalInfo?: string;
     }> = ({ person, subtitle, additionalInfo }) => (
@@ -157,8 +167,28 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             <Typography variant="subtitle2" fontWeight="medium">
               {person.firstname} {person.lastname}
             </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+            >
+              DNI: {person.dni} - Legajo: {person.legajo}
+            </Typography>
+            {person.empresa && (
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+              >
+                Empresa: {person.empresa.empresa}
+              </Typography>
+            )}
             {subtitle && (
-              <Typography variant="caption" color="text.secondary">
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+              >
                 {subtitle}
               </Typography>
             )}
@@ -183,7 +213,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
         {items.map((item, index) => (
           <Chip
-            key={String(item.id) || `chip-${index}`}
+            key={item.id || `chip-${index}`}
             label={item.label}
             color={color}
             size="small"
@@ -212,7 +242,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           {hasNovedades ? (
             activeNovedades.map((novedad, index) => (
               <Paper
-                key={index}
+                key={`novedad-${novedad.type}-${index}`}
                 elevation={1}
                 sx={{
                   p: 2,
@@ -272,6 +302,9 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             Vuelo {data.datosVuelo.codVuelo?.codVuelo || "N/A"} -{" "}
             {formatDate(data.datosPsa.fecha)}
           </Typography>
+          <Typography variant="body2" sx={{ opacity: 0.9 }}>
+            Empresa: {data.datosVuelo.empresa?.empresa || "N/A"}
+          </Typography>
         </Paper>
 
         {/* PSA Information */}
@@ -295,6 +328,18 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 value={`${data.datosPsa.responsable?.firstname || "N/A"} ${
                   data.datosPsa.responsable?.lastname || "N/A"
                 }`}
+              />
+              <DataRow
+                label="Jerarquía"
+                value={data.datosPsa.responsable?.jerarquiaId?.label || "N/A"}
+              />
+              <DataRow
+                label="DNI"
+                value={data.datosPsa.responsable?.dni || "N/A"}
+              />
+              <DataRow
+                label="Legajo"
+                value={data.datosPsa.responsable?.legajo || "N/A"}
               />
             </Grid>
           </Grid>
@@ -328,6 +373,10 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 value={data.datosVuelo.codVuelo?.codVuelo || "N/A"}
               />
               <DataRow
+                label="Empresa"
+                value={data.datosVuelo.empresa?.empresa || "N/A"}
+              />
+              <DataRow
                 label="Tipo de Vuelo"
                 value={data.datosVuelo.tipoVuelo?.label || "N/A"}
               />
@@ -340,6 +389,42 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
               />
             </Grid>
             <Grid item xs={12} md={6}>
+              <DataRow
+                label="Origen"
+                value={
+                  <Box>
+                    <Typography variant="body2" component="span">
+                      {data.datosVuelo.codVuelo?.origen?.aeropuerto || "N/A"}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      display="block"
+                    >
+                      {data.datosVuelo.codVuelo?.origen?.codIATA || "N/A"} -{" "}
+                      {data.datosVuelo.codVuelo?.origen?.codOACI || "N/A"}
+                    </Typography>
+                  </Box>
+                }
+              />
+              <DataRow
+                label="Destino"
+                value={
+                  <Box>
+                    <Typography variant="body2" component="span">
+                      {data.datosVuelo.codVuelo?.destino?.aeropuerto || "N/A"}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      display="block"
+                    >
+                      {data.datosVuelo.codVuelo?.destino?.codIATA || "N/A"} -{" "}
+                      {data.datosVuelo.codVuelo?.destino?.codOACI || "N/A"}
+                    </Typography>
+                  </Box>
+                }
+              />
               {data.datosVuelo.horaArribo && (
                 <DataRow
                   label="Hora Arribo"
@@ -363,20 +448,21 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
         {/* Personnel Information */}
         <InfoCard title="Personal Terrestre" icon={<Group />} color="success">
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Total: {data.datosTerrestre?.length || 0} personas
+            Total: {data.datosTerrestre?.length || 0} grupos
           </Typography>
-          {data.datosTerrestre?.map((item, index) => (
-            <Box key={item.id} sx={{ mb: 2 }}>
+          {data.datosTerrestre?.map((item) => (
+            <Box key={`terrestre-${item.id}`} sx={{ mb: 2 }}>
               <Typography
                 variant="subtitle2"
                 fontWeight="medium"
-                sx={{ mb: 1 }}
+                sx={{ mb: 1, display: "flex", alignItems: "center", gap: 1 }}
               >
+                <Business fontSize="small" />
                 Grupo {item.grupo} - {item.funcion?.label || "N/A"}
               </Typography>
-              {item.personalEmpresa?.map((person, personIndex) => (
+              {item.personalEmpresa?.map((person) => (
                 <PersonCard
-                  key={person.id}
+                  key={`terrestre-person-${person.id}`}
                   person={person}
                   subtitle={`${item.funcion?.label || "N/A"} - Grupo ${
                     item.grupo
@@ -394,17 +480,25 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           color="warning"
         >
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Total: {data.datosSeguridad?.length || 0} personas
+            Total: {data.datosSeguridad?.length || 0} grupos
           </Typography>
-          {data.datosSeguridad?.map((item, index) => (
-            <Box key={item.id} sx={{ mb: 2 }}>
-              {item.personalSegEmpresa?.map((person, personIndex) => (
+          {data.datosSeguridad?.map((item) => (
+            <Box key={`seguridad-${item.id}`} sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle2"
+                fontWeight="medium"
+                sx={{ mb: 1, display: "flex", alignItems: "center", gap: 1 }}
+              >
+                <Security fontSize="small" />
+                Empresa de Seguridad: {item.empresaSeguridad?.empresa || "N/A"}
+              </Typography>
+              {item.personalSegEmpresa?.map((person) => (
                 <PersonCard
-                  key={person.id}
+                  key={`seguridad-person-${person.id}`}
                   person={person}
                   subtitle="Personal de Seguridad"
                   additionalInfo={`Empresa: ${
-                    item.empresaSeguridad?.nombre || "N/A"
+                    item.empresaSeguridad?.empresa || "N/A"
                   }`}
                 />
               ))}
@@ -417,9 +511,9 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Total: {data.datosVehiculos?.length || 0} vehículos
           </Typography>
-          {data.datosVehiculos?.map((item, index) => (
+          {data.datosVehiculos?.map((item) => (
             <Paper
-              key={item.id}
+              key={`vehiculo-${item._id}`}
               elevation={1}
               sx={{
                 p: 2,
@@ -433,11 +527,31 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 </Avatar>
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="subtitle2" fontWeight="medium">
-                    Vehículo ID: {item.vehiculo?.id || "N/A"}
+                    {item.vehiculo?.numInterno || "N/A"} -{" "}
+                    {item.vehiculo?.tipoVehiculo?.label || "N/A"}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Empresa: {item.vehiculo?.empresa?.empresa || "N/A"}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
                     Operador: {item.operadorVehiculo?.firstname || "N/A"}{" "}
                     {item.operadorVehiculo?.lastname || "N/A"}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    DNI: {item.operadorVehiculo?.dni || "N/A"} - Legajo:{" "}
+                    {item.operadorVehiculo?.legajo || "N/A"}
                   </Typography>
                   {item.isObservaciones && item.observacionesVehiculo && (
                     <Typography

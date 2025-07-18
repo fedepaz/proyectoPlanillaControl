@@ -328,13 +328,30 @@ planillasRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const planilla = await Planilla.findById(id)
-      .populate({ path: "datosPsa.responsable", select: "firstname lastname" })
+      .populate({
+        path: "datosPsa.responsable",
+        select: "firstname lastname dni legajo",
+        populate: {
+          path: "jerarquiaId",
+          select: "label",
+        },
+      })
       .populate({ path: "datosPsa.tipoControl", select: "label" })
       .populate({ path: "datosPsa.medioTec", select: "label" })
       .populate({ path: "datosPsa.tipoPro", select: "label" })
       .populate({
         path: "datosVuelo.codVuelo",
-        select: "codVuelo",
+        select: "codVuelo origen destino",
+        populate: [
+          {
+            path: "origen",
+            select: "aeropuerto codIATA codOACI",
+          },
+          {
+            path: "destino",
+            select: "aeropuerto codIATA codOACI",
+          },
+        ],
       })
       .populate({
         path: "datosVuelo.demora",
@@ -348,9 +365,14 @@ planillasRouter.get("/:id", async (req, res, next) => {
         path: "datosVuelo.matriculaAeronave",
         select: "matriculaAeronave",
       })
+      .populate({ path: "datosVuelo.empresa", select: "empresa" })
       .populate({
         path: "datosTerrestre.personalEmpresa",
-        select: "firstname lastname",
+        select: "firstname lastname dni legajo empresa",
+        populate: {
+          path: "empresa",
+          select: "empresa",
+        },
       })
       .populate({
         path: "datosTerrestre.funcion",
@@ -358,19 +380,29 @@ planillasRouter.get("/:id", async (req, res, next) => {
       })
       .populate({
         path: "datosSeguridad.personalSegEmpresa",
-        select: "firstname lastname",
+        select: "firstname lastname dni legajo",
       })
       .populate({
         path: "datosSeguridad.empresaSeguridad",
-        select: "nombre",
+        select: "empresa",
       })
       .populate({
         path: "datosVehiculos.vehiculo",
-        select: "vehiculo",
+        select: "numInterno tipoVehiculo empresa",
+        populate: [
+          {
+            path: "tipoVehiculo",
+            select: "label",
+          },
+          {
+            path: "empresa",
+            select: "empresa",
+          },
+        ],
       })
       .populate({
         path: "datosVehiculos.operadorVehiculo",
-        select: "firstname lastname",
+        select: "firstname lastname dni legajo",
       });
 
     if (!planilla) {

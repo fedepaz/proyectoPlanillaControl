@@ -7,6 +7,7 @@ import {
   PlanillasApiResponse,
   UsePlanillasParams,
 } from "../types/searchTypes";
+import { PlanillaDetailData } from "../types/searchById";
 
 export function usePlanillas(filters: UsePlanillasParams = {}) {
   const {
@@ -44,62 +45,16 @@ export function usePlanillas(filters: UsePlanillasParams = {}) {
     enabled: enabled,
   });
 }
-
 export function usePlanillaID(_id: string) {
   return useQuery({
     queryKey: ["planilla", _id],
     enabled: !!_id,
-    queryFn: async (): Promise<PlanillaData> => {
-      const { data } = await apiClient.get<PlanillaGet>(`/planillas/${_id}`);
-      console.log(data);
-      return {
-        id: data.id,
-        datosPsa: {
-          fecha: data.datosPsa.fecha,
-          responsable: {
-            firstname: data.datosPsa.responsable.firstname,
-            lastname: data.datosPsa.responsable.lastname,
-            id: data.datosPsa.responsable.id,
-          },
-          horaIni: data.datosPsa.horaIni,
-          horaFin: data.datosPsa.horaFin,
-          cant: data.datosPsa.cant,
-          tipoControl: Array.isArray(data.datosPsa.tipoControl)
-            ? data.datosPsa.tipoControl
-            : [data.datosPsa.tipoControl],
-          medioTec: Array.isArray(data.datosPsa.medioTec)
-            ? data.datosPsa.medioTec
-            : [data.datosPsa.medioTec],
-          tipoPro: Array.isArray(data.datosPsa.tipoPro)
-            ? data.datosPsa.tipoPro
-            : [data.datosPsa.tipoPro],
-        },
-        datosVuelo: {
-          tipoVuelo: data.datosVuelo.tipoVuelo,
-          empresa: data.datosVuelo.empresa,
-          codVuelo: data.datosVuelo.codVuelo,
-          horaArribo: data.datosVuelo.horaArribo || "",
-          horaPartida: data.datosVuelo.horaPartida || "",
-          demora: data.datosVuelo.demora,
-          matriculaAeronave: data.datosVuelo.matriculaAeronave,
-          posicion: data.datosVuelo.posicion,
-        },
-        datosTerrestre: data.datosTerrestre,
-        datosSeguridad: data.datosSeguridad,
-        datosVehiculos: Array.isArray(data.datosVehiculos)
-          ? data.datosVehiculos.map((item) => ({
-              vehiculo: item.vehiculo,
-              operadorVehiculo: item.operadorVehiculo,
-              isObservaciones: item.isObservaciones ?? false,
-              observacionesVehiculo: item.observacionesVehiculo ?? "",
-            }))
-          : [],
-        novEquipajes: data.novEquipajes,
-        novInspeccion: data.novInspeccion,
-        novOtras: data.novOtras,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
-      };
+    queryFn: async (): Promise<PlanillaDetailData> => {
+      const { data } = await apiClient.get<PlanillaDetailData>(
+        `/planillas/${_id}`
+      );
+
+      return data;
     },
   });
 }
