@@ -123,7 +123,7 @@ export interface DatosTerrestreDetail {
   personalEmpresa: PersonalEmpresaData[];
   funcion: FuncionData;
   grupo: string;
-  id: string;
+  _id: string;
 }
 
 export interface DatosSeguridadDetail {

@@ -24,6 +24,7 @@ import {
   validateDateFormat,
 } from "../utils/dateParser.js";
 import { authorize } from "../middlewares/authorize.js";
+import mongoose from "mongoose";
 
 const planillasRouter = express.Router();
 
@@ -211,8 +212,8 @@ planillasRouter.post("/", async (req, res, next) => {
       novEquipajes,
       novInspeccion,
       novOtras,
-      createdBy: req.user.id,
-      updatedBy: req.user.id,
+      createdBy: req.user.oficialId.id,
+      updatedBy: req.user.oficialId.id,
     });
 
     const savedPlanilla = await newPlanilla.save();
@@ -223,50 +224,47 @@ planillasRouter.post("/", async (req, res, next) => {
   }
 });
 
-// Helper function to determine if user should see all planillas
 const shouldShowAllPlanillas = (userRole) => {
-  // Define roles that can see all planillas
-  const adminRoles = ["admin", "supervisor", "manager"]; // Adjust these to match your role names
+  const adminRoles = ["admin", "supervisor", "manager"];
   return adminRoles.includes(userRole);
 };
 
-// GET all planillas - filtered by user or role
 planillasRouter.get("/", async (req, res, next) => {
+  const {
+    page = 1,
+    pageSize = 10,
+    empresa,
+    fechaDesde,
+    fechaHasta,
+    populate,
+  } = req.query;
+
+  // Validate dates
+  if (
+    (fechaDesde && !validateDateFormat(fechaDesde)) ||
+    (fechaHasta && !validateDateFormat(fechaHasta))
+  ) {
+    const error = new Error("Invalid date format. Use YYYY-MM-DD");
+    error.status = 400;
+    error.name = "BadRequest";
+    throw error;
+  }
+
   try {
-    const {
-      page = 1,
-      pageSize = 10,
-      empresa,
-      fechaDesde,
-      fechaHasta,
-      populate,
-    } = req.query;
-
-    // Validate dates
-    if (
-      (fechaDesde && !validateDateFormat(fechaDesde)) ||
-      (fechaHasta && !validateDateFormat(fechaHasta))
-    ) {
-      const error = new Error("Invalid date format. Use YYYY-MM-DD");
-      error.status = 400;
-      error.name = "BadRequest";
-      throw error;
-    }
-
     // Build base query for non-date fields
     const query = {};
     if (empresa) query["datosVuelo.empresa"] = empresa;
 
     // Add user filtering based on role
     if (!shouldShowAllPlanillas(req.user.role)) {
-      query.createdBy = req.user.id;
+      query.createdBy = new mongoose.Types.ObjectId(req.user.oficialId.id);
     }
 
     // If we have date filters, we need to use aggregation
     if (fechaDesde || fechaHasta) {
       const pipeline = [
         ...buildDateRangeQuery(fechaDesde, fechaHasta),
-        { $match: query }, // Add other filters including user filter
+        { $match: query },
         { $sort: { createdAt: -1 } },
       ];
 
@@ -345,9 +343,6 @@ planillasRouter.get("/:id", async (req, res, next) => {
   try {
     // Build query with user filtering
     const query = { _id: id };
-    if (!shouldShowAllPlanillas(req.user.role)) {
-      query.createdBy = req.user.id;
-    }
 
     const planilla = await Planilla.findOne(query)
       .populate({
@@ -447,7 +442,7 @@ planillasRouter.put("/:id", async (req, res, next) => {
     // Build query with user filtering
     const query = { _id: id };
     if (!shouldShowAllPlanillas(req.user.role)) {
-      query.createdBy = req.user.id;
+      query.createdBy = new mongoose.Types.ObjectId(req.user.oficialId.id);
     }
 
     const planilla = await Planilla.findOne(query);
@@ -577,7 +572,7 @@ planillasRouter.put("/:id", async (req, res, next) => {
       novEquipajes: body.novEquipajes,
       novInspeccion: body.novInspeccion,
       novOtras: body.novOtras,
-      updatedBy: req.user.id,
+      updatedBy: req.user.oficialId.id,
     };
 
     const updated = await Planilla.findByIdAndUpdate(id, updateData, {
@@ -600,7 +595,7 @@ planillasRouter.delete("/:id", async (req, res, next) => {
     // Build query with user filtering
     const query = { _id: id };
     if (!shouldShowAllPlanillas(req.user.role)) {
-      query.createdBy = req.user.id;
+      query.createdBy = new mongoose.Types.ObjectId(req.user.oficialId.id);
     }
 
     const result = await Planilla.findOneAndDelete(query);

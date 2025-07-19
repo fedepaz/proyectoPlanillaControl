@@ -261,7 +261,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                   </Typography>
                 </Stack>
                 <Typography variant="body2" color="text.secondary">
-                  {novedad.data?.observaciones ||
+                  {novedad.data?.observaciones.toUpperCase() ||
                     "Sin observaciones específicas"}
                 </Typography>
               </Paper>
@@ -325,13 +325,18 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             <Grid item xs={12} md={6}>
               <DataRow
                 label="Responsable"
-                value={`${data.datosPsa.responsable?.firstname || "N/A"} ${
-                  data.datosPsa.responsable?.lastname || "N/A"
+                value={`${
+                  data.datosPsa.responsable?.firstname.toUpperCase() || "N/A"
+                } ${
+                  data.datosPsa.responsable?.lastname.toUpperCase() || "N/A"
                 }`}
               />
               <DataRow
                 label="Jerarquía"
-                value={data.datosPsa.responsable?.jerarquiaId?.label || "N/A"}
+                value={
+                  data.datosPsa.responsable?.jerarquiaId?.label.toUpperCase() ||
+                  "N/A"
+                }
               />
               <DataRow
                 label="DNI"
@@ -378,7 +383,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
               />
               <DataRow
                 label="Tipo de Vuelo"
-                value={data.datosVuelo.tipoVuelo?.label || "N/A"}
+                value={data.datosVuelo.tipoVuelo?.label.toUpperCase() || "N/A"}
               />
               <DataRow label="Posición" value={data.datosVuelo.posicion} />
               <DataRow
@@ -394,16 +399,17 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 value={
                   <Box>
                     <Typography variant="body2" component="span">
-                      {data.datosVuelo.codVuelo?.origen?.aeropuerto || "N/A"}
+                      {data.datosVuelo.codVuelo?.origen?.codIATA.toUpperCase()}
                     </Typography>
-                    <Typography
-                      variant="caption"
-                      color="text.secondary"
-                      display="block"
-                    >
-                      {data.datosVuelo.codVuelo?.origen?.codIATA || "N/A"} -{" "}
-                      {data.datosVuelo.codVuelo?.origen?.codOACI || "N/A"}
-                    </Typography>
+                    {data.datosVuelo.codVuelo?.origen?.codOACI && (
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        display="block"
+                      >
+                        {data.datosVuelo.codVuelo?.origen?.codOACI.toUpperCase()}
+                      </Typography>
+                    )}
                   </Box>
                 }
               />
@@ -412,16 +418,17 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 value={
                   <Box>
                     <Typography variant="body2" component="span">
-                      {data.datosVuelo.codVuelo?.destino?.aeropuerto || "N/A"}
+                      {data.datosVuelo.codVuelo?.destino?.codIATA.toUpperCase()}
                     </Typography>
-                    <Typography
-                      variant="caption"
-                      color="text.secondary"
-                      display="block"
-                    >
-                      {data.datosVuelo.codVuelo?.destino?.codIATA || "N/A"} -{" "}
-                      {data.datosVuelo.codVuelo?.destino?.codOACI || "N/A"}
-                    </Typography>
+                    {data.datosVuelo.codVuelo?.destino?.codOACI && (
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        display="block"
+                      >
+                        {data.datosVuelo.codVuelo?.destino?.codOACI.toUpperCase()}
+                      </Typography>
+                    )}
                   </Box>
                 }
               />
@@ -447,19 +454,8 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
 
         {/* Personnel Information */}
         <InfoCard title="Personal Terrestre" icon={<Group />} color="success">
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Total: {data.datosTerrestre?.length || 0} grupos
-          </Typography>
           {data.datosTerrestre?.map((item) => (
-            <Box key={`terrestre-${item.id}`} sx={{ mb: 2 }}>
-              <Typography
-                variant="subtitle2"
-                fontWeight="medium"
-                sx={{ mb: 1, display: "flex", alignItems: "center", gap: 1 }}
-              >
-                <Business fontSize="small" />
-                Grupo {item.grupo} - {item.funcion?.label || "N/A"}
-              </Typography>
+            <Box key={`terrestre-${item._id}`} sx={{ mb: 2 }}>
               {item.personalEmpresa?.map((person) => (
                 <PersonCard
                   key={`terrestre-person-${person.id}`}
@@ -479,19 +475,8 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           icon={<Security />}
           color="warning"
         >
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Total: {data.datosSeguridad?.length || 0} grupos
-          </Typography>
           {data.datosSeguridad?.map((item) => (
             <Box key={`seguridad-${item.id}`} sx={{ mb: 2 }}>
-              <Typography
-                variant="subtitle2"
-                fontWeight="medium"
-                sx={{ mb: 1, display: "flex", alignItems: "center", gap: 1 }}
-              >
-                <Security fontSize="small" />
-                Empresa de Seguridad: {item.empresaSeguridad?.empresa || "N/A"}
-              </Typography>
               {item.personalSegEmpresa?.map((person) => (
                 <PersonCard
                   key={`seguridad-person-${person.id}`}
@@ -508,9 +493,6 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
 
         {/* Vehicles */}
         <InfoCard title="Vehículos" icon={<DirectionsCar />} color="error">
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Total: {data.datosVehiculos?.length || 0} vehículos
-          </Typography>
           {data.datosVehiculos?.map((item) => (
             <Paper
               key={`vehiculo-${item._id}`}
@@ -528,7 +510,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="subtitle2" fontWeight="medium">
                     {item.vehiculo?.numInterno || "N/A"} -{" "}
-                    {item.vehiculo?.tipoVehiculo?.label || "N/A"}
+                    {item.vehiculo?.tipoVehiculo?.label.toUpperCase() || "N/A"}
                   </Typography>
                   <Typography
                     variant="caption"

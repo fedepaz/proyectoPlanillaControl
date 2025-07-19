@@ -1,12 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PlanillaGet } from "../types/planillaType";
 import { PlanillaSchema } from "../types/planillaSchema";
 import apiClient from "../../services/csrfToken";
-import {
-  PlanillaData,
-  PlanillasApiResponse,
-  UsePlanillasParams,
-} from "../types/searchTypes";
+import { PlanillasApiResponse, UsePlanillasParams } from "../types/searchTypes";
 import { PlanillaDetailData } from "../types/searchById";
 
 export function usePlanillas(filters: UsePlanillasParams = {}) {

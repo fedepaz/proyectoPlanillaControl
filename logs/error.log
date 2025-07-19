@@ -15964,4 +15964,330 @@
     at async file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
     ---------------------
 
+    [2025-07-19T21:15:01.458Z]
+    URL: /personalEmpresa/6850688b26aea98d186b07c9
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PersonalNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:26:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T21:18:40.482Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:22:27.042Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:23:05.782Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:25:03.542Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:25:41.800Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: TypeError: Cannot destructure property 'userId' of 'req.id' as it is undefined.
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:189:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T21:26:25.338Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: TypeError: Cannot destructure property 'userId' of 'user.id' as it is undefined.
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:189:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T21:27:25.735Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:28:26.744Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T21:32:35.826Z]
+    URL: /planillas
+    Method: POST
+    Body: {"datosPsa":{"fecha":"19/07/2025","responsable":"687abc7d21d99333ffbb7902","horaIni":"1800","horaFin":"1820","cant":"1","tipoControl":["665a0f2c9447132ad0d67771"],"medioTec":["665a0f0f9447132ad0d67770"],"tipoPro":["665a0f6a9447132ad0d67775"]},"datosVuelo":{"tipoVuelo":"665a0f8a9447132ad0d67777","empresa":"684d14103a1dba348ee78f41","codVuelo":"687c0a731044a90d26cf6f22","horaArribo":"1810","horaPartida":"","demora":"665a0ba19447132ad0d67768","matriculaAeronave":"6863f31dac159bca2ad41814","posicion":"8"},"datosTerrestre":[{"personalEmpresa":"68558bd69775dd7f236e1d7a","funcion":"665a0e1a9447132ad0d67769","grupo":"3"},{"personalEmpresa":"6855ac05967c88e599e163c3","funcion":"665a0e2d9447132ad0d6776a","grupo":"3"},{"personalEmpresa":"6855ac2f967c88e599e163ce","funcion":"665a0e3a9447132ad0d6776b","grupo":"3"}],"datosSeguridad":[{"personalSegEmpresa":["685ad94a9d3d7c74c763fa16"],"empresaSeguridad":"685ad3da9a4d25d4951ad715"}],"datosVehiculos":[{"vehiculo":"687c0b6b1044a90d26cf6f54","operadorVehiculo":"6855ac2f967c88e599e163ce","isObservaciones":false,"observacionesVehiculo":""}],"novEquipajes":{"isRequired":true,"observaciones":"sin novedad"},"novInspeccion":{"isRequired":false,"observaciones":""},"novOtras":{"isRequired":false,"observaciones":""}}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ValidationError: Planilla validation failed: createdBy: Path `createdBy` is required., updatedBy: Path `updatedBy` is required.
+    at Document.invalidate (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3318:32)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/document.js:3079:17
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongoose@8.8.1/node_modules/mongoose/lib/schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+    ---------------------
+
+    [2025-07-19T22:15:00.769Z]
+    URL: /planillas/6872cc89d70418334436f80b
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PlanillaNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:429:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T22:15:02.225Z]
+    URL: /planillas/6872cc89d70418334436f80b
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PlanillaNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:429:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T22:15:04.429Z]
+    URL: /planillas/6872cc89d70418334436f80b
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PlanillaNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:429:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T22:15:08.575Z]
+    URL: /planillas/6872cc89d70418334436f80b
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PlanillaNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:429:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T22:15:30.759Z]
+    URL: /planillas/6872cc89d70418334436f80b
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: PlanillaNotFound
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:429:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    ---------------------
+
+    [2025-07-19T22:25:30.947Z]
+    URL: /planillas?page=1&pageSize=10&fechaDesde=2025-07-01&fechaHasta=2025-07-19&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ReferenceError: ObjectId is not defined
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:258:27
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-07-19T22:25:31.997Z]
+    URL: /planillas?page=1&pageSize=10&fechaDesde=2025-07-01&fechaHasta=2025-07-19&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ReferenceError: ObjectId is not defined
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:258:27
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-07-19T22:25:34.015Z]
+    URL: /planillas?page=1&pageSize=10&fechaDesde=2025-07-01&fechaHasta=2025-07-19&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ReferenceError: ObjectId is not defined
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:258:27
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-07-19T22:25:38.043Z]
+    URL: /planillas?page=1&pageSize=10&fechaDesde=2025-07-01&fechaHasta=2025-07-19&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ReferenceError: ObjectId is not defined
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/planillasRoute.js:258:27
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
     
