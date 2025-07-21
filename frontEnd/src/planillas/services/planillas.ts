@@ -40,6 +40,7 @@ export function usePlanillas(filters: UsePlanillasParams = {}) {
     enabled: enabled,
   });
 }
+
 export function usePlanillaID(_id: string) {
   return useQuery({
     queryKey: ["planilla", _id],
@@ -48,7 +49,6 @@ export function usePlanillaID(_id: string) {
       const { data } = await apiClient.get<PlanillaDetailData>(
         `/planillas/${_id}`
       );
-
       return data;
     },
   });

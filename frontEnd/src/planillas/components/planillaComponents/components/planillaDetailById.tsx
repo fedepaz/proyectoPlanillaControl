@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -30,12 +30,12 @@ import {
   Warning,
   CheckCircle,
   Close,
-  Business,
 } from "@mui/icons-material";
 import ErrorPage from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
 import { usePlanillaID } from "../../../services/planillas";
 import { formatDate, formatTime } from "../../../types/searchTypes";
+import WarehouseControlFormMUI from "../../planillaPrint/PlanillaPrintVersionV0deb";
 
 interface PlanillaDetailByIdProps {
   open: boolean;
@@ -51,6 +51,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   const { data, isLoading, isError, error } = usePlanillaID(planillaId);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [printForm, setPrintForm] = useState(false);
 
   // Don't fetch data if modal is not open
   const shouldFetch = open && planillaId;
@@ -58,6 +59,10 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   if (!shouldFetch) {
     return null;
   }
+
+  const handlePrint = () => {
+    setPrintForm(true);
+  };
 
   const renderContent = () => {
     if (isLoading) return <Loading />;
@@ -568,6 +573,12 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
     );
   };
 
+  if (printForm) {
+    return (
+      <WarehouseControlFormMUI planillaDataId={planillaId} onBack={onClose} />
+    );
+  }
+
   return (
     <Dialog
       open={open}
@@ -604,6 +615,9 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
       </DialogContent>
 
       <DialogActions sx={{ p: 2 }}>
+        <Button onClick={handlePrint} variant="outlined" color="primary">
+          Imprimir
+        </Button>
         <Button onClick={onClose} variant="outlined">
           Cerrar
         </Button>

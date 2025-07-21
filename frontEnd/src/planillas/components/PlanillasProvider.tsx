@@ -16,6 +16,8 @@ import { useAuth } from "../../hooks/useAuth";
 import { FormReview } from "./planillaShow/formReview";
 import { useCreatePlanilla } from "../services/planillas";
 import { AxiosError } from "axios";
+import WarehouseControlFormMUI from "./planillaPrint/PlanillaPrintVersionV0deb";
+//import WarehouseControlFormMUI from "./planillaPrint/PlanillaPrintVersionClaude";
 
 interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
@@ -28,6 +30,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const [showReview, setShowReview] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const createPlanilla = useCreatePlanilla();
+  const [printForm, setPrintForm] = useState(false);
 
   const methods = useForm<PlanillaSchema>({
     mode: "onChange",
@@ -66,7 +69,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       console.log("✅ Form submitted successfully!");
       setShowReview(false);
       setIsSubmitting(false);
-      onBackHome(true);
+      setPrintForm(true);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         setErrorMessage(error.response.data.message);
@@ -140,6 +143,12 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const handleBackFromReview = () => {
     setShowReview(false);
+    setErrorMessage(null);
+    setIsSubmitting(false);
+  };
+
+  const handleBackFromPrint = () => {
+    setPrintForm(false);
     setErrorMessage(null);
     setIsSubmitting(false);
   };
@@ -228,6 +237,35 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       </FormProvider>
     );
   }
+
+  if (printForm) {
+    return (
+      <FormProvider {...methods}>
+        <CssBaseline />
+        <Box sx={{ py: 3, px: 2 }}>
+          <WarehouseControlFormMUI
+            planillaDataId={"planillaId"}
+            onBack={handleBackFromPrint}
+          />
+        </Box>
+        <Snackbar
+          open={!!errorMessage}
+          autoHideDuration={6000}
+          onClose={clearErrorMessage}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={clearErrorMessage}
+            severity="error"
+            sx={{ width: "100%", whiteSpace: "pre-line" }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      </FormProvider>
+    );
+  }
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
