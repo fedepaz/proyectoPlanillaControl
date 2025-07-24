@@ -128,7 +128,11 @@ export const formatDate = (dateString: string): string => {
 
   // Handle ISO date format
   try {
-    return new Date(dateString).toLocaleDateString("es-ES");
+    return new Date(dateString).toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
   } catch {
     return dateString;
   }
@@ -267,4 +271,72 @@ export const isResponsableObject = (
   responsable: ResponsableData | string
 ): responsable is ResponsableData => {
   return typeof responsable === "object" && responsable !== null;
+};
+
+export const locationMap: Record<string, string> = {
+  // Buenos Aires Area
+  AEP: "METROPOLITANA", // Buenos Aires Jorge Newbery
+  EZE: "EZEIZA", // Ezeiza Ministro Pistarini
+  EPA: "EL PALOMAR", // El Palomar
+  SFE: "SAN FERNANDO", // San Fernando
+  // Major Cities
+  MDZ: "MENDOZA", // Mendoza Francisco Gabrielli
+  COR: "CÓRDOBA", // Córdoba Ingeniero Aeronáutico Ambrosio Taravella
+  ROS: "ROSARIO", // Rosario "Islas Malvinas"
+  BRC: "BARILOCHE", // Bariloche Teniente Luis Candelaria
+  SLA: "SALTA", // Salta General Martín Miguel de Güemes
+  TUC: "TUCUMÁN", // Tucumán teniente Benjamín Matienzo
+  JUJ: "JUJUY", // Jujuy Gobernador Horacio Guzmán
+  NQN: "NEUQUÉN", // Neuquén Presidente Perón
+  MDQ: "MAR DEL PLATA", // Mar del Plata Astor Piazzolla
+
+  // Patagonia Region
+  USH: "USHUAIA", // Ushuaia Malvinas Argentinas
+  RGL: "RÍO GALLEGOS", // Río Gallegos Piloto Civil Norberto Fernández
+  FTE: "EL CALAFATE", // El Calafate Comandante Armando Tola
+  CRD: "COMODORO RIVADAVIA", // Comodoro Rivadavia General Enrique Mosconi
+  PMY: "PUERTO MADRYN", // Puerto Madryn El Tehuelche
+  REL: "TRELEW", // Trelew Almirante Marcos A. Zar
+  EHL: "EL BOLSÓN", // El Bolsón
+  EQS: "ESQUEL", // Esquel Brigadier General Antonio Parodi
+  VDM: "VIEDMA", // Viedma Gobernador Edgardo Castello
+  RGA: "RÍO GRANDE", // Río Grande Gob. Ramón Trejo Noel
+  CPC: "CHAPELCO", // Chapelco Aviador Carlos Campos
+  // Northeast Region
+  IGR: "IGUAZÚ", // Cataratas del Iguazú Mayor D. Carlos Eduardo Krause
+  CNQ: "CORRIENTES", // Corrientes Doctor Fernando Piragine Niveyro
+  RES: "RESISTENCIA", // Resistencia
+  PSS: "POSADAS", // Posadas Libertador General José de San Martín
+  FMA: "FORMOSA", // Formosa
+  AOL: "PASO DE LOS LIBRES", // Paso de los Libres
+  // Central Region
+  SFN: "SANTA FE", // Santa Fe Sauce Viejo
+  PRA: "PARANÁ", // Paraná General Justo José de Urquiza
+  GHU: "GUALEGUAYCHÚ", // Gualeguaychú
+  // Northwest Region
+  UAQ: "SAN JUAN", // San Juan Domingo Faustino Sarmiento
+  IRJ: "LA RIOJA", // La Rioja Capitán Vicente Almandos Almonacid
+  CTC: "CATAMARCA", // Catamarca Coronel Felipe Varela
+  SDE: "SANTIAGO DEL ESTERO", // Santiago del Estero Vicecomodoro Ángel de la Paz Aragonés
+  RHD: "TERMAS DE RÍO HONDO", // Termas de Río Hondo
+  TTG: "TARTAGAL", // Tartagal General Enrique Mosconi
+  RCQ: "RECONQUISTA", // Reconquista Teniente Daniel Jukic
+  // Central West Region
+  LUQ: "SAN LUIS", // San Luis Brigadier Mayor Cesar Raúl Ojeda
+  RCU: "RÍO CUARTO", // Río Cuarto
+  VMR: "VILLA MARÍA", // Villa María Regional
+  LGS: "MALARGÜE", // Malargüe Comodoro D. Ricardo Salomón
+  // Pampas Region
+  RSA: "SANTA ROSA", // Santa Rosa
+  GNR: "GENERAL ROCA", // General Roca Doctor Arturo Umberto Illia
+  BHI: "BAHÍA BLANCA", // Bahía Blanca Comandante Espora
+  GPO: "GENERAL PICO", // General Pico
+  NEC: "NECOCHEA", // Necochea Edgardo Hugo Yelpo
+  TDL: "TANDIL", // Tandil Héroes de Malvinas
+  // International (user-created entries)
+  GRU: "SÃO PAULO", // São Paulo
+  MAD: "MADRID", // Madrid
+  CDG: "PARÍS", // Charles de Gaulle
+  // Default fallback
+  UNKNOWN: "UNKNOWN",
 };

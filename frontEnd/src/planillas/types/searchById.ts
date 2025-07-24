@@ -348,3 +348,23 @@ export const isPlanillaDetailData = (data: any): data is PlanillaDetailData => {
     "empresa" in data.datosVuelo.empresa
   );
 };
+
+// ==================== Print Form ====================
+
+export interface HeaderConfig {
+  location: string; // "METROPOLITANA", "MENDOZA", "BARILOCHE", etc.
+  airportName?: string; // Optional airport name
+  logoUrl?: string; // Optional custom logo URL
+  officialLogoUrl?: string; // Optional official logo URL
+}
+
+export interface PaperSize {
+  label: string;
+  width: string;
+  height: string;
+}
+
+export const PAPER_SIZES: PaperSize[] = [
+  { label: "A4", width: "210mm", height: "297mm" },
+  { label: "Oficio", width: "216mm", height: "330mm" },
+];
