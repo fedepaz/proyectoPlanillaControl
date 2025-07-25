@@ -1,4 +1,7 @@
-import React, { useState, useRef } from "react";
+"use client";
+
+import type React from "react";
+import { useState, useRef } from "react";
 import {
   Button,
   Dialog,
@@ -19,10 +22,10 @@ import {
   Close as CloseIcon,
 } from "@mui/icons-material";
 import {
-  PaperSize,
+  type PaperSize,
   PAPER_SIZES,
-  PlanillaDetailData,
-  HeaderConfig,
+  type PlanillaDetailData,
+  type HeaderConfig,
 } from "../../types/searchById";
 import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
@@ -40,7 +43,6 @@ const PlanillaPDFGenerator: React.FC<{
 
   const generateHeaderConfig = (): HeaderConfig => {
     const airportCodIata = userInfo?.user?.oficialId?.currentAirportId?.codIATA;
-
     const location = locationMap[airportCodIata] || airportCodIata;
 
     return {
@@ -66,9 +68,9 @@ const PlanillaPDFGenerator: React.FC<{
             <title>Planilla de Control</title>
             <style>
               @media print {
-                @page { 
-                  size: ${selectedPaperSize.width} ${selectedPaperSize.height}; 
-                  margin: 0; 
+                @page {
+                  size: ${selectedPaperSize.width} ${selectedPaperSize.height};
+                  margin: 0;
                 }
                 body { margin: 0; }
               }
@@ -169,6 +171,7 @@ const PlanillaPDFGenerator: React.FC<{
             Cerrar
           </Button>
         </DialogTitle>
+
         <DialogContent sx={{ p: 0, overflow: "auto" }}>
           <Box sx={{ p: 2, backgroundColor: "#f5f5f5", minHeight: "100%" }}>
             <div ref={printRef}>
@@ -180,6 +183,7 @@ const PlanillaPDFGenerator: React.FC<{
             </div>
           </Box>
         </DialogContent>
+
         <DialogActions>
           <Button
             onClick={handlePrint}

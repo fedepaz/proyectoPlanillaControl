@@ -1,5 +1,5 @@
 import React from "react";
-import {
+import type {
   HeaderConfig,
   PaperSize,
   PlanillaDetailData,
@@ -21,8 +21,7 @@ const PlanillaPrintForm: React.FC<{
     }));
   };
 
-  // Create rows for personnel tables (minimum 4 rows each)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // Create rows for personnel tables (minimum rows based on form)
   const createPersonnelRows = (personnel: any[], minRows = 4) => {
     const rows = [...personnel];
     while (rows.length < minRows) {
@@ -31,376 +30,435 @@ const PlanillaPrintForm: React.FC<{
     return rows;
   };
 
+  const capitalizeAllWords = (str: string) =>
+    str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+  const nameToDisplayResponsable = () => {
+    const firstname = planillaData.datosPsa.responsable.firstname;
+    const lastname = planillaData.datosPsa.responsable.lastname;
+
+    const capitalizedFirstname = capitalizeAllWords(firstname);
+    const capitalizedLastname = capitalizeAllWords(lastname);
+
+    return `${capitalizedFirstname} ${capitalizedLastname}`;
+  };
+
+  const nameToDisplayEmpleado = (firstname: string, lastname: string) => {
+    const capitalizedFirstname = capitalizeAllWords(firstname);
+    const capitalizedLastname = capitalizeAllWords(lastname);
+
+    return `${capitalizedFirstname} ${capitalizedLastname}`;
+  };
+
+  const Checkbox: React.FC<{
+    checked: boolean;
+    label: string;
+    fontSize?: string;
+  }> = ({ checked, label, fontSize = tableFontSize }) => (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        marginRight: "8px",
+        fontSize,
+      }}
+    >
+      <span
+        style={{
+          display: "inline-block",
+          width: isA4 ? "10px" : "12px",
+          height: isA4 ? "10px" : "12px",
+          border: "1px solid #000",
+          marginRight: "3px",
+          textAlign: "center",
+          lineHeight: isA4 ? "8px" : "10px",
+          fontSize: isA4 ? "7px" : "8px",
+          fontWeight: "bold",
+          backgroundColor: "white",
+        }}
+      >
+        {checked ? "X" : ""}
+      </span>
+      {label}
+    </span>
+  );
+
   const tipoControlOptions = getCheckboxes(planillaData.datosPsa.tipoControl, [
     "Personas",
     "Equipos",
     "Cargas",
   ]);
+
   const medioTecOptions = getCheckboxes(planillaData.datosPsa.medioTec, [
     "Móvil",
     "Paletas",
     "Otros",
   ]);
+
   const tipoProOptions = getCheckboxes(planillaData.datosPsa.tipoPro, [
     "OSVC",
     "Aleatorio",
     "Rutina",
   ]);
 
-  return (
+  const isA4 = paperSize.label === "A4";
+  const isLetter = paperSize.label === "Letter";
+
+  // Base font sizes and spacing
+  const baseFontSize = isA4 ? "9px" : isLetter ? "10px" : "11px";
+  const smallFontSize = isA4 ? "8px" : isLetter ? "9px" : "10px";
+  const headerFontSize = isA4 ? "10px" : isLetter ? "11px" : "12px";
+  const tableFontSize = isA4 ? "7px" : isLetter ? "8px" : "9px";
+
+  // Common styles
+  const pageStyle: React.CSSProperties = {
+    width: paperSize.width,
+    minHeight: paperSize.height,
+    maxHeight: paperSize.height,
+    margin: "0 auto",
+    backgroundColor: "white",
+    padding: isA4 ? "8mm" : "10mm",
+    boxSizing: "border-box",
+    fontFamily: "Arial, sans-serif",
+    fontSize: baseFontSize,
+    lineHeight: "1.1",
+    color: "#000",
+    pageBreakAfter: "always",
+    overflow: "hidden",
+  };
+
+  const sectionStyle: React.CSSProperties = {
+    border: "2px solid #000",
+    marginBottom: isA4 ? "4px" : "6px",
+  };
+
+  const sectionHeaderStyle: React.CSSProperties = {
+    backgroundColor: "#f8f8f8",
+    padding: isA4 ? "3px 6px" : "4px 8px",
+    borderBottom: "1px solid #000",
+    fontWeight: "bold",
+    fontSize: smallFontSize,
+    textAlign: "center",
+  };
+
+  const tableStyle: React.CSSProperties = {
+    width: "100%",
+    borderCollapse: "collapse",
+    fontSize: tableFontSize,
+  };
+
+  const tableCellStyle: React.CSSProperties = {
+    border: "1px solid #000",
+    padding: isA4 ? "2px 4px" : "3px 5px",
+    textAlign: "left",
+    verticalAlign: "top",
+  };
+
+  // Header Component
+  const Header = () => (
     <div
       style={{
-        width: paperSize.width,
-        minHeight: paperSize.height,
-        margin: "0 auto",
-        backgroundColor: "white",
-        padding: "15mm",
-        boxSizing: "border-box",
-        fontFamily: "Arial, sans-serif",
-        fontSize: "10px",
-        lineHeight: "1.2",
-        color: "#000",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: isA4 ? "8px" : "12px",
       }}
     >
-      {/* Header */}
+      {/* PSA Logo */}
       <div
         style={{
+          width: isA4 ? "50px" : "60px",
+          height: isA4 ? "50px" : "60px",
+          border: "3px solid #000",
+          borderRadius: "50%",
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "20px",
+          justifyContent: "center",
+          backgroundColor: "#000",
+          color: "white",
         }}
       >
-        <div
+        <span
           style={{
-            width: "80px",
-            height: "80px",
-            border: "2px solid #000",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <span style={{ fontSize: "8px", fontWeight: "bold" }}>
-            PSA
-            <br />
-            LOGO
-          </span>
-        </div>
-        <div style={{ textAlign: "center", flex: 1, margin: "0 20px" }}>
-          <div
-            style={{
-              border: "2px solid #000",
-              padding: "8px",
-              fontSize: "11px",
-              fontWeight: "bold",
-            }}
-          >
-            PLANILLA DE CONTROL DE BODEGA UOSP {headerConfig.location}
-          </div>
-          {headerConfig.airportName && (
-            <div
-              style={{
-                fontSize: "8px",
-                fontStyle: "italic",
-                color: "#666",
-                marginTop: "2px",
-                fontWeight: "normal",
-              }}
-            >
-              {headerConfig.airportName}
-            </div>
-          )}
-        </div>
-        <div
-          style={{
-            width: "80px",
-            height: "80px",
-            border: "2px solid #000",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <span style={{ fontSize: "8px", fontWeight: "bold" }}>
-            OFFICIAL
-            <br />
-            LOGO
-          </span>
-        </div>
-      </div>
-
-      {/* Patrol and Service Order */}
-      <div style={{ display: "flex", marginBottom: "15px" }}>
-        <div
-          style={{
-            border: "1px solid #000",
-            padding: "5px",
-            width: "50%",
-            marginRight: "10px",
-          }}
-        >
-          <strong>PATRULLA:</strong>
-        </div>
-        <div style={{ border: "1px solid #000", padding: "5px", width: "50%" }}>
-          <strong>ORDEN DE SERVICIO Nro:</strong> ___________________/2025.
-        </div>
-      </div>
-
-      {/* PSA Control Data */}
-      <div style={{ border: "2px solid #000", marginBottom: "15px" }}>
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
+            fontSize: isA4 ? "8px" : "10px",
+            fontWeight: "bold",
             textAlign: "center",
+          }}
+        >
+          PSA
+        </span>
+      </div>
+
+      {/* Title */}
+      <div style={{ textAlign: "center", flex: 1, margin: "0 15px" }}>
+        <div
+          style={{
+            border: "2px solid #000",
+            padding: isA4 ? "4px 8px" : "6px 12px",
+            fontSize: headerFontSize,
             fontWeight: "bold",
           }}
         >
-          DATOS DEL CONTROL PSA
+          PLANILLA DE CONTROL DE BODEGA UOSP {headerConfig.location}
         </div>
-        <div style={{ padding: "8px" }}>
-          <div style={{ display: "flex", marginBottom: "8px" }}>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Fecha de Control:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+        {headerConfig.airportName && (
+          <div
+            style={{
+              fontSize: "8px",
+              fontStyle: "italic",
+              color: "#666",
+              marginTop: "2px",
+              fontWeight: "normal",
+            }}
+          >
+            {headerConfig.airportName}
+          </div>
+        )}
+      </div>
+
+      {/* Official Logo */}
+      <div
+        style={{
+          width: isA4 ? "50px" : "60px",
+          height: isA4 ? "50px" : "60px",
+          border: "3px solid #000",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#000",
+          color: "white",
+        }}
+      >
+        <span
+          style={{
+            fontSize: isA4 ? "6px" : "8px",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          OFFICIAL
+        </span>
+      </div>
+    </div>
+  );
+
+  // Front Page Content
+  const FrontPageContent = () => (
+    <>
+      {/* Patrol and Service Order */}
+      <table style={{ ...tableStyle, marginBottom: isA4 ? "4px" : "6px" }}>
+        <tbody>
+          <tr>
+            <td style={{ ...tableCellStyle, width: "50%", fontWeight: "bold" }}>
+              PATRULLA:
+            </td>
+            <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+              ORDEN DE SERVICIO Nro: ___________________/2024.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* PSA Control Data */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>DATOS DEL CONTROL PSA</div>
+        <table style={tableStyle}>
+          <tbody>
+            <tr>
+              <td
+                style={{ ...tableCellStyle, width: "16%", fontWeight: "bold" }}
+              >
+                Fecha de Control:
+              </td>
+              <td style={{ ...tableCellStyle, width: "17%" }}>
                 {formatDate(planillaData.datosPsa.fecha)}
-              </span>
-            </div>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Responsable PSA:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
-                {planillaData.datosPsa.responsable.firstname}{" "}
-                {planillaData.datosPsa.responsable.lastname}
-              </span>
-            </div>
-            <div style={{ width: "33%" }}>
-              <strong>Cantidad Personal:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
-                {planillaData.datosPsa.cant}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex", marginBottom: "8px" }}>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Hora de Inicio:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+              <td
+                style={{ ...tableCellStyle, width: "16%", fontWeight: "bold" }}
+              >
+                Responsable PSA:
+              </td>
+              <td style={{ ...tableCellStyle, width: "17%" }}>
+                {nameToDisplayResponsable()}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Hora de Inicio:
+              </td>
+              <td style={tableCellStyle}>
                 {formatTime(planillaData.datosPsa.horaIni)}
-              </span>
-            </div>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Hora de finalización:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+              <td
+                style={{ ...tableCellStyle, width: "17%", fontWeight: "bold" }}
+              >
+                Hora de finalización:
+              </td>
+              <td style={tableCellStyle}>
                 {formatTime(planillaData.datosPsa.horaFin)}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Tipos de Controles:</strong>
-              <br />
-              {tipoControlOptions.map((option) => (
-                <span key={option.label} style={{ marginRight: "10px" }}>
-                  [{option.checked ? "X" : " "}] {option.label}
-                </span>
-              ))}
-            </div>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Medios Técnicos:</strong>
-              <br />
-              {medioTecOptions.map((option) => (
-                <span key={option.label} style={{ marginRight: "10px" }}>
-                  [{option.checked ? "X" : " "}] {option.label}
-                </span>
-              ))}
-            </div>
-            <div style={{ width: "33%" }}>
-              <strong>Tipo Procedimiento:</strong>
-              <br />
-              {tipoProOptions.map((option) => (
-                <span key={option.label} style={{ marginRight: "10px" }}>
-                  [{option.checked ? "X" : " "}] {option.label}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Cantidad Personal:
+              </td>
+              <td style={tableCellStyle}>{planillaData.datosPsa.cant}</td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Tipos de Controles:
+              </td>
+              <td style={tableCellStyle}>
+                {tipoControlOptions.map((option) => (
+                  <Checkbox
+                    key={option.label}
+                    checked={option.checked}
+                    label={option.label}
+                  />
+                ))}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Medios Técnicos:
+              </td>
+              <td style={tableCellStyle}>
+                {medioTecOptions.map((option) => (
+                  <Checkbox
+                    key={option.label}
+                    checked={option.checked}
+                    label={option.label}
+                  />
+                ))}
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Tipo Procedimiento
+              </td>
+              <td colSpan={3} style={tableCellStyle}>
+                {tipoProOptions.map((option) => (
+                  <Checkbox
+                    key={option.label}
+                    checked={option.checked}
+                    label={option.label}
+                  />
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       {/* Flight Data */}
-      <div style={{ border: "2px solid #000", marginBottom: "15px" }}>
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          DATOS DEL VUELO
-        </div>
-        <div style={{ padding: "8px" }}>
-          <div style={{ display: "flex", marginBottom: "8px" }}>
-            <div style={{ width: "50%", marginRight: "10px" }}>
-              <strong>Empresa:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>DATOS DEL VUELO:</div>
+        <table style={tableStyle}>
+          <tbody>
+            <tr>
+              <td
+                style={{ ...tableCellStyle, width: "16%", fontWeight: "bold" }}
+              >
+                Empresa:
+              </td>
+              <td style={{ ...tableCellStyle, width: "17%" }}>
                 {planillaData.datosVuelo.empresa.empresa}
-              </span>
-            </div>
-            <div style={{ width: "50%" }}>
-              <strong>Código de Vuelo:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+              <td
+                style={{ ...tableCellStyle, width: "16%", fontWeight: "bold" }}
+              >
+                Código de Vuelo:
+              </td>
+              <td style={{ ...tableCellStyle, width: "17%" }}>
                 {planillaData.datosVuelo.codVuelo.codVuelo}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex", marginBottom: "8px" }}>
-            <div style={{ width: "50%", marginRight: "10px" }}>
-              <strong>Origen:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>Origen:</td>
+              <td style={tableCellStyle}>
                 {planillaData.datosVuelo.codVuelo.origen.codIATA}
-              </span>
-            </div>
-            <div style={{ width: "50%" }}>
-              <strong>Destino:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Destino:
+              </td>
+              <td style={tableCellStyle}>
                 {planillaData.datosVuelo.codVuelo.destino.codIATA}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex", marginBottom: "8px" }}>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Hora arribo:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Hora arribo:
+              </td>
+              <td style={tableCellStyle}>
                 {formatTime(planillaData.datosVuelo.horaArribo)}
-              </span>
-            </div>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Hora de Partida:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Hora de Partida:
+              </td>
+              <td style={tableCellStyle}>
                 {formatTime(planillaData.datosVuelo.horaPartida)}
-              </span>
-            </div>
-            <div style={{ width: "33%" }}>
-              <strong>Con demora:</strong>
-              <br />
-              <span>
-                [{planillaData.datosVuelo.demora.label === "SI" ? "X" : " "}] SI
-                [{planillaData.datosVuelo.demora.label === "NO" ? "X" : " "}] NO
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Matrícula Aeronave:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Con demora:
+              </td>
+              <td style={tableCellStyle}>
+                SI [{planillaData.datosVuelo.demora.label === "SI" ? "X" : " "}]
+                NO [{planillaData.datosVuelo.demora.label === "NO" ? "X" : " "}]
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Tipo de Vuelo:
+              </td>
+              <td style={tableCellStyle}>
+                <Checkbox
+                  checked={planillaData.datosVuelo.tipoVuelo.label === "Arribo"}
+                  label="Arribo"
+                />
+                <Checkbox
+                  checked={planillaData.datosVuelo.tipoVuelo.label === "Salida"}
+                  label="Salida"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Matrícula Aeronave:
+              </td>
+              <td style={tableCellStyle}>
                 {planillaData.datosVuelo.matriculaAeronave.matriculaAeronave}
-              </span>
-            </div>
-            <div style={{ width: "33%", marginRight: "10px" }}>
-              <strong>Tipo de Vuelo:</strong>
-              <br />
-              <span>
-                [
-                {planillaData.datosVuelo.tipoVuelo.label === "Arribo"
-                  ? "X"
-                  : " "}
-                ] Arribo [
-                {planillaData.datosVuelo.tipoVuelo.label === "Salida"
-                  ? "X"
-                  : " "}
-                ] Salida
-              </span>
-            </div>
-            <div style={{ width: "33%" }}>
-              <strong>Posición Plataforma:</strong>
-              <br />
-              <span style={{ textDecoration: "underline" }}>
-                {planillaData.datosVuelo.posicion}
-              </span>
-            </div>
-          </div>
-        </div>
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Posición Plataforma:
+              </td>
+              <td style={tableCellStyle}>{planillaData.datosVuelo.posicion}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       {/* Ground Personnel */}
-      <div style={{ border: "2px solid #000", marginBottom: "15px" }}>
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
-            fontWeight: "bold",
-          }}
-        >
-          DATOS DEL PERSONAL DE APOYO TERRESTRE EMPRESA:{" "}
-          {planillaData.datosTerrestre[0]?.personalEmpresa[0]?.empresa
-            .empresa || ""}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>
+          DATOS DEL PERSONAL DE APOYO TERRESTRE EMPRESA:{"  "}
+          <span style={{ fontWeight: "normal" }}>
+            {planillaData.datosTerrestre[0]?.personalEmpresa[0]?.empresa
+              .empresa || ""}
+          </span>
         </div>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table style={tableStyle}>
           <thead>
             <tr>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Apellido y Nombre
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Apellido y Nombre:
               </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                DNI
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>DNI:</th>
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>Legajo:</th>
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Función:
               </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Legajo
-              </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Función
-              </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Grupo
-              </th>
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>Grupo:</th>
             </tr>
           </thead>
           <tbody>
@@ -410,37 +468,46 @@ const PlanillaPrintForm: React.FC<{
             ).map((person, index) => (
               <tr key={index}>
                 <td
-                  style={{
-                    border: "1px solid #000",
-                    padding: "4px",
-                    height: "25px",
-                  }}
+                  style={{ ...tableCellStyle, height: isA4 ? "20px" : "24px" }}
                 >
-                  {person ? `${person.lastname}, ${person.firstname}` : ""}
-                </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
-                  {person ? person.dni : ""}
-                </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
-                  {person ? person.legajo : ""}
-                </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
                   {person
-                    ? planillaData.datosTerrestre.find((dt) =>
-                        dt.personalEmpresa.includes(person)
-                      )?.funcion.label
+                    ? nameToDisplayEmpleado(person.firstname, person.lastname)
                     : ""}
                 </td>
-                <td
-                  style={{
-                    border: "1px solid #000",
-                    padding: "4px",
-                    fontSize: "8px",
-                  }}
-                >
-                  <span>
-                    [{person ? "X" : " "}] Sup [ ] Bod [ ] Cin [ ] Tra [ ] Otr
-                  </span>
+                <td style={tableCellStyle}>{person ? person.dni : ""}</td>
+                <td style={tableCellStyle}>{person ? person.legajo : ""}</td>
+
+                <td style={tableCellStyle}>
+                  <div style={{ fontSize: isA4 ? "6px" : "7px" }}>
+                    <Checkbox
+                      checked={person ? true : false}
+                      label="Sup"
+                      fontSize={isA4 ? "6px" : "7px"}
+                    />
+                    <Checkbox
+                      checked={false}
+                      label="Bod"
+                      fontSize={isA4 ? "6px" : "7px"}
+                    />
+                    <Checkbox
+                      checked={false}
+                      label="Cin"
+                      fontSize={isA4 ? "6px" : "7px"}
+                    />
+                    <Checkbox
+                      checked={false}
+                      label="Tra"
+                      fontSize={isA4 ? "6px" : "7px"}
+                    />
+                    <Checkbox
+                      checked={false}
+                      label="Otr"
+                      fontSize={isA4 ? "6px" : "7px"}
+                    />
+                  </div>
+                </td>
+                <td style={tableCellStyle}>
+                  {person ? planillaData.datosTerrestre[0]?.grupo : ""}
                 </td>
               </tr>
             ))}
@@ -449,55 +516,18 @@ const PlanillaPrintForm: React.FC<{
       </div>
 
       {/* Security Personnel */}
-      <div style={{ border: "2px solid #000", marginBottom: "15px" }}>
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
-            fontWeight: "bold",
-          }}
-        >
-          DATOS DEL PERSONAL DE SEGURIDAD
-        </div>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>DATOS DEL PERSONAL DE SEGURIDAD:</div>
+        <table style={tableStyle}>
           <thead>
             <tr>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Apellido y Nombre
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Apellido y Nombre:
               </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                DNI
-              </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Legajo
-              </th>
-              <th
-                style={{
-                  border: "1px solid #000",
-                  padding: "4px",
-                  fontSize: "9px",
-                }}
-              >
-                Empresa
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>DNI:</th>
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>Legajo:</th>
+              <th style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Empresa:
               </th>
             </tr>
           </thead>
@@ -510,21 +540,15 @@ const PlanillaPrintForm: React.FC<{
             ).map((person, index) => (
               <tr key={index}>
                 <td
-                  style={{
-                    border: "1px solid #000",
-                    padding: "4px",
-                    height: "25px",
-                  }}
+                  style={{ ...tableCellStyle, height: isA4 ? "20px" : "24px" }}
                 >
-                  {person ? `${person.lastname}, ${person.firstname}` : ""}
+                  {person
+                    ? nameToDisplayEmpleado(person.firstname, person.lastname)
+                    : ""}
                 </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
-                  {person ? person.dni : ""}
-                </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
-                  {person ? person.legajo : ""}
-                </td>
-                <td style={{ border: "1px solid #000", padding: "4px" }}>
+                <td style={tableCellStyle}>{person ? person.dni : ""}</td>
+                <td style={tableCellStyle}>{person ? person.legajo : ""}</td>
+                <td style={tableCellStyle}>
                   {person
                     ? planillaData.datosSeguridad.find((ds) =>
                         ds.personalSegEmpresa.includes(person)
@@ -538,102 +562,283 @@ const PlanillaPrintForm: React.FC<{
       </div>
 
       {/* Vehicles */}
-      <div style={{ border: "2px solid #000", marginBottom: "15px" }}>
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>
+          DATOS DE LOS VEHICULOS CONTROLADOS:
+        </div>
+        <table style={tableStyle}>
+          <tbody>
+            {createPersonnelRows(planillaData.datosVehiculos, 2).map(
+              (vehiculo, index) => (
+                <React.Fragment key={index}>
+                  <tr>
+                    <td
+                      style={{
+                        ...tableCellStyle,
+                        width: "20%",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Tipo de Vehículo:
+                    </td>
+                    <td style={{ ...tableCellStyle, width: "30%" }}>
+                      {vehiculo?.vehiculo.tipoVehiculo.label.toUpperCase() ||
+                        ""}
+                    </td>
+                    <td
+                      style={{
+                        ...tableCellStyle,
+                        width: "20%",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Empresa:
+                    </td>
+                    <td style={tableCellStyle}>
+                      {vehiculo?.vehiculo.empresa.empresa || ""}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                      Nº Interno:
+                    </td>
+                    <td style={tableCellStyle}>
+                      {vehiculo?.vehiculo.numInterno || ""}
+                    </td>
+                    <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                      Operador:
+                    </td>
+                    <td style={tableCellStyle}>
+                      {vehiculo
+                        ? nameToDisplayEmpleado(
+                            vehiculo.operadorVehiculo.firstname,
+                            vehiculo.operadorVehiculo.lastname
+                          )
+                        : ""}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                      Observaciones:
+                    </td>
+                    {vehiculo ? (
+                      <td
+                        colSpan={3}
+                        style={{
+                          ...tableCellStyle,
+                          height: isA4 ? "25px" : "30px",
+                        }}
+                      >
+                        {vehiculo.isObservaciones
+                          ? vehiculo.observacionesVehiculo
+                          : " Sin Novedad"}
+                      </td>
+                    ) : (
+                      <td
+                        colSpan={3}
+                        style={{
+                          ...tableCellStyle,
+                          height: isA4 ? "25px" : "30px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            alignContent: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            fontSize: isA4 ? "12px" : "16px",
+                          }}
+                        ></div>
+                      </td>
+                    )}
+                  </tr>
+                </React.Fragment>
+              )
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Front page incidents section */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>
+          NOVEDADES SOBRE LOS EQUIPAJES/CARGAS DESPACHADAS.
+        </div>
         <div
           style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
-            fontWeight: "bold",
+            padding: isA4 ? "8px" : "12px",
+            minHeight: isA4 ? "40px" : "60px",
           }}
         >
-          DATOS DE LOS VEHICULOS CONTROLADOS
+          {planillaData.novEquipajes.isRequired ? (
+            <div>{planillaData.novEquipajes.observaciones}</div>
+          ) : (
+            <div
+              style={{
+                alignContent: "center",
+                display: "flex",
+                justifyContent: "center",
+                fontSize: isA4 ? "12px" : "16px",
+              }}
+            >
+              Sin Novedades
+            </div>
+          )}
         </div>
-        <div style={{ padding: "8px" }}>
-          {createPersonnelRows(planillaData.datosVehiculos, 2).map(
-            (vehiculo, index) => (
+      </div>
+    </>
+  );
+
+  // Back Page Content
+  const BackPageContent = () => (
+    <>
+      <Header />
+
+      {/* Personnel Inspection Incidents */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>
+          NOVEDADES SOBRE LA INSPECCION DEL PERSONAL.
+        </div>
+        <div style={{ padding: isA4 ? "8px" : "12px" }}>
+          <div
+            style={{
+              minHeight: isA4 ? "80px" : "100px",
+              borderBottom: "1px solid #ccc",
+            }}
+          >
+            {planillaData.novInspeccion.isRequired ? (
+              <div>{planillaData.novInspeccion.observaciones}</div>
+            ) : (
               <div
-                key={index}
                 style={{
-                  marginBottom: "15px",
-                  border: "1px solid #000",
-                  padding: "5px",
+                  alignContent: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: isA4 ? "12px" : "16px",
                 }}
               >
-                <div style={{ display: "flex", marginBottom: "5px" }}>
-                  <div style={{ width: "50%", marginRight: "10px" }}>
-                    <strong>Tipo de Vehículo:</strong>{" "}
-                    {vehiculo?.vehiculo.tipoVehiculo.label || ""}
-                  </div>
-                  <div style={{ width: "50%" }}>
-                    <strong>Empresa:</strong>{" "}
-                    {vehiculo?.vehiculo.empresa.empresa || ""}
-                  </div>
-                </div>
-                <div style={{ display: "flex", marginBottom: "5px" }}>
-                  <div style={{ width: "50%", marginRight: "10px" }}>
-                    <strong>Nº Interno:</strong>{" "}
-                    {vehiculo?.vehiculo.numInterno || ""}
-                  </div>
-                  <div style={{ width: "50%" }}>
-                    <strong>Operador:</strong>{" "}
-                    {vehiculo
-                      ? `${vehiculo.operadorVehiculo.firstname} ${vehiculo.operadorVehiculo.lastname}`
-                      : ""}
-                  </div>
-                </div>
-                <div>
-                  <strong>Observaciones:</strong>
-                  <br />
-                  <div
-                    style={{
-                      border: "1px solid #000",
-                      minHeight: "20px",
-                      padding: "3px",
-                    }}
-                  >
-                    {vehiculo?.observacionesVehiculo || ""}
-                  </div>
-                </div>
+                Sin Novedades
               </div>
-            )
-          )}
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Incidents */}
-      <div style={{ border: "2px solid #000" }}>
-        <div
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "5px",
-            borderBottom: "1px solid #000",
-            fontWeight: "bold",
-          }}
-        >
-          NOVEDADES SOBRE LOS EQUIPAJES/CARGAS DESPACHADAS
+      {/* Equipment Incidents */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>
+          NOVEDADES SOBRE LOS EQUIPAJES UTILIZADOS.
         </div>
-        <div style={{ padding: "8px", minHeight: "60px" }}>
-          {planillaData.novEquipajes.isRequired && (
-            <div>
-              <strong>Equipajes:</strong>{" "}
-              {planillaData.novEquipajes.observaciones}
-            </div>
-          )}
-          {planillaData.novInspeccion.isRequired && (
-            <div>
-              <strong>Inspección:</strong>{" "}
-              {planillaData.novInspeccion.observaciones}
-            </div>
-          )}
-          {planillaData.novOtras.isRequired && (
-            <div>
-              <strong>Otras:</strong> {planillaData.novOtras.observaciones}
-            </div>
-          )}
+        <div style={{ padding: isA4 ? "8px" : "12px" }}>
+          <div
+            style={{
+              minHeight: isA4 ? "80px" : "100px",
+              borderBottom: "1px solid #ccc",
+            }}
+          >
+            {planillaData.novEquipajes.isRequired ? (
+              <div>{planillaData.novEquipajes.observaciones}</div>
+            ) : (
+              <div
+                style={{
+                  alignContent: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: isA4 ? "12px" : "16px",
+                }}
+              >
+                Sin Novedades
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Other Incidents */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>OTRAS NOVEDADES.</div>
+        <div style={{ padding: isA4 ? "8px" : "12px" }}>
+          <div
+            style={{
+              minHeight: isA4 ? "80px" : "100px",
+              borderBottom: "1px solid #ccc",
+            }}
+          >
+            {planillaData.novOtras.isRequired ? (
+              <div>{planillaData.novOtras.observaciones}</div>
+            ) : (
+              <div
+                style={{
+                  alignContent: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: isA4 ? "12px" : "16px",
+                }}
+              >
+                Sin Novedades
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Responsible PSA Data */}
+      <div style={sectionStyle}>
+        <div style={sectionHeaderStyle}>Datos del Responsable PSA</div>
+        <table style={tableStyle}>
+          <tbody>
+            <tr>
+              <td
+                style={{ ...tableCellStyle, width: "25%", fontWeight: "bold" }}
+              >
+                Firma:
+              </td>
+              <td
+                style={{ ...tableCellStyle, height: isA4 ? "40px" : "50px" }}
+              ></td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                Aclaración:
+              </td>
+              <td style={{ ...tableCellStyle, height: isA4 ? "25px" : "30px" }}>
+                {planillaData.datosPsa.responsable.lastname.toUpperCase()},{" "}
+                {planillaData.datosPsa.responsable.firstname.toUpperCase()}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                N° Legajo:
+              </td>
+              <td style={{ ...tableCellStyle, height: isA4 ? "25px" : "30px" }}>
+                {planillaData.datosPsa.responsable.legajo}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>DNI:</td>
+              <td style={{ ...tableCellStyle, height: isA4 ? "25px" : "30px" }}>
+                {planillaData.datosPsa.responsable.dni}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* Front Page */}
+      <div style={pageStyle}>
+        <Header />
+        <FrontPageContent />
+      </div>
+
+      {/* Back Page */}
+      <div style={{ ...pageStyle, pageBreakBefore: "always" }}>
+        <BackPageContent />
+      </div>
+    </>
   );
 };
 
