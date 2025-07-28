@@ -30,7 +30,7 @@ import {
 } from "../../types/searchById";
 import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
-import { formatDate, locationMap } from "../../types/searchTypes";
+import { locationMap } from "../../types/searchTypes";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;

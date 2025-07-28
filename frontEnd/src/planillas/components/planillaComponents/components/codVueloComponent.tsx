@@ -173,9 +173,9 @@ export function CodVueloComponent({
         const newOption: CodVueloOption = {
           id: data.id,
           codVuelo: data.codVuelo,
-          origenId: data.origen,
-          destinoId: data.destino,
-          empresaId: data.empresa,
+          origen: data.origen,
+          destino: data.destino,
+          empresa: data.empresa,
         };
         setSelectedCodVuelo(newOption);
         setSnackbarOpen(true);
