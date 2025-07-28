@@ -22,6 +22,7 @@ const PlanillaPrintForm: React.FC<{
   };
 
   // Create rows for personnel tables (minimum rows based on form)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createPersonnelRows = (personnel: any[], minRows = 4) => {
     const rows = [...personnel];
     while (rows.length < minRows) {
@@ -106,13 +107,13 @@ const PlanillaPrintForm: React.FC<{
   ]);
 
   const isA4 = paperSize.label === "A4";
-  const isLetter = paperSize.label === "Letter";
+  const isLetter = paperSize.label === "Oficio";
 
   // Base font sizes and spacing
-  const baseFontSize = isA4 ? "9px" : isLetter ? "10px" : "11px";
-  const smallFontSize = isA4 ? "8px" : isLetter ? "9px" : "10px";
-  const headerFontSize = isA4 ? "10px" : isLetter ? "11px" : "12px";
-  const tableFontSize = isA4 ? "7px" : isLetter ? "8px" : "9px";
+  const baseFontSize = isA4 ? "12px" : isLetter ? "13px" : "14px";
+  const smallFontSize = isA4 ? "11px" : isLetter ? "12px" : "13px";
+  const headerFontSize = isA4 ? "14px" : isLetter ? "15px" : "16px";
+  const tableFontSize = isA4 ? "11px" : isLetter ? "12px" : "13px";
 
   // Common styles
   const pageStyle: React.CSSProperties = {
@@ -133,12 +134,12 @@ const PlanillaPrintForm: React.FC<{
 
   const sectionStyle: React.CSSProperties = {
     border: "2px solid #000",
-    marginBottom: isA4 ? "4px" : "6px",
+    marginBottom: isA4 ? "4px" : "8px",
   };
 
   const sectionHeaderStyle: React.CSSProperties = {
     backgroundColor: "#f8f8f8",
-    padding: isA4 ? "3px 6px" : "4px 8px",
+    padding: isA4 ? "4px 8px" : "8px 12px", // was 3px
     borderBottom: "1px solid #000",
     fontWeight: "bold",
     fontSize: smallFontSize,
@@ -153,19 +154,19 @@ const PlanillaPrintForm: React.FC<{
 
   const tableCellStyle: React.CSSProperties = {
     border: "1px solid #000",
-    padding: isA4 ? "2px 4px" : "3px 5px",
+    padding: isA4 ? "5px 8px" : "6px 9px", // was 2px
     textAlign: "left",
     verticalAlign: "top",
   };
 
-  // Header Component
   const Header = () => (
     <div
       style={{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: isA4 ? "8px" : "12px",
+        marginBottom: isA4 ? "6px" : "8px",
+        padding: "0 20px", // Add padding for better spacing
       }}
     >
       {/* PSA Logo */}
@@ -191,33 +192,6 @@ const PlanillaPrintForm: React.FC<{
         >
           PSA
         </span>
-      </div>
-
-      {/* Title */}
-      <div style={{ textAlign: "center", flex: 1, margin: "0 15px" }}>
-        <div
-          style={{
-            border: "2px solid #000",
-            padding: isA4 ? "4px 8px" : "6px 12px",
-            fontSize: headerFontSize,
-            fontWeight: "bold",
-          }}
-        >
-          PLANILLA DE CONTROL DE BODEGA UOSP {headerConfig.location}
-        </div>
-        {headerConfig.airportName && (
-          <div
-            style={{
-              fontSize: "8px",
-              fontStyle: "italic",
-              color: "#666",
-              marginTop: "2px",
-              fontWeight: "normal",
-            }}
-          >
-            {headerConfig.airportName}
-          </div>
-        )}
       </div>
 
       {/* Official Logo */}
@@ -250,19 +224,56 @@ const PlanillaPrintForm: React.FC<{
   // Front Page Content
   const FrontPageContent = () => (
     <>
-      {/* Patrol and Service Order */}
-      <table style={{ ...tableStyle, marginBottom: isA4 ? "4px" : "6px" }}>
-        <tbody>
-          <tr>
-            <td style={{ ...tableCellStyle, width: "50%", fontWeight: "bold" }}>
-              PATRULLA:
-            </td>
-            <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
-              ORDEN DE SERVICIO Nro: ___________________/2024.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {/* Title Section */}
+      <div
+        style={{
+          ...sectionStyle,
+          marginBottom: isA4 ? "3px" : "4px",
+          textAlign: "center",
+          padding: isA4 ? "6px" : "8px",
+          backgroundColor: "#f0f0f0",
+        }}
+      >
+        <div
+          style={{
+            fontSize: headerFontSize,
+            fontWeight: "bold",
+            lineHeight: "1.2",
+          }}
+        >
+          PLANILLA DE CONTROL DE BODEGA UOSP {headerConfig.location}
+        </div>
+        {headerConfig.airportName && (
+          <div
+            style={{
+              fontSize: isA4 ? "7px" : "8px",
+              fontStyle: "italic",
+              color: "#666",
+              marginTop: "2px",
+              marginBottom: "4px",
+              fontWeight: "normal",
+            }}
+          >
+            {headerConfig.airportName}
+          </div>
+        )}
+
+        {/* Patrol and Service Order */}
+        <table style={{ ...tableStyle, marginBottom: isA4 ? "3px" : "4px" }}>
+          <tbody>
+            <tr>
+              <td
+                style={{ ...tableCellStyle, width: "50%", fontWeight: "bold" }}
+              >
+                PATRULLA:
+              </td>
+              <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
+                ORDEN DE SERVICIO Nro: ___________________/2024.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       {/* PSA Control Data */}
       <div style={sectionStyle}>
@@ -312,13 +323,21 @@ const PlanillaPrintForm: React.FC<{
                 Tipos de Controles:
               </td>
               <td style={tableCellStyle}>
-                {tipoControlOptions.map((option) => (
-                  <Checkbox
-                    key={option.label}
-                    checked={option.checked}
-                    label={option.label}
-                  />
-                ))}
+                <div
+                  style={{
+                    display: "inline-flex",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  {tipoControlOptions.map((option) => (
+                    <Checkbox
+                      key={option.label}
+                      checked={option.checked}
+                      label={option.label}
+                    />
+                  ))}
+                </div>
               </td>
             </tr>
             <tr>
@@ -326,25 +345,41 @@ const PlanillaPrintForm: React.FC<{
                 Medios Técnicos:
               </td>
               <td style={tableCellStyle}>
-                {medioTecOptions.map((option) => (
-                  <Checkbox
-                    key={option.label}
-                    checked={option.checked}
-                    label={option.label}
-                  />
-                ))}
+                <div
+                  style={{
+                    display: "inline-flex",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  {medioTecOptions.map((option) => (
+                    <Checkbox
+                      key={option.label}
+                      checked={option.checked}
+                      label={option.label}
+                    />
+                  ))}
+                </div>
               </td>
               <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
                 Tipo Procedimiento
               </td>
               <td colSpan={3} style={tableCellStyle}>
-                {tipoProOptions.map((option) => (
-                  <Checkbox
-                    key={option.label}
-                    checked={option.checked}
-                    label={option.label}
-                  />
-                ))}
+                <div
+                  style={{
+                    display: "inline-flex",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  {tipoProOptions.map((option) => (
+                    <Checkbox
+                      key={option.label}
+                      checked={option.checked}
+                      label={option.label}
+                    />
+                  ))}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -405,21 +440,55 @@ const PlanillaPrintForm: React.FC<{
                 Con demora:
               </td>
               <td style={tableCellStyle}>
-                SI [{planillaData.datosVuelo.demora.label === "SI" ? "X" : " "}]
-                NO [{planillaData.datosVuelo.demora.label === "NO" ? "X" : " "}]
+                <div
+                  style={{
+                    display: "inline-flex",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  <Checkbox
+                    checked={
+                      planillaData.datosVuelo.demora.label === "SI"
+                        ? true
+                        : false
+                    }
+                    label="SI"
+                  />
+                  <Checkbox
+                    checked={
+                      planillaData.datosVuelo.demora.label === "NO"
+                        ? true
+                        : false
+                    }
+                    label="NO"
+                  />
+                </div>
               </td>
               <td style={{ ...tableCellStyle, fontWeight: "bold" }}>
                 Tipo de Vuelo:
               </td>
               <td style={tableCellStyle}>
-                <Checkbox
-                  checked={planillaData.datosVuelo.tipoVuelo.label === "Arribo"}
-                  label="Arribo"
-                />
-                <Checkbox
-                  checked={planillaData.datosVuelo.tipoVuelo.label === "Salida"}
-                  label="Salida"
-                />
+                <div
+                  style={{
+                    display: "inline-flex",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  <Checkbox
+                    checked={
+                      planillaData.datosVuelo.tipoVuelo.label === "Arribo"
+                    }
+                    label="Arribo"
+                  />
+                  <Checkbox
+                    checked={
+                      planillaData.datosVuelo.tipoVuelo.label === "Salida"
+                    }
+                    label="Salida"
+                  />
+                </div>
               </td>
             </tr>
             <tr>
@@ -783,7 +852,16 @@ const PlanillaPrintForm: React.FC<{
       </div>
 
       {/* Responsible PSA Data */}
-      <div style={sectionStyle}>
+      <div
+        style={{
+          ...sectionStyle,
+          backgroundColor: "#f4f4f4", // Light gray
+          width: isA4 ? "70%" : "75%", // Narrower for centered look
+          margin: "20px auto", // Center horizontally
+          borderRadius: "8px", // Rounded corners
+          boxShadow: "0 2px 6px rgba(0,0,0,0.15)", // Soft shadow for a card look
+        }}
+      >
         <div style={sectionHeaderStyle}>Datos del Responsable PSA</div>
         <table style={tableStyle}>
           <tbody>

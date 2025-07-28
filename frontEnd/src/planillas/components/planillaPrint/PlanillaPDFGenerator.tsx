@@ -14,9 +14,10 @@ import {
   MenuItem,
   Box,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import {
-  Print as PrintIcon,
   PictureAsPdf as PdfIcon,
   Visibility as PreviewIcon,
   Close as CloseIcon,
@@ -35,6 +36,10 @@ const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
 }> = ({ planillaData }) => {
   const { userInfo } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedPaperSize, setSelectedPaperSize] = useState<PaperSize>(
     PAPER_SIZES[0]
@@ -60,9 +65,23 @@ const PlanillaPDFGenerator: React.FC<{
   };
 
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
-    if (printWindow && printRef.current) {
-      printWindow.document.write(`
+    if (printRef.current) {
+      // Create a temporary iframe for printing
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.top = "-10000px";
+      iframe.style.left = "-10000px";
+      iframe.style.width = "0px";
+      iframe.style.height = "0px";
+      iframe.style.border = "none";
+
+      document.body.appendChild(iframe);
+
+      const iframeDoc =
+        iframe.contentDocument || iframe.contentWindow?.document;
+      if (iframeDoc) {
+        iframeDoc.open();
+        iframeDoc.write(`
         <html>
           <head>
             <title>Planilla de Control</title>
@@ -74,7 +93,16 @@ const PlanillaPDFGenerator: React.FC<{
                 }
                 body { margin: 0; }
               }
-              body { font-family: Arial, sans-serif; }
+              body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+              }
+              * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
             </style>
           </head>
           <body>
@@ -82,8 +110,19 @@ const PlanillaPDFGenerator: React.FC<{
           </body>
         </html>
       `);
-      printWindow.document.close();
-      printWindow.print();
+        iframeDoc.close();
+
+        // Wait for content to load, then print
+        setTimeout(() => {
+          iframe.contentWindow?.focus();
+          iframe.contentWindow?.print();
+
+          // Clean up after printing
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 1000);
+        }, 500);
+      }
     }
   };
 
@@ -94,12 +133,28 @@ const PlanillaPDFGenerator: React.FC<{
   };
 
   return (
-    <Box>
-      {/* Control Buttons */}
-      <Box sx={{ mb: 2, display: "flex", gap: 2, alignItems: "center" }}>
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Tamaño</InputLabel>
+    <Box sx={{ width: "100%", maxWidth: "100vw" }}>
+      {/* Control Buttons - Responsive Layout */}
+      <Box
+        sx={{
+          mb: 2,
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? 1 : 2,
+          alignItems: isMobile ? "stretch" : "center",
+          width: "100%",
+        }}
+      >
+        <FormControl
+          size="small"
+          sx={{
+            minWidth: isMobile ? "100%" : 120,
+            maxWidth: isMobile ? "100%" : "none",
+          }}
+        >
+          <InputLabel id="paper-size-select-label">Tamaño</InputLabel>
           <Select
+            labelId="paper-size-select-label"
             value={selectedPaperSize.label}
             label="Tamaño"
             onChange={(e) => {
@@ -119,38 +174,33 @@ const PlanillaPDFGenerator: React.FC<{
           variant="outlined"
           startIcon={<PreviewIcon />}
           onClick={handlePreview}
-          sx={{ minWidth: 120 }}
+          sx={{
+            minWidth: isMobile ? "100%" : 120,
+            fontSize: isSmallMobile ? "0.875rem" : "inherit",
+          }}
         >
           Vista Previa
         </Button>
-
-        <Button
-          variant="contained"
-          startIcon={<PrintIcon />}
-          onClick={handlePrint}
-          sx={{ minWidth: 120 }}
-        >
-          Imprimir
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<PdfIcon />}
-          onClick={handleDownloadPDF}
-          sx={{ minWidth: 140 }}
-        >
-          Descargar PDF
-        </Button>
       </Box>
 
-      {/* Preview Dialog */}
+      {/* Preview Dialog - Responsive */}
       <Dialog
         open={previewOpen}
         onClose={() => setPreviewOpen(false)}
         maxWidth={false}
+        fullScreen={isMobile}
+        aria-labelledby="preview-dialog-title"
+        aria-describedby="preview-dialog-description"
+        disableEnforceFocus={false}
+        disableAutoFocus={false}
         PaperProps={{
-          sx: { width: "90vw", height: "90vh" },
+          sx: {
+            width: isMobile ? "100vw" : "90vw",
+            height: isMobile ? "100vh" : "90vh",
+            maxWidth: "100vw",
+            maxHeight: "100vh",
+            margin: isMobile ? 0 : "auto",
+          },
         }}
       >
         <DialogTitle
@@ -158,11 +208,21 @@ const PlanillaPDFGenerator: React.FC<{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            px: isMobile ? 1 : 3,
+            py: isMobile ? 1 : 2,
           }}
         >
-          <Typography variant="h6">
+          <Typography
+            component="span"
+            variant={isMobile ? "subtitle1" : "h6"}
+            sx={{
+              fontSize: isSmallMobile ? "1rem" : "inherit",
+              lineHeight: 1.2,
+            }}
+          >
             Vista Previa - Planilla de Control ({selectedPaperSize.label})
           </Typography>
+
           <Button
             onClick={() => setPreviewOpen(false)}
             startIcon={<CloseIcon />}
@@ -172,9 +232,36 @@ const PlanillaPDFGenerator: React.FC<{
           </Button>
         </DialogTitle>
 
-        <DialogContent sx={{ p: 0, overflow: "auto" }}>
-          <Box sx={{ p: 2, backgroundColor: "#f5f5f5", minHeight: "100%" }}>
-            <div ref={printRef}>
+        <DialogContent
+          sx={{
+            p: 0,
+            overflow: "auto",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
+          <Box
+            sx={{
+              p: isMobile ? 1 : 2,
+              backgroundColor: "#f5f5f5",
+              minHeight: "100%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              ref={printRef}
+              style={{
+                transform: isMobile
+                  ? `scale(${isSmallMobile ? 0.3 : 0.4})`
+                  : "scale(0.8)",
+                transformOrigin: "top center",
+                width: isMobile ? "250%" : "125%",
+                marginBottom: isMobile ? "-60%" : "-20%",
+              }}
+            >
               <PlanillaPrintForm
                 planillaData={planillaData}
                 headerConfig={headerConfig}
@@ -184,19 +271,23 @@ const PlanillaPDFGenerator: React.FC<{
           </Box>
         </DialogContent>
 
-        <DialogActions>
-          <Button
-            onClick={handlePrint}
-            variant="contained"
-            startIcon={<PrintIcon />}
-          >
-            Imprimir
-          </Button>
+        <DialogActions
+          sx={{
+            px: isMobile ? 1 : 3,
+            py: isMobile ? 1 : 2,
+            flexDirection: isMobile ? "column" : "row",
+            gap: isMobile ? 1 : 0,
+          }}
+        >
           <Button
             onClick={handleDownloadPDF}
             variant="contained"
             color="secondary"
             startIcon={<PdfIcon />}
+            sx={{
+              width: isMobile ? "100%" : "auto",
+              fontSize: isSmallMobile ? "0.875rem" : "inherit",
+            }}
           >
             Descargar PDF
           </Button>

@@ -17,7 +17,6 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  IconButton,
 } from "@mui/material";
 import {
   Person,
@@ -292,13 +291,6 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             color: "white",
           }}
         >
-          <Typography
-            variant={isMobile ? "h5" : "h4"}
-            fontWeight="bold"
-            gutterBottom
-          >
-            Planilla Detallada
-          </Typography>
           <Typography variant="body2" sx={{ opacity: 0.9 }}>
             Vuelo {data.datosVuelo.codVuelo?.codVuelo || "N/A"} -{" "}
             {formatDate(data.datosPsa.fecha)}
@@ -576,6 +568,8 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
       maxWidth="lg"
       fullWidth
       fullScreen={isMobile}
+      disableEnforceFocus={false}
+      disableAutoFocus={false}
       sx={{
         "& .MuiDialog-paper": {
           borderRadius: isMobile ? 0 : 2,
@@ -586,29 +580,33 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Detalles de Planilla
         </Typography>
-        <IconButton
+        <Button
           aria-label="close"
           onClick={onClose}
           sx={{
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            size: "small",
           }}
+          startIcon={<Close />}
         >
-          <Close />
-        </IconButton>
+          Cerrar
+        </Button>
       </DialogTitle>
 
       <DialogContent dividers sx={{ p: 0 }}>
         {renderContent()}
       </DialogContent>
 
-      <DialogActions sx={{ p: 2 }}>
+      <DialogActions
+        sx={{
+          p: 2,
+          color: theme.palette.primary.main,
+          backgroundColor: `${theme.palette.primary.main}20`,
+        }}
+      >
         {data && <PlanillaPDFGenerator planillaData={data} />}
-        <Button onClick={onClose} variant="outlined">
-          Cerrar
-        </Button>
       </DialogActions>
     </Dialog>
   );

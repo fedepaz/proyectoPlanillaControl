@@ -9,7 +9,6 @@ import {
   useTheme,
   useMediaQuery,
   Paper,
-  Chip,
   Stack,
 } from "@mui/material";
 import { Assignment } from "@mui/icons-material";
@@ -132,13 +131,6 @@ export const PlanillasList: React.FC = () => {
     <Container maxWidth="lg" sx={{ py: 3 }}>
       {/* Header */}
       <Box sx={{ mb: 3 }}>
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", textAlign: "center" }}
-        >
-          Lista de Planillas
-        </Typography>
         <Stack
           direction={isMobile ? "row" : "column"}
           spacing={2}
@@ -148,14 +140,6 @@ export const PlanillasList: React.FC = () => {
             {data.totalCount} planillas encontradas
             {Object.keys(dateFilters).length > 0 && " (filtradas)"}
           </Typography>
-          {data.totalCount > 0 && (
-            <Chip
-              icon={<Assignment />}
-              label={`Página ${data.currentPage} de ${data.totalPages}`}
-              variant="outlined"
-              size="small"
-            />
-          )}
         </Stack>
       </Box>
 

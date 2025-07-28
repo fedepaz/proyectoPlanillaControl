@@ -9,7 +9,6 @@ import {
   Button,
   Box,
   Typography,
-  Chip,
   Stack,
   IconButton,
   useTheme,
@@ -17,15 +16,7 @@ import {
   Paper,
   Grid,
 } from "@mui/material";
-import {
-  Close,
-  Flight,
-  Person,
-  DirectionsCar,
-  Assignment,
-  Warning,
-  Info,
-} from "@mui/icons-material";
+import { Close, Flight, Assignment } from "@mui/icons-material";
 import { ProcessedPlanillaData } from "../../../types/searchTypes";
 
 interface PlanillaModalProps {
@@ -92,56 +83,6 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
     </Grid>
   );
 
-  const renderNovedades = () => {
-    const novedades = [];
-
-    if (planilla.novEquipajes?.isRequired) {
-      novedades.push({
-        type: "Equipajes",
-        observaciones: planilla.novEquipajes.observaciones,
-      });
-    }
-
-    if (planilla.novInspeccion?.isRequired) {
-      novedades.push({
-        type: "Inspección",
-        observaciones: planilla.novInspeccion.observaciones,
-      });
-    }
-
-    if (planilla.novOtras?.isRequired) {
-      novedades.push({
-        type: "Otras",
-        observaciones: planilla.novOtras.observaciones,
-      });
-    }
-
-    return novedades.length > 0 ? (
-      <InfoSection title="Novedades" icon={<Warning color="warning" />}>
-        {novedades.map((novedad, index) => (
-          <Box key={index} sx={{ mb: 2 }}>
-            <Chip
-              label={novedad.type}
-              size="small"
-              color="warning"
-              variant="outlined"
-              sx={{ mb: 1 }}
-            />
-            <Typography variant="body2" color="text.secondary">
-              {novedad.observaciones || "Sin observaciones"}
-            </Typography>
-          </Box>
-        ))}
-      </InfoSection>
-    ) : (
-      <InfoSection title="Novedades" icon={<Info color="info" />}>
-        <Typography variant="body2" color="text.secondary">
-          No hay novedades registradas
-        </Typography>
-      </InfoSection>
-    );
-  };
-
   return (
     <Dialog
       open={open}
@@ -166,17 +107,23 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
         }}
       >
         <Box>
-          <Typography variant={isMobile ? "h5" : "h4"} fontWeight="bold">
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Planilla de Vuelo
           </Typography>
         </Box>
-        <IconButton
+        <Button
+          aria-label="close"
           onClick={onClose}
-          size={isMobile ? "small" : "medium"}
-          sx={{ ml: 1 }}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            size: "small",
+          }}
+          startIcon={<Close />}
         >
-          <Close />
-        </IconButton>
+          Cerrar
+        </Button>
       </DialogTitle>
 
       <DialogContent sx={{ p: isMobile ? 2 : 3 }}>
@@ -191,18 +138,6 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
             value={planilla.formattedHoraIni}
           />
           <DataRow label="Fin de Control" value={planilla.formattedHoraFin} />
-          <DataRow
-            label="Cantidad de Oficiales"
-            value={planilla.datosPsa.cant}
-          />
-          <DataRow
-            label="Tipos de Control Realizados"
-            value={planilla.datosPsa.tipoControl.length}
-          />
-          <DataRow
-            label="Medios Técnicos Utilizados"
-            value={planilla.datosPsa.medioTec.length}
-          />
         </InfoSection>
 
         {/* Flight Information */}
@@ -222,45 +157,6 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
             label="Posición Aeronave"
             value={planilla.datosVuelo.posicion}
           />
-        </InfoSection>
-
-        {/* Personnel Information */}
-        <InfoSection title="Personal" icon={<Person color="primary" />}>
-          <DataRow
-            label="Personal Handling"
-            value={planilla.datosTerrestre.length}
-          />
-          <DataRow
-            label="Personal de Seguridad"
-            value={planilla.datosSeguridad.length}
-          />
-        </InfoSection>
-
-        {/* Vehicles Information */}
-        <InfoSection title="Vehículos" icon={<DirectionsCar color="primary" />}>
-          <DataRow
-            label="Vehículos Utilizados"
-            value={planilla.datosVehiculos.length}
-          />
-        </InfoSection>
-
-        {/* Novedades */}
-        {renderNovedades()}
-
-        {/* Summary */}
-        <InfoSection title="Resumen" icon={<Info color="info" />}>
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            spacing={1}
-            flexWrap="wrap"
-            useFlexGap
-          >
-            <Chip
-              label={`${planilla.novedadesCount} Novedades`}
-              color={planilla.novedadesCount > 0 ? "warning" : "success"}
-              size="small"
-            />
-          </Stack>
         </InfoSection>
       </DialogContent>
 
