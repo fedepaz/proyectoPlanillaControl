@@ -49,6 +49,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   onClose,
 }) => {
   const { data, isLoading, isError, error } = usePlanillaID(planillaId);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

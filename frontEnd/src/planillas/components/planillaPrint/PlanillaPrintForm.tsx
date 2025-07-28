@@ -79,11 +79,9 @@ const PlanillaPrintForm: React.FC<{
           lineHeight: isA4 ? "8px" : "10px",
           fontSize: isA4 ? "7px" : "8px",
           fontWeight: "bold",
-          backgroundColor: "white",
+          backgroundColor: checked ? "grey" : "white",
         }}
-      >
-        {checked ? "X" : ""}
-      </span>
+      ></span>
       {label}
     </span>
   );
@@ -484,9 +482,9 @@ const PlanillaPrintForm: React.FC<{
                   />
                   <Checkbox
                     checked={
-                      planillaData.datosVuelo.tipoVuelo.label === "Salida"
+                      planillaData.datosVuelo.tipoVuelo.label === "Partida"
                     }
-                    label="Salida"
+                    label="Partida"
                   />
                 </div>
               </td>
@@ -549,27 +547,52 @@ const PlanillaPrintForm: React.FC<{
                 <td style={tableCellStyle}>
                   <div style={{ fontSize: isA4 ? "6px" : "7px" }}>
                     <Checkbox
-                      checked={person ? true : false}
-                      label="Sup"
+                      checked={
+                        person
+                          ? planillaData.datosTerrestre[index]?.funcion
+                              ?.label === "Supervisor"
+                          : false
+                      }
+                      label={"Sup"}
                       fontSize={isA4 ? "6px" : "7px"}
                     />
                     <Checkbox
-                      checked={false}
+                      checked={
+                        person
+                          ? planillaData.datosTerrestre[index]?.funcion
+                              ?.label === "Bodega"
+                          : false
+                      }
                       label="Bod"
                       fontSize={isA4 ? "6px" : "7px"}
                     />
                     <Checkbox
-                      checked={false}
+                      checked={
+                        person
+                          ? planillaData.datosTerrestre[index]?.funcion
+                              ?.label === "Cinta"
+                          : false
+                      }
                       label="Cin"
                       fontSize={isA4 ? "6px" : "7px"}
                     />
                     <Checkbox
-                      checked={false}
+                      checked={
+                        person
+                          ? planillaData.datosTerrestre[index]?.funcion
+                              ?.label === "Tractor"
+                          : false
+                      }
                       label="Tra"
                       fontSize={isA4 ? "6px" : "7px"}
                     />
                     <Checkbox
-                      checked={false}
+                      checked={
+                        person
+                          ? planillaData.datosTerrestre[index]?.funcion
+                              ?.label === "Otros"
+                          : false
+                      }
                       label="Otr"
                       fontSize={isA4 ? "6px" : "7px"}
                     />
@@ -855,11 +878,11 @@ const PlanillaPrintForm: React.FC<{
       <div
         style={{
           ...sectionStyle,
-          backgroundColor: "#f4f4f4", // Light gray
-          width: isA4 ? "70%" : "75%", // Narrower for centered look
-          margin: "20px auto", // Center horizontally
-          borderRadius: "8px", // Rounded corners
-          boxShadow: "0 2px 6px rgba(0,0,0,0.15)", // Soft shadow for a card look
+          backgroundColor: "#f4f4f4",
+          width: isA4 ? "70%" : "75%",
+          margin: "20px auto",
+          borderRadius: "8px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
         }}
       >
         <div style={sectionHeaderStyle}>Datos del Responsable PSA</div>

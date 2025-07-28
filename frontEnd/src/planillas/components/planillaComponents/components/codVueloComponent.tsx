@@ -89,9 +89,9 @@ export function CodVueloComponent({
       codVueloQuery.data?.map((item) => ({
         id: item.id,
         codVuelo: item.codVuelo,
-        origenId: item.origenId,
-        destinoId: item.destinoId,
-        empresaId: item.empresaId,
+        origen: item.origen,
+        destino: item.destino,
+        empresa: item.empresa,
         isUserCreated: item.isUserCreated,
         createdAt: item.createdAt,
         needsValidation: item.needsValidation,

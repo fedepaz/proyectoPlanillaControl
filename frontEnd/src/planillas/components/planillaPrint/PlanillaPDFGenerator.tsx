@@ -30,7 +30,7 @@ import {
 } from "../../types/searchById";
 import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
-import { locationMap } from "../../types/searchTypes";
+import { formatDate, locationMap } from "../../types/searchTypes";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
@@ -64,8 +64,40 @@ const PlanillaPDFGenerator: React.FC<{
     setPreviewOpen(true);
   };
 
-  const handlePrint = () => {
+  const getDisplayInfo = () => {
+    const empresaName = planillaData.datosVuelo.empresa.empresa.split(" ");
+
+    let firstLetter = "";
+    let secondLetter = "";
+    if (empresaName.length === 1) {
+      firstLetter = empresaName[0].charAt(0).toUpperCase();
+      secondLetter = empresaName[0].charAt(1).toUpperCase();
+    } else {
+      firstLetter = empresaName[0].charAt(0).toUpperCase();
+      secondLetter = empresaName[1].charAt(0).toUpperCase();
+    }
+    return {
+      label: firstLetter + secondLetter,
+    };
+  };
+
+  const getFechaDisplayInfo = () => {
+    const fecha = planillaData.datosPsa.fecha.split("/");
+    return fecha[0] + "-" + fecha[1] + "-" + fecha[2];
+  };
+
+  const generateFileName = (): string => {
+    const displayInfo = getDisplayInfo();
+    const codVuelo = planillaData.datosVuelo.codVuelo.codVuelo;
+    const fecha = getFechaDisplayInfo();
+    const name = `${displayInfo.label}_${codVuelo}_${fecha}`;
+    return name;
+  };
+
+  const handlePrint = (fileName: string) => {
     if (printRef.current) {
+      const originalTitle = document.title;
+      document.title = fileName;
       // Create a temporary iframe for printing
       const iframe = document.createElement("iframe");
       iframe.style.position = "absolute";
@@ -84,7 +116,7 @@ const PlanillaPDFGenerator: React.FC<{
         iframeDoc.write(`
         <html>
           <head>
-            <title>Planilla de Control</title>
+            <title>${fileName}</title>
             <style>
               @media print {
                 @page {
@@ -120,6 +152,7 @@ const PlanillaPDFGenerator: React.FC<{
           // Clean up after printing
           setTimeout(() => {
             document.body.removeChild(iframe);
+            document.title = originalTitle;
           }, 1000);
         }, 500);
       }
@@ -127,9 +160,10 @@ const PlanillaPDFGenerator: React.FC<{
   };
 
   const handleDownloadPDF = async () => {
+    const fileName = generateFileName();
     // This would integrate with a PDF library like jsPDF or Puppeteer
     // For now, we'll use the print function
-    handlePrint();
+    handlePrint(fileName);
   };
 
   return (
