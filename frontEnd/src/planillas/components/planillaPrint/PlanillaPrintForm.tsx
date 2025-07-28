@@ -132,12 +132,12 @@ const PlanillaPrintForm: React.FC<{
 
   const sectionStyle: React.CSSProperties = {
     border: "2px solid #000",
-    marginBottom: isA4 ? "4px" : "8px",
+    marginBottom: isA4 ? "4px" : "5px",
   };
 
   const sectionHeaderStyle: React.CSSProperties = {
     backgroundColor: "#f8f8f8",
-    padding: isA4 ? "4px 8px" : "8px 12px", // was 3px
+    padding: isA4 ? "4px 8px" : "5px 9px",
     borderBottom: "1px solid #000",
     fontWeight: "bold",
     fontSize: smallFontSize,
@@ -152,7 +152,7 @@ const PlanillaPrintForm: React.FC<{
 
   const tableCellStyle: React.CSSProperties = {
     border: "1px solid #000",
-    padding: isA4 ? "5px 8px" : "6px 9px", // was 2px
+    padding: "5px 8px",
     textAlign: "left",
     verticalAlign: "top",
   };
@@ -163,7 +163,7 @@ const PlanillaPrintForm: React.FC<{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: isA4 ? "6px" : "8px",
+        marginBottom: isA4 ? "6px" : "7px",
         padding: "0 20px", // Add padding for better spacing
       }}
     >
@@ -208,7 +208,7 @@ const PlanillaPrintForm: React.FC<{
       >
         <span
           style={{
-            fontSize: isA4 ? "6px" : "8px",
+            fontSize: isA4 ? "6px" : "7px",
             fontWeight: "bold",
             textAlign: "center",
           }}
@@ -228,7 +228,7 @@ const PlanillaPrintForm: React.FC<{
           ...sectionStyle,
           marginBottom: isA4 ? "3px" : "4px",
           textAlign: "center",
-          padding: isA4 ? "6px" : "8px",
+          padding: isA4 ? "6px" : "7px",
           backgroundColor: "#f0f0f0",
         }}
       >
@@ -257,7 +257,7 @@ const PlanillaPrintForm: React.FC<{
         )}
 
         {/* Patrol and Service Order */}
-        <table style={{ ...tableStyle, marginBottom: isA4 ? "3px" : "4px" }}>
+        <table style={{ ...tableStyle, marginBottom: "3px" }}>
           <tbody>
             <tr>
               <td
@@ -535,7 +535,7 @@ const PlanillaPrintForm: React.FC<{
             ).map((person, index) => (
               <tr key={index}>
                 <td
-                  style={{ ...tableCellStyle, height: isA4 ? "20px" : "24px" }}
+                  style={{ ...tableCellStyle, height: isA4 ? "20px" : "22px" }}
                 >
                   {person
                     ? nameToDisplayEmpleado(person.firstname, person.lastname)
@@ -770,7 +770,7 @@ const PlanillaPrintForm: React.FC<{
                 alignContent: "center",
                 display: "flex",
                 justifyContent: "center",
-                fontSize: isA4 ? "12px" : "16px",
+                fontSize: isA4 ? "12px" : isLetter ? "13px" : "14px",
               }}
             >
               Sin Novedades
@@ -806,7 +806,7 @@ const PlanillaPrintForm: React.FC<{
                   alignContent: "center",
                   display: "flex",
                   justifyContent: "center",
-                  fontSize: isA4 ? "12px" : "16px",
+                  fontSize: isA4 ? "12px" : isLetter ? "13px" : "14px",
                 }}
               >
                 Sin Novedades
@@ -836,7 +836,7 @@ const PlanillaPrintForm: React.FC<{
                   alignContent: "center",
                   display: "flex",
                   justifyContent: "center",
-                  fontSize: isA4 ? "12px" : "16px",
+                  fontSize: isA4 ? "12px" : isLetter ? "13px" : "14px",
                 }}
               >
                 Sin Novedades
@@ -864,7 +864,7 @@ const PlanillaPrintForm: React.FC<{
                   alignContent: "center",
                   display: "flex",
                   justifyContent: "center",
-                  fontSize: isA4 ? "12px" : "16px",
+                  fontSize: isA4 ? "12px" : isLetter ? "13px" : "14px",
                 }}
               >
                 Sin Novedades
