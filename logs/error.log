@@ -16866,4 +16866,76 @@
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     ---------------------
 
+    [2025-07-29T23:07:46.886Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"origen":"doz"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.29.4
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-07-29T23:10:19.347Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"origen":"doz"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.29.4
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: No token provided
+    at authenticate (file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/middlewares/authenticate.js:18:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-07-29T23:11:38.133Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"origen":"doz"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.29.4
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-07-29T23:12:15.535Z]
+    URL: /codVuelo/
+    Method: POST
+    Body: {"origen":"doz"}
+    Client IP: ::1
+    User Agent: PostmanRuntime/7.29.4
+    Hostname: fedepaz-300e4c-300e5c-300e7c
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: MissingData: Missing required fields: CODVUELO, DESTINO, EMPRESA
+    at file:///home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/controllers/datos/codVueloRoute.js:70:21
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
     

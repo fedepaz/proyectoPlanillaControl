@@ -150,10 +150,9 @@ codVueloRouter.post("/busqueda", async (req, res, next) => {
     }
 
     const codVuelos = await CodVuelo.find({
-      $or: [
-        { origen, destino, empresa },
-        { origen: destino, destino: origen, empresa },
-      ],
+      origen,
+      destino,
+      empresa,
     })
       .populate("origen", { codIATA: 1 })
       .populate("destino", { codIATA: 1 })
