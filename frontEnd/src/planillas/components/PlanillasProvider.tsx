@@ -16,6 +16,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { FormReview } from "./planillaShow/formReview";
 import { useCreatePlanilla } from "../services/planillas";
 import { AxiosError } from "axios";
+import { PlanillaDetailById } from "./planillaComponents/components/planillaDetailById";
 
 interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
@@ -24,9 +25,13 @@ interface PlanillasProviderProps {
 export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const [showReview, setShowReview] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [createdPlanillaId, setCreatedPlanillaId] = useState<string | null>(
+    null
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const createPlanilla = useCreatePlanilla();
 
   const methods = useForm<PlanillaSchema>({
@@ -34,7 +39,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     resolver: zodResolver(planillaSchema),
     defaultValues: defaultValuesPlanilla,
   });
-  const { setValue, handleSubmit, getValues } = methods;
+  const { setValue, handleSubmit, getValues, reset } = methods;
 
   const { user, userInfo, error, isError, isLoading, refetch } = useAuth();
 
@@ -45,12 +50,11 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   }, [userInfo, setValue]);
 
   const onSubmit = async (data: PlanillaSchema) => {
-    console.log("Form submitted with data:", data);
     setIsSubmitting(true);
     setErrorMessage(null);
+
     const validationResult = planillaSchema.safeParse(data);
     if (!validationResult.success) {
-      console.error("Validation errors:", validationResult.error);
       const errorMessages = validationResult.error.errors
         .map((error) => {
           const fieldPath = error.path.join(" -> ");
@@ -62,9 +66,12 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       return;
     }
     try {
-      await createPlanilla.mutateAsync(data);
-      console.log("✅ Form submitted successfully!");
+      const result = await createPlanilla.mutateAsync(data);
+      reset(defaultValuesPlanilla);
+
+      setCreatedPlanillaId(result.id || null);
       setShowReview(false);
+      setShowSuccess(true);
       setIsSubmitting(false);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -76,11 +83,9 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const handleFinalize = async () => {
     console.log("=== SHOWING REVIEW ===");
-
     // Get current form values
     const currentValues = getValues();
     console.log("Current form values:", currentValues);
-
     // Validate everything except horaFin (which will be set in review)
     const tempData = { ...currentValues };
     tempData.datosPsa.horaFin = "2359"; // Temporary value for validation
@@ -88,12 +93,8 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     const validationResult = planillaSchema.safeParse(tempData);
 
     if (validationResult.success) {
-      console.log("✅ Form is ready for review");
       setShowReview(true);
     } else {
-      console.log("❌ Form has validation errors:");
-      console.log("Validation errors:", validationResult.error.errors);
-
       // Filter out horaFin errors for display
       const nonHoraFinErrors = validationResult.error.errors.filter(
         (err) => !err.path.includes("horaFin")
@@ -131,8 +132,6 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       },
     };
 
-    console.log("Final data with horaFin:", finalData);
-
     // Submit the form
     await onSubmit(finalData);
   };
@@ -143,7 +142,16 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     setIsSubmitting(false);
   };
 
+  const handleBackFromSuccess = () => {
+    setShowSuccess(false);
+    setCreatedPlanillaId(null);
+    setActiveStep(0);
+    onBackHome(true);
+  };
+
   const sendBack = (data: boolean) => {
+    reset(defaultValuesPlanilla);
+    setActiveStep(0);
     onBackHome(data);
   };
   const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 5));
@@ -194,6 +202,34 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
             }}
           />
         </Box>
+      </>
+    );
+  }
+  // Show success view with planilla details
+  if (showSuccess && createdPlanillaId) {
+    return (
+      <>
+        <CssBaseline />
+        <PlanillaDetailById
+          open={true}
+          planillaId={createdPlanillaId}
+          onClose={handleBackFromSuccess}
+          isSuccessView={true}
+        />
+        <Snackbar
+          open={!!errorMessage}
+          autoHideDuration={6000}
+          onClose={clearErrorMessage}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={clearErrorMessage}
+            severity="error"
+            sx={{ width: "100%", whiteSpace: "pre-line" }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
       </>
     );
   }

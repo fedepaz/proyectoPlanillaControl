@@ -17,6 +17,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Alert,
 } from "@mui/material";
 import {
   Person,
@@ -29,6 +30,7 @@ import {
   Warning,
   CheckCircle,
   Close,
+  Home,
 } from "@mui/icons-material";
 import ErrorPage from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
@@ -41,12 +43,14 @@ interface PlanillaDetailByIdProps {
   open: boolean;
   planillaId: string;
   onClose: () => void;
+  isSuccessView?: boolean;
 }
 
 export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   open,
   planillaId,
   onClose,
+  isSuccessView = false,
 }) => {
   const { data, isLoading, isError, error } = usePlanillaID(planillaId);
 
@@ -281,6 +285,24 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
 
     return (
       <Box sx={{ maxWidth: "100%", mx: "auto" }}>
+        {/* Success Message */}
+        {isSuccessView && (
+          <Alert
+            severity="success"
+            sx={{ mb: 3, borderRadius: 2 }}
+            icon={<CheckCircle fontSize="inherit" />}
+          >
+            <Typography variant="body1" fontWeight="medium">
+              ¡Planilla creada exitosamente!
+            </Typography>
+            <Typography variant="body2">
+              La planilla ha sido guardada correctamente en el sistema. Puede
+              revisar los detalles a continuación y descargar el PDF si lo
+              necesita.
+            </Typography>
+          </Alert>
+        )}
+
         {/* Header */}
         <Paper
           elevation={3}
@@ -579,7 +601,9 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
     >
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Detalles de Planilla
+          {isSuccessView
+            ? "¡Planilla Creada Exitosamente!"
+            : "Detalles de Planilla"}
         </Typography>
         <Button
           aria-label="close"
@@ -592,7 +616,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           }}
           startIcon={<Close />}
         >
-          Cerrar
+          {isSuccessView ? "Volver al Inicio" : "Cerrar"}
         </Button>
       </DialogTitle>
 
@@ -608,6 +632,17 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
         }}
       >
         {data && <PlanillaPDFGenerator planillaData={data} />}
+        {isSuccessView && (
+          <Button
+            variant="contained"
+            color="success"
+            onClick={onClose}
+            startIcon={<Home />}
+            sx={{ ml: 2 }}
+          >
+            Crear Nueva Planilla
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

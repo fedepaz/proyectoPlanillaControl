@@ -13,11 +13,8 @@ import {
   Collapse,
   IconButton,
   Alert,
-  TextField,
   Button,
   Divider,
-  FormControlLabel,
-  Switch,
 } from "@mui/material";
 import {
   ExpandMore,
@@ -28,7 +25,6 @@ import {
   AirportShuttle,
   Build,
   Agriculture,
-  Edit,
 } from "@mui/icons-material";
 import type { VehiculoOption, BasePersonalOption } from "../types/option";
 import { PersonalOneComponent } from "../planillas/components/planillaComponents/components/personalOneComponent";

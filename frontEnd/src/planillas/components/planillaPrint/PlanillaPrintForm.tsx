@@ -120,7 +120,7 @@ const PlanillaPrintForm: React.FC<{
     maxHeight: paperSize.height,
     margin: "0 auto",
     backgroundColor: "white",
-    padding: isA4 ? "8mm" : "10mm",
+    padding: isA4 ? "12mm" : "14mm",
     boxSizing: "border-box",
     fontFamily: "Arial, sans-serif",
     fontSize: baseFontSize,
@@ -750,34 +750,6 @@ const PlanillaPrintForm: React.FC<{
           </tbody>
         </table>
       </div>
-
-      {/* Front page incidents section */}
-      <div style={sectionStyle}>
-        <div style={sectionHeaderStyle}>
-          NOVEDADES SOBRE LOS EQUIPAJES/CARGAS DESPACHADAS.
-        </div>
-        <div
-          style={{
-            padding: isA4 ? "8px" : "12px",
-            minHeight: isA4 ? "40px" : "60px",
-          }}
-        >
-          {planillaData.novEquipajes.isRequired ? (
-            <div>{planillaData.novEquipajes.observaciones}</div>
-          ) : (
-            <div
-              style={{
-                alignContent: "center",
-                display: "flex",
-                justifyContent: "center",
-                fontSize: isA4 ? "12px" : isLetter ? "13px" : "14px",
-              }}
-            >
-              Sin Novedades
-            </div>
-          )}
-        </div>
-      </div>
     </>
   );
 
@@ -819,7 +791,7 @@ const PlanillaPrintForm: React.FC<{
       {/* Equipment Incidents */}
       <div style={sectionStyle}>
         <div style={sectionHeaderStyle}>
-          NOVEDADES SOBRE LOS EQUIPAJES UTILIZADOS.
+          NOVEDADES SOBRE LOS EQUIPAJES/CARGAS DESPACHADAS.
         </div>
         <div style={{ padding: isA4 ? "8px" : "12px" }}>
           <div
