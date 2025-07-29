@@ -55,6 +55,9 @@ export function FormReview({
     (item) => item.id === formData.datosVuelo.codVuelo
   );
 
+  const codVueloData =
+    codVueloCheck && codVueloCheck.length > 0 ? codVueloCheck[0] : null;
+
   // Get user information
   const { userInfo } = useAuth();
 
@@ -256,31 +259,31 @@ export function FormReview({
             isMobile={isMobile}
           >
             <Grid container spacing={isMobile ? 2 : 2}>
-              {codVueloCheck && (
+              {codVueloData && codVueloData.empresa && (
                 <FieldDisplay
                   label="Empresa"
-                  value={codVueloCheck[0].empresa.empresa}
+                  value={codVueloData.empresa.empresa}
                   isMobile={isMobile}
                 />
               )}
-              {codVueloCheck && (
+              {codVueloData && (
                 <FieldDisplay
                   label="Código de vuelo"
-                  value={codVueloCheck[0].codVuelo}
+                  value={codVueloData.codVuelo}
                   isMobile={isMobile}
                 />
               )}
-              {codVueloCheck && (
+              {codVueloData && codVueloData.origen && (
                 <FieldDisplay
                   label="Origen"
-                  value={codVueloCheck[0].origen.codIATA}
+                  value={codVueloData.origen.codIATA}
                   isMobile={isMobile}
                 />
               )}
-              {codVueloCheck && (
+              {codVueloData && codVueloData.destino && (
                 <FieldDisplay
                   label="Destino"
-                  value={codVueloCheck[0].destino.codIATA}
+                  value={codVueloData.destino.codIATA}
                   isMobile={isMobile}
                 />
               )}

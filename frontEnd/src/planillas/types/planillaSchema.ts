@@ -153,7 +153,7 @@ const planillaSchema = z
     datosVehiculos: z
       .array(
         z.object({
-          vehiculo: z.string().min(1, "Se requiere un vehículo"),
+          vehiculo: z.string().optional(),
           operadorVehiculo: z.string().min(1, "Se requiere un operador"),
           isObservaciones: z.boolean().default(false),
           observacionesVehiculo: z.string().optional().default(""),

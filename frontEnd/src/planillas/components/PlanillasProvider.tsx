@@ -67,10 +67,10 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     }
     try {
       const result = await createPlanilla.mutateAsync(data);
-      reset(defaultValuesPlanilla);
 
       setCreatedPlanillaId(result.id || null);
       setShowReview(false);
+      reset(defaultValuesPlanilla);
       setShowSuccess(true);
       setIsSubmitting(false);
     } catch (error) {
@@ -150,8 +150,8 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   };
 
   const sendBack = (data: boolean) => {
-    reset(defaultValuesPlanilla);
     setActiveStep(0);
+    reset(defaultValuesPlanilla);
     onBackHome(data);
   };
   const handleNext = () => setActiveStep((prev) => Math.min(prev + 1, 5));

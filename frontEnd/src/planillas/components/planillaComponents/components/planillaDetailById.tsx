@@ -295,11 +295,6 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             <Typography variant="body1" fontWeight="medium">
               ¡Planilla creada exitosamente!
             </Typography>
-            <Typography variant="body2">
-              La planilla ha sido guardada correctamente en el sistema. Puede
-              revisar los detalles a continuación y descargar el PDF si lo
-              necesita.
-            </Typography>
           </Alert>
         )}
 
@@ -601,9 +596,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
     >
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {isSuccessView
-            ? "¡Planilla Creada Exitosamente!"
-            : "Detalles de Planilla"}
+          Detalles de Planilla
         </Typography>
         <Button
           aria-label="close"
@@ -616,7 +609,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           }}
           startIcon={<Close />}
         >
-          {isSuccessView ? "Volver al Inicio" : "Cerrar"}
+          {isSuccessView ? "Inicio" : "Cerrar"}
         </Button>
       </DialogTitle>
 
@@ -640,7 +633,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             startIcon={<Home />}
             sx={{ ml: 2 }}
           >
-            Crear Nueva Planilla
+            Finalizar
           </Button>
         )}
       </DialogActions>
