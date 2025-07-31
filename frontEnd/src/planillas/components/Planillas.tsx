@@ -40,7 +40,6 @@ export function Planillas({
   onNext,
   onPrevious,
   onFinalize,
-  user,
 }: PlanillaProps) {
   const { validateCurrentStep } = useStepValidation(
     activeStep,

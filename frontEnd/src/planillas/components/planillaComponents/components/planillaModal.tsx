@@ -10,7 +10,6 @@ import {
   Box,
   Typography,
   Stack,
-  IconButton,
   useTheme,
   useMediaQuery,
   Paper,

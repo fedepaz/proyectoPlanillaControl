@@ -20,9 +20,7 @@ export function DatosSeguridad() {
   const [confirmedPersonalList, setConfirmedPersonalList] = useState<
     BasePersonalOption[]
   >([]);
-  const [currentPersonalList, setCurrentPersonalList] = useState<
-    BasePersonalOption[]
-  >([]);
+  const [, setCurrentPersonalList] = useState<BasePersonalOption[]>([]);
   const { setValue } = useFormContext<PlanillaSchema>();
 
   const handleEmpresaSelected = (empresaId: string) => {

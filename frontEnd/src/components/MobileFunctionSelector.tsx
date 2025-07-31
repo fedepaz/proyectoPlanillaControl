@@ -62,7 +62,8 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
   const [assignments, setAssignments] = useState<Record<string, string[]>>({});
   const [grupo, setGrupo] = useState(defaultGroup);
   const [hasChanges, setHasChanges] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const [, setIsConfirmed] = useState(false);
 
   useEffect(() => {
     if (functionQuery.data) {

@@ -42,9 +42,7 @@ export function DatosVehiculos() {
   const [selectedEmpresa, setSelectedEmpresa] = useState<EmpresaOption | null>(
     null
   );
-  const [currentVehiculoList, setCurrentVehiculoList] = useState<
-    VehiculoOption[]
-  >([]);
+  const [, setCurrentVehiculoList] = useState<VehiculoOption[]>([]);
   const [confirmedVehiculoList, setConfirmedVehiculoList] = useState<
     VehiculoOption[]
   >([]);

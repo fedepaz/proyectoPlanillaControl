@@ -344,6 +344,8 @@ export function useStepValidation(
     formState,
     getNestedErrorMessage,
     getFieldName,
+    getValues,
+    validateArrayFields,
   ]);
 
   const clearErrorMessage = useCallback(() => {

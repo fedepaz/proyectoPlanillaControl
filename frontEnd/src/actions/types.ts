@@ -33,15 +33,15 @@ export interface User {
   hierarchy?: UserHierarchy;
 }
 
-const HIERARCHY_LEVELS = {
-  [UserHierarchy.AYUDANTE]: 1,
-  [UserHierarchy.PRINCIPAL]: 2,
-  [UserHierarchy.MAYOR]: 3,
-  [UserHierarchy.JEFE]: 4,
-  [UserHierarchy.SUBINSPECTOR]: 5,
-  [UserHierarchy.INSPECTOR]: 6,
-  [UserHierarchy.COMISIONADO]: 7,
-};
+//const HIERARCHY_LEVELS = {
+//  [UserHierarchy.AYUDANTE]: 1,
+//  [UserHierarchy.PRINCIPAL]: 2,
+//  [UserHierarchy.MAYOR]: 3,
+//  [UserHierarchy.JEFE]: 4,
+//  [UserHierarchy.SUBINSPECTOR]: 5,
+//  [UserHierarchy.INSPECTOR]: 6,
+//  [UserHierarchy.COMISIONADO]: 7,
+//};
 
 const HIERARCHY_ROLES_OVERRIDES: Record<UserHierarchy, UserRole[]> = {
   [UserHierarchy.AYUDANTE]: [],

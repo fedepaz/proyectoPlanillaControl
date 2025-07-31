@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemText,
   Box,
-  Chip,
   useMediaQuery,
   useTheme,
 } from "@mui/material";

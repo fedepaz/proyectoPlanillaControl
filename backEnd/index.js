@@ -59,7 +59,7 @@ app.use(helmet.xssFilter({}));
 app.use(express.json({ limit: "100kb" }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "X-CSRF-TOKEN"],
     credentials: true,

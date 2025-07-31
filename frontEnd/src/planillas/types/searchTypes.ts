@@ -170,6 +170,7 @@ export const formatTime = (timeString: string | undefined): string => {
  * @param field - Field that can be object or string
  * @returns Extracted string value
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const extractValue = (field: any): string => {
   if (typeof field === "object" && field !== null) {
     return (

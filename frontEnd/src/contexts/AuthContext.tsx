@@ -34,7 +34,7 @@ export interface AuthContextType {
 
   // Session state
   isLoading: boolean;
-  error: any;
+  error: string | null;
   isError: boolean;
 
   // Navigation state

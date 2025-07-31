@@ -72,7 +72,7 @@ export const OperatorAndObservationsSelection: React.FC<
     Record<string, boolean>
   >({});
   const [hasChanges, setHasChanges] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [, setIsConfirmed] = useState(false);
 
   // Vehicle icon helper
   const getVehiculoIcon = (tipoVehiculo: string) => {
