@@ -1,13 +1,17 @@
 # .github/workflows/ci.yml
-name: CI - Tests and Validation
+name: CI - Bulletproof Testing
 
 on:
+  # Run on ANY push to ANY branch
+  push:
+    branches: ["**"]
+  # Also run on pull requests
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
 
 concurrency:
-  group: ci-${{ github.event.pull_request.number }}
+  group: ci-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -15,9 +19,6 @@ jobs:
   setup-dependencies:
     name: 📦 Install Dependencies
     runs-on: ubuntu-latest
-    outputs:
-      backend-cache-key: ${{ steps.backend-cache.outputs.cache-hit }}
-      frontend-cache-key: ${{ steps.frontend-cache.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
 
@@ -59,7 +60,7 @@ jobs:
         working-directory: ./frontEnd
         run: pnpm install --frozen-lockfile
 
-  # Job 2: Backend tests (uses cached dependencies)
+  # Job 2: Backend tests (all of them in parallel)
   backend-tests:
     name: 🧪 Backend Tests
     runs-on: ubuntu-latest
@@ -75,7 +76,7 @@ jobs:
             personalEmpresaRoute,
             personalSeguridadRoute,
           ]
-      fail-fast: false # Continue other tests even if one fails
+      fail-fast: false
     defaults:
       run:
         working-directory: ./backEnd
@@ -92,7 +93,6 @@ jobs:
         with:
           version: 9.12.3
 
-      # Reuse the cached dependencies from setup job
       - name: Restore Backend Dependencies
         uses: actions/cache@v3
         with:
@@ -102,7 +102,7 @@ jobs:
       - name: Run ${{ matrix.test-suite }} tests
         run: pnpm test:${{ matrix.test-suite }}
 
-  # Job 3: Frontend validation (uses cached dependencies)
+  # Job 3: Frontend validation
   frontend-validation:
     name: 🎨 Frontend Lint & Build
     runs-on: ubuntu-latest
@@ -123,7 +123,6 @@ jobs:
         with:
           version: 9.12.3
 
-      # Reuse the cached dependencies from setup job
       - name: Restore Frontend Dependencies
         uses: actions/cache@v3
         with:
@@ -136,14 +135,7 @@ jobs:
       - name: Build for production
         run: pnpm build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-build-pr-${{ github.event.pull_request.number }}
-          path: frontEnd/dist/
-          retention-days: 7
-
-  # Job 4: Security audit (uses cached dependencies)
+  # Job 4: Security audit
   security-audit:
     name: 🔒 Security Audit
     runs-on: ubuntu-latest
@@ -181,15 +173,35 @@ jobs:
         working-directory: ./frontEnd
         run: pnpm audit --audit-level moderate
 
-  # Job 5: Final validation summary
-  ci-validation-complete:
-    name: ✅ PR Validation Complete
+  # Job 5: Protection check - BLOCK main branch direct pushes
+  branch-protection-check:
+    name: 🛡️ Branch Protection Check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Block direct push to main
+        run: |
+          echo "🚫 DIRECT PUSH TO MAIN DETECTED!"
+          echo "💡 Please use Pull Requests for main branch changes"
+          echo "📋 Proper workflow:"
+          echo "   1. git checkout -b feature/your-feature"
+          echo "   2. Make changes and commit"
+          echo "   3. git push origin feature/your-feature"
+          echo "   4. Create Pull Request on GitHub"
+          echo "   5. Wait for CI to pass"
+          echo "   6. Merge PR manually"
+          exit 1
+
+  # Job 6: Final validation summary
+  ci-complete:
+    name: ✅ CI Validation Complete
     runs-on: ubuntu-latest
     needs: [backend-tests, frontend-validation, security-audit]
     if: always()
     steps:
       - name: Check all validations
         run: |
+          echo "🔍 CI Results Summary:"
           echo "Backend Tests: ${{ needs.backend-tests.result }}"
           echo "Frontend Validation: ${{ needs.frontend-validation.result }}"
           echo "Security Audit: ${{ needs.security-audit.result }}"
@@ -197,8 +209,14 @@ jobs:
           if [[ "${{ needs.backend-tests.result }}" == "success" && 
                 "${{ needs.frontend-validation.result }}" == "success" && 
                 "${{ needs.security-audit.result }}" == "success" ]]; then
-            echo "🎉 All validations passed - PR ready for manual review!"
+            echo "🎉 All CI checks passed!"
+            
+            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              echo "✅ PR ready for manual review and merge"
+            else
+              echo "✅ Branch is healthy"
+            fi
           else
-            echo "❌ Some validations failed - PR needs fixes before merge"
+            echo "❌ Some CI checks failed - fix required"
             exit 1
           fi
