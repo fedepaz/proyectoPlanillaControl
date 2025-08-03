@@ -1,0 +1,82 @@
+# .github/workflows/03-deploy-frontend.yml
+name: Deploy Frontend to Production
+
+on:
+  push:
+    branches: [main]
+    paths: ["frontEnd/**"]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Deployment reason"
+        required: true
+        default: "Manual deployment"
+
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+jobs:
+  pre-deploy-build:
+    name: Build and Validate Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.12.3
+      - name: Build and validate
+        working-directory: ./frontEnd
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm lint
+          pnpm build
+      - name: Upload production build
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-frontend
+          path: frontEnd/dist/
+          retention-days: 30 # Keep builds for rollback
+
+  deploy-frontend:
+    name: 🚀 Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: [pre-deploy-build]
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Record deployment start
+        run: |
+          echo "🚀 Frontend deployment started at $(date)"
+          echo "Reason: ${{ github.event.inputs.reason || 'Push to main' }}"
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./frontEnd
+          vercel-args: "--prod"
+
+      - name: Frontend health check
+        run: |
+          sleep 20
+          if curl -f -s "${{ secrets.FRONTEND_URL }}"; then
+            echo "✅ Frontend deployment successful!"
+          else
+            echo "❌ Frontend deployment failed!"
+            exit 1
+          fi
+
+      - name: Notify deployment success
+        run: |
+          echo "🎉 Frontend deployed successfully!"
+          echo "URL: ${{ secrets.FRONTEND_URL }}"
+          echo "Time: $(date)"

@@ -1,0 +1,115 @@
+# .github/workflows/01-ci-tests.yml
+name: CI - Tests Only (PR Validation)
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test-suite:
+          [
+            index,
+            dataRoute,
+            planillaRoute,
+            oficialRoute,
+            personalEmpresaRoute,
+            personalSeguridadRoute,
+          ]
+      fail-fast: false
+    defaults:
+      run:
+        working-directory: ./backEnd
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.12.3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run ${{ matrix.test-suite }} tests
+        run: pnpm test:${{ matrix.test-suite }}
+
+  frontend-validation:
+    name: Frontend Lint & Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontEnd
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.12.3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run ESLint
+        run: pnpm lint
+      - name: Build application
+        run: pnpm build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build-${{ github.event.pull_request.number }}
+          path: frontEnd/dist/
+          retention-days: 7
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.12.3
+      - name: Backend Security Audit
+        working-directory: ./backEnd
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm audit --audit-level moderate
+      - name: Frontend Security Audit
+        working-directory: ./frontEnd
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm audit --audit-level moderate
+
+  pr-validation-complete:
+    name: ✅ PR Ready for Review
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-validation, security-audit]
+    if: always()
+    steps:
+      - name: Check all validations
+        run: |
+          if [[ "${{ needs.backend-tests.result }}" == "success" && 
+                "${{ needs.frontend-validation.result }}" == "success" && 
+                "${{ needs.security-audit.result }}" == "success" ]]; then
+            echo "✅ All validations passed - PR ready for manual review and merge"
+          else
+            echo "❌ Some validations failed - PR needs fixes"
+            exit 1
+          fi
