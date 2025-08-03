@@ -1,0 +1,183 @@
+# .github/workflows/deploy-staging.yml
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [develop]
+    paths: ["frontEnd/**", "backEnd/**", ".github/workflows/deploy-staging.yml"]
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: true
+
+jobs:
+  # Esperar que pasen todos los tests
+  wait-for-tests:
+    name: Wait for Tests to Pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for backend tests
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-regexp: "test-backend.*"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success
+        timeout-minutes: 15
+
+      - name: Wait for frontend tests
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: "test-frontend"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success
+        timeout-minutes: 10
+
+  # Determinar qué se debe desplegar
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'backEnd/**'
+            frontend:
+              - 'frontEnd/**'
+
+  # Desplegar Backend a Staging
+  deploy-backend-staging:
+    name: 🚀 Deploy Backend to Staging
+    runs-on: ubuntu-latest
+    needs: [wait-for-tests, detect-changes]
+    if: needs.detect-changes.outputs.backend == 'true'
+    environment: staging
+    steps:
+      - name: Deploy to Render Staging
+        run: |
+          echo "🚀 Deploying backend to staging..."
+          response=$(curl -s -w "HTTPSTATUS:%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND_STAGING }}")
+          http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+
+          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 201 ]; then
+            echo "❌ Deploy hook failed with status: $http_code"
+            exit 1
+          fi
+          echo "✅ Backend staging deploy initiated"
+
+      - name: Health check backend staging
+        run: |
+          echo "⏳ Waiting for backend staging deployment..."
+          sleep 90
+
+          for i in {1..20}; do
+            if curl -f -s --max-time 15 "${{ secrets.STAGING_BACKEND_URL }}/health" > /dev/null 2>&1; then
+              echo "✅ Backend staging deployed successfully!"
+              echo "🔗 Staging API: ${{ secrets.STAGING_BACKEND_URL }}"
+              exit 0
+            fi
+            echo "⏳ Health check $i/20... (waiting 30s)"
+            sleep 30
+          done
+
+          echo "❌ Backend staging deployment failed!"
+          exit 1
+
+  # Desplegar Frontend a Staging
+  deploy-frontend-staging:
+    name: 🚀 Deploy Frontend to Staging
+    runs-on: ubuntu-latest
+    needs: [wait-for-tests, detect-changes, deploy-backend-staging]
+    if: always() && needs.detect-changes.outputs.frontend == 'true' && (needs.deploy-backend-staging.result == 'success' || needs.deploy-backend-staging.result == 'skipped')
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.3
+
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: frontEnd/node_modules
+          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontEnd/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-frontend-
+
+      - name: Install dependencies
+        working-directory: ./frontEnd
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for staging
+        working-directory: ./frontEnd
+        env:
+          VITE_API_URL: ${{ secrets.STAGING_BACKEND_URL }}
+          VITE_ENV: staging
+          NODE_ENV: production
+        run: pnpm build
+
+      - name: Deploy to Vercel Staging
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./frontEnd
+          vercel-args: "--target=preview --alias=staging-${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+
+      - name: Health check frontend staging
+        run: |
+          echo "⏳ Waiting for frontend staging deployment..."
+          sleep 30
+
+          STAGING_URL="https://staging-${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+
+          for i in {1..10}; do
+            if curl -f -s --max-time 10 "$STAGING_URL" > /dev/null 2>&1; then
+              echo "✅ Frontend staging deployed successfully!"
+              echo "🌐 Staging URL: $STAGING_URL"
+              exit 0
+            fi
+            echo "⏳ Health check $i/10... (waiting 15s)"
+            sleep 15
+          done
+
+          echo "❌ Frontend staging deployment failed!"
+          exit 1
+
+  # Notificación de staging completado
+  staging-complete:
+    name: 📢 Staging Deployment Complete
+    runs-on: ubuntu-latest
+    needs: [deploy-backend-staging, deploy-frontend-staging]
+    if: always() && (needs.deploy-backend-staging.result == 'success' || needs.deploy-frontend-staging.result == 'success')
+    steps:
+      - name: Notify staging ready
+        run: |
+          echo "🎉 Staging deployment completed!"
+          echo "📝 Ready for testing and review"
+          echo "🌐 Frontend: https://staging-${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+          echo "🔗 Backend: ${{ secrets.STAGING_BACKEND_URL }}"
+          echo ""
+          echo "✅ Next steps:"
+          echo "   1. Test the staging environment"
+          echo "   2. If satisfied, create a PR from develop to main"
+          echo "   3. Merge to deploy to production"

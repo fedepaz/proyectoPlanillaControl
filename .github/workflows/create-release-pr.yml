@@ -1,0 +1,60 @@
+# .github/workflows/create-release-pr.yml
+name: Create Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Release title"
+        required: true
+        default: "Release: Deploy to Production"
+      description:
+        description: "Release description"
+        required: false
+        default: "Ready for production deployment"
+
+jobs:
+  create-pr:
+    name: Create PR from develop to main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Pull Request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '${{ github.event.inputs.title }}',
+              head: 'develop',
+              base: 'main',
+              body: `## 🚀 Release to Production
+              
+              ${{ github.event.inputs.description }}
+              
+              ### Changes included:
+              - All commits from develop branch
+              - Tests passing ✅
+              - Staging environment validated ✅
+              
+              ### Before merging:
+              - [ ] All tests pass
+              - [ ] Staging environment tested
+              - [ ] Ready for production users
+              
+              **⚠️ This will trigger production deployment automatically after merge**`
+            });
+
+            console.log(\`Pull request created: \${pr.html_url}\`);
+
+            // Auto-assign reviewers if needed
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              reviewers: ['tu-usuario'] // Cambia por tu usuario
+            });
