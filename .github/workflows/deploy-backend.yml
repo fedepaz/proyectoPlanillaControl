@@ -1,79 +1,47 @@
-# .github/workflows/02-deploy-backend.yml
-name: Deploy Backend to Production
+# .github/workflows/deploy-backend.yml
+name: Deploy Backend
 
 on:
   push:
     branches: [main]
-    paths: ["backEnd/**"]
-  workflow_dispatch:
-    inputs:
-      reason:
-        description: "Deployment reason"
-        required: true
-        default: "Manual deployment"
-
-concurrency:
-  group: deploy-backend
-  cancel-in-progress: false # Don't cancel backend deployments
+    paths: ["backEnd/**", ".github/workflows/deploy-backend.yml"]
 
 jobs:
-  pre-deploy-validation:
-    name: Pre-deployment Validation
+  # Wait for tests to pass first
+  wait-for-tests:
+    name: Wait for Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Wait for test workflow
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
-          node-version: "20"
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9.12.3
-      - name: Critical tests only
-        working-directory: ./backEnd
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm test:index
-          pnpm test:authentication
+          ref: ${{ github.ref }}
+          check-name: "test-backEnd-index" # One of your test jobs
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
 
   deploy-backend:
     name: 🚀 Deploy Backend
     runs-on: ubuntu-latest
-    needs: [pre-deploy-validation]
-    environment: production
+    needs: [wait-for-tests]
     steps:
-      - name: Record deployment start
+      - name: Deploy to Render
         run: |
-          echo "🚀 Backend deployment started at $(date)"
-          echo "Reason: ${{ github.event.inputs.reason || 'Push to main' }}"
+          echo "🚀 Deploying backend..."
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
 
-      - name: Trigger Render deployment
+      - name: Wait and health check
         run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}" \
-            -H "Content-Type: application/json" \
-            -d '{"reason": "${{ github.event.inputs.reason || 'Auto-deploy from main' }}"}'
-
-      - name: Wait for deployment
-        run: |
-          echo "⏳ Waiting for backend deployment..."
+          echo "⏳ Waiting for deployment..."
           sleep 60
 
-      - name: Health check with retry
-        run: |
-          for i in {1..15}; do
-            if curl -f -s "${{ secrets.BACKEND_URL }}/health"; then
-              echo "✅ Backend deployment successful!"
+          for i in {1..10}; do
+            if curl -f "${{ secrets.BACKEND_URL }}/health"; then
+              echo "✅ Backend deployed successfully!"
               exit 0
             fi
-            echo "⏳ Health check attempt $i/15..."
-            sleep 10
+            echo "⏳ Health check $i/10..."
+            sleep 15
           done
-          echo "❌ Backend deployment failed health check!"
+          echo "❌ Deployment failed!"
           exit 1
-
-      - name: Notify deployment success
-        run: |
-          echo "🎉 Backend deployed successfully!"
-          echo "URL: ${{ secrets.BACKEND_URL }}"
-          echo "Time: $(date)"
