@@ -25,7 +25,6 @@ export function DatosTerrestre() {
     BasePersonalOption[]
   >([]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCurrentPersonalList] = useState<BasePersonalOption[]>([]);
   const [empresaColorRef, setEmpresaColorRef] = useState("");
 
