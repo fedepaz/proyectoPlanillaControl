@@ -19,7 +19,7 @@ interface LogoutPageProps {
   onBackHome?: () => void;
 }
 
-export function LogoutPage({ darkMode = false, onBackHome }: LogoutPageProps) {
+function LogoutPage({ darkMode = false, onBackHome }: LogoutPageProps) {
   useTheme();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { mutate: logout, isPending } = useLogout();
@@ -149,3 +149,5 @@ export function LogoutPage({ darkMode = false, onBackHome }: LogoutPageProps) {
     </Container>
   );
 }
+
+export default LogoutPage;

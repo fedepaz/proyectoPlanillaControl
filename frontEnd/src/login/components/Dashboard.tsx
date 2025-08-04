@@ -11,7 +11,7 @@ import {
 import { User } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { memo } from "react";
-import { View } from "../../views";
+import { View } from "../../types/types";
 import { RoleBadge } from "../../components/RoleBadge";
 interface DashboardProps {
   onGeneratePlanillas?: () => void;
@@ -28,7 +28,7 @@ interface DashboardProps {
   user: User;
 }
 
-export const Dashboard = memo(function Dashboard({
+const Dashboard = memo(function Dashboard({
   onGeneratePlanillas,
   onHistorialSupervisores,
   onHistorialResponsables,
@@ -333,3 +333,5 @@ export const Dashboard = memo(function Dashboard({
     </Container>
   );
 });
+
+export default Dashboard;

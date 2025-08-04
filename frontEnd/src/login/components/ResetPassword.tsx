@@ -24,7 +24,7 @@ interface ResetPasswordProps {
   onResetPassword: (data: boolean) => void;
 }
 
-export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
+function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
   const methods = useForm<ResetPasswordRequestSchema>({
     resolver: zodResolver(resetPasswordRequestSchema),
     defaultValues: defaultValuesResetPasswordRequest,
@@ -124,3 +124,5 @@ export function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
     </FormProvider>
   );
 }
+
+export default ResetPasswordPage;

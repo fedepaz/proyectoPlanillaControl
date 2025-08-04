@@ -18,7 +18,7 @@ import {
   User,
   UserRole,
 } from "./types";
-import { View } from "../views";
+import { View } from "../types/types";
 
 export const createDashboardActions = (callbacks: {
   onGeneratePlanillas?: () => void;

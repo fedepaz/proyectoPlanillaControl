@@ -65,7 +65,7 @@ export function useOficial(dni: string) {
         `${API_URL}/oficial/dni/${dni}`
       );
       return {
-        dni: data.dni,
+        dni: parseInt(data.dni, 10),
         firstname: data.firstname,
         lastname: data.lastname,
         legajo: data.legajo,
@@ -185,7 +185,7 @@ export function usePersonalEmpresa(dni: number) {
         `${API_URL}/personalEmpresa/dni/${dni}`
       );
       return {
-        dni: data.dni,
+        dni: parseInt(data.dni, 10),
         firstname: data.firstname,
         lastname: data.lastname,
         empresa: data.empresa,

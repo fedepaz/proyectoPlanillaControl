@@ -1,0 +1,17 @@
+export enum View {
+  LOGIN = "login",
+  REGISTER = "register",
+  RESET_PASSWORD = "reset_password",
+  DASHBOARD = "dashboard",
+  LOGOUT = "logout",
+  GENERATE_PLANILLAS = "generate_planillas",
+  VIEW_HISTORY = "view_history",
+  VIEW_PROFILE = "view_profile",
+  SETTINGS = "settings",
+  MANAGE_USERS = "manage_users",
+  REPORTS = "reports",
+  USER_ROLES = "user_roles",
+  VIEW_HISTORY_RESPONSABLES = "view_history_responsables",
+  VIEW_HISTORY_SUPERVISORES = "view_history_supervisors",
+  VIEW_HISTORY_AUXILIARES = "view_history_auxiliares",
+}

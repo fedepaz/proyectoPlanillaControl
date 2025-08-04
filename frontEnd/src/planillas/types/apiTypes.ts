@@ -20,7 +20,7 @@ export type ApiGetOficial = Edit & OficialCommon;
 
 export type PersonalEmpresaCommon = {
   id: string;
-  dni: number;
+  dni: string;
   firstname: string;
   lastname: string;
   empresa: string;

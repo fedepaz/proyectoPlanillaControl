@@ -22,7 +22,7 @@ interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
 }
 
-export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
+function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showReview, setShowReview] = useState(false);
@@ -181,7 +181,7 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     );
   }
 
-  if (isError) {
+  if (isError && error && typeof error === "object") {
     return (
       <>
         <CssBaseline />
@@ -295,3 +295,5 @@ export function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     </FormProvider>
   );
 }
+
+export default PlanillasProvider;

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { User } from "../actions/types";
-import { View } from "../views";
+import { View } from "../types/types";
 
 interface LoginResponse {
   authenticated: boolean;
@@ -34,7 +34,7 @@ export interface AuthContextType {
 
   // Session state
   isLoading: boolean;
-  error: string | null;
+  error: string | Error | null;
   isError: boolean;
 
   // Navigation state

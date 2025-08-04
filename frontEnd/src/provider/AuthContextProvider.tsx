@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect, useCallback } from "react";
 import { User, validateAndCreateUser } from "../actions/types";
 import { useSession } from "../services/session";
 import { useLogout } from "../login/services/logout";
-import { View } from "../views";
+import { View } from "../types/types";
 import { AuthContext, AuthContextType } from "../contexts/AuthContext";
 
 interface LoginResponse {

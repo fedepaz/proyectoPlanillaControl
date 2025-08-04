@@ -46,11 +46,7 @@ interface LoginPageProps {
   onResetPassword: (data: boolean) => void;
 }
 
-export function LoginPage({
-  onLogin,
-  onRegister,
-  onResetPassword,
-}: LoginPageProps) {
+function LoginPage({ onLogin, onRegister, onResetPassword }: LoginPageProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -287,3 +283,5 @@ export function LoginPage({
     </FormProvider>
   );
 }
+
+export default LoginPage;

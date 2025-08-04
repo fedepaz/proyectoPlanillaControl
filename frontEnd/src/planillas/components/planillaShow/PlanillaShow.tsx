@@ -30,7 +30,7 @@ import {
 import { PlanillaModal } from "../planillaComponents/components/planillaModal";
 import { PlanillaDetailById } from "../planillaComponents/components/planillaDetailById";
 
-export const PlanillasList: React.FC = () => {
+const PlanillasList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [dateFilters, setDateFilters] = useState<DateFilters>({});
   const [hasSearched, setHasSearched] = useState(false);
@@ -199,3 +199,5 @@ export const PlanillasList: React.FC = () => {
     </Container>
   );
 };
+
+export default PlanillasList;

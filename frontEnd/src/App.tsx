@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { PlanillasNavbar } from "./components/PlanillasNavBar";
 import { darkTheme, lightTheme } from "./types/theme";
@@ -7,7 +7,8 @@ import { darkTheme, lightTheme } from "./types/theme";
 import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
 import apiClient, { setCsrfToken } from "./services/csrfToken";
-import { View, viewComponents } from "./views";
+import { viewComponents } from "./views";
+import { View } from "./types/types";
 
 import { useAuth } from "./hooks/useAuth";
 import { AuthProvider } from "./provider/AuthContextProvider";
@@ -109,7 +110,7 @@ function AppContent() {
     );
   }
 
-  if (isError) {
+  if (isError && error && typeof error === "object") {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -166,7 +167,9 @@ function AppContent() {
             p: { xs: 1, sm: 2, md: 3 },
           }}
         >
-          <CurrentViewComponent {...viewProps} />
+          <React.Suspense fallback={<Loading />}>
+            <CurrentViewComponent {...viewProps} />
+          </React.Suspense>
         </Box>
       </Box>
     </ThemeProvider>

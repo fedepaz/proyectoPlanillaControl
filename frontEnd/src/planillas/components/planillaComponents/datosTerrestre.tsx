@@ -26,9 +26,7 @@ export function DatosTerrestre() {
   >([]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [currentPersonalList, setCurrentPersonalList] = useState<
-    BasePersonalOption[]
-  >([]);
+  const [, setCurrentPersonalList] = useState<BasePersonalOption[]>([]);
   const [empresaColorRef, setEmpresaColorRef] = useState("");
 
   const { setValue } = useFormContext<PlanillaSchema>();

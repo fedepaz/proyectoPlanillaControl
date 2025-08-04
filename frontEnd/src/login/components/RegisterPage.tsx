@@ -37,7 +37,7 @@ interface OficialData {
 interface RegisterPageProps {
   onBackHome: (data: boolean) => void;
 }
-export function RegisterPage({ onBackHome }: RegisterPageProps) {
+function RegisterPage({ onBackHome }: RegisterPageProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -264,3 +264,5 @@ export function RegisterPage({ onBackHome }: RegisterPageProps) {
     </FormProvider>
   );
 }
+
+export default RegisterPage;
