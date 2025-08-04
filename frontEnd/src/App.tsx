@@ -12,12 +12,15 @@ import { View } from "./types/types";
 
 import { useAuth } from "./hooks/useAuth";
 import { AuthProvider } from "./provider/AuthContextProvider";
+import WelcomeModal from "./login/components/WelcomeModal";
 
 const csrfTokenRoute = "/csrf-token";
 
 function AppContent() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [shouldLoadWelcome, setShouldLoadWelcome] = useState(false);
 
   const {
     user,
@@ -41,6 +44,28 @@ function AppContent() {
   const toggleColorMode = useCallback(() => {
     setIsDarkMode((prevMode) => !prevMode);
   }, []);
+
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+
+    if (!hasSeenWelcome && !isLoggedIn && !isLoading && !isError) {
+      setShouldLoadWelcome(true);
+      setShowWelcome(true);
+    } else {
+      setShowWelcome(false);
+    }
+  }, [isLoggedIn, isLoading, isError]);
+
+  const handleWelcomeClose = useCallback(() => {
+    setShowWelcome(false);
+    localStorage.setItem("hasSeenWelcome", "true");
+  }, []);
+
+  const handleGetStarted = useCallback(() => {
+    setShowWelcome(false);
+    localStorage.setItem("hasSeenWelcome", "true");
+    handleNavigate(View.REGISTER);
+  }, [handleNavigate]);
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -171,6 +196,16 @@ function AppContent() {
             <CurrentViewComponent {...viewProps} />
           </React.Suspense>
         </Box>
+
+        {shouldLoadWelcome && (
+          <React.Suspense fallback={<Loading />}>
+            <WelcomeModal
+              open={showWelcome}
+              onClose={handleWelcomeClose}
+              onGetStarted={handleGetStarted}
+            />
+          </React.Suspense>
+        )}
       </Box>
     </ThemeProvider>
   );
