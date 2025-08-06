@@ -14,12 +14,14 @@ type Props<T extends FieldValues> = {
   name: Path<T>;
   isEndTime?: boolean;
   label?: string;
+  helperText?: string;
 } & Pick<TextFieldProps, "label">;
 
 export function RHFDateTimePicker<T extends FieldValues>({
   name,
   label,
   isEndTime = false,
+  helperText,
 }: Props<T>) {
   const { control, watch } = useFormContext<T>();
   const now = new Date();
@@ -69,7 +71,10 @@ export function RHFDateTimePicker<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value, ...field } }) => {
+      render={({
+        field: { onChange, value, ...field },
+        fieldState: { error },
+      }) => {
         // Parse the current value to a Date object
         const dateValue = parseTimeString(value as string);
 
@@ -117,7 +122,8 @@ export function RHFDateTimePicker<T extends FieldValues>({
               minutesStep={5}
               slotProps={{
                 textField: {
-                  error: false,
+                  helperText: error?.message || helperText,
+                  error: !!error,
                   fullWidth: true,
                 },
               }}

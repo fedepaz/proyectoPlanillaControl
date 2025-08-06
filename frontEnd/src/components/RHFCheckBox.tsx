@@ -13,12 +13,14 @@ type Props<T extends FieldValues> = {
   name: Path<T>;
   options?: Option[];
   label: string;
+  helperText?: string;
 };
 
 export function RHFCheckBox<T extends FieldValues>({
   name,
   options,
   label,
+  helperText,
 }: Props<T>) {
   const { control } = useFormContext<T>();
   return (
@@ -54,7 +56,7 @@ export function RHFCheckBox<T extends FieldValues>({
               />
             ))}
           </FormGroup>
-          <FormHelperText>{error?.message}</FormHelperText>
+          <FormHelperText>{error?.message || helperText}</FormHelperText>
         </FormControl>
       )}
     ></Controller>

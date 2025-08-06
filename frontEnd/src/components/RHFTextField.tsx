@@ -4,11 +4,13 @@ import { TextField, TextFieldProps } from "@mui/material";
 type Props<T extends FieldValues> = {
   name: Path<T>;
   valueAsNumber?: boolean;
+  helperText?: string;
 } & TextFieldProps;
 
 export function RHFTextField<T extends FieldValues>({
   name,
   valueAsNumber,
+  helperText,
   ...props
 }: Props<T>) {
   const { control } = useFormContext();
@@ -27,7 +29,7 @@ export function RHFTextField<T extends FieldValues>({
             field.onChange(valueAsNumber ? Number(value) : value);
           }}
           error={!!error}
-          helperText={error?.message}
+          helperText={error?.message || helperText}
         />
       )}
     />

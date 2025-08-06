@@ -1,4 +1,6 @@
 import {
+  FormControl,
+  FormHelperText,
   FormLabel,
   Grid,
   ToggleButton,
@@ -11,25 +13,25 @@ type Props<T extends FieldValues> = {
   name: Path<T>;
   options?: Option[];
   label: string;
+  helperText?: string;
 };
 
 export function RHFToggleButtonGroup<T extends FieldValues>({
   name,
   options,
   label,
+  helperText,
 }: Props<T>) {
   const { control } = useFormContext<T>();
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value, ...restField } }) => (
-        <Grid
-          container
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="stretch"
-        >
+      render={({
+        field: { onChange, value, ...restField },
+        fieldState: { error },
+      }) => (
+        <FormControl error={!!error}>
           <FormLabel> {label}</FormLabel>
           <ToggleButtonGroup
             size="small"
@@ -69,7 +71,8 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-        </Grid>
+          <FormHelperText>{error?.message || helperText}</FormHelperText>
+        </FormControl>
       )}
     ></Controller>
   );

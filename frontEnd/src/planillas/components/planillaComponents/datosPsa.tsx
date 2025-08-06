@@ -81,27 +81,32 @@ export function DatosPsa() {
       <RHFDateTimePicker<PlanillaSchema>
         name="datosPsa.horaIni"
         label="Hora de Inicio"
+        helperText="Horario del comienzo del control. Admite hasta 2 horas previas a la hora actual."
       />
       <RHFTextField<PlanillaSchema>
         name="datosPsa.cant"
         label="Cantidad"
         type="number"
         inputProps={{ inputMode: "numeric", pattern: "[0-9]*", maxLength: 2 }}
+        helperText="Cantidad de oficiales que realizaron el control."
       />
       <RHFToggleButtonGroup<PlanillaSchema>
         name="datosPsa.tipoControl"
         options={tipoControlQuery}
         label="Tipo Control"
+        helperText="Tipo de control que se realizó en el área."
       />
       <RHFCheckBox<PlanillaSchema>
         name="datosPsa.medioTec"
         options={medioTecQuery}
         label="Medios Técnicos"
+        helperText="Medios técnicos que se utilizaron en el control."
       />
       <RHFCheckBox<PlanillaSchema>
         name="datosPsa.tipoPro"
         options={tipoProQuery}
         label="Tipo de Procedimientos"
+        helperText="Tipo de procedimientos que se realizaron en el control."
       />
     </Stack>
   );
