@@ -1,19 +1,19 @@
 "use client";
 import type React from "react";
-import {
-  Dialog,
-  DialogContent,
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-  useTheme,
-  useMediaQuery,
-  Stack,
-} from "@mui/material";
+
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Stack from "@mui/material/Stack";
+
 import {
   Close as CloseIcon,
   Assignment as AssignmentIcon,
