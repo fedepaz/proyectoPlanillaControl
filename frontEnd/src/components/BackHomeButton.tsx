@@ -1,5 +1,9 @@
 "use client";
-import { IconButton, Tooltip, Typography } from "@mui/material";
+
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+
 import HomeIcon from "@mui/icons-material/Home";
 
 interface BackHomeButtonProps {

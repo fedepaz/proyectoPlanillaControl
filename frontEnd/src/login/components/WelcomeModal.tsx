@@ -4,11 +4,10 @@ import type React from "react";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import {
-  Assignment as AssignmentIcon,
-  Speed as SpeedIcon,
-  CloudSync as CloudSyncIcon,
-} from "@mui/icons-material";
+import Assignment from "@mui/icons-material/Assignment";
+import Speed from "@mui/icons-material/Speed";
+import CloudSync from "@mui/icons-material/CloudSync";
+
 import WelcomeModalMobile from "./WelcomeMobile";
 import WelcomeLargeMobile from "./WelcomeLarge";
 
@@ -20,19 +19,19 @@ interface WelcomeModalProps {
 
 const features = [
   {
-    icon: <AssignmentIcon />,
+    icon: <Assignment />,
     title: "Gestión de Planillas",
     description:
       "Crea y administra tus planillas de forma digital y organizada",
   },
 
   {
-    icon: <SpeedIcon />,
+    icon: <Speed />,
     title: "Proceso Rápido",
     description: "Genera y procesa planillas en minutos, no en horas",
   },
   {
-    icon: <CloudSyncIcon />,
+    icon: <CloudSync />,
     title: "Acceso Desde Cualquier Lugar",
     description:
       "Accede a tus planillas desde cualquier dispositivo, en cualquier momento",

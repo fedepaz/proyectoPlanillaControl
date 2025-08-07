@@ -1,31 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Chip,
-  Stack,
-  useTheme,
-  useMediaQuery,
-  Collapse,
-  IconButton,
-  Alert,
-  Button,
-  Divider,
-} from "@mui/material";
-import {
-  ExpandMore,
-  ExpandLess,
-  Assignment,
-  Save,
-  DirectionsCar,
-  AirportShuttle,
-  Build,
-  Agriculture,
-} from "@mui/icons-material";
+
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import Assignment from "@mui/icons-material/Assignment";
+import Save from "@mui/icons-material/Save";
+import DirectionsCar from "@mui/icons-material/DirectionsCar";
+import AirportShuttle from "@mui/icons-material/AirportShuttle";
+import Build from "@mui/icons-material/Build";
+import Agriculture from "@mui/icons-material/Agriculture";
+
 import type { VehiculoOption, BasePersonalOption } from "../types/option";
 import { PersonalOneComponent } from "../planillas/components/planillaComponents/components/personalOneComponent";
 import { NovedadesComponent } from "./NovedadesComponent";

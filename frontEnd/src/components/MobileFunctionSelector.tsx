@@ -1,30 +1,29 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Chip,
-  Stack,
-  useTheme,
-  useMediaQuery,
-  Collapse,
-  IconButton,
-  Alert,
-  TextField,
-  Button,
-} from "@mui/material";
-import {
-  ExpandMore,
-  ExpandLess,
-  Assignment,
-  CheckCircle,
-  Person,
-  Group,
-  Save,
-} from "@mui/icons-material";
+
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import Assignment from "@mui/icons-material/Assignment";
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import Person from "@mui/icons-material/Person";
+import Group from "@mui/icons-material/Group";
+import Save from "@mui/icons-material/Save";
+
 import type { BasePersonalOption, Option } from "../types/option";
 import { useFuncion } from "../planillas/services/queries";
 

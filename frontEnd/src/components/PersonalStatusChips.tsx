@@ -1,4 +1,8 @@
-import { Stack, Chip } from "@mui/material";
+"use client";
+
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+
 import { BasePersonalOption } from "../types/option";
 import { hasPermission, RolePermissions } from "../actions/types";
 import { useAuth } from "../hooks/useAuth";

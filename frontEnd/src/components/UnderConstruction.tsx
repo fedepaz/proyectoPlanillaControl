@@ -1,13 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
+
 import ConstructionIcon from "@mui/icons-material/Construction";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { memo } from "react";

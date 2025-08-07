@@ -1,21 +1,20 @@
 import type React from "react";
 
-import {
-  AppBar,
-  Toolbar,
-  useTheme,
-  Box,
-  useMediaQuery,
-  Typography,
-  Avatar,
-  Chip,
-  IconButton,
-  Tooltip,
-  Popover,
-  Paper,
-  Divider,
-  Badge,
-} from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import useTheme from "@mui/material/styles/useTheme";
+import Box from "@mui/material/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Popover from "@mui/material/Popover";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import Badge from "@mui/material/Badge";
+
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import CloseSessionButton from "./CloseSessionButton";
@@ -26,6 +25,7 @@ import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+
 interface LoginResponse {
   authenticated: boolean;
   user: {

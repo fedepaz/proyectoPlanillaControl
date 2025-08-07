@@ -1,11 +1,10 @@
-import {
-  Card,
-  CardContent,
-  Stack,
-  Box,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { memo, useEffect, useState } from "react";

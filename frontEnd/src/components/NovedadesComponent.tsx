@@ -1,11 +1,10 @@
 import React from "react";
-import {
-  Box,
-  FormControlLabel,
-  Switch,
-  Typography,
-  TextField,
-} from "@mui/material";
+
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 interface NovedadesComponentProps {
   /** Current state of the switch (whether observations are enabled) */

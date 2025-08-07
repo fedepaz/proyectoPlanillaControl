@@ -1,10 +1,13 @@
-import { Box, Button, Typography, Paper } from "@mui/material";
-import {
-  Wifi,
-  Error as ErrorIcon,
-  LockOutlined,
-  Refresh,
-} from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+import Wifi from "@mui/icons-material/Wifi";
+import Error from "@mui/icons-material/Error";
+import LockOutlined from "@mui/icons-material/LockOutlined";
+import Refresh from "@mui/icons-material/Refresh";
+
 import { AxiosError } from "axios";
 import { getErrorTranslation } from "../hooks/errorTranslation";
 
@@ -75,7 +78,7 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
       if (statusCode >= 500) {
         return {
-          icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+          icon: <Error sx={{ fontSize: 48 }} />,
           title: translatedError.title,
           description: translatedError.message,
           canRetry: translatedError.canRetry,
@@ -84,7 +87,7 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
       if (statusCode >= 400) {
         return {
-          icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+          icon: <Error sx={{ fontSize: 48 }} />,
           title: translatedError.title,
           description: translatedError.message,
           canRetry: translatedError.canRetry,
@@ -118,7 +121,7 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
     if (message.includes("server error") || message.includes("internal")) {
       return {
-        icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+        icon: <Error sx={{ fontSize: 48 }} />,
         title: translatedError.title,
         description: translatedError.message,
         canRetry: translatedError.canRetry,
@@ -126,7 +129,7 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
     }
 
     return {
-      icon: <ErrorIcon sx={{ fontSize: 48 }} />,
+      icon: <Error sx={{ fontSize: 48 }} />,
       title: translatedError.title,
       description: translatedError.message,
       canRetry: translatedError.canRetry,
