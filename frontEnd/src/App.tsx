@@ -52,7 +52,8 @@ function AppContent() {
       setShouldLoadWelcome(true);
       setShowWelcome(true);
     } else {
-      setShowWelcome(false);
+      setShouldLoadWelcome(true);
+      setShowWelcome(true);
     }
   }, [isLoggedIn, isLoading, isError]);
 
