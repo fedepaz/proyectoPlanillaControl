@@ -1,15 +1,15 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-  Alert,
-  useTheme,
-  Divider,
-} from "@mui/material";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+import useTheme from "@mui/material/styles/useTheme";
+import Divider from "@mui/material/Divider";
+
 import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLogout } from "../services/logout";

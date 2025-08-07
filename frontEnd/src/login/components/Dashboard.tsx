@@ -1,18 +1,19 @@
 "use client";
-import {
-  Button,
-  Container,
-  Paper,
-  Typography,
-  Grid,
-  Box,
-  Divider,
-} from "@mui/material";
+
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+
 import { User } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { memo } from "react";
 import { View } from "../../types/types";
 import { RoleBadge } from "../../components/RoleBadge";
+
 interface DashboardProps {
   onGeneratePlanillas?: () => void;
   onHistorialSupervisores?: () => void;
