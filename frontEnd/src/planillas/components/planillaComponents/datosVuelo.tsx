@@ -1,4 +1,6 @@
-import { Stack, Divider } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+
 import { RHFTextField } from "../../../components/RHFTextField";
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { RHFRadioGroup } from "../../../components/RHFRadioGroup";

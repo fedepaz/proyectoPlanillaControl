@@ -1,4 +1,6 @@
-import { Divider, Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+
 import { NovedadesComponent } from "../../../components/NovedadesComponent";
 
 import { useFormContext } from "react-hook-form";

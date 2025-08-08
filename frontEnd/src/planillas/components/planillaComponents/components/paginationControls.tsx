@@ -1,11 +1,14 @@
 "use client";
-import { Box, Button, Typography, Stack, IconButton } from "@mui/material";
-import {
-  ChevronLeft,
-  ChevronRight,
-  FirstPage,
-  LastPage,
-} from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+
+import FirstPage from "@mui/icons-material/FirstPage";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
+import ChevronRight from "@mui/icons-material/ChevronRight";
+import LastPage from "@mui/icons-material/LastPage";
 
 interface PaginationControlsProps {
   currentPage: number;

@@ -1,18 +1,21 @@
 "use client";
 
 import React from "react";
-import {
-  Typography,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { FlightTakeoff, FlightLand, AccessTime } from "@mui/icons-material";
+
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
+import FlightTakeoff from "@mui/icons-material/FlightTakeoff";
+import FlightLand from "@mui/icons-material/FlightLand";
+import AccessTime from "@mui/icons-material/AccessTime";
+
 import { ProcessedPlanillaData } from "../../../types/searchTypes";
 
 interface PlanillaMobileItemProps {

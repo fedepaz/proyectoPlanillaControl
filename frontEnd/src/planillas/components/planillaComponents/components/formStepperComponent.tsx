@@ -1,22 +1,21 @@
 import type React from "react";
 
-import {
-  Box,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  StepIconProps,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Paper from "@mui/material/Paper";
+
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import SecurityIcon from "@mui/icons-material/Security";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import DescriptionIcon from "@mui/icons-material/Description";
 import BadgeIcon from "@mui/icons-material/Badge";
+import { StepIconProps } from "@mui/material/StepIcon";
 
 interface FormStepperProps {
   activeStep: number;

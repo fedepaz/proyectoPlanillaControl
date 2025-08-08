@@ -1,4 +1,6 @@
-import { Divider, Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { RHFDateTimePicker } from "../../../components/RHFDateTimePicker";

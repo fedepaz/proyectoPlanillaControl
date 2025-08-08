@@ -1,29 +1,27 @@
 "use client";
 import { useState, useCallback } from "react";
 
-import {
-  Paper,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  Grid,
-  Alert,
-  useTheme,
-  useMediaQuery,
-  Container,
-  Avatar,
-} from "@mui/material";
-import {
-  CheckCircle,
-  ArrowBack,
-  Person,
-  Schedule,
-  Flight,
-  DirectionsCar,
-  Security,
-  Luggage,
-} from "@mui/icons-material";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Person from "@mui/icons-material/Person";
+import Schedule from "@mui/icons-material/Schedule";
+import Flight from "@mui/icons-material/Flight";
+import DirectionsCar from "@mui/icons-material/DirectionsCar";
+import Security from "@mui/icons-material/Security";
+import Luggage from "@mui/icons-material/Luggage";
+
 import type { PlanillaSchema } from "../../types/planillaSchema";
 import { useAuth } from "../../../hooks/useAuth";
 import { ResponsiveCard } from "../planillaComponents/components/responsiveCard";

@@ -1,37 +1,36 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Chip,
-  Stack,
-  Divider,
-  Card,
-  CardContent,
-  useTheme,
-  useMediaQuery,
-  Avatar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Alert,
-} from "@mui/material";
-import {
-  Person,
-  Flight,
-  Assignment,
-  Security,
-  DirectionsCar,
-  Group,
-  Info,
-  Warning,
-  CheckCircle,
-  Close,
-  Home,
-} from "@mui/icons-material";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Avatar from "@mui/material/Avatar";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+
+import Person from "@mui/icons-material/Person";
+import Flight from "@mui/icons-material/Flight";
+import Assignment from "@mui/icons-material/Assignment";
+import Security from "@mui/icons-material/Security";
+import DirectionsCar from "@mui/icons-material/DirectionsCar";
+import Group from "@mui/icons-material/Group";
+import Info from "@mui/icons-material/InfoOutlined";
+import Warning from "@mui/icons-material/Warning";
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import Close from "@mui/icons-material/Close";
+import Home from "@mui/icons-material/Home";
+
 import ErrorPage from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
 import { usePlanillaID } from "../../../services/planillas";

@@ -2,16 +2,17 @@
 
 import type React from "react";
 import { useMemo, useState } from "react";
-import {
-  Container,
-  Typography,
-  Box,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  Stack,
-} from "@mui/material";
-import { Assignment } from "@mui/icons-material";
+
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+
+import Assignment from "@mui/icons-material/Assignment";
+
 import { usePlanillas } from "../../services/planillas";
 import Loading from "../../../components/Loading";
 import ErrorPage from "../../../components/Error";

@@ -1,26 +1,24 @@
 "use client";
 
 import React from "react";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Stack,
-  Typography,
-  Chip,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import {
-  Business,
-  FlightTakeoff,
-  FlightLand,
-  AccessTime,
-} from "@mui/icons-material";
+
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import Business from "@mui/icons-material/Business";
+import FlightTakeoff from "@mui/icons-material/FlightTakeoff";
+import FlightLand from "@mui/icons-material/FlightLand";
+import AccessTime from "@mui/icons-material/AccessTime";
 
 import { ProcessedPlanillaData } from "../../../types/searchTypes";
 

@@ -1,14 +1,14 @@
-import {
-  Button,
-  Container,
-  Stack,
-  useMediaQuery,
-  useTheme,
-  Paper,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
+import Paper from "@mui/material/Paper";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
+
 import { DatosVuelo } from "./planillaComponents/datosVuelo";
 import { FormStepper } from "./planillaComponents/components/formStepperComponent";
 import { DatosTerrestre } from "./planillaComponents/datosTerrestre";

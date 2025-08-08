@@ -1,5 +1,9 @@
 import type React from "react";
-import { Card, CardContent, CardHeader, Typography, Box } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
 
 interface ResponsiveCardProps {
   title: string;

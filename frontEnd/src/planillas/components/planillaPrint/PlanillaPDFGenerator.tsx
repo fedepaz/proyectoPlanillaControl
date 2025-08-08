@@ -2,26 +2,25 @@
 
 import type React from "react";
 import { useState, useRef } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Box,
-  Typography,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import {
-  PictureAsPdf as PdfIcon,
-  Visibility as PreviewIcon,
-  Close as CloseIcon,
-} from "@mui/icons-material";
+
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
+import Visibility from "@mui/icons-material/Visibility";
+import Close from "@mui/icons-material/Close";
+
 import {
   type PaperSize,
   PAPER_SIZES,
@@ -206,7 +205,7 @@ const PlanillaPDFGenerator: React.FC<{
 
         <Button
           variant="outlined"
-          startIcon={<PreviewIcon />}
+          startIcon={<Visibility />}
           onClick={handlePreview}
           sx={{
             minWidth: isMobile ? "100%" : 120,
@@ -259,7 +258,7 @@ const PlanillaPDFGenerator: React.FC<{
 
           <Button
             onClick={() => setPreviewOpen(false)}
-            startIcon={<CloseIcon />}
+            startIcon={<Close />}
             size="small"
           >
             Cerrar
@@ -317,7 +316,7 @@ const PlanillaPDFGenerator: React.FC<{
             onClick={handleDownloadPDF}
             variant="contained"
             color="secondary"
-            startIcon={<PdfIcon />}
+            startIcon={<PictureAsPdf />}
             sx={{
               width: isMobile ? "100%" : "auto",
               fontSize: isSmallMobile ? "0.875rem" : "inherit",

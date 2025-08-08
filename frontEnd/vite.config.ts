@@ -10,17 +10,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Todas las importaciones de @mui/* van al chunk "mui"
           mui: [
             "@mui/material",
             "@mui/icons-material",
             "@emotion/react",
             "@emotion/styled",
           ],
-          // React y ReactDOM en su propio chunk
           "react-vendor": ["react", "react-dom"],
-          // Puedes añadir más chunks o dejar que el resto vaya a "vendor"
-          vendor: ["axios", "lodash", "zod", "@tanstack/react-query"],
+          "form-vendor": ["zod", "react-hook-form", "@hookform/resolvers"],
+          "query-vendor": ["@tanstack/react-query"],
+          "utility-vendor": ["axios", "lodash", "date-fns"],
         },
       },
     },
