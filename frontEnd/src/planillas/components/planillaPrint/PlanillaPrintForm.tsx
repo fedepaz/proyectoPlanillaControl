@@ -164,20 +164,19 @@ const PlanillaPrintForm: React.FC<{
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: isA4 ? "6px" : "7px",
-        padding: "0 20px", // Add padding for better spacing
+        padding: "0 20px",
       }}
     >
       {/* PSA Logo */}
       <div
         style={{
-          width: isA4 ? "50px" : "60px",
-          height: isA4 ? "50px" : "60px",
-          border: "3px solid #000",
-          borderRadius: "50%",
+          width: isA4 ? "110px" : "120px",
+          height: isA4 ? "110px" : "120px",
+          border: "1px solid #000",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#000",
+          backgroundColor: "white",
           color: "white",
         }}
       >
@@ -195,14 +194,13 @@ const PlanillaPrintForm: React.FC<{
       {/* Official Logo */}
       <div
         style={{
-          width: isA4 ? "50px" : "60px",
-          height: isA4 ? "50px" : "60px",
-          border: "3px solid #000",
-          borderRadius: "50%",
+          width: isA4 ? "110px" : "120px",
+          height: isA4 ? "110px" : "120px",
+          border: "1px solid #000",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#000",
+          backgroundColor: "white",
           color: "white",
         }}
       >

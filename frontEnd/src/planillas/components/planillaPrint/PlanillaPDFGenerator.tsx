@@ -16,10 +16,12 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Stack from "@mui/material/Stack";
 
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Visibility from "@mui/icons-material/Visibility";
 import Close from "@mui/icons-material/Close";
+import Download from "@mui/icons-material/Download";
 
 import {
   type PaperSize,
@@ -30,6 +32,7 @@ import {
 import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
 import { locationMap } from "../../types/searchTypes";
+import Instructions from "./Instructions";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
@@ -40,6 +43,7 @@ const PlanillaPDFGenerator: React.FC<{
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
   const [selectedPaperSize, setSelectedPaperSize] = useState<PaperSize>(
     PAPER_SIZES[0]
   );
@@ -61,6 +65,10 @@ const PlanillaPDFGenerator: React.FC<{
 
   const handlePreview = () => {
     setPreviewOpen(true);
+  };
+
+  const handleInstructions = () => {
+    setInstructionsOpen(true);
   };
 
   const getDisplayInfo = () => {
@@ -164,16 +172,22 @@ const PlanillaPDFGenerator: React.FC<{
     // For now, we'll use the print function
     handlePrint(fileName);
   };
+  const handleDownloadInstructions = () => {
+    const fileName = "Instrucciones_Logos.txt";
+    // This would integrate with a PDF library like jsPDF or Puppeteer
+    // For now, we'll use the print function
+    handlePrint(fileName);
+  };
 
   return (
     <Box sx={{ width: "100%", maxWidth: "100vw" }}>
       {/* Control Buttons - Responsive Layout */}
       <Box
         sx={{
-          mb: 2,
+          mb: isMobile ? 0 : 2,
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          gap: isMobile ? 1 : 2,
+          gap: isMobile ? 0.5 : 2,
           alignItems: isMobile ? "stretch" : "center",
           width: "100%",
         }}
@@ -202,18 +216,39 @@ const PlanillaPDFGenerator: React.FC<{
             ))}
           </Select>
         </FormControl>
-
-        <Button
-          variant="outlined"
-          startIcon={<Visibility />}
-          onClick={handlePreview}
-          sx={{
-            minWidth: isMobile ? "100%" : 120,
-            fontSize: isSmallMobile ? "0.875rem" : "inherit",
-          }}
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          spacing={isMobile ? 0 : 2}
+          alignItems="center"
         >
-          Vista Previa
-        </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Visibility />}
+            onClick={handlePreview}
+            sx={{
+              minWidth: isMobile ? "100%" : 120,
+              fontSize: isSmallMobile ? "0.875rem" : "inherit",
+            }}
+          >
+            Vista Previa
+          </Button>
+
+          <Button
+            variant="text"
+            startIcon={<Visibility />}
+            onClick={handleInstructions}
+            sx={{
+              minWidth: isMobile ? "auto" : 100,
+              fontSize: "0.8rem",
+              color: "text.secondary",
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}
+          >
+            Instrucciones
+          </Button>
+        </Stack>
       </Box>
 
       {/* Preview Dialog - Responsive */}
@@ -323,6 +358,104 @@ const PlanillaPDFGenerator: React.FC<{
             }}
           >
             Descargar PDF
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Instructions Dialog */}
+      <Dialog
+        open={instructionsOpen}
+        onClose={() => setInstructionsOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        fullScreen={isMobile}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: isMobile ? 1 : 3,
+            py: isMobile ? 1 : 2,
+          }}
+        >
+          <Typography
+            component="span"
+            variant={isMobile ? "subtitle1" : "h6"}
+            sx={{
+              fontSize: isSmallMobile ? "1rem" : "inherit",
+              lineHeight: 1.2,
+            }}
+          >
+            Instrucciones
+          </Typography>
+
+          <Button
+            onClick={() => setInstructionsOpen(false)}
+            startIcon={<Close />}
+            size="small"
+          >
+            Cerrar
+          </Button>
+        </DialogTitle>
+
+        <DialogContent
+          sx={{
+            p: 0,
+            overflow: "auto",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
+          <Box
+            sx={{
+              p: isMobile ? 1 : 2,
+              backgroundColor: "#f5f5f5",
+              minHeight: "100%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              ref={printRef}
+              style={{
+                transform: isMobile
+                  ? `scale(${isSmallMobile ? 0.3 : 0.4})`
+                  : "scale(0.8)",
+                transformOrigin: "top center",
+                width: isMobile ? "250%" : "125%",
+                marginBottom: isMobile ? "-60%" : "-20%",
+              }}
+            >
+              <Instructions />
+            </div>
+          </Box>
+        </DialogContent>
+
+        <DialogActions
+          sx={{
+            px: isMobile ? 1 : 3,
+            py: isMobile ? 1 : 2,
+            flexDirection: isMobile ? "column" : "row",
+            gap: isMobile ? 1 : 0,
+          }}
+        >
+          <Button
+            variant="text"
+            startIcon={<Download />}
+            onClick={handleDownloadInstructions}
+            sx={{
+              minWidth: isMobile ? "auto" : 100,
+              fontSize: "0.8rem",
+              color: "text.secondary",
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}
+          >
+            Instrucciones
           </Button>
         </DialogActions>
       </Dialog>
