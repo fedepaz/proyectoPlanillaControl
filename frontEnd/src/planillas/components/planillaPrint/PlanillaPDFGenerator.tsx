@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import ReactDOM from "react-dom/client";
 import { useState, useRef } from "react";
 
 import Button from "@mui/material/Button";
@@ -17,6 +18,8 @@ import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
+import CssBaseline from "@mui/material/CssBaseline";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Visibility from "@mui/icons-material/Visibility";
@@ -33,6 +36,8 @@ import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
 import { locationMap } from "../../types/searchTypes";
 import Instructions from "./Instructions";
+import instructionsMarkdown from "./instructions";
+import handleDocumentHTML from "./handleDocument";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
@@ -168,15 +173,12 @@ const PlanillaPDFGenerator: React.FC<{
 
   const handleDownloadPDF = async () => {
     const fileName = generateFileName();
-    // This would integrate with a PDF library like jsPDF or Puppeteer
-    // For now, we'll use the print function
     handlePrint(fileName);
   };
+
   const handleDownloadInstructions = () => {
-    const fileName = "Instrucciones_Logos.txt";
-    // This would integrate with a PDF library like jsPDF or Puppeteer
-    // For now, we'll use the print function
-    handlePrint(fileName);
+    const fileName = "Instrucciones_Logos";
+    handleDocumentHTML(fileName, instructionsMarkdown, selectedPaperSize);
   };
 
   return (
@@ -366,9 +368,21 @@ const PlanillaPDFGenerator: React.FC<{
       <Dialog
         open={instructionsOpen}
         onClose={() => setInstructionsOpen(false)}
-        maxWidth="sm"
-        fullWidth
-        fullScreen={isMobile}
+        maxWidth={false}
+        fullWidth={isMobile}
+        aria-labelledby="instructions-dialog-title"
+        aria-describedby="instructions-dialog-description"
+        disableEnforceFocus={false}
+        disableAutoFocus={false}
+        PaperProps={{
+          sx: {
+            width: isMobile ? "100vw" : "90vw",
+            height: isMobile ? "100vh" : "90vh",
+            maxWidth: "100vw",
+            maxHeight: "100vh",
+            margin: isMobile ? 0 : "auto",
+          },
+        }}
       >
         <DialogTitle
           sx={{
@@ -429,7 +443,10 @@ const PlanillaPDFGenerator: React.FC<{
                 marginBottom: isMobile ? "-60%" : "-20%",
               }}
             >
-              <Instructions />
+              <Instructions
+                instructionsMarkdown={instructionsMarkdown}
+                paperSize={selectedPaperSize}
+              />
             </div>
           </Box>
         </DialogContent>

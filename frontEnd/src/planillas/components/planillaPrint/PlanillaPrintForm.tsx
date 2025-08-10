@@ -6,11 +6,17 @@ import type {
 } from "../../types/searchById";
 import { formatDate, formatTime } from "../../types/searchTypes";
 
-const PlanillaPrintForm: React.FC<{
+interface PlanillaPrintFormProps {
   planillaData: PlanillaDetailData;
   headerConfig: HeaderConfig;
   paperSize: PaperSize;
-}> = ({ planillaData, headerConfig, paperSize }) => {
+}
+
+const PlanillaPrintForm: React.FC<PlanillaPrintFormProps> = ({
+  planillaData,
+  headerConfig,
+  paperSize,
+}) => {
   const getCheckboxes = (
     options: Array<{ label: string }>,
     availableOptions: string[]
