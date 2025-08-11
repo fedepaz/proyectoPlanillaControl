@@ -1,32 +1,39 @@
-<!-- public/logo.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
-  <!-- Fondo gris claro profesional (más moderno que blanco puro) -->
-  <circle cx="50" cy="50" r="45" fill="#f8f9fa" stroke="#e9ecef" stroke-width="1" />
-  
-  <!-- Figura sentada en patas (postura icónica) -->
-  <path d="M50 35 
-           C45 30, 40 40, 40 45 
-           C40 55, 45 65, 50 65 
-           C55 65, 60 55, 60 45 
-           C60 40, 55 30, 50 35 
-           M50 65 
-           L45 80 
-           L55 80 
-           L50 65" 
-        fill="#1a1a1a" />
-  
-  <!-- Sombrero de época (bombín/boina de trabajador) -->
-  <path d="M40 30 
-           C40 25, 60 25, 60 30 
-           C60 28, 55 20, 50 20 
-           C45 20, 40 28, 40 30 
-           Z" 
-        fill="#333333" />
-  
-  <!-- Detalle del ala del sombrero (estilo años 40) -->
-  <path d="M38 30 
-           C38 32, 62 32, 62 30" 
-        stroke="#222222" 
-        stroke-width="1.5" 
-        fill="none" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background: White Square -->
+  <rect x="0" y="5" width="100" height="60" fill="white" rx="10" ry="10" />
+
+  <!-- Letter P - Manual Pixel Art -->
+  <!-- P - Vertical line -->
+  <rect x="8" y="14" width="5" height="35" fill="#2C2C2C" />
+  <!-- P - Top horizontal -->
+  <rect x="13" y="14" width="15" height="5" fill="#2C2C2C" />
+  <!-- P - Middle horizontal -->
+  <rect x="13" y="26" width="15" height="5" fill="#2C2C2C" />
+  <!-- P - Right vertical (top part) -->
+  <rect x="27" y="19" width="5" height="7" fill="#2C2C2C" />
+
+  <!-- Letter R - Manual Pixel Art -->
+  <!-- R - Vertical line -->
+  <rect x="38" y="14" width="5" height="35" fill="#2C2C2C" />
+  <!-- R - Top horizontal -->
+  <rect x="43" y="14" width="15" height="5" fill="#2C2C2C" />
+  <!-- R - Middle horizontal -->
+  <rect x="43" y="26" width="15" height="5" fill="#2C2C2C" />
+  <!-- R - Right vertical (top part) -->
+  <rect x="57" y="19" width="5" height="7" fill="#2C2C2C" />
+  <!-- R - Diagonal line -->
+  <rect x="42" y="27" width="5" height="7" fill="#2C2C2C" />
+  <rect x="46" y="31" width="5" height="7" fill="#2C2C2C" />
+  <rect x="51" y="36" width="5" height="7" fill="#2C2C2C" />
+  <rect x="56" y="41" width="5" height="7" fill="#2C2C2C" />
+
+  <!-- Letter O - Manual Pixel Art -->
+  <!-- O - Left vertical -->
+  <rect x="69" y="19" width="5" height="25" fill="#2C2C2C" />
+  <!-- O - Right vertical -->
+  <rect x="84" y="19" width="5" height="25" fill="#2C2C2C" />
+  <!-- O - Top horizontal -->
+  <rect x="74" y="14" width="10" height="5" fill="#2C2C2C" />
+  <!-- O - Bottom horizontal -->
+  <rect x="74" y="44" width="10" height="5" fill="#2C2C2C" />
 </svg>
