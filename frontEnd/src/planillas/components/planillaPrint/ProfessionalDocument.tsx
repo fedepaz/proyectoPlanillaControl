@@ -1,14 +1,14 @@
 "use client";
-
 import useTheme from "@mui/material/styles/useTheme";
-import { PaperSize } from "../../types/searchById";
+import type { PaperSize } from "../types/searchById";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import { alpha } from "@mui/material/styles";
-import React from "react";
+import type React from "react";
+import type { JSX } from "react";
 
 interface ProfessionalDocumentProps {
   markdownContent: string;
@@ -17,6 +17,7 @@ interface ProfessionalDocumentProps {
   subtitle?: string;
   footer?: string;
   companyName?: string;
+  isDisplayMode?: boolean; // New prop for display mode
 }
 
 const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
@@ -25,16 +26,16 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
   title = "Documento",
   subtitle = "Sistema de Gestión",
   footer = `© ${new Date().getFullYear()} cabecitaNegraDevOps. Todos los derechos reservados.`,
-  companyName = "cabecitaNegraDevOps",
+  isDisplayMode = false,
 }) => {
   const theme = useTheme();
   const isA4 = paperSize.label === "A4";
 
   // Professional page styling using MUI theme
   const pageStyle: React.CSSProperties = {
-    width: paperSize.width,
-    minHeight: paperSize.height,
-    maxHeight: paperSize.height,
+    width: isDisplayMode ? "100%" : paperSize.width, // Full width in display mode
+    minHeight: isDisplayMode ? "auto" : paperSize.height, // Auto height in display mode
+    maxHeight: isDisplayMode ? "none" : paperSize.height, // No max height in display mode
     margin: "0 auto",
     backgroundColor: theme.palette.background.paper,
     padding: 0,
@@ -42,10 +43,10 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
     fontFamily: theme.typography.fontFamily,
     lineHeight: 1.6,
     color: theme.palette.text.primary,
-    pageBreakAfter: "always",
+    pageBreakAfter: isDisplayMode ? "auto" : "always", // No page breaks in display mode
     position: "relative",
-    boxShadow: theme.shadows[3],
-    border: `1px solid ${theme.palette.divider}`,
+    boxShadow: isDisplayMode ? "none" : theme.shadows[3], // No shadow in display mode
+    border: isDisplayMode ? "none" : `1px solid ${theme.palette.divider}`, // No border in display mode
   };
 
   const parseInlineMarkdown = (text: string) => {
@@ -67,6 +68,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             sx={{
               fontWeight: 700,
               color: theme.palette.primary.main,
+              fontSize: isDisplayMode
+                ? { xs: "0.9rem", sm: "1rem" }
+                : "inherit", // Responsive font size
             }}
           >
             {match[2]}
@@ -81,7 +85,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             variant="outlined"
             sx={{
               height: "auto",
-              fontSize: "0.85rem",
+              fontSize: isDisplayMode
+                ? { xs: "0.75rem", sm: "0.85rem" }
+                : "0.85rem", // Responsive font size
               fontFamily: "monospace",
               backgroundColor: alpha(theme.palette.primary.main, 0.08),
               borderColor: alpha(theme.palette.primary.main, 0.3),
@@ -100,6 +106,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             sx={{
               fontStyle: "italic",
               color: theme.palette.text.secondary,
+              fontSize: isDisplayMode
+                ? { xs: "0.9rem", sm: "1rem" }
+                : "inherit", // Responsive font size
             }}
           >
             {match[4]}
@@ -112,7 +121,6 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
     if (lastIndex < text.length) {
       parts.push(text.substring(lastIndex));
     }
-
     return <>{parts}</>;
   };
 
@@ -128,8 +136,8 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             key={`list-${elements.length}`}
             elevation={1}
             sx={{
-              my: 2,
-              p: 2.5,
+              my: isDisplayMode ? { xs: 1.5, sm: 2 } : 2, // Responsive margin
+              p: isDisplayMode ? { xs: 2, sm: 2.5 } : 2.5, // Responsive padding
               backgroundColor: alpha(theme.palette.background.default, 0.5),
               borderLeft: `4px solid ${theme.palette.primary.main}`,
             }}
@@ -138,9 +146,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
               component={currentList.type}
               sx={{
                 m: 0,
-                pl: 2,
+                pl: isDisplayMode ? { xs: 1.5, sm: 2 } : 2, // Responsive padding
                 "& li": {
-                  mb: 1.5,
+                  mb: isDisplayMode ? { xs: 1, sm: 1.5 } : 1.5, // Responsive margin
                   lineHeight: 1.7,
                 },
               }}
@@ -152,6 +160,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
                   variant="body1"
                   sx={{
                     color: theme.palette.text.primary,
+                    fontSize: isDisplayMode
+                      ? { xs: "0.95rem", sm: "1rem" }
+                      : "1rem", // Responsive font size
                   }}
                 >
                   {parseInlineMarkdown(item)}
@@ -166,13 +177,18 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
 
     lines.forEach((line, index) => {
       line = line.trim();
-
       if (line.startsWith("# ")) {
         flushList();
         elements.push(
-          <Box key={index} sx={{ mt: index === 0 ? 0 : 4, mb: 3 }}>
+          <Box
+            key={index}
+            sx={{
+              mt: index === 0 ? 0 : { xs: 3, sm: 4 },
+              mb: { xs: 2, sm: 3 },
+            }}
+          >
             <Typography
-              variant="h3"
+              variant={isDisplayMode ? "h4" : "h3"} // Smaller heading for display mode
               component="h1"
               sx={{
                 fontWeight: 800,
@@ -182,6 +198,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 mb: 1,
+                fontSize: isDisplayMode
+                  ? { xs: "1.8rem", sm: "2.2rem" }
+                  : "inherit", // Responsive font size
               }}
             >
               {parseInlineMarkdown(line.substring(2))}
@@ -200,24 +219,27 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         elements.push(
           <Typography
             key={index}
-            variant="h4"
+            variant={isDisplayMode ? "h5" : "h4"} // Smaller heading for display mode
             component="h2"
             sx={{
-              mt: 4,
-              mb: 2,
+              mt: { xs: 3, sm: 4 },
+              mb: { xs: 1.5, sm: 2 },
               fontWeight: 700,
               color: theme.palette.primary.dark,
               position: "relative",
               "&::before": {
                 content: '""',
                 position: "absolute",
-                left: -16,
+                left: isDisplayMode ? -12 : -16, // Responsive position
                 top: 6,
                 width: 4,
                 height: "80%",
                 backgroundColor: theme.palette.secondary.main,
                 borderRadius: 2,
               },
+              fontSize: isDisplayMode
+                ? { xs: "1.4rem", sm: "1.6rem" }
+                : "inherit", // Responsive font size
             }}
           >
             {parseInlineMarkdown(line.substring(3))}
@@ -228,11 +250,11 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         elements.push(
           <Typography
             key={index}
-            variant="h5"
+            variant={isDisplayMode ? "h6" : "h5"} // Smaller heading for display mode
             component="h3"
             sx={{
-              mt: 3,
-              mb: 1.5,
+              mt: { xs: 2.5, sm: 3 },
+              mb: { xs: 1, sm: 1.5 },
               fontWeight: 600,
               color: theme.palette.primary.light,
               display: "flex",
@@ -243,6 +265,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
                 color: theme.palette.secondary.main,
                 fontWeight: 800,
               },
+              fontSize: isDisplayMode
+                ? { xs: "1.2rem", sm: "1.35rem" }
+                : "inherit", // Responsive font size
             }}
           >
             {parseInlineMarkdown(line.substring(4))}
@@ -271,9 +296,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             key={index}
             elevation={2}
             sx={{
-              mt: 2.5,
-              mb: 2.5,
-              p: 3,
+              mt: { xs: 2, sm: 2.5 },
+              mb: { xs: 2, sm: 2.5 },
+              p: { xs: 2.5, sm: 3 }, // Responsive padding
               borderRadius: 3,
               backgroundColor: alpha(theme.palette.warning.main, 0.08),
               borderLeft: `6px solid ${theme.palette.warning.main}`,
@@ -297,6 +322,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
                 margin: 0,
                 pl: 4,
                 lineHeight: 1.7,
+                fontSize: isDisplayMode
+                  ? { xs: "0.95rem", sm: "1rem" }
+                  : "1rem", // Responsive font size
               }}
             >
               {parseInlineMarkdown(line.replace("⚠️ ", ""))}
@@ -306,7 +334,7 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
       } else if (line.startsWith("---")) {
         flushList();
         elements.push(
-          <Box key={index} sx={{ my: 4 }}>
+          <Box key={index} sx={{ my: { xs: 3, sm: 4 } }}>
             <Divider
               sx={{
                 "&::before, &::after": {
@@ -333,11 +361,11 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
             key={index}
             variant="body1"
             sx={{
-              mb: 2,
+              mb: { xs: 1.5, sm: 2 },
               color: theme.palette.text.primary,
               textAlign: "justify",
               lineHeight: 1.8,
-              fontSize: "1rem",
+              fontSize: isDisplayMode ? { xs: "0.95rem", sm: "1rem" } : "1rem", // Responsive font size
             }}
           >
             {parseInlineMarkdown(line)}
@@ -348,10 +376,20 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         elements.push(<Box key={index} sx={{ height: theme.spacing(2) }} />);
       }
     });
-
     flushList();
     return elements;
   };
+
+  const headerHeight = isDisplayMode
+    ? { xs: theme.spacing(8), md: theme.spacing(10) }
+    : isA4
+    ? "25mm"
+    : "30mm";
+  const footerHeight = isDisplayMode
+    ? { xs: theme.spacing(6), md: theme.spacing(8) }
+    : isA4
+    ? "20mm"
+    : "25mm";
 
   // MUI-styled header
   const DocumentHeader = () => (
@@ -362,12 +400,14 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         top: 0,
         left: 0,
         right: 0,
-        height: isA4 ? "25mm" : "30mm",
+        height: headerHeight, // Responsive height
         background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: `0 ${isA4 ? "20mm" : "25mm"}`,
+        padding: isDisplayMode
+          ? { xs: theme.spacing(2), sm: theme.spacing(3) }
+          : `0 ${isA4 ? "20mm" : "25mm"}`, // Responsive padding
         zIndex: 2,
         borderRadius: 0,
       }}
@@ -378,32 +418,23 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
           sx={{
             color: theme.palette.primary.contrastText,
             fontWeight: 700,
-            fontSize: "1.1rem",
+            fontSize: isDisplayMode ? { xs: "1rem", sm: "1.1rem" } : "1.1rem", // Responsive font size
           }}
         >
-          {companyName}
+          {title.toUpperCase()}
         </Typography>
         <Typography
           variant="caption"
           sx={{
             color: alpha(theme.palette.primary.contrastText, 0.8),
-            fontSize: "0.75rem",
+            fontSize: isDisplayMode
+              ? { xs: "0.7rem", sm: "0.75rem" }
+              : "0.75rem", // Responsive font size
           }}
         >
           {subtitle}
         </Typography>
       </Box>
-
-      <Chip
-        label={new Date().toLocaleDateString("es-ES")}
-        size="small"
-        sx={{
-          backgroundColor: alpha(theme.palette.primary.contrastText, 0.15),
-          color: theme.palette.primary.contrastText,
-          fontWeight: 500,
-          border: `1px solid ${alpha(theme.palette.primary.contrastText, 0.3)}`,
-        }}
-      />
     </Paper>
   );
 
@@ -416,13 +447,15 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         bottom: 0,
         left: 0,
         right: 0,
-        height: isA4 ? "20mm" : "25mm",
+        height: footerHeight, // Responsive height
         backgroundColor: alpha(theme.palette.background.default, 0.8),
         borderTop: `2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: `0 ${isA4 ? "20mm" : "25mm"}`,
+        padding: isDisplayMode
+          ? { xs: theme.spacing(1), sm: theme.spacing(2) }
+          : `0 ${isA4 ? "20mm" : "25mm"}`, // Responsive padding
         zIndex: 2,
         borderRadius: 0,
       }}
@@ -431,7 +464,7 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
         variant="caption"
         sx={{
           color: theme.palette.text.secondary,
-          fontSize: "0.8rem",
+          fontSize: isDisplayMode ? { xs: "0.75rem", sm: "0.8rem" } : "0.8rem", // Responsive font size
           textAlign: "center",
           fontWeight: 500,
         }}
@@ -440,17 +473,6 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
       </Typography>
     </Paper>
   );
-
-  // Enhanced content area with MUI styling
-  const contentStyle: React.CSSProperties = {
-    padding: isA4 ? "35mm 24mm 30mm 24mm" : "40mm 30mm 35mm 30mm",
-    minHeight: `calc(${paperSize.height} - 70mm)`,
-    position: "relative",
-    background: `linear-gradient(180deg, ${alpha(
-      theme.palette.background.default,
-      0.02
-    )} 0%, transparent 100%)`,
-  };
 
   const pages = [parseMarkdownToJsx(markdownContent)]; // Single page for now
 
@@ -465,49 +487,11 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
           }}
         >
           <DocumentHeader />
-
           {/* Main content area */}
-          <Box sx={contentStyle}>
-            {/* Document title section */}
-            <Paper
-              elevation={0}
-              sx={{
-                p: 3,
-                mb: 4,
-                backgroundColor: alpha(theme.palette.primary.main, 0.05),
-                border: `2px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-                borderRadius: 3,
-                textAlign: "center",
-              }}
-            >
-              <Typography
-                variant="h3"
-                component="h1"
-                sx={{
-                  fontWeight: 800,
-                  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  mb: 1,
-                }}
-              >
-                {title}
-              </Typography>
-              <Chip
-                label={subtitle}
-                sx={{
-                  backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  color: theme.palette.primary.dark,
-                  fontWeight: 600,
-                }}
-              />
-            </Paper>
-
+          <Box>
             {/* Content */}
             <Box sx={{ position: "relative", zIndex: 1 }}>{pageContent}</Box>
           </Box>
-
           <DocumentFooter />
         </Box>
       ))}

@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-import ReactDOM from "react-dom/client";
 import { useState, useRef } from "react";
 
 import Button from "@mui/material/Button";
@@ -18,13 +17,10 @@ import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
-import CssBaseline from "@mui/material/CssBaseline";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Visibility from "@mui/icons-material/Visibility";
 import Close from "@mui/icons-material/Close";
-import Download from "@mui/icons-material/Download";
 
 import {
   type PaperSize,
@@ -35,9 +31,10 @@ import {
 import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
 import { locationMap } from "../../types/searchTypes";
-import Instructions from "./Instructions";
+
 import instructionsMarkdown from "./instructions";
-import handleDocumentHTML from "./handleDocument";
+import ProfessionalDocument from "./ProfessionalDocument";
+import { is } from "date-fns/locale";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
@@ -174,11 +171,6 @@ const PlanillaPDFGenerator: React.FC<{
   const handleDownloadPDF = async () => {
     const fileName = generateFileName();
     handlePrint(fileName);
-  };
-
-  const handleDownloadInstructions = () => {
-    const fileName = "Instrucciones_Logos";
-    handleDocumentHTML(fileName, instructionsMarkdown, selectedPaperSize);
   };
 
   return (
@@ -369,7 +361,7 @@ const PlanillaPDFGenerator: React.FC<{
         open={instructionsOpen}
         onClose={() => setInstructionsOpen(false)}
         maxWidth={false}
-        fullWidth={isMobile}
+        fullScreen={isMobile}
         aria-labelledby="instructions-dialog-title"
         aria-describedby="instructions-dialog-description"
         disableEnforceFocus={false}
@@ -380,7 +372,7 @@ const PlanillaPDFGenerator: React.FC<{
             height: isMobile ? "100vh" : "90vh",
             maxWidth: "100vw",
             maxHeight: "100vh",
-            margin: isMobile ? 0 : "auto",
+            margin: "auto",
           },
         }}
       >
@@ -389,21 +381,19 @@ const PlanillaPDFGenerator: React.FC<{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            px: isMobile ? 1 : 3,
-            py: isMobile ? 1 : 2,
+            m: 0,
+            p: 2,
           }}
         >
           <Typography
             component="span"
             variant={isMobile ? "subtitle1" : "h6"}
             sx={{
-              fontSize: isSmallMobile ? "1rem" : "inherit",
               lineHeight: 1.2,
             }}
           >
             Instrucciones
           </Typography>
-
           <Button
             onClick={() => setInstructionsOpen(false)}
             startIcon={<Close />}
@@ -412,10 +402,8 @@ const PlanillaPDFGenerator: React.FC<{
             Cerrar
           </Button>
         </DialogTitle>
-
         <DialogContent
           sx={{
-            p: 0,
             overflow: "auto",
             display: "flex",
             justifyContent: "center",
@@ -424,57 +412,23 @@ const PlanillaPDFGenerator: React.FC<{
         >
           <Box
             sx={{
-              p: isMobile ? 1 : 2,
-              backgroundColor: "#f5f5f5",
-              minHeight: "100%",
               width: "100%",
+              maxWidth: "auto",
+              minHeight: "100%",
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              p: isMobile ? 0.5 : 1,
             }}
           >
-            <div
-              ref={printRef}
-              style={{
-                transform: isMobile
-                  ? `scale(${isSmallMobile ? 0.3 : 0.4})`
-                  : "scale(0.8)",
-                transformOrigin: "top center",
-                width: isMobile ? "250%" : "125%",
-                marginBottom: isMobile ? "-60%" : "-20%",
-              }}
-            >
-              <Instructions
-                instructionsMarkdown={instructionsMarkdown}
-                paperSize={selectedPaperSize}
-              />
-            </div>
+            <ProfessionalDocument
+              markdownContent={instructionsMarkdown}
+              paperSize={selectedPaperSize}
+              title="Instrucciones para integrar logos con Word"
+              isDisplayMode={true}
+            />
           </Box>
         </DialogContent>
-
-        <DialogActions
-          sx={{
-            px: isMobile ? 1 : 3,
-            py: isMobile ? 1 : 2,
-            flexDirection: isMobile ? "column" : "row",
-            gap: isMobile ? 1 : 0,
-          }}
-        >
-          <Button
-            variant="text"
-            startIcon={<Download />}
-            onClick={handleDownloadInstructions}
-            sx={{
-              minWidth: isMobile ? "auto" : 100,
-              fontSize: "0.8rem",
-              color: "text.secondary",
-              "&:hover": {
-                color: "primary.main",
-              },
-            }}
-          >
-            Instrucciones
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );
