@@ -70,30 +70,35 @@ export function EmpresaComponent({
           label: "Aerolínea",
           icon: <FlightIcon />,
           color: theme.palette.primary.main,
+          helperText: "Seleccione una Aerolínea o Agregue una Nueva",
         };
       case "seguridad":
         return {
           label: "Seguridad",
           icon: <SecurityIcon />,
           color: theme.palette.error.main,
+          helperText: "Seleccione una Seguridad o Agregue una Nueva",
         };
       case "limpieza":
         return {
           label: "Limpieza",
           icon: <CleaningServicesIcon />,
           color: theme.palette.info.main,
+          helperText: "Seleccione una Limpieza o Agregue una Nueva",
         };
       case "handling":
         return {
           label: "Handling",
           icon: <LocalShippingIcon />,
           color: theme.palette.warning.main,
+          helperText: "Seleccione un Handling o Agregue una Nueva",
         };
       default:
         return {
           label: label || "Empresa",
           icon: <BusinessIcon />,
           color: theme.palette.secondary.main,
+          helperText: "Seleccione una Empresa o Agregue una Nueva",
         };
     }
   };
@@ -102,6 +107,7 @@ export function EmpresaComponent({
     label: displayLabel,
     icon: displayIcon,
     color: displayColor,
+    helperText: displayHelperText,
   } = getDisplayInfo();
 
   const methods = useForm<EmpresaSchema>({
@@ -206,6 +212,7 @@ export function EmpresaComponent({
             options={empresaOptions}
             label={displayLabel}
             onAddNew={() => setOpenDialog(true)}
+            helperText={displayHelperText}
           />
         )}
         {selectedEmpresa && (

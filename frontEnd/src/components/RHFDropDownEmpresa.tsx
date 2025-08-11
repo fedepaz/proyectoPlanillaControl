@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import Select from "@mui/material/Select";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -18,6 +19,7 @@ type Props<T extends FieldValues> = {
   options?: EmpresaOption[];
   label: string;
   onAddNew?: () => void;
+  helperText?: string;
 } & TextFieldProps;
 
 export function RHFDropDownEmpresa<T extends FieldValues>({
@@ -25,6 +27,7 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
   options,
   label,
   onAddNew,
+  helperText,
 }: Props<T>) {
   const { control } = useFormContext<T>();
   const ADD_NEW_EMPRESA = "ADD_NEW_EMPRESA";
@@ -33,9 +36,12 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value, ...restField } }) => (
+      render={({
+        field: { onChange, value, ...restField },
+        fieldState: { error },
+      }) => (
         <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
+          <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
               labelId={`${name}-label`}
@@ -69,6 +75,7 @@ export function RHFDropDownEmpresa<T extends FieldValues>({
                 </ListItemText>
               </MenuItem>
             </Select>
+            <FormHelperText>{error?.message || helperText}</FormHelperText>
           </FormControl>
         </Box>
       )}
