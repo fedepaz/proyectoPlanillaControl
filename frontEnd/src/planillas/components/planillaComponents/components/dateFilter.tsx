@@ -1,16 +1,18 @@
 "use client";
 import { useState } from "react";
 
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import FilterList from "@mui/icons-material/FilterList";
 import ExpandMore from "@mui/icons-material/ExpandMore";

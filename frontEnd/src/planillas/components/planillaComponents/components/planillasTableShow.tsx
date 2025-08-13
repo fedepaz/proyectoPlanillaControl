@@ -2,18 +2,20 @@
 
 import React from "react";
 
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  Chip,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import Business from "@mui/icons-material/Business";
 import FlightTakeoff from "@mui/icons-material/FlightTakeoff";

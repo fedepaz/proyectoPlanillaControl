@@ -1,21 +1,4 @@
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Divider from "@mui/material/Divider";
+"use client";
 
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
@@ -42,6 +25,26 @@ import { CompactPersonalCard } from "../../../../components/EmpleadoCard";
 import { PersonalDeleteDialog } from "../../../../components/PersonalDeleteDialog";
 import { PersonalDetailsDialog } from "../../../../components/PersonalDetailsDialog";
 import { PersonalTableDetails } from "../../../../components/PersonalTableDetails";
+import {
+  useTheme,
+  useMediaQuery,
+  Stack,
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  Chip,
+  Alert,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider,
+  DialogActions,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 
 interface PersonalSeguridadComponentProps {
   onPersonalListChange: (personalList: BasePersonalOption[]) => void;

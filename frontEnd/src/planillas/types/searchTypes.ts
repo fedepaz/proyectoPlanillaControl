@@ -2,7 +2,7 @@
 
 export interface DateFilters {
   fechaDesde?: string;
-  fechaHasta?: string;
+  fechaHasta: string;
 }
 
 export interface ResponsableData {

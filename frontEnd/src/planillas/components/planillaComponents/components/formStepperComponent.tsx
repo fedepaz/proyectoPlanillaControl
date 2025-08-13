@@ -1,13 +1,15 @@
 import type React from "react";
 
-import Box from "@mui/material/Box";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stepper from "@mui/material/Stepper";
-import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Paper from "@mui/material/Paper";
+import {
+  Box,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";

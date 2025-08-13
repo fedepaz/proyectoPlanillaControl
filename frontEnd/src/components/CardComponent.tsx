@@ -1,6 +1,6 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+"use client";
+
+import { Card, CardContent, Typography } from "@mui/material";
 import { OficialSchemaInput } from "../planillas/types/apiSchema";
 
 interface CardComponentProps {

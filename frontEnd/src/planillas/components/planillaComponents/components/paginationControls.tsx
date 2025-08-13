@@ -1,9 +1,6 @@
 "use client";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
+
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 
 import FirstPage from "@mui/icons-material/FirstPage";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";

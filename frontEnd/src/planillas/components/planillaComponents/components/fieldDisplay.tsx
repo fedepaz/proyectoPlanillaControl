@@ -1,7 +1,6 @@
 import type React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
+import { Box, Grid, Typography } from "@mui/material";
 
 interface FieldDisplayProps {
   label: string;

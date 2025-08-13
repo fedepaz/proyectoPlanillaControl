@@ -1,5 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
+import { Stack, Divider } from "@mui/material";
 
 import { RHFTextField } from "../../../components/RHFTextField";
 import { PlanillaSchema } from "../../types/planillaSchema";
@@ -95,6 +94,7 @@ export function DatosVuelo() {
         name="datosVuelo.tipoVuelo"
         options={tipoVueloQuery.data}
         label="Tipo de Vuelo"
+        helperText="Seleccione el tipo de vuelo."
       />
       {/*destino | origen*/}
       <AeropuertoComponent
@@ -106,6 +106,7 @@ export function DatosVuelo() {
           name="datosVuelo.horaArribo"
           flightType={tipoVuelo}
           label="Hora de Arribo"
+          helperText="Seleccione la hora de arribo."
         />
       )}
       {canRenderDateTimePicker && (
@@ -113,6 +114,7 @@ export function DatosVuelo() {
           name="datosVuelo.horaPartida"
           flightType={tipoVuelo}
           label="Hora de Partida"
+          helperText="Seleccione la hora de partida."
         />
       )}
       {/*codVuelo*/}
@@ -143,6 +145,7 @@ export function DatosVuelo() {
       <RHFTextField<PlanillaSchema>
         name="datosVuelo.posicion"
         label="Posición"
+        helperText="Posición de la aeronave."
       />
     </Stack>
   );

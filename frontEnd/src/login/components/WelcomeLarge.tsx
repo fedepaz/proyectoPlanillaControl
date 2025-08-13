@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Fade from "@mui/material/Fade";
-import Slide from "@mui/material/Slide";
-import useTheme from "@mui/material/styles/useTheme";
-import Container from "@mui/material/Container";
-
 import ArrowForward from "@mui/icons-material/ArrowForward";
-import { alpha } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
+import {
+  Fade,
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Stack,
+  Button,
+  Slide,
+  Card,
+  CardContent,
+} from "@mui/material";
 
 type Feature = {
   icon: React.ReactNode;

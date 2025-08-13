@@ -1,8 +1,6 @@
 "use client";
 
-import Chip from "@mui/material/Chip";
-import Tooltip from "@mui/material/Tooltip";
-import useTheme from "@mui/material/styles/useTheme";
+import { Chip, Tooltip, useTheme } from "@mui/material";
 
 import { UserRole } from "../actions/types";
 import { formatRoleName } from "../utils/formatUtils";

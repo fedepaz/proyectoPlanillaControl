@@ -1,5 +1,6 @@
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
+"use client";
+
+import { Stack, Divider } from "@mui/material";
 
 import { NovedadesComponent } from "../../../components/NovedadesComponent";
 

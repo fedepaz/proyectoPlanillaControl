@@ -3,21 +3,6 @@
 import type React from "react";
 import { useState, useRef } from "react";
 
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Stack from "@mui/material/Stack";
-
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Visibility from "@mui/icons-material/Visibility";
 import Close from "@mui/icons-material/Close";
@@ -32,9 +17,24 @@ import PlanillaPrintForm from "./PlanillaPrintForm";
 import { useAuth } from "../../../hooks/useAuth";
 import { locationMap } from "../../types/searchTypes";
 
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import instructionsMarkdown from "./instructions";
 import ProfessionalDocument from "./ProfessionalDocument";
-import { is } from "date-fns/locale";
 
 const PlanillaPDFGenerator: React.FC<{
   planillaData: PlanillaDetailData;
@@ -43,6 +43,7 @@ const PlanillaPDFGenerator: React.FC<{
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isLargeDesktop = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
@@ -227,21 +228,23 @@ const PlanillaPDFGenerator: React.FC<{
             Vista Previa
           </Button>
 
-          <Button
-            variant="text"
-            startIcon={<Visibility />}
-            onClick={handleInstructions}
-            sx={{
-              minWidth: isMobile ? "auto" : 100,
-              fontSize: "0.8rem",
-              color: "text.secondary",
-              "&:hover": {
-                color: "primary.main",
-              },
-            }}
-          >
-            Instrucciones
-          </Button>
+          {isLargeDesktop && (
+            <Button
+              variant="text"
+              startIcon={<Visibility />}
+              onClick={handleInstructions}
+              sx={{
+                minWidth: isMobile ? "auto" : 100,
+                fontSize: "0.8rem",
+                color: "text.secondary",
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              Instrucciones
+            </Button>
+          )}
         </Stack>
       </Box>
 
@@ -306,11 +309,12 @@ const PlanillaPDFGenerator: React.FC<{
           <Box
             sx={{
               p: isMobile ? 1 : 2,
-              backgroundColor: "#f5f5f5",
+
               minHeight: "100%",
               width: "100%",
               display: "flex",
               justifyContent: "center",
+              backgroundColor: theme.palette.secondary.main,
             }}
           >
             <div
@@ -357,8 +361,9 @@ const PlanillaPDFGenerator: React.FC<{
       </Dialog>
 
       {/* Instructions Dialog */}
+
       <Dialog
-        open={instructionsOpen}
+        open={instructionsOpen && !isMobile}
         onClose={() => setInstructionsOpen(false)}
         maxWidth={false}
         fullScreen={isMobile}
@@ -368,8 +373,8 @@ const PlanillaPDFGenerator: React.FC<{
         disableAutoFocus={false}
         PaperProps={{
           sx: {
-            width: isMobile ? "100vw" : "90vw",
-            height: isMobile ? "100vh" : "90vh",
+            width: "90vw",
+            height: "90vh",
             maxWidth: "100vw",
             maxHeight: "100vh",
             margin: "auto",
@@ -418,7 +423,7 @@ const PlanillaPDFGenerator: React.FC<{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              p: isMobile ? 0.5 : 1,
+              p: 1,
             }}
           >
             <ProfessionalDocument

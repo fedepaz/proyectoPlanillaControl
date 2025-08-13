@@ -12,6 +12,7 @@ interface DateTimePickerProps {
   minTimeConstraint?: Date;
   maxTimeConstraint?: Date;
   disabled?: boolean;
+  helperText?: string;
 }
 
 export function RHFDateTimePickerEnd({
@@ -23,6 +24,7 @@ export function RHFDateTimePickerEnd({
   minTimeConstraint,
   maxTimeConstraint,
   disabled = false,
+  helperText,
 }: DateTimePickerProps) {
   const parseTimeString = (timeStr: string | undefined): Date | null => {
     if (!timeStr) return null;
@@ -86,7 +88,8 @@ export function RHFDateTimePickerEnd({
         minutesStep={5}
         slotProps={{
           textField: {
-            error: false,
+            helperText: helperText,
+
             fullWidth: true,
           },
         }}

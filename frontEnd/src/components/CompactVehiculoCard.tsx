@@ -1,9 +1,13 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+"use client";
+
+import {
+  Box,
+  Card,
+  CardContent,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";

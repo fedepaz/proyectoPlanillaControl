@@ -1,9 +1,13 @@
-import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormLabel from "@mui/material/FormLabel";
+"use client";
+
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  FormLabel,
+} from "@mui/material";
 
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";

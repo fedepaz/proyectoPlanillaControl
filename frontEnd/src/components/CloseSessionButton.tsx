@@ -1,11 +1,13 @@
 "use client";
 
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import useTheme from "@mui/material/styles/useTheme";
+import {
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 

@@ -1,18 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
 
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Person from "@mui/icons-material/Person";
@@ -28,6 +16,19 @@ import { ResponsiveCard } from "../planillaComponents/components/responsiveCard"
 import { FieldDisplay } from "../planillaComponents/components/fieldDisplay";
 import { useCodVuelo } from "../../services/queries";
 import { RHFDateTimePickerEnd } from "../../../components/RHFDateTimePickerEnd";
+import {
+  useTheme,
+  useMediaQuery,
+  Container,
+  Paper,
+  Box,
+  Typography,
+  Stack,
+  Avatar,
+  Grid,
+  Alert,
+  Button,
+} from "@mui/material";
 
 interface FormReviewProps {
   formData: PlanillaSchema;
@@ -244,6 +245,7 @@ export function FormReview({
                     isEndTime={true}
                     startTimeValue={formData.datosPsa.horaIni}
                     disabled={isSubmitting}
+                    helperText="La hora de fin debe ser mayor o igual a la hora de inicio"
                   />
                 </Box>
               </Grid>
@@ -465,7 +467,7 @@ export function FormReview({
                 variant="contained"
                 startIcon={<CheckCircle />}
                 onClick={handleConfirm}
-                disabled={isSubmitting || !horaFin.trim()}
+                disabled={isSubmitting}
                 size={isMobile ? "large" : "medium"}
                 sx={{
                   minWidth: isMobile ? "100%" : "140px",

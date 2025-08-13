@@ -19,6 +19,7 @@ type Props<T extends FieldValues> = {
   label?: string;
   flightType: "arribo" | "partida" | "";
   defaultValue?: PathValue<T, Path<T>>;
+  helperText?: string;
 } & Pick<TextFieldProps, "label">;
 
 export function RHFFlightTimePicker<T extends FieldValues>({
@@ -26,6 +27,7 @@ export function RHFFlightTimePicker<T extends FieldValues>({
   label,
   flightType,
   defaultValue = "0000" as PathValue<T, Path<T>>,
+  helperText,
 }: Props<T>) {
   const { control, watch, setValue } = useFormContext<T>();
 
@@ -78,7 +80,10 @@ export function RHFFlightTimePicker<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value, ...field } }) => {
+      render={({
+        field: { onChange, value, ...field },
+        fieldState: { error },
+      }) => {
         const dateValue = parseTimeString(value as string);
 
         return (
@@ -99,7 +104,8 @@ export function RHFFlightTimePicker<T extends FieldValues>({
               minutesStep={5}
               slotProps={{
                 textField: {
-                  error: false,
+                  error: !!error,
+                  helperText: error?.message || helperText,
                   fullWidth: true,
                 },
               }}

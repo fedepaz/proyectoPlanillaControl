@@ -1,8 +1,6 @@
 "use client";
 
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
 

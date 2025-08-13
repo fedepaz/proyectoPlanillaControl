@@ -1,9 +1,13 @@
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import useTheme from "@mui/material/styles/useTheme";
-import Paper from "@mui/material/Paper";
+"use client";
+
+import {
+  useTheme,
+  useMediaQuery,
+  Container,
+  Paper,
+  Stack,
+  Button,
+} from "@mui/material";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";

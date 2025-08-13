@@ -1,19 +1,21 @@
 import type React from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import useTheme from "@mui/material/styles/useTheme";
-import Box from "@mui/material/Box";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Popover from "@mui/material/Popover";
-import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
-import Badge from "@mui/material/Badge";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  Chip,
+  Divider,
+  IconButton,
+  Paper,
+  Popover,
+  Toolbar,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";

@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Paper,
+  Typography,
+  Alert,
+} from "@mui/material";
 
 import { useRequestResetPasswordService } from "../services/resetPassword";
 import {

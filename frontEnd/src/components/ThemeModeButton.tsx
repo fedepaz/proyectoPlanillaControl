@@ -1,9 +1,6 @@
 "use client";
 
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
+import { IconButton, Tooltip, Typography, useTheme } from "@mui/material";
 
 import WbSunnyTwoToneIcon from "@mui/icons-material/WbSunnyTwoTone";
 import Brightness2TwoToneIcon from "@mui/icons-material/Brightness2TwoTone";

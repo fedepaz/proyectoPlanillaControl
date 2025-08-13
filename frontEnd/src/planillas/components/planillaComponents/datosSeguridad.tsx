@@ -1,6 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
+import { Stack, Divider, Typography } from "@mui/material";
 
 import { PlanillaSchema } from "../../types/planillaSchema";
 import { useFormContext } from "react-hook-form";

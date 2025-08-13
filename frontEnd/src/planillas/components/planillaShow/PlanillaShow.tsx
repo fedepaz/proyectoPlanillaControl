@@ -3,14 +3,6 @@
 import type React from "react";
 import { useMemo, useState } from "react";
 
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-
 import Assignment from "@mui/icons-material/Assignment";
 
 import { usePlanillas } from "../../services/planillas";
@@ -30,10 +22,26 @@ import {
 } from "../../types/searchTypes";
 import { PlanillaModal } from "../planillaComponents/components/planillaModal";
 import { PlanillaDetailById } from "../planillaComponents/components/planillaDetailById";
+import {
+  useTheme,
+  useMediaQuery,
+  Container,
+  Paper,
+  Typography,
+  Box,
+  Stack,
+} from "@mui/material";
+
+interface DateFiltersResponse {
+  fechaDesde?: string;
+  fechaHasta?: string;
+}
 
 const PlanillasList: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [dateFilters, setDateFilters] = useState<DateFilters>({});
+  const [dateFilters, setDateFilters] = useState<DateFilters>({
+    fechaHasta: new Date().toISOString().split("T")[0],
+  });
   const [hasSearched, setHasSearched] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -66,8 +74,10 @@ const PlanillasList: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleFilterChange = (filters: DateFilters) => {
-    setDateFilters(filters);
+  const handleFilterChange = (filters: DateFiltersResponse) => {
+    const { fechaDesde, fechaHasta } = filters;
+    if (!fechaHasta || fechaHasta === undefined) return;
+    setDateFilters({ fechaDesde, fechaHasta });
     setPage(1);
     setHasSearched(true);
   };

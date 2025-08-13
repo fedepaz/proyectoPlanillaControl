@@ -1,15 +1,17 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Divider from "@mui/material/Divider";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

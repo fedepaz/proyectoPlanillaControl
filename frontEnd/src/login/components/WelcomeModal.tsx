@@ -1,8 +1,4 @@
 "use client";
-import type React from "react";
-
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Assignment from "@mui/icons-material/Assignment";
 import Speed from "@mui/icons-material/Speed";
@@ -10,6 +6,7 @@ import CloudSync from "@mui/icons-material/CloudSync";
 
 import WelcomeModalMobile from "./WelcomeMobile";
 import WelcomeLargeMobile from "./WelcomeLarge";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 interface WelcomeModalProps {
   open: boolean;

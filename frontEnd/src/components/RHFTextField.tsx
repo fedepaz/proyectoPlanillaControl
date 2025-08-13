@@ -1,5 +1,5 @@
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { TextField, TextFieldProps } from "@mui/material";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;

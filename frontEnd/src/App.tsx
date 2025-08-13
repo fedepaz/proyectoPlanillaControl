@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import useMediaQuery from "@mui/material/useMediaQuery";
+
+import { Box, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 
 import { PlanillasNavbar } from "./components/PlanillasNavBar";
 import { darkTheme, lightTheme } from "./types/theme";

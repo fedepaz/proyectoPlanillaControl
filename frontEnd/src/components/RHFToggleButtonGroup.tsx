@@ -1,8 +1,12 @@
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormLabel from "@mui/material/FormLabel";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+"use client";
+
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";

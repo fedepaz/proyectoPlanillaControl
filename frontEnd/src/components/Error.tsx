@@ -1,7 +1,6 @@
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+"use client";
+
+import { Box, Button, Paper, Typography } from "@mui/material";
 
 import Wifi from "@mui/icons-material/Wifi";
 import Error from "@mui/icons-material/Error";

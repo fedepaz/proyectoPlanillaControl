@@ -1,14 +1,17 @@
 "use client";
-import useTheme from "@mui/material/styles/useTheme";
-import type { PaperSize } from "../types/searchById";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
-import { alpha } from "@mui/material/styles";
+
 import type React from "react";
 import type { JSX } from "react";
+import { PaperSize } from "../../types/searchById";
+import {
+  useTheme,
+  Typography,
+  Chip,
+  alpha,
+  Paper,
+  Box,
+  Divider,
+} from "@mui/material";
 
 interface ProfessionalDocumentProps {
   markdownContent: string;
@@ -490,7 +493,9 @@ const ProfessionalDocument: React.FC<ProfessionalDocumentProps> = ({
           {/* Main content area */}
           <Box>
             {/* Content */}
-            <Box sx={{ position: "relative", zIndex: 1 }}>{pageContent}</Box>
+            <Box sx={{ position: "relative", zIndex: 1, pb: 10 }}>
+              {pageContent}
+            </Box>
           </Box>
           <DocumentFooter />
         </Box>

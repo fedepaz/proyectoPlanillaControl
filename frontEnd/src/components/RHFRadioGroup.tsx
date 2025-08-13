@@ -1,22 +1,27 @@
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Option } from "../types/option";
+import { FormHelperText } from "@mui/material";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
   options?: Option[];
   label: string;
+  helperText?: string;
 };
 
 export function RHFRadioGroup<T extends FieldValues>({
   name,
   options,
   label,
+  helperText,
 }: Props<T>) {
   const { control } = useFormContext<T>();
   return (
@@ -43,6 +48,7 @@ export function RHFRadioGroup<T extends FieldValues>({
               />
             ))}
           </RadioGroup>
+          <FormHelperText>{error?.message || helperText}</FormHelperText>
         </FormControl>
       )}
     />

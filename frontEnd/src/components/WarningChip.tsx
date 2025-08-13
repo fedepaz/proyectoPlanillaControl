@@ -1,5 +1,6 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+"use client";
+
+import { Box, Typography } from "@mui/material";
 
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 

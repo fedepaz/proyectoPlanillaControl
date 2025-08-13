@@ -1,12 +1,14 @@
 "use client";
 
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 
 import { User } from "../../actions/types";
 import { useDashboardActions } from "../../actions";

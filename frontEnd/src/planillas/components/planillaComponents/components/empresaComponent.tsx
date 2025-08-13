@@ -2,25 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import useTheme from "@mui/material/styles/useTheme";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import InputAdornment from "@mui/material/InputAdornment";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Chip from "@mui/material/Chip";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
-
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -39,6 +20,26 @@ import { EmpresaOption } from "../../../../types/option";
 import { useCreateEmpresa } from "../../../services/mutations";
 import { useAppError } from "../../../../hooks/useAppError";
 import { HelperTextWarning } from "../../../../components/WarningChip";
+import {
+  useTheme,
+  useMediaQuery,
+  Stack,
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  IconButton,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  InputAdornment,
+  DialogActions,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 interface EmpresaComponentProps {
   onEmpresaSelected: (tipoEmpresa: string) => void;
@@ -77,21 +78,21 @@ export function EmpresaComponent({
           label: "Seguridad",
           icon: <SecurityIcon />,
           color: theme.palette.error.main,
-          helperText: "Seleccione una Seguridad o Agregue una Nueva",
+          helperText: "Seleccione una Empresa de Seguridad o Agregue una Nueva",
         };
       case "limpieza":
         return {
           label: "Limpieza",
           icon: <CleaningServicesIcon />,
           color: theme.palette.info.main,
-          helperText: "Seleccione una Limpieza o Agregue una Nueva",
+          helperText: "Seleccione una Empresa de Limpieza o Agregue una Nueva",
         };
       case "handling":
         return {
           label: "Handling",
           icon: <LocalShippingIcon />,
           color: theme.palette.warning.main,
-          helperText: "Seleccione un Handling o Agregue una Nueva",
+          helperText: "Seleccione un Empresa de Handling o Agregue una Nueva",
         };
       default:
         return {

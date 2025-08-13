@@ -1,14 +1,16 @@
 "use client";
 
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import useTheme from "@mui/material/styles/useTheme";
+import {
+  Box,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PersonIcon from "@mui/icons-material/Person";

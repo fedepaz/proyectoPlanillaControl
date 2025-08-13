@@ -1,5 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
+import { Stack, Divider } from "@mui/material";
 
 import { useFormContext, useWatch } from "react-hook-form";
 

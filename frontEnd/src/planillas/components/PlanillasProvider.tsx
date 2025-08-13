@@ -8,10 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { CssBaseline, Snackbar, Alert, Box } from "@mui/material";
 
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
