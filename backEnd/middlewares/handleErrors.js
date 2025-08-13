@@ -157,9 +157,7 @@ export const handleErrors = (error, request, response, next) => {
   if (process.env.NODE_ENV === "development") {
     console.error(`[${new Date().toISOString()}] ${error}`);
   } else {
-    console.error(
-      `[${new Date().toISOString()}]Error: contact your administrator`
-    );
+    console.error(`[${new Date().toISOString()}] ${error}`);
   }
 
   if (response.headersSent) {

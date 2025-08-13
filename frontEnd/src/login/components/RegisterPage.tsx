@@ -206,7 +206,7 @@ function RegisterPage({ onBackHome }: RegisterPageProps) {
               id="password"
               autoComplete="new-password"
               disabled={showSuccessMessage}
-              helperText="La contraseña debe tener al menos 8 caracteres"
+              helperText="La contraseña debe tener al menos 9 caracteres. Y no puede ser 123456789"
             />
             <Divider sx={{ my: 3 }} />
 

@@ -17042,4 +17042,54 @@
     at async FindCursor._initialize (/home/fedepaz/Documents/estudio/proyectos/planillaControl/proyectoPlanillaControl/backEnd/node_modules/.pnpm/mongodb@6.10.0/node_modules/mongodb/lib/cursor/find_cursor.js:51:26)
     ---------------------
 
+    [2025-08-13T21:14:07.401Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"delaserna@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario delaserna@gmail.com ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-08-13T21:14:32.693Z]
+    URL: /resetPassword
+    Method: POST
+    Body: {"email":"delaserna@gmail.com"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: DuplicateData: El usuario delaserna@gmail.com ya ha solicitado una contraseña, pendiente de aprobación
+    at ResetPasswordRepository.create (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPasswordRepository.js:20:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/resetPassword.js:17:27
+    ---------------------
+
+    [2025-08-13T21:15:32.676Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"22222222","password":"tgbyhnujm"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: AuthenticationError: Credenciales inválidas
+    at UserRepository.login (file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/userRepository.js:128:23)
+    at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:61:18
+    ---------------------
+
     
