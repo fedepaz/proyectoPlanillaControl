@@ -25,8 +25,6 @@ import {
 } from "../types/apiSchema";
 import apiClient from "../../services/csrfToken";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 interface CreateOficialResponse {
   _id: string;
   dni: number;
