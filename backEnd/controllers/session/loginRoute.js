@@ -87,12 +87,6 @@ sessionRouter.post("/login", async (req, res, next) => {
       signed: true,
     });
 
-    if (process.env.NODE_ENV === "production") {
-      res.cookie("XSRF-TOKEN", req.csrfToken(), {
-        secure: true,
-        sameSite: "strict",
-      });
-    }
     res.status(200).json({
       authenticated: true,
       message: "Login correcto",
