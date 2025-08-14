@@ -83,10 +83,8 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   };
 
   const handleFinalize = async () => {
-    console.log("=== SHOWING REVIEW ===");
-    // Get current form values
     const currentValues = getValues();
-    console.log("Current form values:", currentValues);
+
     // Validate everything except horaFin (which will be set in review)
     const tempData = { ...currentValues };
     tempData.datosPsa.horaFin = "2359"; // Temporary value for validation

@@ -62,7 +62,7 @@ app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_PREVIEW],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "X-CSRF-TOKEN"],
+    allowedHeaders: ["Content-Type", "X-CSRF-TOKEN", "X-Requested-With"],
     credentials: true,
   })
 );
@@ -105,6 +105,7 @@ if (process.env.NODE_ENV !== "test") {
     .then(() => {
       app.listen(PORT, () => {
         console.log(`App is listening in port: http://localhost:${PORT}/`);
+        console.log("VIVA PERÓN!!!");
       });
     })
     .catch((error) => {

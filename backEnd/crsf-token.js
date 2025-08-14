@@ -5,7 +5,7 @@ const csrfTokenRouter = express.Router();
 csrfTokenRouter.get("/", (req, res) => {
   try {
     const csrfToken = req.csrfToken();
-    console.log("CSRF Token:", csrfToken);
+
     res.json({ csrfToken: csrfToken });
   } catch (err) {
     console.error("CSRF Token Error:", err);

@@ -20,6 +20,7 @@ import { locationMap } from "../../types/searchTypes";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -44,6 +45,7 @@ const PlanillaPDFGenerator: React.FC<{
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isLargeDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
@@ -91,6 +93,13 @@ const PlanillaPDFGenerator: React.FC<{
     };
   };
 
+  const getFullName = () => {
+    if (!userInfo?.user?.oficialId) return "";
+
+    const { firstname, lastname } = userInfo.user.oficialId;
+    return `${firstname} ${lastname}`;
+  };
+
   const getFechaDisplayInfo = () => {
     const fecha = planillaData.datosPsa.fecha.split("/");
     return fecha[0] + "-" + fecha[1] + "-" + fecha[2];
@@ -104,11 +113,80 @@ const PlanillaPDFGenerator: React.FC<{
     return name;
   };
 
-  const handlePrint = (fileName: string) => {
+  const handleDownloadPDF = async () => {
+    // Asegurarnos de que el elemento a imprimir existe
+    if (!printRef.current) {
+      console.error("El elemento a imprimir no se encuentra.");
+      return;
+    }
+
+    setIsGenerating(true); // Inicia el estado de carga
+    const fileName = generateFileName();
+
+    try {
+      const { default: html2canvas } = await import("html2canvas");
+      const { default: jsPDF } = await import("jspdf");
+
+      const input = printRef.current;
+
+      const canvas = await html2canvas(input, {
+        scale: 5, // Mayor resolución
+        useCORS: true, // Necesario si tienes imágenes de otros dominios
+        logging: false, // Opcional: para limpiar la consola
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+
+      // Obtenemos el ancho y alto del PDF según el tamaño de papel seleccionado.
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: selectedPaperSize.label.toLowerCase(),
+      });
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // Calculamos la altura que tendrá la imagen dentro del PDF para mantener su proporción.
+      // Esta será la altura TOTAL de tu componente (Página 1 + Página 2).
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Agregamos la primera página (o la única si cabe)
+      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Bucle para agregar las páginas restantes
+      while (heightLeft > 0) {
+        position = -heightLeft; // La posición se vuelve negativa para "subir" la imagen
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      pdf.setProperties({
+        title: `Planilla de Control: Vuelo ${planillaData.datosVuelo.codVuelo.codVuelo}`,
+        subject: `Control vuelo ${planillaData.datosVuelo.empresa.empresa} ${planillaData.datosVuelo.codVuelo.codVuelo}`,
+        author: `UOSP ${headerConfig.location}-PSA-${getFullName()}`,
+        keywords: `planilla, control, ${planillaData.datosVuelo.codVuelo.codVuelo}, ${headerConfig.location}`,
+        creator: "Sistema de Gestión de Planillas planillasPROapp",
+      });
+
+      pdf.save(`${fileName}.pdf`); // Aseguramos que tenga la extensión .pdf
+    } catch (error) {
+      console.error("Error al generar el PDF:", error);
+
+      handleFallbackPrint(fileName);
+    } finally {
+      setIsGenerating(false); // Finaliza el estado de carga
+    }
+  };
+  // Fallback print method (your original implementation)
+  const handleFallbackPrint = (fileName: string) => {
     if (printRef.current) {
       const originalTitle = document.title;
       document.title = fileName;
-      // Create a temporary iframe for printing
+
       const iframe = document.createElement("iframe");
       iframe.style.position = "absolute";
       iframe.style.top = "-10000px";
@@ -151,15 +229,13 @@ const PlanillaPDFGenerator: React.FC<{
             ${printRef.current.innerHTML}
           </body>
         </html>
-      `);
+        `);
         iframeDoc.close();
 
-        // Wait for content to load, then print
         setTimeout(() => {
           iframe.contentWindow?.focus();
           iframe.contentWindow?.print();
 
-          // Clean up after printing
           setTimeout(() => {
             document.body.removeChild(iframe);
             document.title = originalTitle;
@@ -167,11 +243,6 @@ const PlanillaPDFGenerator: React.FC<{
         }, 500);
       }
     }
-  };
-
-  const handleDownloadPDF = async () => {
-    const fileName = generateFileName();
-    handlePrint(fileName);
   };
 
   return (
@@ -275,6 +346,8 @@ const PlanillaPDFGenerator: React.FC<{
             alignItems: "center",
             px: isMobile ? 1 : 3,
             py: isMobile ? 1 : 2,
+            maxWidth: "100%",
+            mx: "auto",
           }}
         >
           <Typography
@@ -349,13 +422,15 @@ const PlanillaPDFGenerator: React.FC<{
             onClick={handleDownloadPDF}
             variant="contained"
             color="secondary"
-            startIcon={<PictureAsPdf />}
+            startIcon={
+              isGenerating ? <CircularProgress size="1rem" /> : <PictureAsPdf />
+            }
             sx={{
               width: isMobile ? "100%" : "auto",
               fontSize: isSmallMobile ? "0.875rem" : "inherit",
             }}
           >
-            Descargar PDF
+            {isGenerating ? "Generando PDF..." : "Descargar PDF"}
           </Button>
         </DialogActions>
       </Dialog>
