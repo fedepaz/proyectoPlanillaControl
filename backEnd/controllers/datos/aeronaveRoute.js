@@ -122,6 +122,7 @@ aeronaveRouter.post("/busqueda", async (req, res, next) => {
 
     return res.json(matriculas);
   } catch (error) {
+    console.error(error);
     next(error);
   }
 });
