@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Visibility from "@mui/icons-material/Visibility";
@@ -271,6 +271,13 @@ const PlanillaPDFGenerator: React.FC<{
       }
     }
   };
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const updateHeight = () => setViewportHeight(window.innerHeight);
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
 
   return (
     <Box sx={{ width: "100%", maxWidth: "100vw" }}>
@@ -359,7 +366,7 @@ const PlanillaPDFGenerator: React.FC<{
         PaperProps={{
           sx: {
             width: isMobile ? "100vw" : "90vw",
-            height: isMobile ? "100vh" : "90vh",
+            height: isMobile ? `${viewportHeight}px` : "90vh",
             maxWidth: "100vw",
             maxHeight: "100vh",
             margin: isMobile ? 0 : "auto",
