@@ -161,9 +161,7 @@ export const handleErrors = (error, request, response, next) => {
   }
 
   if (response.headersSent) {
-    console.warn(
-      "Headers already sent. Delegating to default Express error handler."
-    );
+    console.warn("Headers already sent.");
     return next(error);
   }
 
@@ -173,7 +171,7 @@ export const handleErrors = (error, request, response, next) => {
   response.status(status).json({
     error: handler(error),
 
-    ...(process.env.NODE_ENV === "development" && {
+    ...(process.env.NODE_ENV === "production" && {
       name: error.name,
       message: error.message,
       statusCode: STATUS_CODES[status],
