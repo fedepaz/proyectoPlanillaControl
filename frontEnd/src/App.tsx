@@ -84,11 +84,8 @@ function AppContent() {
         console.error("Error fetching CSRF Token:", error);
       }
     };
-    if (isLoggedIn) {
-      fetchCsrfToken();
-    } else {
-      setCsrfToken("");
-    }
+
+    fetchCsrfToken();
   }, [isLoggedIn]);
 
   const handleRegister = useCallback(() => {
