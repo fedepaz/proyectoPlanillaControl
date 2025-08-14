@@ -42,7 +42,7 @@ export function useCreateOficial() {
   return useMutation<CreateOficialResponse, Error, OficialSchema>({
     mutationFn: async (newOficial: OficialSchema) => {
       const { data } = await apiClient.post<CreateOficialResponse>(
-        `${API_URL}/oficial`,
+        `/oficial`,
         newOficial
       );
       return data;
@@ -62,7 +62,7 @@ export function useOficial(dni: string) {
       }
 
       const { data } = await apiClient.get<ApiGetOficial>(
-        `${API_URL}/oficial/dni/${dni}`
+        `/oficial/dni/${dni}`
       );
       return {
         dni: parseInt(data.dni, 10),
@@ -80,9 +80,7 @@ export function useTipoControl() {
   return useQuery({
     queryKey: ["tipoControl"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoControl`
-      );
+      const response = await apiClient.get<Option[]>(`/data/tipoControl`);
       const tipoControl = response.data;
       return tipoControl;
     },
@@ -92,9 +90,7 @@ export function useTipoEmpresa() {
   return useQuery({
     queryKey: ["tipoEmpresa"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoEmpresa`
-      );
+      const response = await apiClient.get<Option[]>(`/data/tipoEmpresa`);
       const tipoEmpresa = response.data;
       return tipoEmpresa;
     },
@@ -105,9 +101,7 @@ export function useMediosTec() {
   return useQuery({
     queryKey: ["mediosTec"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/mediosTec`
-      );
+      const response = await apiClient.get<Option[]>(`/data/mediosTec`);
       const mediosTec = response.data;
       return mediosTec;
     },
@@ -118,7 +112,7 @@ export function useTipoPro() {
   return useQuery({
     queryKey: ["tipoPro"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/tipoPro`);
+      const response = await apiClient.get<Option[]>(`/data/tipoPro`);
       const tipoPro = response.data;
       return tipoPro;
     },
@@ -129,7 +123,7 @@ export function useDemora() {
   return useQuery({
     queryKey: ["demora"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/demora`);
+      const response = await apiClient.get<Option[]>(`/data/demora`);
       const demora = response.data;
       return demora;
     },
@@ -140,9 +134,7 @@ export function useTipoVuelo() {
   return useQuery({
     queryKey: ["tipoVuelo"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoVuelo`
-      );
+      const response = await apiClient.get<Option[]>(`/data/tipoVuelo`);
       const tipoVuelo = response.data;
       return tipoVuelo;
     },
@@ -153,7 +145,7 @@ export function useFuncion() {
   return useQuery({
     queryKey: ["funcion"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`${API_URL}/data/funcion`);
+      const response = await apiClient.get<Option[]>(`/data/funcion`);
       const funcion = response.data;
       return funcion;
     },
@@ -164,9 +156,7 @@ export function useTipoVehiculo() {
   return useQuery({
     queryKey: ["tipoVehiculo"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(
-        `${API_URL}/data/tipoVehiculo`
-      );
+      const response = await apiClient.get<Option[]>(`/data/tipoVehiculo`);
       const tipoVehiculo = response.data;
       return tipoVehiculo;
     },
@@ -182,7 +172,7 @@ export function usePersonalEmpresa(dni: number) {
       }
 
       const { data } = await apiClient.get<ApiGetPersonalEmpresa>(
-        `${API_URL}/personalEmpresa/dni/${dni}`
+        `/personalEmpresa/dni/${dni}`
       );
       return {
         dni: parseInt(data.dni, 10),
@@ -209,7 +199,7 @@ export function usePersonalEmpresaBusqueda(
     queryFn: async () => {
       if (!params) return null;
       const response = await apiClient.post<PersonalEmpresaOption | null>(
-        `${API_URL}/personalEmpresa/busqueda`,
+        `/personalEmpresa/busqueda`,
         params
       );
       const personalEmpresa = response.data;
@@ -229,7 +219,7 @@ export function usePersonalEmpresaSeg(dni: number) {
       }
 
       const { data } = await apiClient.get<ApiGetPersonalSeguridad>(
-        `${API_URL}/personalSeguridad/dni/${dni}`
+        `/personalSeguridad/dni/${dni}`
       );
       return {
         dni: data.dni,
@@ -250,7 +240,7 @@ export function usePersonalSeguridadBusqueda(
     queryFn: async () => {
       if (!params) return null;
       const response = await apiClient.post<PersonalSeguridadOption | null>(
-        `${API_URL}/personalSeguridad/busqueda`,
+        `/personalSeguridad/busqueda`,
         params
       );
       const personalSeguridad = response.data;
@@ -267,7 +257,7 @@ export function useMatricula(empresa?: string) {
     queryFn: async () => {
       const response = await apiClient.get<{
         matriculaAeronave: MatriculaOption[];
-      }>(`${API_URL}/aeronave`);
+      }>(`/aeronave`);
       const matriculaAeronaveRes = response.data;
 
       return matriculaAeronaveRes;
@@ -284,7 +274,7 @@ export function useMatriculaId(matriculaAeronave: string) {
       }
 
       const { data } = await apiClient.get<ApiGetMatriculaAeronave>(
-        `${API_URL}/aeronave/matricula/${matriculaAeronave}`
+        `/aeronave/matricula/${matriculaAeronave}`
       );
       return {
         matriculaAeronave: data.matriculaAeronave,
@@ -305,7 +295,7 @@ export function useMatriculaBusqueda(params: BuscarMatriculaParams | null) {
     queryFn: async () => {
       if (!params) return [];
       const response = await apiClient.post<MatriculaOption[]>(
-        `${API_URL}/aeronave/busqueda`,
+        `/aeronave/busqueda`,
         params
       );
       const matricula = response.data;
@@ -319,9 +309,7 @@ export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
     queryKey: ["empresa", tipoEmpresa],
     queryFn: async () => {
-      const response = await apiClient.get<EmpresaOption[]>(
-        `${API_URL}/empresa`
-      );
+      const response = await apiClient.get<EmpresaOption[]>(`/empresa`);
       const empresaRes = response.data;
       return empresaRes;
     },
@@ -333,7 +321,7 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
     queryKey: ["empresa", tipoEmpresaId],
     queryFn: async () => {
       const response = await apiClient.get<EmpresaOption[]>(
-        `${API_URL}/empresa/tipoID/${tipoEmpresaId}`
+        `/empresa/tipoID/${tipoEmpresaId}`
       );
       const empresaRes = response.data;
       return empresaRes;
@@ -347,7 +335,7 @@ export function useEmpresaId(empresaId: string) {
     queryKey: ["empresa", empresaId],
     queryFn: async () => {
       const response = await apiClient.get<EmpresaOption>(
-        `${API_URL}/empresa/${empresaId}`
+        `/empresa/${empresaId}`
       );
       const empresa = response.data;
       return empresa;
@@ -361,7 +349,7 @@ export function useJerarquia() {
     queryKey: ["jerarquias"],
     queryFn: async () => {
       const response = await apiClient.get<JerarquiaOption[]>(
-        `${API_URL}/session/jerarquias`
+        `/session/jerarquias`
       );
       const jerarquias = response.data;
       return jerarquias;
@@ -373,9 +361,7 @@ export function useUnidad() {
   return useQuery({
     queryKey: ["unidad"],
     queryFn: async () => {
-      const response = await apiClient.get<UnidadOption[]>(
-        `${API_URL}/session/unidad`
-      );
+      const response = await apiClient.get<UnidadOption[]>(`/session/unidad`);
       const unidades = response.data;
       return unidades;
     },
@@ -386,9 +372,7 @@ export function useAeropuertos() {
   return useQuery({
     queryKey: ["aeropuertos"],
     queryFn: async () => {
-      const response = await apiClient.get<AeropuertoOption[]>(
-        `${API_URL}/aeropuerto`
-      );
+      const response = await apiClient.get<AeropuertoOption[]>(`/aeropuerto`);
       const aeropuertos = response.data;
       return aeropuertos;
     },
@@ -399,9 +383,7 @@ export function useCodVuelo() {
   return useQuery({
     queryKey: ["codVuelo"],
     queryFn: async () => {
-      const response = await apiClient.get<CodVueloOption[]>(
-        `${API_URL}/codVuelo`
-      );
+      const response = await apiClient.get<CodVueloOption[]>(`/codVuelo`);
       const codVuelo = response.data;
       return codVuelo;
     },
@@ -420,7 +402,7 @@ export function useCodVueloBusqueda(params: BuscarCodVueloParams | null) {
     queryFn: async () => {
       if (!params) return [];
       const response = await apiClient.post<CodVueloOption[]>(
-        `${API_URL}/codVuelo/busqueda`,
+        `/codVuelo/busqueda`,
         params
       );
       const codVuelo = response.data;
@@ -435,7 +417,7 @@ export function usePersonalHandlingEmpresa(id: string) {
     queryKey: ["personalHandling", id],
     queryFn: async () => {
       const response = await apiClient.get<PersonalEmpresaOption>(
-        `${API_URL}/personalEmpresa/${id}`
+        `/personalEmpresa/${id}`
       );
       const empresaHandling = response.data;
       return empresaHandling;
@@ -454,7 +436,7 @@ export function useVehiculoBusqueda(params: BuscarVehiculosParams | null) {
     queryFn: async () => {
       if (!params) return null;
       const response = await apiClient.post<VehiculoOption>(
-        `${API_URL}/vehiculos/busqueda`,
+        `/vehiculos/busqueda`,
         params
       );
       const vehiculo = response.data;

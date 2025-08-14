@@ -5,6 +5,7 @@ const limiter = rateLimit({
   max: 100,
   message: "Too many requests from this IP, please try again later",
   headers: true,
+  trustProxy: true,
 });
 
 export default limiter;
