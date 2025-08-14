@@ -66,14 +66,6 @@ app.use(
   })
 );
 
-// Add this right after your CORS setup, before any routes
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  console.log("Headers:", req.headers);
-  console.log("Body:", req.body);
-  next();
-});
-
 app.use("/scrape-arribos", scrapeArribosRouter);
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -83,11 +75,12 @@ app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(234).send("planillasBackend");
 });
-app.use(csrfProtection);
-app.use("/csrf-token", crsfTokenRouter);
 
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
+
+app.use(csrfProtection);
+app.use("/csrf-token", crsfTokenRouter);
 
 app.use(authenticate);
 
