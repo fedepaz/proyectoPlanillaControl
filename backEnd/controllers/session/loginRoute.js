@@ -82,7 +82,7 @@ sessionRouter.post("/login", async (req, res, next) => {
     res.cookie("access_token", token, {
       httpOnly: true,
       maxAge: 86400000 / 2, //12hs
-      sameSite: "strict",
+      sameSite: "none",
       secure: process.env.NODE_ENV === "production",
       signed: true,
     });
