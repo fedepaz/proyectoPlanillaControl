@@ -74,12 +74,13 @@ app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(234).send("planillasBackend");
 });
+app.use(csrfProtection);
+app.use("/csrf-token", crsfTokenRouter);
+
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
 app.use(authenticate);
-app.use(csrfProtection);
-app.use("/csrf-token", crsfTokenRouter);
 
 app.use("/data", dataRouter);
 
