@@ -101,9 +101,8 @@ sessionRouter.delete("/", (req, res) => {
   res
     .clearCookie("access_token", {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       secure: process.env.NODE_ENV === "production",
-      signed: true,
     })
     .status(200)
     .json({ message: "Logout correcto" });
