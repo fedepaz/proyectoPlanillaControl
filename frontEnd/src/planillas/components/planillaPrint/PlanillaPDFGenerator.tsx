@@ -113,6 +113,8 @@ const PlanillaPDFGenerator: React.FC<{
     return name;
   };
 
+  const mmToPx = (mm: number) => Math.round((mm / 25.4) * 96);
+
   const handleDownloadPDF = async () => {
     // Asegurarnos de que el elemento a imprimir existe
     if (!printRef.current) {
@@ -127,15 +129,43 @@ const PlanillaPDFGenerator: React.FC<{
       const { default: html2canvas } = await import("html2canvas");
       const { default: jsPDF } = await import("jspdf");
 
-      const input = printRef.current;
+      await document.fonts.ready;
 
-      const canvas = await html2canvas(input, {
-        scale: 5, // Mayor resolución
-        useCORS: true, // Necesario si tienes imágenes de otros dominios
-        logging: false, // Opcional: para limpiar la consola
+      // Get selected size from your PAPER_SIZES
+      const paper = PAPER_SIZES.find(
+        (p) => p.label === selectedPaperSize.label
+      );
+      const widthPx = mmToPx(parseFloat(paper!.width));
+      const heightPx = mmToPx(parseFloat(paper!.height));
+
+      const originalWidth = printRef.current.style.width;
+      const originalHeight = printRef.current.style.height;
+
+      printRef.current.style.width = `${widthPx}px`;
+      printRef.current.style.height = `${heightPx * 2}px`; // for multi-page
+
+      const originalDPR = window.devicePixelRatio;
+      Object.defineProperty(window, "devicePixelRatio", {
+        get: () => 1,
+        configurable: true,
       });
 
-      const imgData = canvas.toDataURL("image/png");
+      const canvas = await html2canvas(printRef.current, {
+        scale: 3, // Mayor resolución
+        useCORS: true, // Necesario si tienes imágenes de otros dominios
+        logging: false, // Opcional: para limpiar la consola
+        backgroundColor: "#ffffff",
+      });
+
+      Object.defineProperty(window, "devicePixelRatio", {
+        get: () => originalDPR,
+        configurable: true,
+      });
+
+      printRef.current.style.width = originalWidth;
+      printRef.current.style.height = originalHeight;
+
+      const imgData = canvas.toDataURL("image/png", 0.8);
 
       // Obtenemos el ancho y alto del PDF según el tamaño de papel seleccionado.
       const pdf = new jsPDF({
@@ -145,9 +175,6 @@ const PlanillaPDFGenerator: React.FC<{
       });
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-
-      // Calculamos la altura que tendrá la imagen dentro del PDF para mantener su proporción.
-      // Esta será la altura TOTAL de tu componente (Página 1 + Página 2).
       const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
       let heightLeft = imgHeight;
