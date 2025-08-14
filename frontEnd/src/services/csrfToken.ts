@@ -19,6 +19,7 @@ apiClient.interceptors.request.use(
         config.method?.toUpperCase() ?? ""
       )
     ) {
+      console.log("Current CSRF Token: ", csrfToken);
       if (csrfToken) {
         config.headers["X-CSRF-TOKEN"] = csrfToken;
       } else {
