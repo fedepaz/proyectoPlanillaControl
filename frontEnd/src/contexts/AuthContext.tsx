@@ -1,30 +1,7 @@
 import { createContext } from "react";
 import { User } from "../actions/types";
 import { View } from "../types/types";
-
-interface LoginResponse {
-  authenticated: boolean;
-  user: {
-    dni: string;
-    oficialId: {
-      id?: string;
-      dni: string;
-      firstname: string;
-      lastname: string;
-      legajo: string;
-      currentAirportId: {
-        id?: string;
-        aeropuerto: string;
-        codIATA: string;
-        codOACI: string;
-      };
-      jerarquiaId: {
-        jerarquia: string;
-      };
-    };
-    role: string;
-  };
-}
+import { LoginResponse } from "../types/auth";
 
 export interface AuthContextType {
   // User state

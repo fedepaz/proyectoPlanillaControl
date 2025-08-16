@@ -6,33 +6,10 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
+import { LoginResponse } from "../../types/auth";
+
 const API_URL = import.meta.env.VITE_API_URL;
 const loginUrl = `${API_URL}/session/login`;
-interface LoginResponse {
-  authenticated: boolean;
-  message: string;
-  user: {
-    dni: string;
-    oficialId: {
-      dni: string;
-      firstname: string;
-      lastname: string;
-      legajo: string;
-      id: string;
-      currentAirportId: {
-        aeropuerto: string;
-        codIATA: string;
-        codOACI: string;
-        id: string;
-      };
-      jerarquiaId: {
-        jerarquia: string;
-        id: string;
-      };
-    };
-    role: string;
-  };
-}
 
 export function useLogin(): UseMutationResult<
   LoginResponse,

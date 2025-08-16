@@ -312,6 +312,7 @@ const commonThemeSettings = {
         },
       },
     },
+
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -494,6 +495,23 @@ const lightThemeBase = createTheme({
         },
       },
     },
+    MuiMenu: {
+      styleOverrides: {
+        list: {
+          WebkitOverflowScrolling: "touch",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "rgba(0, 0, 0, 0.2)",
+            borderRadius: "4px",
+          },
+        },
+      },
+    },
   },
 });
 
@@ -632,6 +650,23 @@ const darkThemeBase = createTheme({
       styleOverrides: {
         ripple: {
           opacity: 0.32,
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        list: {
+          WebkitOverflowScrolling: "touch",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "rgba(0, 0, 0, 0.2)",
+            borderRadius: "4px",
+          },
         },
       },
     },

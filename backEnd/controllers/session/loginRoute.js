@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import { UserRepository } from "./userRepository.js";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils.js";
 import { ResetPasswordRepository } from "./resetPasswordRepository.js";
@@ -9,7 +10,23 @@ import {
   PersonalSeguridadEmpresa,
 } from "../../models/personalModel.js";
 
+dotenv.config();
+
 const sessionRouter = express.Router();
+
+const FRONTEND_URL = process.env.FRONTEND_URL;
+const FRONTEND_URL_PREVIEW = process.env.FRONTEND_URL_PREVIEW;
+
+// Configuración de cookies mejorada
+const getCookieConfig = (isProduction) => ({
+  httpOnly: true,
+  maxAge: 43200000, // 12 horas
+  sameSite: isProduction ? "none" : "lax", // Cambiar de "strict" a "lax" para mejor compatibilidad
+  secure: isProduction,
+  signed: true,
+  path: "/",
+  // No especificar domain para mejor compatibilidad cross-browser
+});
 
 sessionRouter.get("/", (req, res) => {
   try {
@@ -17,6 +34,7 @@ sessionRouter.get("/", (req, res) => {
 
     const response = {
       authenticated: true,
+      message: "Sesión válida",
       user: {
         dni: user.dni,
         oficialId: {
@@ -42,6 +60,7 @@ sessionRouter.get("/", (req, res) => {
 
     res.status(200).json(response);
   } catch (error) {
+    console.error("Error en /session: ", error);
     res.status(200).json({ authenticated: false });
   }
 });
@@ -79,13 +98,9 @@ sessionRouter.post("/login", async (req, res, next) => {
     };
 
     const token = signJWT(userInfo, "12h");
-    res.cookie("access_token", token, {
-      httpOnly: true,
-      maxAge: 86400000 / 2, //12hs
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      secure: process.env.NODE_ENV === "production",
-      signed: true,
-    });
+
+    const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
+    res.cookie("access_token", token, cookieConfig);
 
     res.status(200).json({
       authenticated: true,
@@ -98,11 +113,13 @@ sessionRouter.post("/login", async (req, res, next) => {
 });
 
 sessionRouter.delete("/", (req, res) => {
+  const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
   res
     .clearCookie("access_token", {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      secure: process.env.NODE_ENV === "production",
+      httpOnly: cookieConfig.httpOnly,
+      sameSite: cookieConfig.sameSite,
+      secure: cookieConfig.secure,
+      path: cookieConfig.path,
     })
     .status(200)
     .json({ message: "Logout correcto" });

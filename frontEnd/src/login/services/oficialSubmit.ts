@@ -6,16 +6,11 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
+import { OficialResponse } from "../../types/auth";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const loginUrl = "/oficial";
-
-interface OficialResponse {
-  dni: string;
-  firstname: string;
-  lastname: string;
-  legajo: number;
-}
 
 export function useOficialSubmit(): UseMutationResult<
   OficialResponse,

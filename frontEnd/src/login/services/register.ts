@@ -8,14 +8,11 @@ import {
 } from "@tanstack/react-query";
 import apiClient from "../../services/csrfToken";
 
+import { RegisterResponse } from "../../types/auth";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const registerUrl = "/session/register";
-interface RegisterResponse {
-  success: boolean;
-  message: string;
-  userID: string;
-}
 
 export function useRegister(): UseMutationResult<
   RegisterResponse,

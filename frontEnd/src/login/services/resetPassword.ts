@@ -10,24 +10,13 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+import {
+  ResetPasswordResponse,
+  ResetPasswordApprovedResponse,
+} from "../../types/auth";
+
 const API_URL = import.meta.env.VITE_API_URL;
 const resetPasswordUrl = `${API_URL}/resetPassword`;
-
-interface ResetPasswordResponse {
-  id: string;
-  okToChangePassword: boolean;
-  changed: boolean;
-  message: string;
-}
-interface ResetPasswordApprovedResponse {
-  dni: string;
-  email: string;
-  role: string;
-  name: string;
-  legajo: number;
-  dateUpdated: string;
-  message: string;
-}
 
 export function useRequestResetPasswordService(): UseMutationResult<
   ResetPasswordResponse,

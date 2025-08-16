@@ -1,125 +1,245 @@
-import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
-import { UnidadOption } from "../types/option";
-
+import { useState } from "react";
 import {
+  Autocomplete,
+  TextField,
   Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextFieldProps,
   Typography,
   useMediaQuery,
   useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  InputAdornment,
+  Chip,
 } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import { UnidadOption } from "../types/option";
 
-type Props<T extends FieldValues> = {
-  name: Path<T>;
-  options?: UnidadOption[];
+interface RHFDropDownCurrentAirportProps<T> {
+  name: keyof T;
+  options: UnidadOption[];
   label: string;
-} & TextFieldProps;
+  margin?: "none" | "dense" | "normal";
+  fullWidth?: boolean;
+}
 
-export function RHFDropDownCurrentAirport<T extends FieldValues>({
+export function RHFDropDownCurrentAirport<T>({
   name,
   options,
   label,
-  margin = "normal",
-}: Props<T>) {
-  const { control } = useFormContext<T>();
+  margin = "none",
+  fullWidth = false,
+}: RHFDropDownCurrentAirportProps<T>) {
+  const { control, setValue } = useFormContext<T>();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const [mobileDialogOpen, setMobileDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtrar opciones basado en búsqueda
+  const filteredOptions = options.filter(
+    (option) =>
+      option.aeropuerto.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      option.codIATA.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      option.codOACI.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleMobileSelection = (
+    option: UnidadOption,
+    onChange: (value: string) => void
+  ) => {
+    onChange(option.id);
+    setMobileDialogOpen(false);
+    setSearchTerm("");
+  };
+
+  const getDisplayValue = (value: string) => {
+    const selected = options.find((option) => option.id === value);
+    return selected ? `${selected.aeropuerto} (${selected.codIATA})` : "";
+  };
 
   return (
     <Controller
-      control={control}
       name={name}
-      render={({ field: { onChange, value, ...restField } }) => (
-        <Box
-          sx={{
-            width: "100%",
-            mt: margin === "normal" ? 2 : 1,
-            mb: margin === "normal" ? 1 : 0,
-            position: "relative",
-          }}
-        >
-          <FormControl fullWidth>
-            <InputLabel id={`${name}-label`}>{label}</InputLabel>
-            <Select
-              labelId={`${name}-label`}
-              id={name}
-              value={value || ""}
-              label={label}
-              onChange={(event) => {
-                onChange(event.target.value);
-              }}
-              MenuProps={{
-                container: document.body,
-                PaperProps: {
-                  style: {
-                    maxHeight: 300,
-                  },
+      control={control}
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
+        <>
+          {isMobile ? (
+            // Versión Mobile con Dialog
+            <>
+              <TextField
+                fullWidth={fullWidth}
+                margin={margin}
+                label={label}
+                value={getDisplayValue(value)}
+                onClick={() => setMobileDialogOpen(true)}
+                readOnly
+                error={!!error}
+                helperText={error?.message}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Seleccionar unidad..."
+              />
+
+              <Dialog
+                open={mobileDialogOpen}
+                onClose={() => setMobileDialogOpen(false)}
+                fullWidth
+                maxWidth="md"
+                PaperProps={{
                   sx: {
-                    width: "auto",
-                    minWidth: "100%",
-                    maxWidth: {
-                      xs: "calc(100vw - 32px)",
-                      sm: 400,
-                    },
-                    zIndex: 9999,
-                    mt: 0.5,
-                    boxShadow: (theme) => theme.shadows[4],
-                    overflow: "hidden",
+                    maxHeight: "80vh",
+                    m: 2,
+                    borderRadius: 2,
                   },
-                },
-                disablePortal: false,
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-              }}
-              {...restField}
-            >
-              {options?.map((option) => (
-                <MenuItem
-                  value={option.id}
-                  key={option.id}
+                }}
+              >
+                <DialogTitle
                   sx={{
                     display: "flex",
-                    flexDirection: isMobile ? "column" : "row",
-                    alignItems: isMobile ? "flex-start" : "center",
-                    padding: isMobile ? "8px 16px" : "6px 16px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    pb: 1,
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "normal",
-                      marginRight: isMobile ? 0 : 1,
-                      fontSize: isMobile ? "0.875rem" : "inherit",
-                      width: isMobile ? "100%" : "auto",
-                      whiteSpace: "normal",
-                      wordBreak: "break-word",
-                    }}
+                  <Typography variant="h6">{label}</Typography>
+                  <IconButton
+                    onClick={() => setMobileDialogOpen(false)}
+                    size="small"
                   >
-                    {option.aeropuerto}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: isMobile ? "0.875rem" : "inherit",
-                      marginTop: isMobile ? 0.5 : 0,
+                    <CloseIcon />
+                  </IconButton>
+                </DialogTitle>
+
+                <DialogContent sx={{ pt: 1 }}>
+                  <TextField
+                    fullWidth
+                    placeholder="Buscar aeropuerto, código IATA o OACI..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
                     }}
-                  >
-                    ({option.codIATA})
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+                    sx={{ mb: 2 }}
+                    autoFocus
+                  />
+
+                  <List sx={{ maxHeight: "50vh", overflow: "auto" }}>
+                    {filteredOptions.map((option) => (
+                      <ListItem
+                        key={option.id}
+                        button
+                        onClick={() => handleMobileSelection(option, onChange)}
+                        selected={value === option.id}
+                        sx={{
+                          borderRadius: 1,
+                          mb: 0.5,
+                          "&.Mui-selected": {
+                            backgroundColor: theme.palette.primary.light + "20",
+                          },
+                        }}
+                      >
+                        <ListItemText
+                          primary={
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1,
+                              }}
+                            >
+                              <Typography variant="body2" fontWeight="medium">
+                                {option.aeropuerto}
+                              </Typography>
+                              <Chip
+                                label={option.codIATA}
+                                size="small"
+                                variant="outlined"
+                                sx={{ fontSize: "0.75rem" }}
+                              />
+                            </Box>
+                          }
+                          secondary={`OACI: ${option.codOACI}`}
+                        />
+                      </ListItem>
+                    ))}
+
+                    {filteredOptions.length === 0 && (
+                      <ListItem>
+                        <ListItemText
+                          primary="No se encontraron resultados"
+                          secondary="Intenta con otro término de búsqueda"
+                        />
+                      </ListItem>
+                    )}
+                  </List>
+                </DialogContent>
+              </Dialog>
+            </>
+          ) : (
+            // Versión Desktop con Autocomplete
+            <Autocomplete
+              options={options}
+              getOptionLabel={(option) =>
+                `${option.aeropuerto} (${option.codIATA})`
+              }
+              value={options.find((option) => option.id === value) || null}
+              onChange={(_, newValue) => onChange(newValue?.id || "")}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  margin={margin}
+                  fullWidth={fullWidth}
+                  error={!!error}
+                  helperText={error?.message}
+                />
+              )}
+              renderOption={(props, option) => (
+                <Box component="li" {...props}>
+                  <Box>
+                    <Typography variant="body2" fontWeight="medium">
+                      {option.aeropuerto}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      IATA: {option.codIATA} • OACI: {option.codOACI}
+                    </Typography>
+                  </Box>
+                </Box>
+              )}
+              filterOptions={(options, { inputValue }) => {
+                return options.filter(
+                  (option) =>
+                    option.aeropuerto
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase()) ||
+                    option.codIATA
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase()) ||
+                    option.codOACI
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase())
+                );
+              }}
+            />
+          )}
+        </>
       )}
     />
   );

@@ -4,31 +4,7 @@ import apiClient from "./csrfToken";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const sessionUrl = `${API_URL}/session`;
-
-interface SessionResponse {
-  authenticated: boolean;
-  user: {
-    dni: string;
-    oficialId: {
-      dni: string;
-      firstname: string;
-      lastname: string;
-      legajo: string;
-      id: string;
-      currentAirportId: {
-        aeropuerto: string;
-        codIATA: string;
-        codOACI: string;
-        id: string;
-      };
-      jerarquiaId: {
-        jerarquia: string;
-        id: string;
-      };
-    };
-    role: string;
-  };
-}
+import { SessionResponse } from "../types/auth";
 
 export function useSession(): UseQueryResult<SessionResponse, Error> {
   return useQuery({
