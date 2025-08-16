@@ -276,6 +276,7 @@ export function PersonalOneComponent({
               fullWidth
               size={isMobile ? "medium" : "small"}
               type="text"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               inputRef={(input) => {
                 if (personalQuery.error && shouldSearch && input) {
                   setTimeout(() => input.focus(), 100);
@@ -511,7 +512,10 @@ export function PersonalOneComponent({
         open={snackbarOpen}
         autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: isMobile ? "top" : "bottom",
+          horizontal: "center",
+        }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}

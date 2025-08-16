@@ -342,6 +342,7 @@ export function VehiculoComponent({
               fullWidth
               size={isMobile ? "medium" : "small"}
               type="text"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               inputRef={(input) => {
                 if (vehiculoQuery.error && shouldSearch && input) {
                   setTimeout(() => input.focus(), 100);
@@ -588,6 +589,7 @@ export function VehiculoComponent({
                   label="Número Interno"
                   fullWidth
                   size={isMobile ? "medium" : "small"}
+                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                   inputRef={methods.register("numInterno").ref}
                   error={!!methods.formState.errors.numInterno}
                   helperText={
@@ -639,7 +641,10 @@ export function VehiculoComponent({
         open={snackbarOpen}
         autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: isMobile ? "top" : "bottom",
+          horizontal: "center",
+        }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}

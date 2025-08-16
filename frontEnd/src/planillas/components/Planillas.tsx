@@ -27,6 +27,7 @@ import { DatosNovedades } from "./planillaComponents/datosNovedades";
 
 interface PlanillaProps {
   activeStep: number;
+  setPlanillaStep: (step: number) => void;
   setErrorMessage: (message: string | null) => void;
   clearErrorMessage: () => void;
   onBack: (data: boolean) => void;
@@ -34,16 +35,19 @@ interface PlanillaProps {
   onPrevious: () => void;
   onFinalize: () => Promise<void>;
   user: User | null;
+  setIsReviewing: (isReviewing: boolean) => void;
 }
 
 export function Planillas({
   activeStep,
+  setPlanillaStep,
   setErrorMessage,
   clearErrorMessage,
   onBack,
   onNext,
   onPrevious,
   onFinalize,
+  setIsReviewing,
 }: PlanillaProps) {
   const { validateCurrentStep } = useStepValidation(
     activeStep,
@@ -53,6 +57,10 @@ export function Planillas({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const sendBack = () => {
+    if (activeStep === 6) {
+      setIsReviewing(false);
+    }
+    setPlanillaStep(activeStep - 1);
     onBack(true);
   };
 
@@ -60,12 +68,15 @@ export function Planillas({
     clearErrorMessage();
     const isValid = await validateCurrentStep();
     if (isValid) {
+      setPlanillaStep(activeStep + 1);
       onNext();
     }
   };
 
   const handleFinalize = async () => {
     clearErrorMessage();
+    setIsReviewing(false);
+    setPlanillaStep(activeStep + 1);
     await onFinalize();
   };
 
@@ -108,6 +119,8 @@ export function Planillas({
         overflowY: "auto",
       }}
     >
+      {/* Botón de ayuda específico para el paso actual */}
+
       <FormStepper activeStep={activeStep} />
       <Stack
         sx={{

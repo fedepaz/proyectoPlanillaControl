@@ -21,6 +21,7 @@ import {
 import { RHFTextField } from "../../components/RHFTextField";
 import { AxiosError } from "axios";
 import { ResetPasswordApprovedPage } from "./ResetPasswordApprovedPage";
+import { ResetPasswordWelcomeModal } from "./helpComponents/ResetPasswordWelcomeModal";
 
 interface ResetPasswordProps {
   onResetPassword: (data: boolean) => void;
@@ -45,6 +46,7 @@ function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
   const [successMessage, setSuccessMessage] = useState("");
   const [isApproved, setIsApproved] = useState(false);
   const [requestId, setRequestId] = useState("");
+  const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
     if (isSuccess && mutationData) {
@@ -60,8 +62,16 @@ function ResetPasswordPage({ onResetPassword }: ResetPasswordProps) {
   const onSubmit = (data: ResetPasswordRequestSchema) => {
     requestResetPassword(data);
   };
+  const handleGetStarted = () => {
+    setShowWelcome(false);
+  };
 
-  return isApproved ? (
+  return showWelcome ? (
+    <ResetPasswordWelcomeModal
+      open={showWelcome}
+      onGetStarted={handleGetStarted}
+    />
+  ) : isApproved ? (
     <ResetPasswordApprovedPage requestId={requestId} />
   ) : (
     <FormProvider {...methods}>

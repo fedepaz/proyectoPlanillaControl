@@ -68,7 +68,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
     if (statusCode) {
       if (statusCode === 401 || statusCode === 403) {
         return {
-          icon: <LockOutlined sx={{ fontSize: 48 }} />,
+          icon: (
+            <LockOutlined
+              sx={{
+                fontSize: 48,
+                color: "error.main",
+              }}
+            />
+          ),
           title: translatedError.title,
           description: translatedError.message,
           canRetry: translatedError.canRetry,
@@ -77,7 +84,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
       if (statusCode >= 500) {
         return {
-          icon: <Error sx={{ fontSize: 48 }} />,
+          icon: (
+            <Error
+              sx={{
+                fontSize: 48,
+                color: "error.main",
+              }}
+            />
+          ),
           title: translatedError.title,
           description: translatedError.message,
           canRetry: translatedError.canRetry,
@@ -86,7 +100,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
       if (statusCode >= 400) {
         return {
-          icon: <Error sx={{ fontSize: 48 }} />,
+          icon: (
+            <Error
+              sx={{
+                fontSize: 48,
+                color: "error.main",
+              }}
+            />
+          ),
           title: translatedError.title,
           description: translatedError.message,
           canRetry: translatedError.canRetry,
@@ -102,7 +123,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
       message.includes("timeout")
     ) {
       return {
-        icon: <Wifi sx={{ fontSize: 48 }} />,
+        icon: (
+          <Wifi
+            sx={{
+              fontSize: 48,
+              color: "error.main",
+            }}
+          />
+        ),
         title: translatedError.title,
         description: translatedError.message,
         canRetry: translatedError.canRetry,
@@ -111,7 +139,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
     if (message.includes("unauthorized") || message.includes("forbidden")) {
       return {
-        icon: <LockOutlined sx={{ fontSize: 48 }} />,
+        icon: (
+          <LockOutlined
+            sx={{
+              fontSize: 48,
+              color: "error.main",
+            }}
+          />
+        ),
         title: translatedError.title,
         description: translatedError.message,
         canRetry: translatedError.canRetry,
@@ -120,7 +155,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
 
     if (message.includes("server error") || message.includes("internal")) {
       return {
-        icon: <Error sx={{ fontSize: 48 }} />,
+        icon: (
+          <Error
+            sx={{
+              fontSize: 48,
+              color: "error.main",
+            }}
+          />
+        ),
         title: translatedError.title,
         description: translatedError.message,
         canRetry: translatedError.canRetry,
@@ -128,7 +170,14 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
     }
 
     return {
-      icon: <Error sx={{ fontSize: 48 }} />,
+      icon: (
+        <Error
+          sx={{
+            fontSize: 48,
+            color: "error.main",
+          }}
+        />
+      ),
       title: translatedError.title,
       description: translatedError.message,
       canRetry: translatedError.canRetry,

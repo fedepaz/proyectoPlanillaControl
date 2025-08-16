@@ -146,6 +146,7 @@ export function DatosVuelo() {
         name="datosVuelo.posicion"
         label="Posición"
         helperText="Posición de la aeronave."
+        inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
       />
     </Stack>
   );

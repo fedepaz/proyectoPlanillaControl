@@ -57,6 +57,7 @@ export function CodVueloComponent({
     useState<CodVueloOption | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { setError } = useAppError();
 
@@ -338,6 +339,7 @@ export function CodVueloComponent({
             onChange={(e) => setNewCodVueloNumber(e.target.value)}
             variant="outlined"
             helperText="Código del vuelo"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -389,7 +391,10 @@ export function CodVueloComponent({
         open={snackbarOpen}
         autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: isMobile ? "top" : "bottom",
+          horizontal: "center",
+        }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}

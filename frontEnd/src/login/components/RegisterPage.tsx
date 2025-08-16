@@ -26,6 +26,7 @@ import {
 } from "../types/modelsSchema";
 import { RHFTextField } from "../../components/RHFTextField";
 import { OficialSubmitPage } from "./OficialSubmitPage";
+import { RegisterWelcomeModal } from "./helpComponents/RegisterWelcomeModal";
 
 interface OficialData {
   dni: string;
@@ -46,6 +47,7 @@ function RegisterPage({ onBackHome }: RegisterPageProps) {
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [oficialData, setOficialData] = useState<OficialData | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const methods = useForm<CredentialsSchema>({
     resolver: zodResolver(credentialsSchema),
@@ -99,7 +101,13 @@ function RegisterPage({ onBackHome }: RegisterPageProps) {
     onBackHome(true);
   };
 
-  return isFirstStep ? (
+  const handleGetStarted = () => {
+    setShowWelcome(false);
+  };
+
+  return showWelcome ? (
+    <RegisterWelcomeModal open={showWelcome} onGetStarted={handleGetStarted} />
+  ) : isFirstStep ? (
     <OficialSubmitPage onSuccess={handleOficialSubmit} onBackHome={onRegreso} />
   ) : (
     <FormProvider {...methods}>
@@ -206,7 +214,7 @@ function RegisterPage({ onBackHome }: RegisterPageProps) {
               id="password"
               autoComplete="new-password"
               disabled={showSuccessMessage}
-              helperText="La contraseña debe tener al menos 9 caracteres. Y no puede ser 123456789"
+              helperText="La contraseña debe tener al menos 9 caracteres. Y no puede ser 123456789."
             />
             <Divider sx={{ my: 3 }} />
 

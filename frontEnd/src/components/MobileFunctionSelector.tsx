@@ -206,6 +206,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
             value={grupo}
             onChange={(e) => setGrupo(e.target.value)}
             size="small"
+            inputMode="numeric"
             InputProps={{
               startAdornment: <Group sx={{ mr: 1, color: "text.secondary" }} />,
             }}

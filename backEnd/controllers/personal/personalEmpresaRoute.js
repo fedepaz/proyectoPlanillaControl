@@ -187,7 +187,7 @@ personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
 
       if (personalInEmpresa) {
         const error = new Error();
-        error.status = 404;
+        error.status = 409;
         error.name = "PersonalRegistrado";
         error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalSeguridadEncontrado.empresa.empresa} con el nombre de ${personalSeguridadEncontrado.firstname} ${personalSeguridadEncontrado.lastname}`;
         throw error;
@@ -203,7 +203,7 @@ personalEmpresaRouter.post("/busqueda", async (req, res, next) => {
 
       if (personalInEmpresa) {
         const error = new Error();
-        error.status = 404;
+        error.status = 409;
         error.name = "PersonalRegistrado";
         error.message = `El DNI ${dni} ya esta registrado en la empresa ${personalEncontrado.empresa.empresa} con el nombre de ${personalEncontrado.firstname} ${personalEncontrado.lastname}`;
         throw error;

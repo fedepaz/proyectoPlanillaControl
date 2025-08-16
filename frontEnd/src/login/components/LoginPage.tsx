@@ -14,7 +14,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  IconButton,
 } from "@mui/material";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
@@ -72,6 +76,7 @@ function LoginPage({ onLogin, onRegister, onResetPassword }: LoginPageProps) {
   } = useLogin();
 
   const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isError && mutationError instanceof AxiosError) {
@@ -101,6 +106,14 @@ function LoginPage({ onLogin, onRegister, onResetPassword }: LoginPageProps) {
 
   const onResetPasswordButton = () => {
     onResetPassword(true);
+  };
+
+  const onShowPassword = () => {
+    setShowPassword(!showPassword);
+    const timeoout = setTimeout(() => {
+      setShowPassword(!showPassword);
+    }, 2000);
+    return () => clearTimeout(timeoout);
   };
 
   return (
@@ -201,18 +214,33 @@ function LoginPage({ onLogin, onRegister, onResetPassword }: LoginPageProps) {
               label="DNI"
               name="dni"
               autoComplete="dni"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               autoFocus
             />
-            <RHFTextField<LoginSchema>
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+
+            <Box sx={{ position: "relative" }}>
+              <RHFTextField<LoginSchema>
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                id="password"
+                autoComplete="current-password"
+                inputProps={{ type: showPassword ? "text" : "password" }}
+              />
+              <IconButton
+                onClick={onShowPassword}
+                sx={{
+                  position: "absolute",
+                  top: 25,
+                  right: 10,
+                  p: 0.5,
+                }}
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </Box>
             <Button
               type="submit"
               fullWidth

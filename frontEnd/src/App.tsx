@@ -15,6 +15,7 @@ import { View } from "./types/types";
 import { useAuth } from "./hooks/useAuth";
 import { AuthProvider } from "./provider/AuthContextProvider";
 import WelcomeModal from "./login/components/WelcomeModal";
+import { PlanillaStepProvider } from "./provider/PlanillaStepProvider";
 
 const csrfTokenRoute = "/csrf-token";
 
@@ -23,6 +24,8 @@ function AppContent() {
   const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
   const [showWelcome, setShowWelcome] = useState(false);
   const [shouldLoadWelcome, setShouldLoadWelcome] = useState(false);
+  const [currentStep, setCurrentStep] = useState<number | null>(null);
+  const [isReviewing, setIsReviewing] = useState(false);
 
   const {
     user,
@@ -88,6 +91,13 @@ function AppContent() {
     fetchCsrfToken();
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (currentView !== View.GENERATE_PLANILLAS) {
+      setCurrentStep(null);
+      setIsReviewing(false);
+    }
+  }, [currentView]);
+
   const handleRegister = useCallback(() => {
     handleNavigate(View.REGISTER);
   }, [handleNavigate]);
@@ -114,6 +124,8 @@ function AppContent() {
 
   const CurrentViewComponent = viewComponents[currentView];
 
+  const effectiveStep = isReviewing ? 6 : currentStep;
+
   if (isLoading) {
     return (
       <ThemeProvider theme={theme}>
@@ -134,7 +146,12 @@ function AppContent() {
     );
   }
 
-  if (isError && error && typeof error === "object") {
+  if (
+    isError &&
+    error &&
+    typeof error === "object" &&
+    currentView !== View.GENERATE_PLANILLAS
+  ) {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -172,13 +189,15 @@ function AppContent() {
           overflow: "hidden",
         }}
       >
-        <PlanillasNavbar
-          toggleColorMode={toggleColorMode}
-          onLogout={handleLogout}
-          isLoggedIn={isLoggedIn}
-          onBackHome={handleBack}
-          userInfo={userInfo}
-        />
+        <PlanillaStepProvider step={effectiveStep}>
+          <PlanillasNavbar
+            toggleColorMode={toggleColorMode}
+            onLogout={handleLogout}
+            isLoggedIn={isLoggedIn}
+            onBackHome={handleBack}
+            userInfo={userInfo}
+          />
+        </PlanillaStepProvider>
         <Box
           component="main"
           sx={{
@@ -192,7 +211,11 @@ function AppContent() {
           }}
         >
           <React.Suspense fallback={<Loading />}>
-            <CurrentViewComponent {...viewProps} />
+            <CurrentViewComponent
+              {...viewProps}
+              setPlanillaStep={setCurrentStep}
+              setIsReviewing={setIsReviewing}
+            />
           </React.Suspense>
         </Box>
 

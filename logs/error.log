@@ -17124,4 +17124,452 @@
     at async file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:61:18
     ---------------------
 
+    [2025-08-15T14:45:08.568Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T14:45:23.314Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T14:47:13.974Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T14:49:14.868Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T15:23:09.593Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T15:58:28.464Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T17:03:28.679Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:07:05.427Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:09:15.539Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:09:18.277Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:09:22.109Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:10:06.125Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:11:36.403Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:12:42.649Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:13:46.994Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:13:53.355Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:16:18.823Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:16:21.244Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:29:07.867Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:30:50.951Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:31:46.816Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:32:14.285Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:33:43.516Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:33:45.448Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:33:59.120Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T18:35:23.509Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T19:13:15.420Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
+    [2025-08-15T23:07:19.919Z]
+    URL: /personalEmpresa/busqueda
+    Method: POST
+    Body: {"dni":"45123123","empresa":"685789b67d1c81c348dab263"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: PersonalRegistrado: El DNI 45123123 ya esta registrado en la empresa PRUEBAHANDLING con el nombre de ROBERTO GOMEZ BOLAÑOS
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/personal/personalEmpresaRoute.js:205:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    ---------------------
+
     

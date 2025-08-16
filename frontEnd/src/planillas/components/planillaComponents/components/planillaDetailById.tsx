@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Alert,
@@ -39,6 +39,8 @@ import { usePlanillaID } from "../../../services/planillas";
 import { formatDate, formatTime } from "../../../types/searchTypes";
 
 import PlanillaPDFGenerator from "../../planillaPrint/PlanillaPDFGenerator";
+import { useAuth } from "../../../../hooks/useAuth";
+import SuccessHelpModal from "../../planillaHelp/SuccessHelpModal";
 
 interface PlanillaDetailByIdProps {
   open: boolean;
@@ -54,6 +56,8 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   isSuccessView = false,
 }) => {
   const { data, isLoading, isError, error } = usePlanillaID(planillaId);
+  const { userInfo } = useAuth();
+  const [showSuccessHelp, setShowSuccessHelp] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -61,9 +65,27 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
   // Don't fetch data if modal is not open
   const shouldFetch = open && planillaId;
 
+  useEffect(() => {
+    if (!isSuccessView || !open) return;
+    if (isLoading) return;
+    if (isError) return;
+    const viewedKey = `successHelpViewed_${userInfo?.user?.dni || "guest"}`;
+    if (!localStorage.getItem(viewedKey)) {
+      setShowSuccessHelp(true);
+    }
+  }, [isSuccessView, open, isLoading, isError, userInfo]);
+
   if (!shouldFetch) {
     return null;
   }
+
+  const handleSuccessHelpClose = () => {
+    setShowSuccessHelp(false);
+
+    // Marcar como visto en localStorage
+    const viewedKey = `successHelpViewed_${userInfo?.user?.dni || "guest"}`;
+    localStorage.setItem(viewedKey, "true");
+  };
 
   const renderContent = () => {
     if (isLoading) return <Loading />;
@@ -616,6 +638,12 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
 
       <DialogContent dividers sx={{ p: 0 }}>
         {renderContent()}
+        {isSuccessView && !isLoading && !isError && data && (
+          <SuccessHelpModal
+            open={showSuccessHelp}
+            onClose={handleSuccessHelpClose}
+          />
+        )}
       </DialogContent>
 
       <DialogActions

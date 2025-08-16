@@ -152,6 +152,7 @@ export function OficialSubmitPage({
               name="dni"
               autoComplete="dni"
               autoFocus
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             />
             <RHFTextField<OficialSchema>
               margin="normal"
@@ -182,6 +183,7 @@ export function OficialSubmitPage({
               name="legajo"
               autoComplete="legajo"
               autoFocus
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             />
             <RHFDropDownJerarquia<OficialSchema>
               margin="normal"

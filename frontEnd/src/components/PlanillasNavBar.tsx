@@ -27,6 +27,7 @@ import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import HelpButton from "../login/components/helpComponents/HelpButton";
 
 interface LoginResponse {
   authenticated: boolean;
@@ -339,6 +340,8 @@ export function PlanillasNavbar({
                   </Popover>
                 </>
               )}
+              {/* Botón de ayuda contextual */}
+              <HelpButton />
 
               {/* Theme toggle button - always visible */}
               <ThemeModeButton toggleColorMode={toggleColorMode} />

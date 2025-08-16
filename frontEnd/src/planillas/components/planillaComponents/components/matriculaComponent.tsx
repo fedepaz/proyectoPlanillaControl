@@ -393,7 +393,10 @@ export function MatriculaComponent({
         open={snackbarOpen}
         autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: fullScreen ? "top" : "bottom",
+          horizontal: "center",
+        }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}

@@ -62,6 +62,7 @@ export function AeropuertoComponent({
   const [inputValue, setInputValue] = useState("");
   const [showAddButton, setShowAddButton] = useState(false);
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { setError } = useAppError();
 
@@ -611,7 +612,10 @@ export function AeropuertoComponent({
         open={snackbarOpen}
         autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: isMobile ? "top" : "bottom",
+          horizontal: "center",
+        }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}

@@ -8,7 +8,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 
-import { CssBaseline, Snackbar, Alert, Box } from "@mui/material";
+import {
+  CssBaseline,
+  Snackbar,
+  Alert,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import ErrorPage from "../../components/Error";
 import Loading from "../../components/Loading";
@@ -21,9 +28,15 @@ import { PlanillaDetailById } from "./planillaComponents/components/planillaDeta
 
 interface PlanillasProviderProps {
   onBackHome: (data: boolean) => void;
+  setPlanillaStep: (step: number) => void;
+  setIsReviewing: (isReviewing: boolean) => void;
 }
 
-function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
+function PlanillasProvider({
+  onBackHome,
+  setPlanillaStep,
+  setIsReviewing,
+}: PlanillasProviderProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showReview, setShowReview] = useState(false);
@@ -32,6 +45,8 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
     null
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const theme = useTheme();
+  const isMobiile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const createPlanilla = useCreatePlanilla();
 
@@ -43,6 +58,10 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
   const { setValue, handleSubmit, getValues, reset } = methods;
 
   const { user, userInfo, error, isError, isLoading, refetch } = useAuth();
+
+  useEffect(() => {
+    setPlanillaStep(activeStep);
+  }, [activeStep, setPlanillaStep]);
 
   useEffect(() => {
     if (userInfo.authenticated && userInfo.user.oficialId.id) {
@@ -93,6 +112,7 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
     if (validationResult.success) {
       setShowReview(true);
+      setIsReviewing(true);
     } else {
       // Filter out horaFin errors for display
       const nonHoraFinErrors = validationResult.error.errors.filter(
@@ -137,6 +157,7 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
 
   const handleBackFromReview = () => {
     setShowReview(false);
+    setIsReviewing(false);
     setErrorMessage(null);
     setIsSubmitting(false);
   };
@@ -219,7 +240,10 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
           open={!!errorMessage}
           autoHideDuration={6000}
           onClose={clearErrorMessage}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          anchorOrigin={{
+            vertical: isMobiile ? "top" : "bottom",
+            horizontal: "center",
+          }}
         >
           <Alert
             onClose={clearErrorMessage}
@@ -249,7 +273,10 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
           open={!!errorMessage}
           autoHideDuration={6000}
           onClose={clearErrorMessage}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          anchorOrigin={{
+            vertical: isMobiile ? "top" : "bottom",
+            horizontal: "center",
+          }}
         >
           <Alert
             onClose={clearErrorMessage}
@@ -268,6 +295,8 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Planillas
           activeStep={activeStep}
+          setPlanillaStep={setPlanillaStep}
+          setIsReviewing={setIsReviewing}
           setErrorMessage={setErrorMessage}
           clearErrorMessage={clearErrorMessage}
           onBack={sendBack}
@@ -280,7 +309,10 @@ function PlanillasProvider({ onBackHome }: PlanillasProviderProps) {
           open={!!errorMessage}
           autoHideDuration={6000}
           onClose={clearErrorMessage}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          anchorOrigin={{
+            vertical: isMobiile ? "top" : "bottom",
+            horizontal: "center",
+          }}
         >
           <Alert
             onClose={clearErrorMessage}
