@@ -1,50 +1,97 @@
 import authClient from "./authClient";
 import { SessionResponse } from "../types/auth";
-import { LoginSchema } from "../login/types/modelsSchema";
-
-// Backup de sesión para casos donde las cookies fallan
-const SESSION_BACKUP_KEY = "user_session_backup";
+import { LoginSchema, RegisterSchema } from "../login/types/modelsSchema";
+import { sessionBackup } from "./sessionBackup";
+import axios from "axios";
 
 export const sessionService = {
   // Login
   login: async (credentials: LoginSchema): Promise<SessionResponse> => {
-    const response = await authClient.post<SessionResponse>(
-      "/session/login",
-      credentials
-    );
+    try {
+      const response = await authClient.post<SessionResponse>(
+        "/session/login",
+        credentials
+      );
 
-    // Solo guardar información básica del usuario, NO el token
-    if (response.data.authenticated) {
-      const userBackup = {
-        dni: response.data.user.dni,
-        role: response.data.user.role,
-        oficialId: response.data.user.oficialId,
-        timestamp: Date.now(),
-      };
-
-      // Guardar backup en múltiples lugares para iOS
-      try {
-        sessionStorage.setItem(SESSION_BACKUP_KEY, JSON.stringify(userBackup));
-        localStorage.setItem(SESSION_BACKUP_KEY, JSON.stringify(userBackup));
-      } catch (error) {
-        console.warn("Cannot save session backup:", error);
+      if (response.data.authenticated) {
+        sessionBackup.save(response.data);
+      } else {
+        sessionBackup.clear();
       }
-    }
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      sessionBackup.clear();
+      throw error;
+    }
   },
 
   // Verificar sesión
   getSession: async (): Promise<SessionResponse> => {
     try {
       const response = await authClient.get<SessionResponse>("/session");
+
+      if (response.data.authenticated) {
+        sessionBackup.save(response.data);
+      } else {
+        sessionBackup.clear();
+      }
+
       return response.data;
     } catch (error) {
-      // Si falla la cookie, intentar con backup local
-      const backup = getSessionBackup();
-      if (backup && isBackupValid(backup)) {
-        throw error; // Aún necesitamos validar con el servidor
+      sessionBackup.clear();
+
+      // If it's a 401, return unauthenticated instead of throwing
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        return {
+          authenticated: false,
+          message: "Unauthorized",
+          user: {
+            dni: "",
+            oficialId: {
+              dni: "",
+              firstname: "",
+              lastname: "",
+              legajo: "",
+              id: "",
+              currentAirportId: {
+                aeropuerto: "",
+                codIATA: "",
+                codOACI: "",
+                id: "",
+              },
+              jerarquiaId: {
+                jerarquia: "",
+                id: "",
+              },
+            },
+            role: "",
+          },
+        };
       }
+
+      throw error;
+    }
+  },
+
+  // Register with auto-login
+  register: async (
+    registerData: RegisterSchema
+  ): Promise<{ success: boolean; message: string; userID: string }> => {
+    try {
+      const response = await authClient.post<{
+        success: boolean;
+        message: string;
+        userID: string;
+      }>("/session/register", registerData);
+
+      // Registration doesn't auto-login based on your backend code
+      // So we clear any existing session data
+      sessionBackup.clear();
+
+      return response.data;
+    } catch (error) {
+      sessionBackup.clear();
       throw error;
     }
   },
@@ -53,33 +100,27 @@ export const sessionService = {
   logout: async (): Promise<void> => {
     try {
       await authClient.delete("/session");
+    } catch (error) {
+      console.warn("Logout request failed:", error);
+      // Continue with cleanup even if request fails
     } finally {
-      // Limpiar backups locales
-      sessionStorage.removeItem(SESSION_BACKUP_KEY);
-      localStorage.removeItem(SESSION_BACKUP_KEY);
+      sessionBackup.clear();
     }
   },
 
   // Verificar si hay sesión válida local (para UI optimista)
   hasLocalSession: (): boolean => {
-    const backup = getSessionBackup();
-    return backup && isBackupValid(backup);
+    const backup = sessionBackup.load();
+    return !!(backup && backup.authenticated && isBackupValid(backup));
+  },
+
+  // Clear all session data
+  clearSession: (): void => {
+    sessionBackup.clear();
   },
 };
 
-// Funciones auxiliares
-const getSessionBackup = () => {
-  try {
-    // Priorizar sessionStorage sobre localStorage
-    let backupStr = sessionStorage.getItem(SESSION_BACKUP_KEY);
-    if (!backupStr) {
-      backupStr = localStorage.getItem(SESSION_BACKUP_KEY);
-    }
-    return backupStr ? JSON.parse(backupStr) : null;
-  } catch {
-    return null;
-  }
-};
+// Helper function
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isBackupValid = (backup: any): boolean => {

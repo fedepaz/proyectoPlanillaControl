@@ -6,13 +6,9 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import apiClient from "../../services/csrfToken";
 
 import { RegisterResponse } from "../../types/auth";
-
-const API_URL = import.meta.env.VITE_API_URL;
-
-const registerUrl = "/session/register";
+import { sessionService } from "../../services/sessionService";
 
 export function useRegister(): UseMutationResult<
   RegisterResponse,
@@ -24,11 +20,8 @@ export function useRegister(): UseMutationResult<
   return useMutation({
     mutationFn: async (data: RegisterSchema) => {
       try {
-        const res = await apiClient.post<RegisterResponse>(
-          `${API_URL}${registerUrl}`,
-          data
-        );
-        return res.data;
+        const response = await sessionService.register(data);
+        return response;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           throw new Error(
@@ -39,15 +32,23 @@ export function useRegister(): UseMutationResult<
       }
     },
 
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: [""] });
+    onSuccess: async (data) => {
+      queryClient.removeQueries();
+      const successMessage =
+        data.message ||
+        "Registro exitoso, haz clic en el enlace para confirmar tu cuenta";
+
+      console.log(successMessage);
     },
     onError: (error) => {
-      const errorMessage =
-        error instanceof AxiosError
-          ? error.response?.data?.message
-          : "Ocurrió un error inesperado";
-      return errorMessage;
+      sessionService.clearSession();
+      if (error instanceof AxiosError) {
+        const errorMessage =
+          error.response?.data?.message ?? "Error de registro";
+        console.error("Error de registro: ", errorMessage);
+      } else {
+        console.error("Error inesperado de registro: ", error);
+      }
     },
   });
 }

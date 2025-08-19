@@ -14,9 +14,6 @@ dotenv.config();
 
 const sessionRouter = express.Router();
 
-const FRONTEND_URL = process.env.FRONTEND_URL;
-const FRONTEND_URL_PREVIEW = process.env.FRONTEND_URL_PREVIEW;
-
 // Configuración de cookies mejorada
 const getCookieConfig = (isProduction) => ({
   httpOnly: true,
