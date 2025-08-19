@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 import { LoginSchema } from "../types/modelsSchema";
 import {
@@ -7,10 +7,8 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { LoginResponse } from "../../types/auth";
-import { sessionBackup } from "../../services/sessionBackup";
 
-const API_URL = import.meta.env.VITE_API_URL;
-const loginUrl = `${API_URL}/session/login`;
+import { sessionService } from "../../services/sessionService";
 
 export function useLogin(): UseMutationResult<
   LoginResponse,
@@ -21,27 +19,25 @@ export function useLogin(): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: LoginSchema) => {
-      const res = await axios.post<LoginResponse>(loginUrl, data, {
-        withCredentials: true,
-      });
-
-      if (res.data.authenticated) {
-        sessionBackup.save(res.data);
-      }
-
-      return res.data;
+      const response = await sessionService.login(data);
+      return response;
     },
-    onSuccess: async () => {
-      queryClient.removeQueries();
-      await queryClient.invalidateQueries({ queryKey: ["session"] });
-      window.location.href = "/";
+    onSuccess: async (data) => {
+      if (data.authenticated) {
+        queryClient.removeQueries();
+        await queryClient.invalidateQueries({ queryKey: ["session"] });
+        window.location.href = "/";
+      }
     },
     onError: (error) => {
-      sessionBackup.clear();
-      error instanceof AxiosError
-        ? error.response?.data?.message
-        : "Ocurrió un error inesperado";
-      return error;
+      sessionService.clearSession();
+      if (error instanceof AxiosError) {
+        const errorMessage =
+          error.response?.data?.message ?? "Error de autenticación";
+        console.error("Error de autenticación: ", errorMessage);
+      } else {
+        console.error("Error inesperado login: ", error);
+      }
     },
   });
 }

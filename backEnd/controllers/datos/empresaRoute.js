@@ -68,19 +68,6 @@ empresaRouter.post("/", async (req, res, next) => {
       throw error;
     }
 
-    const existingEmpresa = await Empresa.findOne({
-      empresa: empresa.toUpperCase(),
-      tipoEmpresa,
-    });
-
-    if (existingEmpresa) {
-      const error = new Error();
-      error.status = 409;
-      error.name = "EmpresaAlreadyExists";
-      error.message = `Empresa ${empresa.toUpperCase()} already exists`;
-      throw error;
-    }
-
     const newEmpresa = new Empresa({
       empresa: empresa.toUpperCase(),
       tipoEmpresa,
@@ -123,7 +110,7 @@ empresaRouter.patch("/:id/needsValidation", async (req, res, next) => {
     }
 
     if (!empresa.isUserCreated) {
-      const error = new Error("This airport is not a system-generated airport");
+      const error = new Error("This empresa is not user created");
       error.status = 400;
       error.name = "InvalidOperation";
       throw error;
