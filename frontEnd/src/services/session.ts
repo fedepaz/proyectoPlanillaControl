@@ -5,6 +5,7 @@ import apiClient from "./csrfToken";
 const API_URL = import.meta.env.VITE_API_URL;
 const sessionUrl = `${API_URL}/session`;
 import { SessionResponse } from "../types/auth";
+import { sessionBackup } from "./sessionBackup";
 
 export function useSession(): UseQueryResult<SessionResponse, Error> {
   return useQuery({
@@ -14,9 +15,16 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
         const res = await apiClient.get<SessionResponse>(sessionUrl, {
           withCredentials: true,
         });
+        if (res.data.authenticated) {
+          sessionBackup.save(res.data); // ← NUEVA LÍNEA
+        }
 
         return res.data;
       } catch (error) {
+        const backup = sessionBackup.load(); // ← NUEVA LÍNEA
+        if (backup && backup.authenticated) {
+          return backup;
+        }
         if (axios.isAxiosError(error)) {
           if (!error.response) {
             throw new Error(
@@ -36,8 +44,8 @@ export function useSession(): UseQueryResult<SessionResponse, Error> {
       if (error instanceof Error) {
         const message = error.message.toLowerCase();
         if (
-          message.includes("unable to connect") ||
-          message.includes("internal server error")
+          message.includes("Está dificil de conectarse") ||
+          message.includes("Error interno del servidor, estamos trabajando")
         ) {
           return failureCount < 3;
         }

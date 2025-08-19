@@ -16,27 +16,32 @@ import {
   InputAdornment,
   Chip,
 } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { UnidadOption } from "../types/option";
 
-interface RHFDropDownCurrentAirportProps<T> {
-  name: keyof T;
+interface RHFDropDownCurrentAirportProps<T extends FieldValues> {
+  name: FieldPath<T>;
   options: UnidadOption[];
   label: string;
   margin?: "none" | "dense" | "normal";
   fullWidth?: boolean;
 }
 
-export function RHFDropDownCurrentAirport<T>({
+export function RHFDropDownCurrentAirport<T extends FieldValues>({
   name,
   options,
   label,
   margin = "none",
   fullWidth = false,
 }: RHFDropDownCurrentAirportProps<T>) {
-  const { control, setValue } = useFormContext<T>();
+  const { control } = useFormContext<T>();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -47,8 +52,7 @@ export function RHFDropDownCurrentAirport<T>({
   const filteredOptions = options.filter(
     (option) =>
       option.aeropuerto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      option.codIATA.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      option.codOACI.toLowerCase().includes(searchTerm.toLowerCase())
+      option.codIATA.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleMobileSelection = (
@@ -80,10 +84,10 @@ export function RHFDropDownCurrentAirport<T>({
                 label={label}
                 value={getDisplayValue(value)}
                 onClick={() => setMobileDialogOpen(true)}
-                readOnly
                 error={!!error}
                 helperText={error?.message}
                 InputProps={{
+                  readOnly: true,
                   endAdornment: (
                     <InputAdornment position="end">
                       <SearchIcon />

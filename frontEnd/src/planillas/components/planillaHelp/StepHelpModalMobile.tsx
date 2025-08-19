@@ -170,10 +170,15 @@ function StepHelpModalMobile({
       {/* Acciones */}
       <Box
         sx={{
-          py: 3,
+          position: "sticky",
+          bottom: 0,
+          mt: "auto", // pushes it to the bottom if content is short
           background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
           color: theme.palette.primary.contrastText,
           textAlign: "center",
+          pt: 2,
+          pb: 3,
+          px: 2,
         }}
       >
         <Container>
@@ -189,6 +194,8 @@ function StepHelpModalMobile({
               borderRadius: 50,
               backgroundColor: theme.palette.primary.contrastText,
               color: theme.palette.primary.main,
+              minWidth: "80%",
+              boxShadow: 3,
             }}
           >
             Entiendo, continuar

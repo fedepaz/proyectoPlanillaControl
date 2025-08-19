@@ -5,6 +5,7 @@ import { useLogout } from "../login/services/logout";
 import { View } from "../types/types";
 import { AuthContext, AuthContextType } from "../contexts/AuthContext";
 import { LoginResponse } from "../types/auth";
+import { sessionBackup } from "../services/sessionBackup";
 
 const defaultUserInfo: LoginResponse = {
   authenticated: false,
@@ -87,6 +88,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(null);
         setUserInfo(defaultUserInfo);
         setCurrentView(View.LOGIN);
+        sessionBackup.clear();
       },
     });
   }, [logout]);

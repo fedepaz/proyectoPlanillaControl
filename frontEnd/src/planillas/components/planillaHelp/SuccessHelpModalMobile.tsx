@@ -163,10 +163,15 @@ function SuccessHelpModalMobile({
       {/* Acciones */}
       <Box
         sx={{
-          py: 3,
+          position: "sticky",
+          bottom: 0,
+          mt: "auto", // pushes it to the bottom if content is short
           background: `linear-gradient(135deg, ${theme.palette.success.main} 0%, ${theme.palette.success.dark} 100%)`,
           color: theme.palette.success.contrastText,
           textAlign: "center",
+          pt: 2,
+          py: 3,
+          px: 2,
         }}
       >
         <Container>

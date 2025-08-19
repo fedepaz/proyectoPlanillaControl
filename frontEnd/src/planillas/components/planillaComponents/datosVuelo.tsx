@@ -98,7 +98,7 @@ export function DatosVuelo() {
       />
       {/*destino | origen*/}
       <AeropuertoComponent
-        label="Destino"
+        label={canRenderDateTimePicker ? "Destino" : "Origen"}
         onAeropuertoSelected={sendAeropuerto}
       />
       {!canRenderDateTimePicker && (
