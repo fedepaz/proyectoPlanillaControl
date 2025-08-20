@@ -1,5 +1,5 @@
 import express from "express";
-import dotenv from "dotenv";
+import dotenv, { config } from "dotenv";
 import { UserRepository } from "./userRepository.js";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils.js";
 import { ResetPasswordRepository } from "./resetPasswordRepository.js";
@@ -9,6 +9,7 @@ import {
   PersonalEmpresa,
   PersonalSeguridadEmpresa,
 } from "../../models/personalModel.js";
+import { get } from "mongoose";
 
 dotenv.config();
 
@@ -18,11 +19,10 @@ const sessionRouter = express.Router();
 const getCookieConfig = (isProduction) => ({
   httpOnly: true,
   maxAge: 43200000, // 12 horas
-  sameSite: isProduction ? "none" : "lax", // Cambiar de "strict" a "lax" para mejor compatibilidad
+  sameSite: isProduction ? "none" : "lax",
   secure: isProduction,
   signed: true,
   path: "/",
-  // No especificar domain para mejor compatibilidad cross-browser
 });
 
 sessionRouter.get("/", (req, res) => {
@@ -98,6 +98,13 @@ sessionRouter.post("/login", async (req, res, next) => {
 
     const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
     res.cookie("access_token", token, cookieConfig);
+
+    console.log("setCookieConfig", {
+      name: "access_token",
+      value: token.substring(0, 15) + "...",
+      configSet: getCookieConfig(process.env.NODE_ENV === "production"),
+      configGet: cookieConfig,
+    });
 
     res.status(200).json({
       authenticated: true,

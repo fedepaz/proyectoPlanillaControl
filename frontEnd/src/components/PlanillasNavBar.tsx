@@ -93,6 +93,8 @@ export function PlanillasNavbar({
     if (!userInfo?.user?.oficialId) return "U";
 
     const { firstname, lastname } = userInfo.user.oficialId;
+    if (firstname === undefined || lastname === undefined) return "U";
+
     return `${firstname.charAt(0)}${lastname.charAt(0)}`;
   };
 
@@ -100,6 +102,7 @@ export function PlanillasNavbar({
     if (!userInfo?.user?.oficialId) return "";
 
     const { firstname, lastname } = userInfo.user.oficialId;
+    if (firstname === undefined || lastname === undefined) return "";
     return `${firstname} ${lastname}`;
   };
 
@@ -108,6 +111,7 @@ export function PlanillasNavbar({
 
     // Format role - capitalize first letter
     const role = userInfo.user.role;
+    if (role === undefined) return "";
     return role.charAt(0).toUpperCase() + role.slice(1);
   };
 
@@ -115,7 +119,9 @@ export function PlanillasNavbar({
     if (!userInfo?.user?.oficialId?.jerarquiaId) return "";
 
     // Format rank - capitalize first letter
+
     const rank = userInfo.user.oficialId.jerarquiaId.jerarquia;
+    if (rank === undefined) return "";
     return rank.charAt(0).toUpperCase() + rank.slice(1);
   };
 
@@ -123,12 +129,14 @@ export function PlanillasNavbar({
   const getAirportCode = () => {
     if (!userInfo?.user?.oficialId?.currentAirportId) return "";
 
+    if (userInfo.user.oficialId.currentAirportId === undefined) return "";
     return userInfo.user.oficialId.currentAirportId.codIATA;
   };
 
   // Get legajo (ID number)
   const getLegajo = () => {
     if (!userInfo?.user?.oficialId) return "";
+    if (userInfo.user.oficialId === undefined) return "";
 
     return userInfo.user.oficialId.legajo;
   };

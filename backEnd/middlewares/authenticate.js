@@ -14,6 +14,9 @@ export const authenticate = (req, res, next) => {
       ? req.cookies.access_token
       : req.signedCookies.access_token;
 
+  console.log("cookies recibidas en request" + req.cookies);
+  console.log("cookiesFirmadas recibidas en request" + req.signedCookies);
+  console.log("token recibido en request" + token);
   if (!token) {
     const error = new Error();
     error.name = "AuthenticationError";

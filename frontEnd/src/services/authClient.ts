@@ -9,8 +9,14 @@ const authClient = axios.create({
 });
 
 authClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log("response recibida en interceptor", response);
+    console.log("cookies recibidas en interceptor", document.cookie);
+    return response;
+  },
   (error) => {
+    console.log("error recibida en interceptor", error);
+    console.log("cookies recibidas en interceptor", document.cookie);
     if (error.response?.status === 401) {
       try {
         sessionStorage.removeItem("user_session_backup");

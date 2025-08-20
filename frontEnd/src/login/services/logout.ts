@@ -1,24 +1,15 @@
-import {
-  useMutation,
-  UseMutationResult,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios from "axios";
-import apiClient from "../../services/csrfToken";
 
-const logoutUrl = "/session/";
+import { sessionService } from "../../services/sessionService";
 
 export function useLogout(): UseMutationResult<unknown, Error, void> {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["logout"],
     mutationFn: async () => {
       try {
-        const res = await apiClient.delete(logoutUrl, {
-          withCredentials: true,
-        });
-        queryClient.clear();
-        return res.data;
+        const response = await sessionService.logout();
+        return response;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (!error.response) {
