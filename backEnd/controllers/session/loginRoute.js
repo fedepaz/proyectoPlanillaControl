@@ -14,16 +14,28 @@ import { get } from "mongoose";
 dotenv.config();
 
 const sessionRouter = express.Router();
+const getCookieConfig = (isProduction) => {
+  const baseConfig = {
+    httpOnly: true,
+    maxAge: 43200000, // 12 horas
+    path: "/",
+    signed: true,
+  };
 
-// Configuración de cookies mejorada
-const getCookieConfig = (isProduction) => ({
-  httpOnly: true,
-  maxAge: 43200000, // 12 horas
-  sameSite: isProduction ? "none" : "lax",
-  secure: isProduction,
-  signed: true,
-  path: "/",
-});
+  if (isProduction) {
+    return {
+      ...baseConfig,
+      secure: true,
+      sameSite: "none", // Para cross-origin requests
+    };
+  } else {
+    return {
+      ...baseConfig,
+      secure: false,
+      sameSite: "lax", // Para desarrollo local
+    };
+  }
+};
 
 sessionRouter.get("/", (req, res) => {
   try {
