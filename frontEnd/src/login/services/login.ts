@@ -26,7 +26,6 @@ export function useLogin(): UseMutationResult<
       if (data.authenticated) {
         queryClient.removeQueries();
         await queryClient.invalidateQueries({ queryKey: ["session"] });
-        window.location.href = "/";
       }
     },
     onError: (error) => {

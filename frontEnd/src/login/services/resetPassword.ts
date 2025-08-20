@@ -68,7 +68,7 @@ export function useResetPasswordService(): UseMutationResult<
     },
     onSuccess: async () => {
       queryClient.removeQueries();
-      window.location.href = "/";
+
       await queryClient.invalidateQueries({ queryKey: ["session"] });
     },
     onError: (error) => {

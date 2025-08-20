@@ -1,28 +1,24 @@
 import axios from "axios";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import apiClient from "./csrfToken";
 
-const API_URL = import.meta.env.VITE_API_URL;
-const sessionUrl = `${API_URL}/session`;
 import { SessionResponse } from "../types/auth";
 import { sessionBackup } from "./sessionBackup";
+import { sessionService } from "./sessionService";
 
 export function useSession(): UseQueryResult<SessionResponse, Error> {
   return useQuery({
     queryKey: ["session"],
     queryFn: async () => {
       try {
-        const res = await apiClient.get<SessionResponse>(sessionUrl, {
-          withCredentials: true,
-        });
+        const res = await sessionService.getSession();
 
-        if (res.data.authenticated) {
-          sessionBackup.save(res.data);
-          return res.data;
+        if (res.authenticated) {
+          sessionBackup.save(res);
+          return res;
         } else {
           // Clear backup if server says not authenticated
           sessionBackup.clear();
-          return res.data; // Return the unauthenticated response
+          return res; // Return the unauthenticated response
         }
       } catch (error) {
         // Clear backup on error
