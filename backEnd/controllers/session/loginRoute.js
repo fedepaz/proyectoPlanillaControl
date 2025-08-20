@@ -9,7 +9,6 @@ import {
   PersonalEmpresa,
   PersonalSeguridadEmpresa,
 } from "../../models/personalModel.js";
-import { get } from "mongoose";
 
 dotenv.config();
 
@@ -19,20 +18,19 @@ const getCookieConfig = (isProduction) => {
     httpOnly: true,
     maxAge: 43200000, // 12 horas
     path: "/",
-    signed: true,
   };
 
   if (isProduction) {
     return {
       ...baseConfig,
-      secure: true,
       sameSite: "none", // Para cross-origin requests
+      secure: true,
     };
   } else {
     return {
       ...baseConfig,
-      secure: false,
       sameSite: "lax", // Para desarrollo local
+      secure: false,
     };
   }
 };

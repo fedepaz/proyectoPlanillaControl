@@ -12,18 +12,17 @@ export const authenticate = (req, res, next) => {
 
   console.log("=== COOKIE DEBUG INFO ===");
   console.log("Environment:", process.env.NODE_ENV);
-  console.log("All cookies:", req.cookies);
-  console.log("All signed cookies:", req.signedCookies);
+  console.log("All cookies:", JSON.stringify(req.cookies));
+  console.log("All signed cookies:", JSON.stringify(req.signedCookies));
   console.log("Headers:", req.headers.cookie);
   console.log("========================");
 
-  const token =
-    process.env.NODE_ENV === "test"
-      ? req.cookies.access_token
-      : req.signedCookies.access_token;
+  const token = req.cookies.access_token;
 
-  console.log("cookies recibidas en request" + req.cookies);
-  console.log("cookiesFirmadas recibidas en request" + req.signedCookies);
+  console.log("cookies recibidas en request" + JSON.stringify(req.cookies));
+  console.log(
+    "cookiesFirmadas recibidas en request" + JSON.stringify(req.signedCookies)
+  );
   console.log("token recibido en request" + token);
   if (!token) {
     const error = new Error();
