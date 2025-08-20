@@ -30,8 +30,11 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cookieParser());
-
+if (process.env.NODE_ENV === "test") {
+  app.use(cookieParser());
+} else {
+  app.use(cookieParser(process.env.COOKIE_SECRET));
+}
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
   app.use(limiter);

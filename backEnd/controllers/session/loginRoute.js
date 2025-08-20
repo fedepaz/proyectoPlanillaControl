@@ -18,6 +18,7 @@ const getCookieConfig = (isProduction) => {
     httpOnly: true,
     maxAge: 43200000, // 12 horas
     path: "/",
+    signed: true,
   };
 
   if (isProduction) {
