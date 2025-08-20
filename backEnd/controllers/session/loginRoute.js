@@ -9,21 +9,31 @@ import {
   PersonalEmpresa,
   PersonalSeguridadEmpresa,
 } from "../../models/personalModel.js";
-import { get } from "mongoose";
 
 dotenv.config();
 
 const sessionRouter = express.Router();
+const getCookieConfig = (isProduction) => {
+  const baseConfig = {
+    httpOnly: true,
+    maxAge: 43200000, // 12 horas
+    path: "/",
+  };
 
-// Configuración de cookies mejorada
-const getCookieConfig = (isProduction) => ({
-  httpOnly: true,
-  maxAge: 43200000, // 12 horas
-  sameSite: isProduction ? "none" : "lax",
-  secure: isProduction,
-  signed: true,
-  path: "/",
-});
+  if (isProduction) {
+    return {
+      ...baseConfig,
+      sameSite: "none", // Para cross-origin requests
+      secure: true,
+    };
+  } else {
+    return {
+      ...baseConfig,
+      sameSite: "lax", // Para desarrollo local
+      secure: false,
+    };
+  }
+};
 
 sessionRouter.get("/", (req, res) => {
   try {

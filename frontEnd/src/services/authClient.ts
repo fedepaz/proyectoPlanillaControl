@@ -4,8 +4,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const authClient = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
-  timeout: 10000,
 });
 
 authClient.interceptors.response.use(
