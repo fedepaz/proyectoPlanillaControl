@@ -17,7 +17,10 @@ export const authenticate = (req, res, next) => {
   console.log("Headers:", req.headers.cookie);
   console.log("========================");
 
-  const token = req.cookies.access_token;
+  const token =
+    process.env.NODE_ENV === "test"
+      ? req.cookies.access_token
+      : req.signedCookies.access_token;
 
   console.log("cookies recibidas en request" + JSON.stringify(req.cookies));
   console.log(
