@@ -75,11 +75,10 @@ app.get("/", (request, response) => {
   return response.status(234).send("planillasBackend");
 });
 app.use(cookieParser());
-app.use(csrfProtection);
-app.use("/csrf-token", crsfTokenRouter);
-
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
+app.use(csrfProtection);
+app.use("/csrf-token", crsfTokenRouter);
 
 // Apply CSRF protection only to /csrf-token route
 

@@ -79,6 +79,7 @@ function AppContent() {
           csrfTokenRoute
         );
         if (response.data.csrfToken) {
+          console.log("CSRF Token:", response.data.csrfToken);
           setCsrfToken(response.data.csrfToken);
         } else {
           console.error("Error fetching CSRF Token");

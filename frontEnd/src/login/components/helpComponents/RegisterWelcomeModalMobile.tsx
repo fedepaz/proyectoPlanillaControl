@@ -50,7 +50,7 @@ function RegisterWelcomeModalMobile({
           zIndex: theme.zIndex.modal,
           backgroundColor: theme.palette.background.default,
           overflowY: "auto",
-          minHeight: "100vh",
+          minHeight: ["100dvh", "100vh"],
           display: "flex",
           flexDirection: "column",
         }}

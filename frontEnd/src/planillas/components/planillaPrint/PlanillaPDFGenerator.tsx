@@ -366,7 +366,7 @@ const PlanillaPDFGenerator: React.FC<{
         PaperProps={{
           sx: {
             width: isMobile ? "100vw" : "90vw",
-            height: isMobile ? `${viewportHeight}px` : "90vh",
+            height: isMobile ? ["100dvh", `${viewportHeight}px`] : "90vh", // Use 100dvh if supported, else fallback
             maxWidth: "100vw",
             maxHeight: "100vh",
             margin: isMobile ? 0 : "auto",

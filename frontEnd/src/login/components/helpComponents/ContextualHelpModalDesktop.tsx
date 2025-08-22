@@ -36,7 +36,7 @@ function ContextualHelpModalDesktop({
         zIndex: theme.zIndex.modal,
         backgroundColor: alpha(theme.palette.background.default, 0.9),
         overflow: "auto",
-        minHeight: "100vh",
+  minHeight: ["100dvh", "100vh"],
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

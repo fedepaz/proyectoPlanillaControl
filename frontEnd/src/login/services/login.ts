@@ -33,7 +33,13 @@ export function useLogin(): UseMutationResult<
       if (error instanceof AxiosError) {
         const errorMessage =
           error.response?.data?.message ?? "Error de autenticación";
-        console.error("Error de autenticación: ", errorMessage);
+        const errorData = error.response?.data;
+        console.error(
+          "Error de autenticación: ",
+          errorMessage,
+          "\n",
+          errorData
+        );
       } else {
         console.error("Error inesperado login: ", error);
       }

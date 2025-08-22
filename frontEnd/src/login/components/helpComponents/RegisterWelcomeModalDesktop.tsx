@@ -47,7 +47,7 @@ function RegisterWelcomeModalDesktop({
           zIndex: theme.zIndex.modal,
           backgroundColor: theme.palette.background.default,
           overflow: "auto",
-          minHeight: "100vh",
+          minHeight: ["100dvh", "100vh"],
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

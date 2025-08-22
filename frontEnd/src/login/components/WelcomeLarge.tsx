@@ -61,7 +61,7 @@ const WelcomeLarge: React.FC<WelcomeLargeProps> = ({
           zIndex: theme.zIndex.modal,
           backgroundColor: theme.palette.background.default,
           overflow: "auto",
-          minHeight: "100vh",
+    minHeight: ["100dvh", "100vh"],
         }}
       >
         {/* Hero Section */}
