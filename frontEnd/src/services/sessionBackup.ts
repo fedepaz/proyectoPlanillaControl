@@ -1,4 +1,5 @@
 import { SessionResponse } from "../types/auth";
+import cookies from "./cookieClient";
 
 export const sessionBackup = {
   // Guardar datos básicos del usuario
@@ -16,8 +17,12 @@ export const sessionBackup = {
 
       // Cookie especial para iOS (solo datos, no token)
       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        const cookieValue = encodeURIComponent(JSON.stringify(backup));
-        document.cookie = `ios_user_backup=${cookieValue}; path=/; max-age=43200; SameSite=Lax`;
+        const cookieValue = JSON.stringify(backup);
+        cookies.set("ios_user_backup", cookieValue, {
+          path: "/",
+          maxAge: 43200, // 12 hours
+          sameSite: "lax",
+        });
       }
     } catch (error) {
       console.warn("No se pudo guardar backup:", error);
@@ -37,13 +42,9 @@ export const sessionBackup = {
 
       // Si no, desde cookie iOS
       if (!backupStr && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        const cookies = document.cookie.split(";");
-        for (const cookie of cookies) {
-          const [name, value] = cookie.split("=");
-          if (name.trim() === "ios_user_backup") {
-            backupStr = decodeURIComponent(value);
-            break;
-          }
+        const cookieValue = cookies.get("ios_user_backup");
+        if (cookieValue) {
+          backupStr = cookieValue;
         }
       }
 
@@ -67,7 +68,7 @@ export const sessionBackup = {
     try {
       sessionStorage.removeItem("user_backup");
       localStorage.removeItem("user_backup");
-      document.cookie = "ios_user_backup=; path=/; max-age=0";
+      cookies.remove("ios_user_backup", { path: "/" });
     } catch (error) {
       console.warn("Error limpiando backup:", error);
     }

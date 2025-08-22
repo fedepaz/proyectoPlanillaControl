@@ -7,7 +7,6 @@ import { csrfProtection } from "./middlewares/csrf.js";
 import { handleErrors } from "./middlewares/handleErrors.js";
 import { authenticate } from "./middlewares/authenticate.js";
 import limiter from "./middlewares/limiter.js";
-import cookieParser from "cookie-parser";
 
 import planillasRouter from "./controllers/planillasRoute.js";
 import dataRouter from "./controllers/dataRoute.js";
@@ -23,22 +22,16 @@ import sessionRouter from "./controllers/session/loginRoute.js";
 import resetPasswordRouter from "./controllers/session/resetPassword.js";
 import crsfTokenRouter from "./crsf-token.js";
 import scrapeArribosRouter from "./controllers/datos/scrapeArribosRoute.js";
+import cookieParser from "cookie-parser";
 
+import cookiesMiddleware from "universal-cookie-express";
 const app = express();
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV === "test") {
-  app.use(cookieParser());
-} else {
-  app.use(cookieParser(process.env.COOKIE_SECRET));
-}
-if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy", 1);
-  app.use(limiter);
-}
+// Use universal-cookie-express for cookie handling
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy());
 app.use(helmet.dnsPrefetchControl());
@@ -67,6 +60,11 @@ app.use(
   })
 );
 
+app.use(cookiesMiddleware());
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+  app.use(limiter);
+}
 app.use("/scrape-arribos", scrapeArribosRouter);
 app.get("/health", (req, res) => {
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -76,12 +74,14 @@ app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(234).send("planillasBackend");
 });
+app.use(cookieParser());
+app.use(csrfProtection);
+app.use("/csrf-token", crsfTokenRouter);
 
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
 
-app.use(csrfProtection);
-app.use("/csrf-token", crsfTokenRouter);
+// Apply CSRF protection only to /csrf-token route
 
 app.use(authenticate);
 

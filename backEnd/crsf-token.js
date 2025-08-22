@@ -8,7 +8,6 @@ csrfTokenRouter.get("/", (req, res) => {
 
     res.json({ csrfToken: csrfToken });
   } catch (err) {
-    console.error("CSRF Token Error:", err);
     res.status(500).json({ message: "Could not generate CSRF token" });
   }
 });

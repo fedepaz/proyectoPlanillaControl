@@ -1,4 +1,5 @@
 import axios from "axios";
+import cookies from "./cookieClient";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -9,20 +10,16 @@ const authClient = axios.create({
 
 authClient.interceptors.response.use(
   (response) => {
-    console.log("response recibida en interceptor", response);
-    console.log("cookies recibidas en interceptor", document.cookie);
     return response;
   },
   (error) => {
-    console.log("error recibida en interceptor", error);
-    console.log("cookies recibidas en interceptor", document.cookie);
     if (error.response?.status === 401) {
       try {
         sessionStorage.removeItem("user_session_backup");
         localStorage.removeItem("user_session_backup");
         sessionStorage.removeItem("user_backup");
         localStorage.removeItem("user_backup");
-        document.cookie = "ios_user_backup=; path=/; max-age=0";
+        cookies.remove("ios_user_backup", { path: "/" });
       } catch (e) {
         console.warn("Error al limpiar cookies", e);
       }

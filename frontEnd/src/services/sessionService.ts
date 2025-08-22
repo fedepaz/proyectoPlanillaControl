@@ -3,12 +3,13 @@ import { SessionResponse } from "../types/auth";
 import { LoginSchema, RegisterSchema } from "../login/types/modelsSchema";
 import { sessionBackup } from "./sessionBackup";
 import axios from "axios";
+import apiClient from "./csrfToken";
 
 export const sessionService = {
   // Login
   login: async (credentials: LoginSchema): Promise<SessionResponse> => {
     try {
-      const response = await authClient.post<SessionResponse>(
+      const response = await apiClient.post<SessionResponse>(
         "/session/login",
         credentials
       );
@@ -99,7 +100,7 @@ export const sessionService = {
   // Logout
   logout: async (): Promise<void> => {
     try {
-      await authClient.delete("/session");
+      await apiClient.delete("/session");
     } catch (error) {
       console.warn("Logout request failed:", error);
       // Continue with cleanup even if request fails

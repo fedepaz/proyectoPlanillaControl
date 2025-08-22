@@ -13,12 +13,13 @@ import {
 dotenv.config();
 
 const sessionRouter = express.Router();
+
 const getCookieConfig = (isProduction) => {
   const baseConfig = {
     httpOnly: true,
     maxAge: 43200000, // 12 horas
     path: "/",
-    signed: true,
+    // signed: true, // Removed for universal-cookie-express compatibility
   };
 
   if (isProduction) {
@@ -38,7 +39,9 @@ const getCookieConfig = (isProduction) => {
 
 sessionRouter.get("/", (req, res) => {
   try {
-    const user = verifyJWT(req.signedCookies.access_token);
+    // Use universal-cookie-express for cookie access
+    const token = req.universalCookies.get("access_token");
+    const user = verifyJWT(token);
 
     const response = {
       authenticated: true,
@@ -68,7 +71,6 @@ sessionRouter.get("/", (req, res) => {
 
     res.status(200).json(response);
   } catch (error) {
-    console.error("Error en /session: ", error);
     res.status(200).json({ authenticated: false });
   }
 });
@@ -109,13 +111,6 @@ sessionRouter.post("/login", async (req, res, next) => {
 
     const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
     res.cookie("access_token", token, cookieConfig);
-
-    console.log("setCookieConfig", {
-      name: "access_token",
-      value: token.substring(0, 15) + "...",
-      configSet: getCookieConfig(process.env.NODE_ENV === "production"),
-      configGet: cookieConfig,
-    });
 
     res.status(200).json({
       authenticated: true,

@@ -17968,4 +17968,1206 @@
     at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
     ---------------------
 
+    [2025-08-22T02:02:07.627Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:02:07.705Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:02:20.030Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"11111111","password":"asdfghjklñ"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: Error: cookieParser("secret") required for signed cookies
+    at res.cookie (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/response.js:868:11)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:113:9
+    ---------------------
+
+    [2025-08-22T02:03:41.327Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"11111111","password":"asdfghjklñ"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: Error: cookieParser("secret") required for signed cookies
+    at res.cookie (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/response.js:868:11)
+    at file:///home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/controllers/session/loginRoute.js:113:9
+    ---------------------
+
+    [2025-08-22T02:06:18.164Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:09:04.440Z]
+    URL: /planillas?page=1&pageSize=10&fechaHasta=2025-08-21&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:09:05.506Z]
+    URL: /planillas?page=1&pageSize=10&fechaHasta=2025-08-21&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:09:07.549Z]
+    URL: /planillas?page=1&pageSize=10&fechaHasta=2025-08-21&populate=codVuelo%2Cempresa
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:09:07.723Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:10:03.990Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:10:07.881Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:10:07.897Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Not Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:02.487Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:02.633Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:02.977Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:13.369Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:13.380Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:48:13.749Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:08.505Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:46.724Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:46.732Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:47.088Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:55.059Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:57:59.294Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T02:58:00.843Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:11:24.286Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:11:26.669Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:11:38.387Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:14:10.208Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:14:14.362Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:14:53.826Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:20:43.327Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:23:14.035Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:24:17.832Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:24:19.095Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:24:19.766Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:26:00.463Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:26:01.485Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:26:02.032Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:28:53.723Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:29:47.725Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:29:54.117Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:32:00.105Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:36:28.616Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:37:24.529Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:37:54.075Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:37:54.089Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:37:54.383Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:40:33.405Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:40:34.909Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:43:13.553Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:46:35.556Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:47:00.256Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:49:12.664Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:54:41.466Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:54:41.476Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:54:41.788Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:55:14.186Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:55:14.195Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:55:14.626Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T03:58:04.318Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-08-22T03:58:54.771Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-08-22T04:01:20.283Z]
+    URL: /csrf-token
+    Method: GET
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+    Hostname: fedepaz-Latitude-E5470
+    Referer: Unknown Referer
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: Error: misconfigured csrf
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:71:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/route.js:119:3)
+    ---------------------
+
+    [2025-08-22T04:47:13.841Z]
+    URL: /session
+    Method: DELETE
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T04:47:29.282Z]
+    URL: /session
+    Method: DELETE
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T04:53:38.145Z]
+    URL: /session
+    Method: DELETE
+    Body: {}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: Unknown Content Type
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
+    [2025-08-22T04:57:07.152Z]
+    URL: /session/login
+    Method: POST
+    Body: {"dni":"11111111","password":"asdfghjklñ"}
+    Client IP: ::1
+    User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+    Hostname: fedepaz-Latitude-E5470
+    Referer: http://localhost:5173/
+    Cookies: Cookies Present in Request
+    Content Type: application/json
+    Protocol: HTTP
+    Stack: ForbiddenError: invalid csrf token
+    at csrf (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/csurf@1.11.0/node_modules/csurf/index.js:112:19)
+    at Layer.handle [as handle_request] (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:328:13)
+    at /home/fedepaz/Documents/proyectos/proyectoPlanillaControl/backEnd/node_modules/.pnpm/express@4.21.1/node_modules/express/lib/router/index.js:286:9
+    ---------------------
+
     

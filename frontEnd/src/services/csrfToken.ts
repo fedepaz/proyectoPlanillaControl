@@ -20,7 +20,7 @@ apiClient.interceptors.request.use(
       )
     ) {
       if (csrfToken) {
-        config.headers["X-CSRF-TOKEN"] = csrfToken;
+        config.headers["x-csrf-token"] = csrfToken;
       } else {
         console.warn("CSRF Token not found");
       }

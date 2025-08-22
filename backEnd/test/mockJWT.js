@@ -33,10 +33,7 @@ export const createAuthenticatedRequest = (userData = {}) => {
   const { cookieValue, user } = generateMockAuthCookie(userData);
   return {
     method: "GET",
-    signedCookies: {
-      access_token: user,
-    },
-    cookies: {},
+    cookies: { access_token: user },
     headers: { cookie: cookieValue },
     path: "/data",
     user: undefined,
