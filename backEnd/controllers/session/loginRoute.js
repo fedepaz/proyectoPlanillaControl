@@ -109,30 +109,17 @@ sessionRouter.post("/login", async (req, res, next) => {
 
     const accessToken = signJWT(userInfo, "12h");
 
-    const userAgent = req.headers["user-agent"];
-    const supportsHttpONly = !userAgent.includes("MSIE");
+    const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
+    res.cookie("access_token", accessToken, cookieConfig);
+    console.log("Token set in cookie");
 
-    if (supportsHttpONly) {
-      const cookieConfig = getCookieConfig(
-        process.env.NODE_ENV === "production"
-      );
-      res.cookie("access_token", accessToken, cookieConfig);
-      console.log("Token set in cookie");
-
-      res.status(200).json({
-        authenticated: true,
-        message: "Login correcto",
-        user: userInfo,
-      });
-    } else {
-      console.log("Token set in header");
-      res.status(200).json({
-        authenticated: true,
-        message: "Login correcto",
-        user: userInfo,
-        accessToken,
-      });
-    }
+    console.log("Sending accessToken in response body");
+    res.status(200).json({
+      authenticated: true,
+      message: "Login correcto",
+      user: userInfo,
+      accessToken,
+    });
   } catch (error) {
     next(error);
   }

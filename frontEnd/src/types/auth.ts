@@ -48,6 +48,7 @@ interface LoginResponse {
     };
     role: string;
   };
+  accessToken?: string;
 }
 
 interface OficialResponse {

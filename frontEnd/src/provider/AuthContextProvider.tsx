@@ -68,6 +68,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserInfo(loginData);
 
     if (loginData.authenticated) {
+      if (!navigator.cookieEnabled && loginData.accessToken) {
+        console.log("Cookies disabled. Storing token in sessionStorage.");
+        sessionStorage.setItem("accessToken", loginData.accessToken);
+      } else {
+        console.log("Cookies enabled. Using cookie-based auth.");
+      }
       if (loginData.user.role) {
         const validatedUser = validateAndCreateUser(
           loginData.user.role,

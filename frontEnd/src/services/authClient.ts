@@ -8,6 +8,20 @@ const authClient = axios.create({
   withCredentials: true,
 });
 
+authClient.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem("accessToken");
+    if (token) {
+      console.log("Attaching bearer token from sessionStorage to request.");
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 authClient.interceptors.response.use(
   (response) => {
     return response;
@@ -19,6 +33,7 @@ authClient.interceptors.response.use(
         localStorage.removeItem("user_session_backup");
         sessionStorage.removeItem("user_backup");
         localStorage.removeItem("user_backup");
+        sessionStorage.removeItem("accessToken");
         cookies.remove("ios_user_backup", { path: "/" });
       } catch (e) {
         console.warn("Error al limpiar cookies", e);
