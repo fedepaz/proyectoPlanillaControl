@@ -14,33 +14,12 @@ dotenv.config();
 
 const sessionRouter = express.Router();
 
-const getCookieConfig = (isProduction) => {
-  const baseConfig = {
-    httpOnly: true,
-    maxAge: 43200000, // 12 horas
-    path: "/",
-    // signed: true, // Removed for universal-cookie-express compatibility
-  };
 
-  if (isProduction) {
-    return {
-      ...baseConfig,
-      sameSite: "none", // Para cross-origin requests
-      secure: true,
-    };
-  } else {
-    return {
-      ...baseConfig,
-      sameSite: "lax", // Para desarrollo local
-      secure: false,
-    };
-  }
-};
 
 sessionRouter.get("/", (req, res) => {
   try {
-    // Use universal-cookie-express for cookie access
-    const token = req.universalCookies.get("access_token");
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(" ")[1];
     const user = verifyJWT(token);
 
     const response = {
@@ -109,11 +88,6 @@ sessionRouter.post("/login", async (req, res, next) => {
 
     const accessToken = signJWT(userInfo, "12h");
 
-    const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
-    res.cookie("access_token", accessToken, cookieConfig);
-    console.log("Token set in cookie");
-
-    console.log("Sending accessToken in response body");
     res.status(200).json({
       authenticated: true,
       message: "Login correcto",
@@ -126,16 +100,7 @@ sessionRouter.post("/login", async (req, res, next) => {
 });
 
 sessionRouter.delete("/", (req, res) => {
-  const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
-  res
-    .clearCookie("access_token", {
-      httpOnly: cookieConfig.httpOnly,
-      sameSite: cookieConfig.sameSite,
-      secure: cookieConfig.secure,
-      path: cookieConfig.path,
-    })
-    .status(200)
-    .json({ message: "Logout correcto" });
+  res.status(200).json({ message: "Logout correcto" });
 });
 
 sessionRouter.post("/register", async (req, res, next) => {

@@ -8,7 +8,7 @@ import { darkTheme, lightTheme } from "./types/theme";
 
 import Loading from "./components/Loading";
 import ErrorPage from "./components/Error";
-import apiClient, { setCsrfToken } from "./services/csrfToken";
+
 import { viewComponents } from "./views";
 import { View } from "./types/types";
 
@@ -16,8 +16,6 @@ import { useAuth } from "./hooks/useAuth";
 import { AuthProvider } from "./provider/AuthContextProvider";
 import WelcomeModal from "./login/components/WelcomeModal";
 import { PlanillaStepProvider } from "./provider/PlanillaStepProvider";
-
-const csrfTokenRoute = "/csrf-token";
 
 function AppContent() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -71,26 +69,6 @@ function AppContent() {
     localStorage.setItem("hasSeenWelcome", "true");
     handleNavigate(View.REGISTER);
   }, [handleNavigate]);
-
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await apiClient.get<{ csrfToken: string }>(
-          csrfTokenRoute
-        );
-        if (response.data.csrfToken) {
-          console.log("CSRF Token:", response.data.csrfToken);
-          setCsrfToken(response.data.csrfToken);
-        } else {
-          console.error("Error fetching CSRF Token");
-        }
-      } catch (error) {
-        console.error("Error fetching CSRF Token:", error);
-      }
-    };
-
-    fetchCsrfToken();
-  }, [isLoggedIn]);
 
   useEffect(() => {
     if (currentView !== View.GENERATE_PLANILLAS) {

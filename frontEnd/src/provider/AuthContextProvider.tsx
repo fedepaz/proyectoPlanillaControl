@@ -67,13 +67,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoggedIn(loginData.authenticated);
     setUserInfo(loginData);
 
-    if (loginData.authenticated) {
-      if (!navigator.cookieEnabled && loginData.accessToken) {
-        console.log("Cookies disabled. Storing token in sessionStorage.");
-        sessionStorage.setItem("accessToken", loginData.accessToken);
-      } else {
-        console.log("Cookies enabled. Using cookie-based auth.");
-      }
+    if (loginData.authenticated && loginData.accessToken) {
+      sessionStorage.setItem("accessToken", loginData.accessToken);
       if (loginData.user.role) {
         const validatedUser = validateAndCreateUser(
           loginData.user.role,
@@ -90,6 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const handleLogout = useCallback(() => {
     logout(undefined, {
       onSuccess: () => {
+        sessionStorage.removeItem("accessToken");
         setIsLoggedIn(false);
         setUser(null);
         setUserInfo(defaultUserInfo);

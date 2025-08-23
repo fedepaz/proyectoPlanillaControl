@@ -1,11 +1,9 @@
 import axios from "axios";
-import cookies from "./cookieClient";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const authClient = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
 });
 
 authClient.interceptors.request.use(
@@ -34,7 +32,6 @@ authClient.interceptors.response.use(
         sessionStorage.removeItem("user_backup");
         localStorage.removeItem("user_backup");
         sessionStorage.removeItem("accessToken");
-        cookies.remove("ios_user_backup", { path: "/" });
       } catch (e) {
         console.warn("Error al limpiar cookies", e);
       }

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PlanillaSchema } from "../types/planillaSchema";
-import apiClient from "../../services/csrfToken";
+import authClient from "../../services/authClient";
 import { PlanillasApiResponse, UsePlanillasParams } from "../types/searchTypes";
 import { PlanillaDetailData } from "../types/searchById";
 
@@ -31,7 +31,7 @@ export function usePlanillas(filters: UsePlanillasParams = {}) {
       if (fechaHasta) params.append("fechaHasta", fechaHasta);
       if (populate.length > 0) params.append("populate", populate.join(","));
 
-      const { data } = await apiClient.get<PlanillasApiResponse>(
+      const { data } = await authClient.get<PlanillasApiResponse>(
         `/planillas?${params.toString()}`
       );
       return data;
@@ -46,7 +46,7 @@ export function usePlanillaID(_id: string) {
     queryKey: ["planilla", _id],
     enabled: !!_id,
     queryFn: async (): Promise<PlanillaDetailData> => {
-      const { data } = await apiClient.get<PlanillaDetailData>(
+      const { data } = await authClient.get<PlanillaDetailData>(
         `/planillas/${_id}`
       );
       return data;
@@ -58,7 +58,7 @@ export function useCreatePlanilla() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: PlanillaSchema) => {
-      const response = await apiClient.post<PlanillaSchema>("/planillas", {
+      const response = await authClient.post<PlanillaSchema>("/planillas", {
         datosPsa: {
           fecha: data.datosPsa.fecha,
           responsable: data.datosPsa.responsable,

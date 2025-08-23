@@ -10,28 +10,20 @@ export const authenticate = (req, res, next) => {
     return next();
   }
 
-  // Use universal-cookie-express for cookie access
-  const token = req.universalCookies.get("access_token");
-  console.log("token", token);
   const authHeader = req.headers.authorization;
-  const headerToken = authHeader && authHeader.split(" ")[1];
-  console.log("headerToken", headerToken);
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    try {
-      const decoded = verifyJWT(headerToken);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      next(error);
-    }
-  } else {
-    try {
-      const decoded = verifyJWT(token);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      next(error);
-    }
+    const error = new Error("No token provided");
+    error.name = "AuthenticationError";
+    return next(error);
+  }
+
+  try {
+    const decoded = verifyJWT(token);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    next(error);
   }
 };
