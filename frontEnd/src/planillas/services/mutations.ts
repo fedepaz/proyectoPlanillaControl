@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import apiClient from "../../services/csrfToken";
+import authClient from "../../services/authClient";
 
 import {
   AeropuertosSchema,
@@ -14,7 +14,7 @@ export function useCreateEmpresa() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: EmpresaSchema) => {
-      const response = await apiClient.post(`/empresa`, data);
+      const response = await authClient.post(`/empresa`, data);
       return response.data;
     },
     retry: false,
@@ -28,7 +28,7 @@ export function useCreateAeropuerto() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: AeropuertosSchema) => {
-      const response = await apiClient.post(`/aeropuerto`, data);
+      const response = await authClient.post(`/aeropuerto`, data);
       return response.data;
     },
     retry: false,
@@ -42,7 +42,7 @@ export function useCreateCodVuelo() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: CodVueloSchema) => {
-      const response = await apiClient.post(`/codVuelo`, data);
+      const response = await authClient.post(`/codVuelo`, data);
       return response.data;
     },
     retry: false,
@@ -56,7 +56,7 @@ export function useCreateMatricula() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: MatriculaAeronaveSchema) => {
-      const response = await apiClient.post(`/aeronave`, data);
+      const response = await authClient.post(`/aeronave`, data);
       return response.data;
     },
     retry: false,
@@ -70,7 +70,7 @@ export function useCreatePersonalEmpresa() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: PersonalEmpresaSchema) => {
-      const response = await apiClient.post(`/personalEmpresa`, data);
+      const response = await authClient.post(`/personalEmpresa`, data);
       return response.data;
     },
     retry: false,
@@ -86,7 +86,7 @@ export function useCreatePersonalSeguridad() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: PersonalEmpresaSchema) => {
-      const response = await apiClient.post(`/personalSeguridad`, data);
+      const response = await authClient.post(`/personalSeguridad`, data);
       return response.data;
     },
     retry: false,
@@ -102,7 +102,7 @@ export function useCreateVehiculo() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: VehiculosSchema) => {
-      const response = await apiClient.post(`/vehiculos`, data);
+      const response = await authClient.post(`/vehiculos`, data);
       return response.data;
     },
     retry: false,

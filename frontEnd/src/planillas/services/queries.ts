@@ -23,7 +23,7 @@ import {
   PersonalEmpresaSchema,
   PersonalSeguridadSchema,
 } from "../types/apiSchema";
-import apiClient from "../../services/csrfToken";
+import authClient from "../../services/authClient";
 
 interface CreateOficialResponse {
   _id: string;
@@ -39,7 +39,7 @@ export function useCreateOficial() {
 
   return useMutation<CreateOficialResponse, Error, OficialSchema>({
     mutationFn: async (newOficial: OficialSchema) => {
-      const { data } = await apiClient.post<CreateOficialResponse>(
+      const { data } = await authClient.post<CreateOficialResponse>(
         `/oficial`,
         newOficial
       );
@@ -59,7 +59,7 @@ export function useOficial(dni: string) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      const { data } = await apiClient.get<ApiGetOficial>(
+      const { data } = await authClient.get<ApiGetOficial>(
         `/oficial/dni/${dni}`
       );
       return {
@@ -78,7 +78,7 @@ export function useTipoControl() {
   return useQuery({
     queryKey: ["tipoControl"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/tipoControl`);
+      const response = await authClient.get<Option[]>(`/data/tipoControl`);
       const tipoControl = response.data;
       return tipoControl;
     },
@@ -88,7 +88,7 @@ export function useTipoEmpresa() {
   return useQuery({
     queryKey: ["tipoEmpresa"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/tipoEmpresa`);
+      const response = await authClient.get<Option[]>(`/data/tipoEmpresa`);
       const tipoEmpresa = response.data;
       return tipoEmpresa;
     },
@@ -99,7 +99,7 @@ export function useMediosTec() {
   return useQuery({
     queryKey: ["mediosTec"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/mediosTec`);
+      const response = await authClient.get<Option[]>(`/data/mediosTec`);
       const mediosTec = response.data;
       return mediosTec;
     },
@@ -110,7 +110,7 @@ export function useTipoPro() {
   return useQuery({
     queryKey: ["tipoPro"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/tipoPro`);
+      const response = await authClient.get<Option[]>(`/data/tipoPro`);
       const tipoPro = response.data;
       return tipoPro;
     },
@@ -121,7 +121,7 @@ export function useDemora() {
   return useQuery({
     queryKey: ["demora"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/demora`);
+      const response = await authClient.get<Option[]>(`/data/demora`);
       const demora = response.data;
       return demora;
     },
@@ -132,7 +132,7 @@ export function useTipoVuelo() {
   return useQuery({
     queryKey: ["tipoVuelo"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/tipoVuelo`);
+      const response = await authClient.get<Option[]>(`/data/tipoVuelo`);
       const tipoVuelo = response.data;
       return tipoVuelo;
     },
@@ -143,7 +143,7 @@ export function useFuncion() {
   return useQuery({
     queryKey: ["funcion"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/funcion`);
+      const response = await authClient.get<Option[]>(`/data/funcion`);
       const funcion = response.data;
       return funcion;
     },
@@ -154,7 +154,7 @@ export function useTipoVehiculo() {
   return useQuery({
     queryKey: ["tipoVehiculo"],
     queryFn: async () => {
-      const response = await apiClient.get<Option[]>(`/data/tipoVehiculo`);
+      const response = await authClient.get<Option[]>(`/data/tipoVehiculo`);
       const tipoVehiculo = response.data;
       return tipoVehiculo;
     },
@@ -169,7 +169,7 @@ export function usePersonalEmpresa(dni: number) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      const { data } = await apiClient.get<ApiGetPersonalEmpresa>(
+      const { data } = await authClient.get<ApiGetPersonalEmpresa>(
         `/personalEmpresa/dni/${dni}`
       );
       return {
@@ -196,7 +196,7 @@ export function usePersonalEmpresaBusqueda(
     queryKey: ["personalEmpresa", params],
     queryFn: async () => {
       if (!params) return null;
-      const response = await apiClient.post<PersonalEmpresaOption | null>(
+      const response = await authClient.post<PersonalEmpresaOption | null>(
         `/personalEmpresa/busqueda`,
         params
       );
@@ -216,7 +216,7 @@ export function usePersonalEmpresaSeg(dni: number) {
         throw new Error("Invalid DNI: DNI is undefined");
       }
 
-      const { data } = await apiClient.get<ApiGetPersonalSeguridad>(
+      const { data } = await authClient.get<ApiGetPersonalSeguridad>(
         `/personalSeguridad/dni/${dni}`
       );
       return {
@@ -237,7 +237,7 @@ export function usePersonalSeguridadBusqueda(
     queryKey: ["personalSeguridad", params],
     queryFn: async () => {
       if (!params) return null;
-      const response = await apiClient.post<PersonalSeguridadOption | null>(
+      const response = await authClient.post<PersonalSeguridadOption | null>(
         `/personalSeguridad/busqueda`,
         params
       );
@@ -253,7 +253,7 @@ export function useMatricula(empresa?: string) {
   return useQuery({
     queryKey: ["matriculaAeronave", empresa],
     queryFn: async () => {
-      const response = await apiClient.get<{
+      const response = await authClient.get<{
         matriculaAeronave: MatriculaOption[];
       }>(`/aeronave`);
       const matriculaAeronaveRes = response.data;
@@ -271,7 +271,7 @@ export function useMatriculaId(matriculaAeronave: string) {
         throw new Error("Invalid Matricula: Matricula is undefined");
       }
 
-      const { data } = await apiClient.get<ApiGetMatriculaAeronave>(
+      const { data } = await authClient.get<ApiGetMatriculaAeronave>(
         `/aeronave/matricula/${matriculaAeronave}`
       );
       return {
@@ -292,7 +292,7 @@ export function useMatriculaBusqueda(params: BuscarMatriculaParams | null) {
     queryKey: ["matricula", params],
     queryFn: async () => {
       if (!params) return [];
-      const response = await apiClient.post<MatriculaOption[]>(
+      const response = await authClient.post<MatriculaOption[]>(
         `/aeronave/busqueda`,
         params
       );
@@ -307,7 +307,7 @@ export function useEmpresa(tipoEmpresa?: string) {
   return useQuery({
     queryKey: ["empresa", tipoEmpresa],
     queryFn: async () => {
-      const response = await apiClient.get<EmpresaOption[]>(`/empresa`);
+      const response = await authClient.get<EmpresaOption[]>(`/empresa`);
       const empresaRes = response.data;
       return empresaRes;
     },
@@ -318,7 +318,7 @@ export const useEmpresaTipoId = (tipoEmpresaId: string) => {
   return useQuery({
     queryKey: ["empresa", tipoEmpresaId],
     queryFn: async () => {
-      const response = await apiClient.get<EmpresaOption[]>(
+      const response = await authClient.get<EmpresaOption[]>(
         `/empresa/tipoID/${tipoEmpresaId}`
       );
       const empresaRes = response.data;
@@ -332,7 +332,7 @@ export function useEmpresaId(empresaId: string) {
   return useQuery({
     queryKey: ["empresa", empresaId],
     queryFn: async () => {
-      const response = await apiClient.get<EmpresaOption>(
+      const response = await authClient.get<EmpresaOption>(
         `/empresa/${empresaId}`
       );
       const empresa = response.data;
@@ -346,7 +346,7 @@ export function useJerarquia() {
   return useQuery({
     queryKey: ["jerarquias"],
     queryFn: async () => {
-      const response = await apiClient.get<JerarquiaOption[]>(
+      const response = await authClient.get<JerarquiaOption[]>(
         `/session/jerarquias`
       );
       const jerarquias = response.data;
@@ -359,7 +359,7 @@ export function useUnidad() {
   return useQuery({
     queryKey: ["unidad"],
     queryFn: async () => {
-      const response = await apiClient.get<UnidadOption[]>(`/session/unidad`);
+      const response = await authClient.get<UnidadOption[]>(`/session/unidad`);
       const unidades = response.data;
       return unidades;
     },
@@ -370,7 +370,7 @@ export function useAeropuertos() {
   return useQuery({
     queryKey: ["aeropuertos"],
     queryFn: async () => {
-      const response = await apiClient.get<AeropuertoOption[]>(`/aeropuerto`);
+      const response = await authClient.get<AeropuertoOption[]>(`/aeropuerto`);
       const aeropuertos = response.data;
       return aeropuertos;
     },
@@ -381,7 +381,7 @@ export function useCodVuelo() {
   return useQuery({
     queryKey: ["codVuelo"],
     queryFn: async () => {
-      const response = await apiClient.get<CodVueloOption[]>(`/codVuelo`);
+      const response = await authClient.get<CodVueloOption[]>(`/codVuelo`);
       const codVuelo = response.data;
       return codVuelo;
     },
@@ -399,7 +399,7 @@ export function useCodVueloBusqueda(params: BuscarCodVueloParams | null) {
     queryKey: ["codVuelo", params],
     queryFn: async () => {
       if (!params) return [];
-      const response = await apiClient.post<CodVueloOption[]>(
+      const response = await authClient.post<CodVueloOption[]>(
         `/codVuelo/busqueda`,
         params
       );
@@ -414,7 +414,7 @@ export function usePersonalHandlingEmpresa(id: string) {
   return useQuery({
     queryKey: ["personalHandling", id],
     queryFn: async () => {
-      const response = await apiClient.get<PersonalEmpresaOption>(
+      const response = await authClient.get<PersonalEmpresaOption>(
         `/personalEmpresa/${id}`
       );
       const empresaHandling = response.data;
@@ -433,7 +433,7 @@ export function useVehiculoBusqueda(params: BuscarVehiculosParams | null) {
     queryKey: ["vehiculo", params],
     queryFn: async () => {
       if (!params) return null;
-      const response = await apiClient.post<VehiculoOption>(
+      const response = await authClient.post<VehiculoOption>(
         `/vehiculos/busqueda`,
         params
       );

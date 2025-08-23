@@ -3,7 +3,7 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import cors from "cors";
-import { csrfProtection } from "./middlewares/csrf.js";
+
 import { handleErrors } from "./middlewares/handleErrors.js";
 import { authenticate } from "./middlewares/authenticate.js";
 import limiter from "./middlewares/limiter.js";
@@ -20,18 +20,14 @@ import aeropuertoRouter from "./controllers/datos/aeropuertoRoute.js";
 import vehiculosRouter from "./controllers/datos/vehiculosRoute.js";
 import sessionRouter from "./controllers/session/loginRoute.js";
 import resetPasswordRouter from "./controllers/session/resetPassword.js";
-import crsfTokenRouter from "./crsf-token.js";
-import scrapeArribosRouter from "./controllers/datos/scrapeArribosRoute.js";
-import cookieParser from "cookie-parser";
 
-import cookiesMiddleware from "universal-cookie-express";
+import scrapeArribosRouter from "./controllers/datos/scrapeArribosRoute.js";
 const app = express();
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-// Use universal-cookie-express for cookie handling
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy());
 app.use(helmet.dnsPrefetchControl());
@@ -55,12 +51,10 @@ app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_PREVIEW],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "X-CSRF-TOKEN", "X-Requested-With"],
-    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 
-app.use(cookiesMiddleware());
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
   app.use(limiter);
@@ -74,13 +68,9 @@ app.get("/", (request, response) => {
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
   return response.status(234).send("planillasBackend");
 });
-app.use(cookieParser());
+
 app.use("/session", sessionRouter);
 app.use("/resetPassword", resetPasswordRouter);
-app.use(csrfProtection);
-app.use("/csrf-token", crsfTokenRouter);
-
-// Apply CSRF protection only to /csrf-token route
 
 app.use(authenticate);
 
@@ -105,7 +95,6 @@ if (process.env.NODE_ENV !== "test") {
       app.listen(PORT, () => {
         console.log(`App is listening in port: http://localhost:${PORT}/`);
         console.log("VIVA PERÓN!!!");
-        console.log("branch aiDevelop");
       });
     })
     .catch((error) => {

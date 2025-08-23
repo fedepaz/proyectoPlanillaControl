@@ -515,7 +515,6 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                 <PersonCard
                   key={`seguridad-person-${person.id}`}
                   person={person}
-                  subtitle="Personal de Seguridad"
                   additionalInfo={`Empresa: ${
                     item.empresaSeguridad?.empresa || "N/A"
                   }`}
