@@ -107,16 +107,32 @@ sessionRouter.post("/login", async (req, res, next) => {
       role: user.role,
     };
 
-    const token = signJWT(userInfo, "12h");
+    const accessToken = signJWT(userInfo, "12h");
 
-    const cookieConfig = getCookieConfig(process.env.NODE_ENV === "production");
-    res.cookie("access_token", token, cookieConfig);
+    const userAgent = req.headers["user-agent"];
+    const supportsHttpONly = !userAgent.includes("MSIE");
 
-    res.status(200).json({
-      authenticated: true,
-      message: "Login correcto",
-      user: userInfo,
-    });
+    if (supportsHttpONly) {
+      const cookieConfig = getCookieConfig(
+        process.env.NODE_ENV === "production"
+      );
+      res.cookie("access_token", accessToken, cookieConfig);
+      console.log("Token set in cookie");
+
+      res.status(200).json({
+        authenticated: true,
+        message: "Login correcto",
+        user: userInfo,
+      });
+    } else {
+      console.log("Token set in header");
+      res.status(200).json({
+        authenticated: true,
+        message: "Login correcto",
+        user: userInfo,
+        accessToken,
+      });
+    }
   } catch (error) {
     next(error);
   }
