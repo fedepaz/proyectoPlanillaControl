@@ -156,12 +156,12 @@ export function useStepValidation(
       }
 
       if (stepNumber === 3) {
-        // Datos seguridad - check if array has at least one complete entry
+        // Datos seguridad - allow empty, but warn if confirming with none
         if (
           !formValues.datosSeguridad ||
           formValues.datosSeguridad.length === 0
         ) {
-          errors.push("Datos de seguridad - Se requiere al menos una entrada");
+          // No error, but could trigger a warning in the UI if needed
         } else {
           // Check if any entry is incomplete
           const incompleteEntries = formValues.datosSeguridad.filter(
@@ -177,12 +177,12 @@ export function useStepValidation(
       }
 
       if (stepNumber === 4) {
-        // Datos vehiculos - check if array has at least one complete entry
+        // Datos vehiculos - allow empty, but warn if confirming with none
         if (
           !formValues.datosVehiculos ||
           formValues.datosVehiculos.length === 0
         ) {
-          errors.push("Datos de vehículos - Se requiere al menos una entrada");
+          // No error, but could trigger a warning in the UI if needed
         } else {
           // Check if any entry is incomplete
           const incompleteEntries = formValues.datosVehiculos.filter(

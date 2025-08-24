@@ -571,6 +571,7 @@ export const planillaStepDescriptions: Record<number, HelpDescription> = {
       },
     ],
     criticalInfo: [
+      "Puede presionar siguiente paso si no quiere registrar personal de seguridad",
       "Si no aparece alguien, puedes crearlo",
       "Todos los campos son obligatorios",
       "Sea minucioso, es la planilla que luego va a descargar. No se puede modificar.",
@@ -615,7 +616,7 @@ export const planillaStepDescriptions: Record<number, HelpDescription> = {
       },
     ],
     criticalInfo: [
-      "Al menos un vehículo debe seleccionar, y luego asignar a un operador",
+      "Puede presionar siguiente paso si no quiere registrar vehículos",
       "El operador puede ser el mismo asignado en la sección de personal de handling",
       "Todos los campos son obligatorios",
       "Sea minucioso, es la planilla que luego va a descargar. No se puede modificar.",
