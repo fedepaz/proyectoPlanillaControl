@@ -24,6 +24,8 @@ import { ErrorProvider } from "../../provider/ErrorProvider";
 import { StepErrorWrapper } from "./planillaComponents/components/stepErrorWrapperComponent";
 import { User } from "../../actions/types";
 import { DatosNovedades } from "./planillaComponents/datosNovedades";
+import { BasePersonalOption } from "../../types/option";
+import { useState } from "react";
 
 interface PlanillaProps {
   activeStep: number;
@@ -55,6 +57,7 @@ export function Planillas({
   );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [personalList, setPersonalList] = useState<BasePersonalOption[]>([]);
 
   const sendBack = () => {
     if (activeStep === 6) {
@@ -80,6 +83,10 @@ export function Planillas({
     await onFinalize();
   };
 
+  const handlePersonalListChange = (personalList: BasePersonalOption[]) => {
+    setPersonalList(personalList);
+  };
+
   const renderStepContent = () => {
     const stepContent = (() => {
       switch (activeStep) {
@@ -88,11 +95,13 @@ export function Planillas({
         case 1:
           return <DatosVuelo />;
         case 2:
-          return <DatosTerrestre />;
+          return (
+            <DatosTerrestre onPersonalListChange={handlePersonalListChange} />
+          );
         case 3:
           return <DatosSeguridad />;
         case 4:
-          return <DatosVehiculos />;
+          return <DatosVehiculos personalList={personalList} />;
         case 5:
           return <DatosNovedades />;
         default:
