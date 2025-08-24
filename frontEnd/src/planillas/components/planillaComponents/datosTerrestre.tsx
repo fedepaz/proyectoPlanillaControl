@@ -21,7 +21,11 @@ interface PersonalWithFunction {
   grupo: string;
 }
 
-export function DatosTerrestre() {
+interface DatosTerrestreProps {
+  onPersonalListChange: (personalList: BasePersonalOption[]) => void;
+}
+
+export function DatosTerrestre({ onPersonalListChange }: DatosTerrestreProps) {
   const [empresaIdRef, setEmpresaIdRef] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [confirmedPersonalList, setConfirmedPersonalList] = useState<
@@ -54,6 +58,7 @@ export function DatosTerrestre() {
 
   const handlePersonalListChange = (personalList: PersonalEmpresaOption[]) => {
     setCurrentPersonalList(personalList);
+    onPersonalListChange(personalList);
   };
 
   const handlePersonalListConfirm = (personalList: PersonalEmpresaOption[]) => {

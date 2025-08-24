@@ -28,8 +28,8 @@ import Build from "@mui/icons-material/Build";
 import Agriculture from "@mui/icons-material/Agriculture";
 
 import type { VehiculoOption, BasePersonalOption } from "../types/option";
-import { PersonalOneComponent } from "../planillas/components/planillaComponents/components/personalOneComponent";
 import { NovedadesComponent } from "./NovedadesComponent";
+import { CheckCircle } from "@mui/icons-material";
 
 interface VehiculoWithOperator {
   vehiculo: string;
@@ -40,11 +40,12 @@ interface VehiculoWithOperator {
 
 interface OperatorAndObservationsSelectionProps {
   vehiculoList: VehiculoOption[];
+  personalList: BasePersonalOption[];
   onPersonalAssignment: (
     vehiculosWithOperators: VehiculoWithOperator[]
   ) => void;
   title?: string;
-  empresaId: string;
+
   requireObservations?: boolean;
   empresaColor?: string;
 }
@@ -53,9 +54,9 @@ export const OperatorAndObservationsSelection: React.FC<
   OperatorAndObservationsSelectionProps
 > = ({
   vehiculoList,
+  personalList,
   onPersonalAssignment,
   title = "Asignar Operadores y Observaciones",
-  empresaId,
   requireObservations = false,
   empresaColor = "primary.main",
 }) => {
@@ -141,17 +142,6 @@ export const OperatorAndObservationsSelection: React.FC<
       newExpanded.add(vehicleId);
     }
     setExpandedVehicles(newExpanded);
-  };
-
-  const handlePersonalChange = (
-    vehicleId: string,
-    personal: BasePersonalOption | null
-  ) => {
-    setAssignments((prev) => ({
-      ...prev,
-      [vehicleId]: personal,
-    }));
-    setIsConfirmed(false);
   };
 
   const handleObservationChange = (vehicleId: string, observation: string) => {
@@ -348,15 +338,26 @@ export const OperatorAndObservationsSelection: React.FC<
                   >
                     {/* Personal Selection */}
                     <Box sx={{ mb: 2 }}>
-                      <PersonalOneComponent
-                        onPersonalChange={(personal) =>
-                          handlePersonalChange(vehicle.id, personal)
-                        }
-                        empresaId={empresaId}
-                        label="Selecciona operador"
-                        required={true}
-                        initialPersonal={assignedPersonal}
-                      />
+                      {personalList.map((personal) => {
+                        const isSelected =
+                          assignments[vehicle.id]?.id === personal.id;
+                        return (
+                          <Chip
+                            key={personal.id}
+                            label={personal.firstname + " " + personal.lastname}
+                            clickable
+                            color={isSelected ? "primary" : "default"}
+                            variant={isSelected ? "filled" : "outlined"}
+                            onClick={() =>
+                              setAssignments((prev) => ({
+                                ...prev,
+                                [vehicle.id]: isSelected ? null : personal,
+                              }))
+                            }
+                            icon={isSelected ? <CheckCircle /> : undefined}
+                          />
+                        );
+                      })}
                     </Box>
 
                     <Divider sx={{ my: 1 }} />

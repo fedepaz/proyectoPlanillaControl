@@ -4,7 +4,11 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import BusinessIcon from "@mui/icons-material/Business";
 import { useFormContext } from "react-hook-form";
 import { PlanillaSchema } from "../../types/planillaSchema";
-import { EmpresaOption, VehiculoOption } from "../../../types/option";
+import {
+  BasePersonalOption,
+  EmpresaOption,
+  VehiculoOption,
+} from "../../../types/option";
 import { usePersonalHandlingEmpresa } from "../../services/queries";
 import { HelperTextWarning } from "../../../components/WarningChip";
 import { VehiculoComponent } from "./components/vehiculoComponent";
@@ -33,7 +37,11 @@ interface VehiculoWithOperator {
   observacionesVehiculo: string;
 }
 
-export function DatosVehiculos() {
+interface DatosVehiculosProps {
+  personalList: BasePersonalOption[];
+}
+
+export function DatosVehiculos({ personalList }: DatosVehiculosProps) {
   const { watch, setValue } = useFormContext<PlanillaSchema>();
   const datosTerrestre = watch("datosTerrestre.0") as PersonalWithFunction;
   const datosVehiculos = watch("datosVehiculos") as VehiculoWithOperator[];
@@ -228,9 +236,9 @@ export function DatosVehiculos() {
         !isOperatorsAssigned && (
           <OperatorAndObservationsSelection
             vehiculoList={confirmedVehiculoList}
+            personalList={personalList}
             onPersonalAssignment={handlePersonalAssignment}
             title="Asignar Operadores y Observaciones"
-            empresaId={selectedEmpresa.id}
           />
         )}
 
