@@ -10,7 +10,6 @@ authClient.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
-      console.log("Attaching bearer token from sessionStorage to request.");
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

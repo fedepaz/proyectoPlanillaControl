@@ -72,7 +72,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
             <LockOutlined
               sx={{
                 fontSize: 48,
-                color: "error.main",
               }}
             />
           ),
@@ -88,7 +87,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
             <Error
               sx={{
                 fontSize: 48,
-                color: "error.main",
               }}
             />
           ),
@@ -104,7 +102,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
             <Error
               sx={{
                 fontSize: 48,
-                color: "error.main",
               }}
             />
           ),
@@ -127,7 +124,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
           <Wifi
             sx={{
               fontSize: 48,
-              color: "error.main",
             }}
           />
         ),
@@ -143,7 +139,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
           <LockOutlined
             sx={{
               fontSize: 48,
-              color: "error.main",
             }}
           />
         ),
@@ -159,7 +154,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
           <Error
             sx={{
               fontSize: 48,
-              color: "error.main",
             }}
           />
         ),
@@ -174,7 +168,6 @@ const ErrorPage = ({ error, onRetry }: ErrorPageProps) => {
         <Error
           sx={{
             fontSize: 48,
-            color: "error.main",
           }}
         />
       ),
