@@ -6,8 +6,11 @@ export enum UserRole {
   RESPONSABLE = "responsable",
   SUPERVISOR = "supervisor",
   OPER_UNIDAD = "operUnidad",
+  ICIA_UNIDAD = "iciaUnidad",
   OPER_REGIONAL = "operRegional",
+  ICIA_REGIONAL = "iciaRegional",
   OPER_CEAC = "operCeac",
+  ICIA_CEAC = "iciaCeac",
 }
 
 export enum UserHierarchy {

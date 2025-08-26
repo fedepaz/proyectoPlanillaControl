@@ -10,6 +10,7 @@ import AnalyticsIcon from "@mui/icons-material/Analytics"; // Better for reports
 import FolderSharedIcon from "@mui/icons-material/FolderShared"; // For shared history
 import AssignmentIcon from "@mui/icons-material/Assignment"; // For specific role histories
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   type ActionButton,
   ActionCategory,
@@ -186,6 +187,23 @@ export const createDashboardActions = (callbacks: {
       category: ActionCategory.REPORTS,
       allowedRoles: [UserRole.SUPERVISOR, UserRole.ADMIN],
       description: "Ver historial de planillas de supervisores",
+    },
+    {
+      id: "busqueda_avanzada",
+      label: "Búsqueda Avanzada",
+      icon: <SearchIcon />,
+      onClick: createNavigationHandler(View.BUSQUEDA_AVANZADA),
+      category: ActionCategory.MAIN,
+      allowedRoles: [
+        UserRole.OPER_UNIDAD,
+        UserRole.OPER_REGIONAL,
+        UserRole.OPER_CEAC,
+        UserRole.ICIA_UNIDAD,
+        UserRole.ICIA_REGIONAL,
+        UserRole.ICIA_CEAC,
+        UserRole.ADMIN,
+      ],
+      description: "Búsqueda avanzada de planillas, usuarios y más.",
     },
   ];
 };

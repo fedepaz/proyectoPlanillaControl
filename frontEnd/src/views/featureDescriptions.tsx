@@ -104,4 +104,11 @@ export const featureDescriptions: Record<
     estimatedTime: "Diciembre 2025",
     status: "under_construction",
   },
+  [View.BUSQUEDA_AVANZADA]: {
+    name: "Búsqueda Avanzada",
+    description:
+      "Realiza búsquedas detalladas y filtradas en todo el sistema. Accede a reportes de unidades, regiones o a nivel nacional según tu rol.",
+    estimatedTime: "Enero 2026",
+    status: "under_construction",
+  },
 };

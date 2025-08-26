@@ -57,4 +57,5 @@ export const viewComponents: Record<View, React.ComponentType<any>> = {
   [View.VIEW_HISTORY_AUXILIARES]: lazyUnderConstruction(
     View.VIEW_HISTORY_AUXILIARES
   ),
+  [View.BUSQUEDA_AVANZADA]: lazyUnderConstruction(View.BUSQUEDA_AVANZADA),
 };

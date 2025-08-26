@@ -1,20 +1,13 @@
+
 "use client";
 
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
-
-import { User } from "../../actions/types";
-import { useDashboardActions } from "../../actions";
 import { memo } from "react";
+import { User, UserRole } from "../../actions/types";
+import { useDashboardActions } from "../../actions";
 import { View } from "../../types/types";
-import { RoleBadge } from "../../components/RoleBadge";
+import { Box, CircularProgress, Container } from "@mui/material";
+import { ModernDashboardLayout } from "./layout/ModernDashboardLayout";
+import { GenericDashboard } from "./dashboards/GenericDashboard";
 
 interface DashboardProps {
   onGeneratePlanillas?: () => void;
@@ -29,22 +22,11 @@ interface DashboardProps {
   onManageUsers?: () => void;
   onNavigate?: (view: View) => void;
   user: User;
+  mobileOpen: boolean;
+  onToggleDrawer: () => void;
 }
 
-const Dashboard = memo(function Dashboard({
-  onGeneratePlanillas,
-  onHistorialSupervisores,
-  onHistorialResponsables,
-  onHistorialAuxiliares,
-  onUserRoles,
-  onReports,
-  onViewHistory,
-  onViewProfile,
-  onOpenSettings,
-  onManageUsers,
-  onNavigate,
-  user,
-}: DashboardProps) {
+const Dashboard = memo(function Dashboard(props: DashboardProps) {
   const {
     mainActions,
     accountActions,
@@ -54,286 +36,64 @@ const Dashboard = memo(function Dashboard({
     effectiveRoles,
   } = useDashboardActions(
     {
-      onGeneratePlanillas,
-      onHistorialSupervisores,
-      onHistorialResponsables,
-      onHistorialAuxiliares,
-      onUserRoles,
-      onReports,
-      onViewHistory,
-      onViewProfile,
-      onOpenSettings,
-      onManageUsers,
-      onNavigate,
+      onGeneratePlanillas: props.onGeneratePlanillas,
+      onHistorialSupervisores: props.onHistorialSupervisores,
+      onHistorialResponsables: props.onHistorialResponsables,
+      onHistorialAuxiliares: props.onHistorialAuxiliares,
+      onUserRoles: props.onUserRoles,
+      onReports: props.onReports,
+      onViewHistory: props.onViewHistory,
+      onViewProfile: props.onViewProfile,
+      onOpenSettings: props.onOpenSettings,
+      onManageUsers: props.onManageUsers,
+      onNavigate: props.onNavigate,
     },
-    user
+    props.user
   );
 
+  const sections = [
+    { label: "General", actions: mainActions },
+    { label: "Reportes", actions: reportsActions },
+    { label: "Administración", actions: adminActions },
+    { label: "Configuración", actions: settingsActions },
+    { label: "Cuenta", actions: accountActions },
+  ];
+
+  const renderDashboardPage = (selectedTab: number) => {
+    if (!effectiveRoles) {
+      return (
+        <Container>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+            <CircularProgress />
+          </Box>
+        </Container>
+      );
+    }
+
+    const kpis = [
+      { title: "Planillas Hoy", value: 12 },
+      { title: "Pendientes", value: 3 },
+      { title: "Auxiliares Activos", value: 8 },
+    ];
+
+    return (
+      <GenericDashboard
+        user={props.user}
+        title={sections[selectedTab]?.label || "Dashboard"}
+        sections={[{ title: sections[selectedTab]?.label, actions: sections[selectedTab]?.actions || [] }]}
+        kpis={effectiveRoles.includes(UserRole.RESPONSABLE) ? kpis : []}
+      />
+    );
+  };
+
   return (
-    <Container component="main" maxWidth="sm">
-      <Paper
-        elevation={3}
-        sx={{
-          mt: 4,
-          p: 3,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          borderRadius: 1,
-        }}
-      >
-        <Typography
-          variant="h5"
-          component="h1"
-          gutterBottom
-          sx={{
-            fontWeight: 500,
-            pb: 1,
-            textAlign: "center",
-          }}
-        >
-          Panel de Control
-        </Typography>
-        {/* Role indicator */}
-        {effectiveRoles.length > 0 && (
-          <Box
-            sx={{
-              mb: 3,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                mr: 1,
-                color: "text.secondary",
-              }}
-            >
-              Rol :
-            </Typography>
-            {effectiveRoles.map((role) => (
-              <RoleBadge key={role} role={role} />
-            ))}
-          </Box>
-        )}
-        {/* Main Actions Section */}
-        {mainActions.length > 0 && (
-          <Box
-            sx={{
-              mb: 3,
-              width: "100%",
-            }}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: 500,
-                mb: 1,
-                textAlign: "center",
-              }}
-            >
-              Acciones Principales
-            </Typography>
-            <Grid container spacing={2} justifyContent="center">
-              {mainActions.map((action) => (
-                <Grid item xs={12} sm={10} key={action.id}>
-                  <Button
-                    fullWidth
-                    variant={action.primary ? "contained" : "outlined"}
-                    size="large"
-                    startIcon={action.icon}
-                    onClick={action.onClick}
-                    sx={{
-                      py: 1.5,
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {action.label}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        )}
-
-        {/* Reports Actions Section */}
-        {reportsActions.length > 0 && (
-          <>
-            <Divider sx={{ my: 3, width: "100%" }} />
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Reportes
-              </Typography>
-              <Grid container spacing={2} justifyContent="center">
-                {reportsActions.map((action) => (
-                  <Grid item xs={12} sm={10} key={action.id}>
-                    <Button
-                      fullWidth
-                      variant={action.primary ? "contained" : "outlined"}
-                      size="large"
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                      sx={{
-                        py: 1.5,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {action.label}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </>
-        )}
-
-        {/* Account Actions Section */}
-        {accountActions.length > 0 && (
-          <>
-            <Divider sx={{ my: 3, width: "100%" }} />
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Mi Cuenta
-              </Typography>
-              <Grid container spacing={2} justifyContent="center">
-                {accountActions.map((action) => (
-                  <Grid item xs={12} sm={10} key={action.id}>
-                    <Button
-                      fullWidth
-                      variant={action.primary ? "contained" : "outlined"}
-                      size="large"
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                      sx={{
-                        py: 1.5,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {action.label}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </>
-        )}
-        {/* Settings Actions Section */}
-        {settingsActions.length > 0 && (
-          <>
-            <Divider sx={{ my: 3, width: "100%" }} />
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Configuración
-              </Typography>
-              <Grid container spacing={2} justifyContent="center">
-                {settingsActions.map((action) => (
-                  <Grid item xs={12} sm={10} key={action.id}>
-                    <Button
-                      fullWidth
-                      variant={action.primary ? "contained" : "outlined"}
-                      size="large"
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                      sx={{
-                        py: 1.5,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {action.label}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </>
-        )}
-
-        {/* canAccessAdmin */}
-
-        {/* Admin Actions Section */}
-        {adminActions.length > 0 && (
-          <>
-            <Divider sx={{ my: 3, width: "100%" }} />
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Administración
-              </Typography>
-              <Grid container spacing={2} justifyContent="center">
-                {adminActions.map((action) => (
-                  <Grid item xs={12} sm={10} key={action.id}>
-                    <Button
-                      fullWidth
-                      variant={action.primary ? "contained" : "outlined"}
-                      size="large"
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                      sx={{
-                        py: 1.5,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {action.label}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </>
-        )}
-      </Paper>
-    </Container>
+    <ModernDashboardLayout
+      sections={sections}
+      mobileOpen={props.mobileOpen}
+      onDrawerToggle={props.onToggleDrawer}
+    >
+      {renderDashboardPage}
+    </ModernDashboardLayout>
   );
 });
 

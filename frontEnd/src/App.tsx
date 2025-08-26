@@ -24,6 +24,11 @@ function AppContent() {
   const [shouldLoadWelcome, setShouldLoadWelcome] = useState(false);
   const [currentStep, setCurrentStep] = useState<number | null>(null);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const {
     user,
@@ -33,9 +38,6 @@ function AppContent() {
     error,
     isError,
     currentView,
-    //setUser,
-    //setCurrentView,
-    //setIsLoggedIn,
     refetch,
     handleLogin,
     handleLogout,
@@ -99,6 +101,8 @@ function AppContent() {
     user,
     userInfo,
     isLoggedIn,
+    onToggleDrawer: handleDrawerToggle,
+    mobileOpen,
   };
 
   const CurrentViewComponent = viewComponents[currentView];
@@ -160,12 +164,11 @@ function AppContent() {
       <CssBaseline />
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 3,
           minHeight: "100vh",
           width: "100%",
-          overflow: "hidden",
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(180deg, #1a1c20 0%, #2a2d32 100%)' 
+            : 'linear-gradient(180deg, #f5f7fa 0%, #e6e9ee 100%)',
         }}
       >
         <PlanillaStepProvider step={effectiveStep}>
@@ -175,6 +178,7 @@ function AppContent() {
             isLoggedIn={isLoggedIn}
             onBackHome={handleBack}
             userInfo={userInfo}
+            onDrawerToggle={currentView === View.DASHBOARD ? handleDrawerToggle : undefined}
           />
         </PlanillaStepProvider>
         <Box

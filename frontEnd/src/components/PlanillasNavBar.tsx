@@ -1,7 +1,6 @@
 import type React from "react";
 
 import {
-  AppBar,
   Avatar,
   Badge,
   Box,
@@ -23,39 +22,23 @@ import CloseSessionButton from "./CloseSessionButton";
 import BackHomeButton from "./BackHomeButton";
 import ThemeModeButton from "./ThemeModeButton";
 import { useState } from "react";
+
+import MenuIcon from "@mui/icons-material/Menu";
+
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import HelpButton from "../login/components/helpComponents/HelpButton";
+import { LoginResponse } from "../types/auth";
 
-interface LoginResponse {
-  authenticated: boolean;
-  user: {
-    dni: string;
-    oficialId: {
-      dni: string;
-      firstname: string;
-      lastname: string;
-      legajo: string;
-      currentAirportId: {
-        aeropuerto: string;
-        codIATA: string;
-        codOACI: string;
-      };
-      jerarquiaId: {
-        jerarquia: string;
-      };
-    };
-    role: string;
-  };
-}
 interface PlanillasNavbarProps {
   toggleColorMode: () => void;
-  onLogout: (data: boolean) => void;
-  onBackHome: (data: boolean) => void;
+  onLogout: (logout: boolean) => void;
+  onBackHome: (backHome: boolean) => void;
   isLoggedIn: boolean;
-  userInfo?: LoginResponse;
+  userInfo: LoginResponse;
+  onDrawerToggle: () => void;
 }
 
 export function PlanillasNavbar({
@@ -64,6 +47,7 @@ export function PlanillasNavbar({
   onBackHome,
   isLoggedIn,
   userInfo,
+  onDrawerToggle,
 }: PlanillasNavbarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -147,215 +131,239 @@ export function PlanillasNavbar({
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar
-          position="static"
+      <Box sx={{ flexGrow: 1, width: "100%" }}>
+        <Toolbar
           sx={{
-            minHeight: "48px",
+            minHeight: "48px !important",
+            py: 0,
+            px: 1,
+            justifyContent: "space-between",
+            width: "100%",
           }}
         >
-          <Toolbar
+          {/* Left side - Back button and app title */}
+          <Box
             sx={{
-              minHeight: "48px !important",
-              py: 0,
-              px: 1,
-              justifyContent: "space-between",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
             }}
           >
-            {/* Left side - Back button and app title */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
+            {isMobile && onDrawerToggle && (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={onDrawerToggle}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "4px 8px",
+                  borderRadius: 1,
+                  minWidth: "auto",
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+            {!onDrawerToggle && (
               <BackHomeButton onComeBackHome={onBackButton} />
-              {!isMobile && (
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ fontWeight: 500, fontSize: "1rem" }}
+            )}
+
+            {!isMobile && (
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ fontWeight: 500, fontSize: "1rem" }}
+              >
+                Planillas
+              </Typography>
+            )}
+          </Box>
+
+          {/* Right side - User info and actions */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            {isLoggedIn && userInfo && (
+              <>
+                {/* Airport chip - always visible */}
+                <Tooltip
+                  title={userInfo.user.oficialId.currentAirportId.aeropuerto}
                 >
-                  PSA Planillas
-                </Typography>
-              )}
-            </Box>
-
-            {/* Right side - User info and actions */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              {isLoggedIn && userInfo && (
-                <>
-                  {/* Airport chip - always visible */}
-                  <Tooltip
-                    title={userInfo.user.oficialId.currentAirportId.aeropuerto}
-                  >
-                    <Chip
-                      icon={
-                        <FlightTakeoffIcon
-                          sx={{
-                            color: "3a73b2",
-                          }}
-                        />
-                      }
-                      label={getAirportCode()}
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      sx={{
-                        height: "24px",
-                        display: { xs: "none", sm: "flex" },
-                        "& .MuiChip-label": { px: 1 },
-                        "& .MuiChip-icon": { ml: 0.5 },
-                      }}
-                    />
-                  </Tooltip>
-
-                  {/* User profile button */}
-                  <Tooltip title="Ver perfil">
-                    <IconButton
-                      onClick={handleProfileClick}
-                      size="small"
-                      sx={{ p: 0.5 }}
-                    >
-                      <Badge
-                        overlap="circular"
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        badgeContent={
-                          isAdmin ? (
-                            <Tooltip title="Administrador">
-                              <AdminPanelSettingsIcon
-                                color="primary"
-                                sx={{
-                                  fontSize: 14,
-                                  backgroundColor:
-                                    theme.palette.background.paper,
-                                  borderRadius: "50%",
-                                }}
-                              />
-                            </Tooltip>
-                          ) : null
-                        }
-                      >
-                        <Avatar
-                          sx={{
-                            width: 32,
-                            height: 32,
-                            bgcolor: theme.palette.primary.main,
-                            fontSize: "0.875rem",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {getUserInitials()}
-                        </Avatar>
-                      </Badge>
-                    </IconButton>
-                  </Tooltip>
-
-                  {/* User profile popover */}
-                  <Popover
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleProfileClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
-                    <Paper sx={{ p: 2, maxWidth: 300, minWidth: 250 }}>
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", mb: 2 }}
-                      >
-                        <Avatar
-                          sx={{
-                            width: 40,
-                            height: 40,
-                            bgcolor: theme.palette.primary.main,
-                            mr: 1.5,
-                          }}
-                        >
-                          {getUserInitials()}
-                        </Avatar>
-                        <Box>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ fontWeight: 500, lineHeight: 1.2 }}
-                          >
-                            {getFullName()}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {getFormattedRole()} • {getFormattedRank()}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Divider sx={{ my: 1.5 }} />
-
-                      <Box
+                  <Chip
+                    icon={
+                      <FlightTakeoffIcon
                         sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
+                          color: "3a73b2",
+                        }}
+                      />
+                    }
+                    label={getAirportCode()}
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    sx={{
+                      height: "24px",
+                      display: { xs: "none", sm: "flex" },
+                      "& .MuiChip-label": { px: 1 },
+                      "& .MuiChip-icon": { ml: 0.5 },
+                    }}
+                  />
+                </Tooltip>
+
+                {/* User profile button */}
+                <Tooltip title="Ver perfil">
+                  <IconButton
+                    onClick={handleProfileClick}
+                    size="small"
+                    sx={{ p: 0.5 }}
+                  >
+                    <Badge
+                      overlap="circular"
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      badgeContent={
+                        isAdmin ? (
+                          <Tooltip title="Administrador">
+                            <AdminPanelSettingsIcon
+                              color="primary"
+                              sx={{
+                                fontSize: 14,
+                                backgroundColor: theme.palette.background.paper,
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </Tooltip>
+                        ) : null
+                      }
+                    >
+                      <Avatar
+                        sx={{
+                          width: 32,
+                          height: 32,
+                          bgcolor: theme.palette.primary.main,
+                          fontSize: "0.875rem",
+                          fontWeight: 500,
                         }}
                       >
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <BadgeIcon
-                            fontSize="small"
-                            sx={{ color: "text.secondary", mr: 1 }}
-                          />
-                          <Typography variant="body2">
-                            Legajo: <strong>{getLegajo()}</strong>
-                          </Typography>
-                        </Box>
+                        {getUserInitials()}
+                      </Avatar>
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
 
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <AirplaneTicketIcon
-                            fontSize="small"
-                            sx={{ color: "text.secondary", mr: 1 }}
-                          />
-                          <Typography variant="body2">
-                            Aeropuerto: <strong>{getAirportCode()}</strong>
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{ ml: 0.5 }}
-                          >
-                            ({userInfo.user.oficialId.currentAirportId.codOACI})
-                          </Typography>
-                        </Box>
+                {/* User profile popover */}
+                <Popover
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleProfileClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  sx={{
+                    "& .MuiDrawer-paper": {
+                      boxSizing: "border-box",
+
+                      backgroundColor:
+                        theme.palette.mode === "dark"
+                          ? "rgba(42, 45, 50, 0.8)"
+                          : "rgba(255, 255, 255, 0.8)",
+                      backdropFilter: "blur(20px)",
+                      borderRight: `1px solid ${theme.palette.divider}`,
+                    },
+                  }}
+                >
+                  <Paper sx={{ p: 2, maxWidth: 300, minWidth: 250 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                      <Avatar
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          bgcolor: theme.palette.primary.main,
+                          mr: 1.5,
+                        }}
+                      >
+                        {getUserInitials()}
+                      </Avatar>
+                      <Box>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 500, lineHeight: 1.2 }}
+                        >
+                          {getFullName()}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {getFormattedRole()} • {getFormattedRank()}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ my: 1.5 }} />
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1,
+                      }}
+                    >
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <BadgeIcon
+                          fontSize="small"
+                          sx={{ color: "text.secondary", mr: 1 }}
+                        />
+                        <Typography variant="body2">
+                          Legajo: <strong>{getLegajo()}</strong>
+                        </Typography>
                       </Box>
 
-                      <Divider sx={{ my: 1.5 }} />
-
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                        <CloseSessionButton onLogout={onLogoutButton} />
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <AirplaneTicketIcon
+                          fontSize="small"
+                          sx={{ color: "text.secondary", mr: 1 }}
+                        />
+                        <Typography variant="body2">
+                          Aeropuerto: <strong>{getAirportCode()}</strong>
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ ml: 0.5 }}
+                        >
+                          ({userInfo.user.oficialId.currentAirportId.codOACI})
+                        </Typography>
                       </Box>
-                    </Paper>
-                  </Popover>
-                </>
-              )}
-              {/* Botón de ayuda contextual */}
-              <HelpButton />
+                    </Box>
 
-              {/* Theme toggle button - always visible */}
-              <ThemeModeButton toggleColorMode={toggleColorMode} />
-            </Box>
-          </Toolbar>
-        </AppBar>
+                    <Divider sx={{ my: 1.5 }} />
+
+                    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                      <CloseSessionButton onLogout={onLogoutButton} />
+                    </Box>
+                  </Paper>
+                </Popover>
+              </>
+            )}
+            {/* Botón de ayuda contextual */}
+            <HelpButton />
+
+            {/* Theme toggle button - always visible */}
+            <ThemeModeButton toggleColorMode={toggleColorMode} />
+          </Box>
+        </Toolbar>
       </Box>
     </ThemeProvider>
   );
