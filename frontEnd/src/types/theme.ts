@@ -102,7 +102,33 @@ const commonThemeSettings = {
     "0px 10px 13px -6px rgba(0,0,0,0.06),0px 21px 33px 3px rgba(0,0,0,0.04),0px 8px 40px 7px rgba(0,0,0,0.08)",
     "0px 10px 14px -6px rgba(0,0,0,0.06),0px 22px 35px 3px rgba(0,0,0,0.04),0px 8px 42px 7px rgba(0,0,0,0.08)",
     "0px 11px 14px -7px rgba(0,0,0,0.06),0px 23px 36px 3px rgba(0,0,0,0.04),0px 9px 44px 8px rgba(0,0,0,0.08)",
-    "0px 11px 15px -7px rgba(0,0,0,0.06),0px 24px 38px 3px rgba(0,0,0,0.04),0px 9px 46px 8px rgba(0,0,0,0.08)"
+    "0px 11px 15px -7px rgba(0,0,0,0.06),0px 24px 38px 3px rgba(0,0,0,0.04),0px 9px 46px 8px rgba(0,0,0,0.08)",
+  ] as [
+    "none",
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
   ],
   components: {
     MuiButtonBase: {
@@ -241,6 +267,41 @@ const lightThemeBase = createTheme({
       default: "#f5f7fa",
       paper: "#ffffff",
     },
+    text: {
+      primary: "#202124",
+      secondary: "#5f6368",
+    },
+    error: {
+      main: "#d32f2f",
+      light: "#ef5350",
+      dark: "#c62828",
+    },
+    warning: {
+      main: "#ed6c02",
+      light: "#ff9800",
+      dark: "#e65100",
+    },
+    info: {
+      main: "#0288d1",
+      light: "#03a9f4",
+      dark: "#01579b",
+    },
+    success: {
+      main: "#1B5E20",
+      light: "#2E7D32",
+      dark: "#004D40",
+      contrastText: "#FFFFFF",
+    },
+    divider: "rgba(0, 0, 0, 0.12)",
+    action: {
+      active: "rgba(0, 0, 0, 0.54)",
+      hover: "rgba(0, 0, 0, 0.04)",
+      selected: "rgba(0, 0, 0, 0.08)",
+      disabled: "rgba(0, 0, 0, 0.26)",
+      disabledBackground: "rgba(0, 0, 0, 0.12)",
+      focus: "rgba(0, 0, 0, 0.12)",
+    },
+    contrastThreshold: 4.5,
   },
 });
 
@@ -259,6 +320,40 @@ const darkThemeBase = createTheme({
       default: "#1a1c20",
       paper: "#2a2d32",
     },
+    text: {
+      primary: "#e1e3e6",
+      secondary: "#a1a4a9",
+    },
+    error: {
+      main: "#f44336",
+      light: "#e57373",
+      dark: "#d32f2f",
+    },
+    warning: {
+      main: "#ff9800",
+      light: "#ffb74d",
+      dark: "#f57c00",
+    },
+    info: {
+      main: "#29b6f6",
+      light: "#4fc3f7",
+      dark: "#0288d1",
+    },
+    success: {
+      main: "#388E3C",
+      light: "#4CAF50",
+      dark: "#1B5E20",
+    },
+    divider: "rgba(255, 255, 255, 0.12)",
+    action: {
+      active: "rgba(255, 255, 255, 0.7)",
+      hover: "rgba(255, 255, 255, 0.08)",
+      selected: "rgba(255, 255, 255, 0.16)",
+      disabled: "rgba(255, 255, 255, 0.3)",
+      disabledBackground: "rgba(255, 255, 255, 0.12)",
+      focus: "rgba(255, 255, 255, 0.12)",
+    },
+    contrastThreshold: 4.5,
   },
 });
 

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Button,
   Container,
@@ -9,8 +9,8 @@ import {
   Divider,
   Card,
   CardContent,
-} from '@mui/material';
-import { User, ActionButton } from '../../../actions/types';
+} from "@mui/material";
+import { User, ActionButton } from "../../../actions/types";
 
 interface Kpi {
   title: string;
@@ -40,10 +40,10 @@ export function GenericDashboard({
         <Grid item xs={12} sm={6} md={4} lg={3} key={action.id}>
           <Button
             fullWidth
-            variant={action.primary ? 'contained' : 'outlined'}
+            variant={action.primary ? "contained" : "outlined"}
             startIcon={action.icon}
             onClick={action.onClick}
-            sx={{ p: 1.5, height: '100%' }}
+            sx={{ p: 1.5, height: "100%" }}
           >
             {action.label}
           </Button>
@@ -56,9 +56,6 @@ export function GenericDashboard({
     <Container maxWidth="xl">
       <Paper sx={{ p: { xs: 2, md: 3 }, my: 2, borderRadius: 2 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {title}
-        </Typography>
-        <Typography variant="h6" component="h2" sx={{ mb: 3 }}>
           Bienvenido, {user.hierarchy?.toUpperCase()}!
         </Typography>
 
@@ -66,7 +63,7 @@ export function GenericDashboard({
           <Grid container spacing={2} sx={{ mb: 4 }}>
             {kpis.map((kpi) => (
               <Grid item xs={12} sm={4} key={kpi.title}>
-                <Card sx={{ textAlign: 'center', p: 1 }}>
+                <Card sx={{ textAlign: "center", p: 1 }}>
                   <CardContent>
                     <Typography variant="subtitle1">{kpi.title}</Typography>
                     <Typography variant="h4" component="p">
@@ -83,7 +80,7 @@ export function GenericDashboard({
           <Box key={index}>
             <Divider sx={{ my: 4 }} />
             <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
-              {section.title}
+              {title}
             </Typography>
             {renderActionButtons(section.actions)}
           </Box>

@@ -396,6 +396,46 @@ export const helpDescriptions: Record<View, HelpDescription | null> = {
       "El acceso está auditado para seguridad",
     ],
   },
+  [View.BUSQUEDA_AVANZADA]: {
+    title: "Busqueda Avanzada",
+    subtitle:
+      "Busca planillas específicas, filtra por fecha, empresa, vuelo, personal, etc.",
+    steps: [
+      {
+        step: "1",
+        title: "Filtrar por fecha",
+        description:
+          "Selecciona el rango de fechas que necesitas. Por defecto muestra el último mes.",
+        icon: AccessTimeIcon,
+      },
+      {
+        step: "2",
+        title: "Buscar planilla",
+        description:
+          "Usa el buscador para encontrar por número de planilla, vuelo o personal (ej: 'AR1234' o '20240515-001').",
+        icon: SearchIcon,
+      },
+      {
+        step: "3",
+        title: "Ver detalles",
+        description:
+          "En la vista rápida, haz clic en 'Ver detalles' para ver TODA la información completa.",
+        icon: VisibilityIcon,
+      },
+      {
+        step: "4",
+        title: "Descargar PDF",
+        description:
+          "En la vista de detalles, usa el botón 'Descargar PDF' para guardar un informe oficial firmado.",
+        icon: PictureAsPdfIcon,
+      },
+    ],
+    criticalInfo: [
+      "Solo puedes ver planillas de TU AEROPUERTO",
+      "Los datos sensibles están ocultos por seguridad",
+      "El historial se mantiene por 180 días",
+    ],
+  },
 };
 
 export const planillaStepDescriptions: Record<number, HelpDescription> = {

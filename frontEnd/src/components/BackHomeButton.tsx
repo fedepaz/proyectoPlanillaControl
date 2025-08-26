@@ -18,9 +18,9 @@ export default function BackHomeButton({
   return (
     <Tooltip title="Regresar a la página de inicio" arrow placement="bottom">
       <IconButton
-        color="inherit"
         onClick={onComeBackHomeButton}
         sx={{
+          color: 'text.primary',
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

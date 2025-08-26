@@ -5,10 +5,10 @@ import {
   Badge,
   Box,
   Chip,
+  Dialog,
   Divider,
   IconButton,
   Paper,
-  Popover,
   Toolbar,
   Tooltip,
   Typography,
@@ -38,7 +38,7 @@ interface PlanillasNavbarProps {
   onBackHome: (backHome: boolean) => void;
   isLoggedIn: boolean;
   userInfo: LoginResponse;
-  onDrawerToggle: () => void;
+  onDrawerToggle: (() => void) | undefined;
 }
 
 export function PlanillasNavbar({
@@ -151,10 +151,10 @@ export function PlanillasNavbar({
           >
             {isMobile && onDrawerToggle && (
               <IconButton
-                color="inherit"
                 aria-label="open drawer"
                 onClick={onDrawerToggle}
                 sx={{
+                  color: 'text.primary',
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -260,19 +260,9 @@ export function PlanillasNavbar({
                   </IconButton>
                 </Tooltip>
 
-                {/* User profile popover */}
-                <Popover
+                <Dialog
                   open={open}
-                  anchorEl={anchorEl}
                   onClose={handleProfileClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
                   sx={{
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
@@ -354,7 +344,7 @@ export function PlanillasNavbar({
                       <CloseSessionButton onLogout={onLogoutButton} />
                     </Box>
                   </Paper>
-                </Popover>
+                </Dialog>
               </>
             )}
             {/* Botón de ayuda contextual */}

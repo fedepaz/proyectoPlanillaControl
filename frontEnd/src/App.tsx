@@ -166,9 +166,10 @@ function AppContent() {
         sx={{
           minHeight: "100vh",
           width: "100%",
-          background: theme.palette.mode === 'dark' 
-            ? 'linear-gradient(180deg, #1a1c20 0%, #2a2d32 100%)' 
-            : 'linear-gradient(180deg, #f5f7fa 0%, #e6e9ee 100%)',
+          background:
+            theme.palette.mode === "dark"
+              ? "linear-gradient(180deg, #1a1c20 0%, #2a2d32 100%)"
+              : "linear-gradient(180deg, #f5f7fa 0%, #e6e9ee 100%)",
         }}
       >
         <PlanillaStepProvider step={effectiveStep}>
@@ -178,7 +179,9 @@ function AppContent() {
             isLoggedIn={isLoggedIn}
             onBackHome={handleBack}
             userInfo={userInfo}
-            onDrawerToggle={currentView === View.DASHBOARD ? handleDrawerToggle : undefined}
+            onDrawerToggle={
+              currentView === View.DASHBOARD ? handleDrawerToggle : undefined
+            }
           />
         </PlanillaStepProvider>
         <Box

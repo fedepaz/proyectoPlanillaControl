@@ -31,6 +31,7 @@ export const ModernDashboardLayout = ({
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(event);
     setSelectedTab(newValue);
   };
 

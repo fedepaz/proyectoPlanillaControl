@@ -21,9 +21,9 @@ export default function ThemeModeButton({
       placement="bottom"
     >
       <IconButton
-        color="inherit"
         onClick={toggleColorMode}
         sx={{
+          color: 'text.primary',
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
