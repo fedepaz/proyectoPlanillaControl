@@ -1,7 +1,6 @@
-
 "use client";
 
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { User, UserRole } from "../../actions/types";
 import { useDashboardActions } from "../../actions";
 import { View } from "../../types/types";
@@ -50,14 +49,26 @@ const Dashboard = memo(function Dashboard(props: DashboardProps) {
     },
     props.user
   );
+  const sections = useMemo(() => {
+    const allSections = [
+      { label: "General", actions: mainActions },
+      { label: "Reportes", actions: reportsActions },
+      { label: "Administración", actions: adminActions },
+      { label: "Configuración", actions: settingsActions },
+      { label: "Cuenta", actions: accountActions },
+    ];
 
-  const sections = [
-    { label: "General", actions: mainActions },
-    { label: "Reportes", actions: reportsActions },
-    { label: "Administración", actions: adminActions },
-    { label: "Configuración", actions: settingsActions },
-    { label: "Cuenta", actions: accountActions },
-  ];
+    // Only include sections that have at least one action
+    return allSections.filter(
+      (section) => section.actions && section.actions.length > 0
+    );
+  }, [
+    mainActions,
+    reportsActions,
+    adminActions,
+    settingsActions,
+    accountActions,
+  ]);
 
   const renderDashboardPage = (selectedTab: number) => {
     if (!effectiveRoles) {
@@ -80,7 +91,12 @@ const Dashboard = memo(function Dashboard(props: DashboardProps) {
       <GenericDashboard
         user={props.user}
         title={sections[selectedTab]?.label || "Dashboard"}
-        sections={[{ title: sections[selectedTab]?.label, actions: sections[selectedTab]?.actions || [] }]}
+        sections={[
+          {
+            title: sections[selectedTab]?.label,
+            actions: sections[selectedTab]?.actions || [],
+          },
+        ]}
         kpis={effectiveRoles.includes(UserRole.RESPONSABLE) ? kpis : []}
       />
     );

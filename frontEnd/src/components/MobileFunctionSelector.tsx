@@ -183,7 +183,6 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
             <Typography
               variant={isMobile ? "subtitle1" : "h6"}
               color={empresaColor}
-              fontWeight={theme.typography.fontWeightSemiBold}
             >
               {title}
             </Typography>
