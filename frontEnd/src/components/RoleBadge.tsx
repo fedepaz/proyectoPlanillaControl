@@ -52,7 +52,7 @@ export function RoleBadge({ role, size = "small" }: RoleBadgeProps) {
         sx={{
           backgroundColor: bg,
           color: isDarkMode ? theme.palette.getContrastText(color) : color,
-          fontWeight: 600,
+          fontWeight: theme.typography.fontWeightSemiBold,
           borderRadius: "20px",
           height: size === "small" ? 26 : 36,
           fontSize: size === "small" ? 13 : 15,

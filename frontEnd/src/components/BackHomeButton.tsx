@@ -20,7 +20,7 @@ export default function BackHomeButton({
       <IconButton
         onClick={onComeBackHomeButton}
         sx={{
-          color: 'text.primary',
+          color: "text.primary",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -39,7 +39,6 @@ export default function BackHomeButton({
           variant="caption"
           component="span"
           sx={{
-            fontSize: "0.65rem",
             lineHeight: 1,
             mt: 0.5,
           }}

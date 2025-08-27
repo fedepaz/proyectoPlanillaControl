@@ -126,8 +126,8 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             </Avatar>
             <Typography
               variant={isMobile ? "h6" : "h5"}
-              fontWeight="bold"
               color={`${color}.main`}
+              sx={{ fontWeight: theme.typography.fontWeightBold }}
             >
               {title}
             </Typography>
@@ -147,8 +147,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           <Typography
             variant="body2"
             color="text.secondary"
-            fontWeight="medium"
-            sx={{ fontSize: isMobile ? "0.85rem" : "0.875rem" }}
+            sx={{ fontWeight: theme.typography.fontWeightMedium }}
             component="div"
           >
             {label}:
@@ -158,7 +157,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
           <Typography
             variant="body2"
             color="text.primary"
-            sx={{ fontSize: isMobile ? "0.85rem" : "0.875rem" }}
+            sx={{}}
             component="div"
           >
             {value}
@@ -192,7 +191,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             <Person fontSize="small" />
           </Avatar>
           <Box sx={{ flex: 1 }}>
-            <Typography variant="subtitle2" fontWeight="medium">
+            <Typography variant="subtitle2" sx={{ fontWeight: theme.typography.fontWeightMedium }}>
               {person.firstname} {person.lastname}
             </Typography>
             <Typography
@@ -284,7 +283,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                   sx={{ mb: 1 }}
                 >
                   <Warning color="warning" fontSize="small" />
-                  <Typography variant="subtitle2" fontWeight="medium">
+                  <Typography variant="subtitle2" sx={{ fontWeight: theme.typography.fontWeightMedium }}>
                     {novedad.type}
                   </Typography>
                 </Stack>
@@ -315,7 +314,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
             sx={{ mb: 3, borderRadius: 2 }}
             icon={<CheckCircle fontSize="inherit" />}
           >
-            <Typography variant="body1" fontWeight="medium">
+            <Typography variant="body1" sx={{ fontWeight: theme.typography.fontWeightMedium }}>
               ¡Planilla creada exitosamente!
             </Typography>
           </Alert>
@@ -541,7 +540,7 @@ export const PlanillaDetailById: React.FC<PlanillaDetailByIdProps> = ({
                   <DirectionsCar fontSize="small" />
                 </Avatar>
                 <Box sx={{ flex: 1 }}>
-                  <Typography variant="subtitle2" fontWeight="medium">
+                  <Typography variant="subtitle2" sx={{ fontWeight: theme.typography.fontWeightMedium }}>
                     {item.vehiculo?.numInterno || "N/A"} -{" "}
                     {item.vehiculo?.tipoVehiculo?.label.toUpperCase() || "N/A"}
                   </Typography>

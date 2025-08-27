@@ -53,7 +53,6 @@ function SuccessHelpModalMobile({
             component="h1"
             sx={{
               fontWeight: 700,
-              fontSize: "1.5rem",
               mb: 1,
             }}
           >
@@ -80,7 +79,7 @@ function SuccessHelpModalMobile({
               <Box sx={{ display: "flex", gap: 2, mb: 1 }}>
                 <Box
                   sx={{
-                    fontSize: "1.5rem",
+                    fontSize: theme.typography.h6.fontSize,
                     mt: -0.5,
                   }}
                 >
@@ -100,7 +99,7 @@ function SuccessHelpModalMobile({
                       px: 1.5,
                       py: 0.25,
                       display: "inline-block",
-                      fontWeight: "bold",
+                      fontWeight: theme.typography.fontWeightBold,
                       fontSize: "0.85rem",
                     }}
                   >
@@ -146,7 +145,7 @@ function SuccessHelpModalMobile({
               }}
               icon={<WarningIcon />}
             >
-              <Typography variant="body2" fontWeight="bold">
+              <Typography variant="body2" sx={{ fontWeight: theme.typography.fontWeightBold }}>
                 ¡Importante para este paso!
               </Typography>
               <ul style={{ paddingLeft: "20px", margin: 0 }}>
@@ -182,8 +181,6 @@ function SuccessHelpModalMobile({
             sx={{
               px: 3,
               py: 1.2,
-              fontSize: "0.9rem",
-              fontWeight: 600,
               borderRadius: 50,
               backgroundColor: theme.palette.success.contrastText,
               color: theme.palette.success.main,

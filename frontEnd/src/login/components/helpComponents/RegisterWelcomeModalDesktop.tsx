@@ -110,7 +110,7 @@ function RegisterWelcomeModalDesktop({
                       component="h1"
                       sx={{
                         fontWeight: 800,
-                        fontSize: "1.25rem", // Explicit smaller font size
+                        
                       }}
                     >
                       ¡Completa tu registro!
@@ -120,7 +120,6 @@ function RegisterWelcomeModalDesktop({
                     variant="body1" // Changed from h6 to body1
                     sx={{
                       opacity: 0.9,
-                      fontSize: "0.9rem", // Smaller subtitle
                     }}
                   >
                     Te explicamos qué datos necesitas y por qué:
@@ -138,7 +137,7 @@ function RegisterWelcomeModalDesktop({
                     <Box key={index} sx={{ display: "flex", gap: 2 }}>
                       <Box
                         sx={{
-                          fontSize: "2rem",
+                          fontSize: theme.typography.h4.fontSize,
                           minWidth: "40px",
                           display: "flex",
                           alignItems: "center",
@@ -221,7 +220,7 @@ function RegisterWelcomeModalDesktop({
                       sx={{
                         fontWeight: 700,
                         mb: 1.5, // Reduced margin
-                        fontSize: "1.1rem", // Smaller title
+                        
                       }}
                     >
                       ¡Importante para este paso!
@@ -235,13 +234,12 @@ function RegisterWelcomeModalDesktop({
                       borderLeft: `4px solid ${theme.palette.error.main}`,
                     }}
                   >
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: theme.typography.fontWeightBold }}>
                       Información CRÍTICA:
                     </Typography>
                     <Typography
                       variant="body2" // Changed from body1 to body2
                       component="div"
-                      sx={{ fontSize: "0.8rem" }} // Smaller critical info text
                     >
                       <ul
                         style={{
@@ -287,8 +285,6 @@ function RegisterWelcomeModalDesktop({
                     sx={{
                       px: 4,
                       py: 2,
-                      fontSize: "1.1rem",
-                      fontWeight: 600,
                       borderRadius: 50,
                       backgroundColor: theme.palette.warning.contrastText,
                       color: theme.palette.warning.main,

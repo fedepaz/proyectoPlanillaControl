@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -34,6 +35,8 @@ export const CompactVehiculoCard = memo(function CompactVehiculoCard({
   const [canDelete, setCanDelete] = useState(false);
   const [canViewDetails, setCanViewDetails] = useState(false);
   const { user } = useAuth();
+
+  const theme = useTheme();
 
   useEffect(() => {
     if (user) {
@@ -72,7 +75,7 @@ export const CompactVehiculoCard = memo(function CompactVehiculoCard({
           justifyContent="space-between"
         >
           <Box sx={{ minWidth: 0 }}>
-            <Typography variant="body1" fontWeight="bold" noWrap>
+            <Typography variant="body1" noWrap sx={{ fontWeight: theme.typography.fontWeightBold }}>
               {vehiculo.tipoVehiculo.label.toUpperCase()}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>

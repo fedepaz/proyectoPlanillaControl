@@ -66,7 +66,6 @@ export default function CloseSessionButton({
           variant="caption"
           component="span"
           sx={{
-            fontSize: "0.65rem",
             lineHeight: 1,
             mt: 0.5,
           }}

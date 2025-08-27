@@ -181,7 +181,7 @@ export function AeropuertoComponent({
             label={`IATA: ${option.codIATA}`}
             size="small"
             variant="outlined"
-            sx={{ fontSize: "0.75rem", height: 20 }}
+            sx={{ height: 20 }}
           />
 
           {option.codOACI && !option.isUserCreated && (
@@ -189,7 +189,7 @@ export function AeropuertoComponent({
               label={`OACI: ${option.codOACI}`}
               size="small"
               variant="outlined"
-              sx={{ fontSize: "0.75rem", height: 20 }}
+              sx={{ height: 20 }}
             />
           )}
         </Box>
@@ -410,7 +410,6 @@ export function AeropuertoComponent({
                     textTransform: "none",
                     fontWeight: 500,
                     minHeight: 48,
-                    fontSize: "1rem",
                     borderRadius: 2,
                     boxShadow: theme.shadows[2],
                     "&:hover": {

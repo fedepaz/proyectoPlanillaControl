@@ -183,7 +183,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
             <Typography
               variant={isMobile ? "subtitle1" : "h6"}
               color={empresaColor}
-              fontWeight="600"
+              fontWeight={theme.typography.fontWeightSemiBold}
             >
               {title}
             </Typography>
@@ -215,7 +215,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
         </Box>
 
         {totalAssignments === 0 && (
-          <Alert severity="info" sx={{ mb: 2, fontSize: "0.875rem" }}>
+          <Alert severity="info" sx={{ mb: 2 }}>
             Toca en cada empleado para asignar sus funciones
           </Alert>
         )}
@@ -275,7 +275,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
                           size="small"
                           color="success"
                           variant="filled"
-                          sx={{ fontSize: "0.75rem", height: 20 }}
+                          sx={{ height: 20 }}
                         />
                       ))}
                       {grupo && (
@@ -284,7 +284,7 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
                           size="small"
                           color="primary"
                           variant="outlined"
-                          sx={{ fontSize: "0.75rem", height: 20 }}
+                          sx={{ height: 20 }}
                         />
                       )}
                     </Box>
@@ -377,7 +377,6 @@ export const MobileFunctionSelector: React.FC<MobileFunctionSelectorProps> = ({
               sx={{
                 minWidth: 200,
                 py: 1.5,
-                fontSize: "1rem",
                 fontWeight: 600,
               }}
             >

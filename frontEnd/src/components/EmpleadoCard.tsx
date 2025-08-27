@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -35,6 +36,8 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
   const [canDelete, setCanDelete] = useState(false);
   const [canViewDetails, setCanViewDetails] = useState(false);
   const { user } = useAuth();
+
+  const theme = useTheme();
 
   useEffect(() => {
     if (user) {
@@ -76,11 +79,11 @@ export const CompactPersonalCard = memo(function CompactPersonalCard({
             {/* Employee info - takes most space */}
             <Box sx={{ minWidth: 0 }}>
               {showActions ? (
-                <Typography variant="body2" fontWeight="bold" noWrap>
+                <Typography variant="body2" noWrap sx={{ fontWeight: theme.typography.fontWeightBold }}>
                   {personal.lastname}
                 </Typography>
               ) : (
-                <Typography variant="body2" fontWeight="bold" noWrap>
+                <Typography variant="body2" noWrap sx={{ fontWeight: theme.typography.fontWeightBold }}>
                   {personal.lastname} - {personal.firstname}
                 </Typography>
               )}

@@ -73,7 +73,6 @@ export default function ResetPasswordWelcomeModalMobile({
               component="h1"
               sx={{
                 fontWeight: 800,
-                fontSize: "1.8rem",
                 mb: 2,
               }}
             >
@@ -104,7 +103,7 @@ export default function ResetPasswordWelcomeModalMobile({
               borderLeft: `4px solid ${theme.palette.warning.dark}`,
             }}
           >
-            <Typography variant="body2" fontWeight="bold">
+            <Typography variant="body2" sx={{ fontWeight: theme.typography.fontWeightBold }}>
               ¡NO ES AUTOMÁTICO!
             </Typography>
             <Typography variant="body2">
@@ -141,7 +140,7 @@ export default function ResetPasswordWelcomeModalMobile({
                       <Box sx={{ display: "flex", gap: 2, mb: 1 }}>
                         <Box
                           sx={{
-                            fontSize: "1.8rem",
+                            fontSize: theme.typography.h5.fontSize,
                             mt: -0.5,
                           }}
                         >
@@ -163,8 +162,7 @@ export default function ResetPasswordWelcomeModalMobile({
                               px: 1.5,
                               py: 0.25,
                               display: "inline-block",
-                              fontWeight: "bold",
-                              fontSize: "0.85rem",
+                              fontWeight: theme.typography.fontWeightBold,
                             }}
                           >
                             Paso {feature.step}
@@ -212,7 +210,7 @@ export default function ResetPasswordWelcomeModalMobile({
             }}
             icon={<WarningIcon />}
           >
-            <Typography variant="body2" fontWeight="bold">
+            <Typography variant="body2" sx={{ fontWeight: theme.typography.fontWeightBold }}>
               Información CRÍTICA:
             </Typography>
             <Typography variant="body2">
@@ -247,8 +245,6 @@ export default function ResetPasswordWelcomeModalMobile({
                 sx={{
                   px: 3,
                   py: 1.5,
-                  fontSize: "1rem",
-                  fontWeight: 600,
                   borderRadius: 50,
                   backgroundColor: theme.palette.warning.contrastText,
                   color: theme.palette.warning.main,

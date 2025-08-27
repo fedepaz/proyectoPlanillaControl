@@ -86,7 +86,6 @@ function StepHelpModalDesktop({
                     component="h1"
                     sx={{
                       fontWeight: 800,
-                      fontSize: "1.25rem", // Explicit smaller font size
                     }}
                   >
                     {helpDescription.title}
@@ -96,7 +95,6 @@ function StepHelpModalDesktop({
                   variant="body1" // Changed from h6 to body1
                   sx={{
                     opacity: 0.9,
-                    fontSize: "0.9rem", // Smaller subtitle
                   }}
                 >
                   {helpDescription.subtitle}
@@ -131,7 +129,6 @@ function StepHelpModalDesktop({
                       {/* Reduced gaps and margins */}
                       <Box
                         sx={{
-                          fontSize: "1.2rem", // Reduced icon size
                           display: "flex",
                           alignItems: "center",
                         }}
@@ -158,7 +155,6 @@ function StepHelpModalDesktop({
                             py: 0.25, // Reduced padding
                             display: "inline-block",
                             fontWeight: "bold",
-                            fontSize: "0.75rem", // Smaller step number
                           }}
                         >
                           Paso {step.step}
@@ -169,7 +165,6 @@ function StepHelpModalDesktop({
                             fontWeight: 700,
                             color: "white",
                             mt: 0.25, // Reduced margin
-                            fontSize: "0.9rem", // Smaller title
                           }}
                         >
                           {step.title}
@@ -182,7 +177,6 @@ function StepHelpModalDesktop({
                         opacity: 0.9,
                         lineHeight: 1.4, // Tighter line height
                         pl: 3, // Reduced padding from 4 to 3
-                        fontSize: "0.8rem", // Smaller description text
                       }}
                     >
                       {step.description}
@@ -228,7 +222,6 @@ function StepHelpModalDesktop({
                     sx={{
                       fontWeight: 700,
                       mb: 1.5, // Reduced margin
-                      fontSize: "1.1rem", // Smaller title
                     }}
                   >
                     ¡Importante para este paso!
@@ -237,7 +230,6 @@ function StepHelpModalDesktop({
                     variant="body2" // Changed from body1 to body2
                     sx={{
                       opacity: 0.9,
-                      fontSize: "0.85rem", // Smaller text
                     }}
                   >
                     El botón de ayuda se encuentra en la esquina superior
@@ -262,7 +254,6 @@ function StepHelpModalDesktop({
                       <Typography
                         variant="body2" // Changed from body1 to body2
                         component="div"
-                        sx={{ fontSize: "0.8rem" }} // Smaller critical info text
                       >
                         <ul
                           style={{
@@ -301,7 +292,6 @@ function StepHelpModalDesktop({
                   sx={{
                     px: 3, // Reduced padding
                     py: 1.25, // Reduced padding
-                    fontSize: "0.9rem", // Smaller button text
                     fontWeight: 600,
                     borderRadius: 50,
                     backgroundColor: theme.palette.primary.main,

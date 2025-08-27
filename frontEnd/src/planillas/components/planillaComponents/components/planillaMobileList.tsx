@@ -58,7 +58,6 @@ export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
                 fontWeight: "bold",
                 textAlign: "center",
                 px: 1,
-                fontSize: "0.8rem",
               }}
             >
               Fecha
@@ -68,7 +67,6 @@ export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
                 fontWeight: "bold",
                 textAlign: "center",
                 px: 1,
-                fontSize: "0.8rem",
               }}
             >
               Código
@@ -78,7 +76,6 @@ export const PlanillaMobileList: React.FC<PlanillaMobileItemProps> = ({
                 fontWeight: "bold",
                 textAlign: "center",
                 px: 1,
-                fontSize: "0.8rem",
               }}
             >
               Horarios

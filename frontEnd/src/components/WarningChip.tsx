@@ -21,7 +21,6 @@ export function HelperTextWarning({
       <Typography
         variant="caption"
         color="text.secondary"
-        sx={{ fontSize: "0.7rem", lineHeight: 1.2 }}
       >
         {itemType} agregado por usuario - no verificado
       </Typography>

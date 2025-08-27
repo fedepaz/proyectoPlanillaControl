@@ -59,8 +59,8 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
         {icon}
         <Typography
           variant={isMobile ? "h6" : "h5"}
-          fontWeight="bold"
           color="primary"
+          sx={{ fontWeight: theme.typography.fontWeightBold }}
         >
           {title}
         </Typography>
@@ -75,7 +75,7 @@ export const PlanillaModal: React.FC<PlanillaModalProps> = ({
   }) => (
     <Grid container spacing={2} sx={{ mb: 1 }}>
       <Grid item xs={isMobile ? 5 : 4}>
-        <Typography variant="body2" color="text.secondary" fontWeight="medium">
+        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: theme.typography.fontWeightMedium }}>
           {label}:
         </Typography>
       </Grid>

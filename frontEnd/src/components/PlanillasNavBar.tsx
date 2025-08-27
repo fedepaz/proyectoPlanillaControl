@@ -175,7 +175,7 @@ export function PlanillasNavbar({
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ fontWeight: 500, fontSize: "1rem" }}
+                sx={{ fontWeight: theme.typography.fontWeightMedium }}
               >
                 Planillas
               </Typography>
@@ -250,7 +250,6 @@ export function PlanillasNavbar({
                           width: 32,
                           height: 32,
                           bgcolor: theme.palette.primary.main,
-                          fontSize: "0.875rem",
                           fontWeight: 500,
                         }}
                       >

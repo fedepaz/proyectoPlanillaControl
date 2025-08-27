@@ -104,7 +104,6 @@ const WelcomeModalMobile: React.FC<WelcomeModalMobileProps> = ({
                   component="h1"
                   sx={{
                     fontWeight: 800,
-                    fontSize: { xs: "2.5rem", sm: "3rem" },
                     lineHeight: 1.1,
                     mb: 2,
                     letterSpacing: "-0.02em",
@@ -261,7 +260,6 @@ const WelcomeModalMobile: React.FC<WelcomeModalMobileProps> = ({
                                   variant="body2"
                                   sx={{
                                     lineHeight: 1.5,
-                                    fontSize: "0.95rem",
                                     color: theme.palette.text.secondary,
                                   }}
                                 >
@@ -319,7 +317,6 @@ const WelcomeModalMobile: React.FC<WelcomeModalMobileProps> = ({
                     sx={{
                       px: 4,
                       py: 2,
-                      fontSize: "1rem",
                       fontWeight: 700,
                       textTransform: "none",
                       borderRadius: theme.shape.borderRadius * 2,
@@ -355,7 +352,6 @@ const WelcomeModalMobile: React.FC<WelcomeModalMobileProps> = ({
                     sx={{
                       px: 4,
                       py: 2,
-                      fontSize: "1rem",
                       fontWeight: 600,
                       textTransform: "none",
                       borderRadius: theme.shape.borderRadius * 2,

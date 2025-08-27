@@ -175,7 +175,6 @@ export function RHFDropDownCurrentAirport<T extends FieldValues>({
                                 label={option.codIATA}
                                 size="small"
                                 variant="outlined"
-                                sx={{ fontSize: "0.75rem" }}
                               />
                             </Box>
                           }

@@ -118,7 +118,6 @@ const WelcomeLarge: React.FC<WelcomeLargeProps> = ({
                       component="h1"
                       sx={{
                         fontWeight: 800,
-                        fontSize: { md: "3.5rem", lg: "4.5rem", xl: "5rem" },
                         lineHeight: 1.1,
                         mb: 3,
                         letterSpacing: "-0.02em",
@@ -183,7 +182,6 @@ const WelcomeLarge: React.FC<WelcomeLargeProps> = ({
                         sx={{
                           px: 6,
                           py: 2.5,
-                          fontSize: "1.2rem",
                           fontWeight: 700,
                           textTransform: "none",
                           borderRadius: theme.shape.borderRadius * 2,
@@ -220,7 +218,6 @@ const WelcomeLarge: React.FC<WelcomeLargeProps> = ({
                         sx={{
                           px: 6,
                           py: 2.5,
-                          fontSize: "1.1rem",
                           fontWeight: 600,
                           textTransform: "none",
                           borderRadius: theme.shape.borderRadius * 2,
@@ -361,7 +358,6 @@ const WelcomeLarge: React.FC<WelcomeLargeProps> = ({
                                       variant="body1"
                                       sx={{
                                         lineHeight: 1.6,
-                                        fontSize: "1.1rem",
                                         color: theme.palette.text.secondary,
                                       }}
                                     >

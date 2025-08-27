@@ -112,7 +112,7 @@ export default function ResetPasswordWelcomeModalDesktop({
                       component="h1"
                       sx={{
                         fontWeight: 800,
-                        fontSize: "1.25rem", // Explicit smaller font size
+                        
                       }}
                     >
                       ¡Cambio de contraseña MANUAL!
@@ -122,7 +122,6 @@ export default function ResetPasswordWelcomeModalDesktop({
                     variant="body1" // Changed from h6 to body1
                     sx={{
                       opacity: 0.9,
-                      fontSize: "0.9rem", // Smaller subtitle
                     }}
                   >
                     IMPORTANTE: Este proceso requiere aprobación del
@@ -179,7 +178,7 @@ export default function ResetPasswordWelcomeModalDesktop({
                         {" "}
                         <Box
                           sx={{
-                            fontSize: "1.2rem", // Reduced icon size
+                            fontSize: theme.typography.body1.fontSize, // Reduced icon size
                             display: "flex",
                             alignItems: "center",
                           }}
@@ -205,8 +204,7 @@ export default function ResetPasswordWelcomeModalDesktop({
                               px: 1,
                               py: 0.25, // Re
                               display: "inline-block",
-                              fontWeight: "bold",
-                              fontSize: "0.75rem", // Smaller step number
+                              fontWeight: theme.typography.fontWeightBold,
                             }}
                           >
                             Paso {feature.step}
@@ -217,7 +215,6 @@ export default function ResetPasswordWelcomeModalDesktop({
                               fontWeight: 700,
                               color: "white",
                               mt: 0.25, // Reduced margin
-                              fontSize: "0.9rem", // Smaller title
                             }}
                           >
                             {feature.title}
@@ -230,7 +227,7 @@ export default function ResetPasswordWelcomeModalDesktop({
                           opacity: 0.9,
                           lineHeight: 1.4, // Tighter line height
                           pl: 3, // Reduced padding from 4 to 3
-                          fontSize: "0.8rem", // Smaller description text
+                          
                         }}
                       >
                         {feature.description}
@@ -284,7 +281,7 @@ export default function ResetPasswordWelcomeModalDesktop({
                       sx={{
                         fontWeight: 700,
                         mb: 1.5, // Reduced margin
-                        fontSize: "1.1rem", // Smaller title
+                        
                       }}
                     >
                       ¡Importante para este paso!
@@ -299,13 +296,12 @@ export default function ResetPasswordWelcomeModalDesktop({
                       borderLeft: `4px solid ${theme.palette.error.main}`,
                     }}
                   >
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: theme.typography.fontWeightBold }}>
                       ¡IMPORTANTE PARA TU USO DIARIO!
                     </Typography>
                     <Typography
                       variant="body2" // Changed from body1 to body2
                       component="div"
-                      sx={{ fontSize: "0.8rem" }} // Smaller critical info text
                     >
                       <ul
                         style={{
@@ -373,8 +369,6 @@ export default function ResetPasswordWelcomeModalDesktop({
                     sx={{
                       px: 3, // Reduced padding
                       py: 1.25, // Reduced padding
-                      fontSize: "0.9rem", // Smaller button text
-                      fontWeight: 600,
                       borderRadius: 50,
                       backgroundColor: theme.palette.warning.contrastText,
                       color: theme.palette.warning.main,

@@ -239,7 +239,7 @@ export const OperatorAndObservationsSelection: React.FC<
             <Typography
               variant={isMobile ? "subtitle1" : "h6"}
               color={empresaColor}
-              fontWeight="600"
+              fontWeight={theme.typography.fontWeightSemiBold}
             >
               {title}
             </Typography>
@@ -248,7 +248,7 @@ export const OperatorAndObservationsSelection: React.FC<
 
         {/* Initial instruction */}
         {assignedCount === 0 && (
-          <Alert severity="info" sx={{ mb: 2, fontSize: "0.875rem" }}>
+          <Alert severity="info" sx={{ mb: 2 }}>
             Toca en cada vehículo para asignar su operador
           </Alert>
         )}
@@ -315,7 +315,7 @@ export const OperatorAndObservationsSelection: React.FC<
                           size="small"
                           color="warning"
                           variant="outlined"
-                          sx={{ fontSize: "0.75rem", height: 20 }}
+                          sx={{ height: 20 }}
                         />
                       )}
                     </Box>
@@ -417,7 +417,6 @@ export const OperatorAndObservationsSelection: React.FC<
               sx={{
                 minWidth: 200,
                 py: 1.5,
-                fontSize: "1rem",
                 fontWeight: 600,
               }}
             >

@@ -71,7 +71,6 @@ function RegisterWelcomeModalMobile({
               component="h1"
               sx={{
                 fontWeight: 800,
-                fontSize: "1.8rem",
                 mb: 2,
               }}
             >
@@ -117,7 +116,7 @@ function RegisterWelcomeModalMobile({
                       <Box sx={{ display: "flex", gap: 2, mb: 1 }}>
                         <Box
                           sx={{
-                            fontSize: "1.8rem",
+                            fontSize: theme.typography.h5.fontSize,
                             mt: -0.5,
                           }}
                         >
@@ -139,8 +138,7 @@ function RegisterWelcomeModalMobile({
                               px: 1.5,
                               py: 0.25,
                               display: "inline-block",
-                              fontWeight: "bold",
-                              fontSize: "0.85rem",
+                              fontWeight: theme.typography.fontWeightBold,
                             }}
                           >
                             Paso {feature.step}
@@ -187,7 +185,7 @@ function RegisterWelcomeModalMobile({
             }}
             icon={<WarningIcon />}
           >
-            <Typography variant="body2" fontWeight="bold">
+            <Typography variant="body2" sx={{ fontWeight: theme.typography.fontWeightBold }}>
               Información CRÍTICA:
             </Typography>
             <Typography variant="body2">
@@ -223,8 +221,6 @@ function RegisterWelcomeModalMobile({
                 sx={{
                   px: 3,
                   py: 1.5,
-                  fontSize: "1rem",
-                  fontWeight: 600,
                   borderRadius: 50,
                   backgroundColor: theme.palette.primary.contrastText,
                   color: theme.palette.primary.main,
